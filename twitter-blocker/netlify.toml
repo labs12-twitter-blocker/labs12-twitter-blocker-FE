@@ -1,0 +1,4 @@
+[build]
+base = "twitter-blocker/"
+publish = "twitter-blocker/build/"
+command = "yarn build"
