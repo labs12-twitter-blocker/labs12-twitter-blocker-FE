@@ -10,7 +10,7 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <button href="/login">Sign In Through Twitter</button>
+        <button href="/auth/twitter">Sign In Through Twitter</button>
       </header>
     </div>
   );
