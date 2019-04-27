@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 require('dotenv').config();
-const url = process.env.BACKEND_BASE_URL || 'http://localhost:5000';
+const url = process.env.BACKEND_BASE_URL;
 
 function App() {
   return (
