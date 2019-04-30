@@ -1,4 +1,4 @@
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
+  from = "https://twitter-blocker.netlify.com/auth/twitter/callback?oauth_token=1eqzPQAAAAAA-NQpAAABamx1GOc&oauth_verifier=0nSWkSvfqhKsBmRevxqcleY474WBegsF"
+  to = "/"
   status = 200
