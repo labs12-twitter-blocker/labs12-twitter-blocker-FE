@@ -24,7 +24,12 @@ import {
 
 const initialState = {
     users: [],
+    points:[],
+    premiumUsers: [],
     error: null,
+    fetchingProfiles: false,
+    fetchingUsersPoints: false,
+    fetchingPremiumUsers: false,
     currentProfile: null,
     fetchingProfile: false,
     editingProfile: false,
@@ -37,19 +42,19 @@ switch (action.type) {
     case GET_USERS:
     return {
         ...state,
-        fetchingProfile: true,
+        fetchingProfiles: true,
         error: null
     };
     case GET_USERS_SUCCESS:
     return {
         ...state,
-        fetchingProfile: false,
-        currentProfile: action.payload
+        fetchingProfiles: false,
+        users: action.payload
     };
     case GET_USERS_FAILURE:
     return {
         ...state,
-        fetchingProfile: false,
+        fetchingProfiles: false,
         error: action.payload
     };
     case GET_USER:
@@ -73,37 +78,37 @@ switch (action.type) {
     case  GET_USERS_POINTS:
     return {
         ...state,
-        fetchingProfile: true,
+        fetchingUsersPoints: true,
         error: null
     };
     case  GET_USERS_POINTS_SUCCESS:
     return {
         ...state,
-        fetchingProfile: false,
-        currentProfile: action.payload
+        fetchingUsersPoints: false,
+        points: action.payload
     };
     case  GET_USERS_POINTS_FAILURE:
     return {
         ...state,
-        fetchingProfile: false,
+        fetchingUsersPoints: false,
         error: action.payload
     };
     case  GET_PREMIUM_USERS:
     return {
         ...state,
-        fetchingProfile: true,
+        fetchingPremiumUsers: true,
         error: null
     };
     case  GET_PREMIUM_USERS_SUCCESS:
     return {
         ...state,
-        fetchingProfile: false,
-        currentProfile: action.payload
+        fetchingPremiumUsers: false,
+        premiumUsers: action.payload
     };
     case  GET_PREMIUM_USERS_FAILURE:
     return {
         ...state,
-        fetchingProfile: false,
+        fetchingPremiumUsers: false,
         error: action.payload
     };
     case ADD_USER:
