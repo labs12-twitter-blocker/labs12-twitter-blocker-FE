@@ -1,6 +1,11 @@
 import axios from "axios";
 
 
+//<------NEED SIGNIN ACTIONS------->
+
+
+
+
 
 //<------USERS------->
 
@@ -539,6 +544,11 @@ export const addPost = post => dispatch => {
     });
 };
 
+export const ERROR_HANDLER = "ERROR_HANDLER";
+
+export const handleError = () => {
+  return { type: ERROR_HANDLER };
+};
 
 //Getting User's Tweets
 // export const GET_POSTS = "GET_POSTS";
