@@ -1,6 +1,8 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+require('dotenv').config();
+const url = process.env.REACT_APP_BACKEND_BASE_URL;
 
 function App() {
   return (
@@ -10,7 +12,8 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <button href="/auth/twitter">Sign In Through Twitter</button>
+        <a href={`${url}/auth/twitter/login`}>LOGIN</a>
+        Sign In Through Twitter
       </header>
     </div>
   );
