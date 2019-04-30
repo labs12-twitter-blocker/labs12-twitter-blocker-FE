@@ -24,17 +24,17 @@ import {
 
 const initialState = {
     users: [],
-    points:[],
+    points: null,
     premiumUsers: [],
     error: null,
-    fetchingProfiles: false,
+    fetchingUsers: false,
     fetchingUsersPoints: false,
     fetchingPremiumUsers: false,
-    currentProfile: null,
-    fetchingProfile: false,
-    editingProfile: false,
-    addingProfile: false,
-    deletingProfile: false,
+    currentUser: null,
+    fetchingUser: false,
+    editingUser: false,
+    addingUser: false,
+    deletingUser: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -42,37 +42,37 @@ switch (action.type) {
     case GET_USERS:
     return {
         ...state,
-        fetchingProfiles: true,
+        fetchingUsers: true,
         error: null
     };
     case GET_USERS_SUCCESS:
     return {
         ...state,
-        fetchingProfiles: false,
+        fetchingUsers: false,
         users: action.payload
     };
     case GET_USERS_FAILURE:
     return {
         ...state,
-        fetchingProfiles: false,
+        fetchingUsers: false,
         error: action.payload
     };
     case GET_USER:
     return {
         ...state,
-        fetchingProfile: true,
+        fetchingUser: true,
         error: null
     };
     case GET_USER_SUCCESS:
     return {
         ...state,
-        fetchingProfile: false,
-        currentProfile: action.payload
+        fetchingUser: false,
+        currentUser: action.payload
     };
     case GET_USER_FAILURE:
     return {
         ...state,
-        fetchingProfile: false,
+        fetchingUser: false,
         error: action.payload
     };
     case  GET_USERS_POINTS:
@@ -114,55 +114,55 @@ switch (action.type) {
     case ADD_USER:
     return {
       ...state,
-      addingProfile: true,
+      addingUser: true,
       error: null
     };
   case ADD_USER_SUCCESS:
     return {
       ...state,
-      addingProfile: false,
+      addingUser: false,
       users: [...state.users, action.payload]
     };
   case ADD_USER_FAILURE:
     return {
       ...state,
-      addingProfile: false,
+      addingUser: false,
       error: action.payload
     };
     case EDIT_USER:
     return {
         ...state,
-        editingProfile: true,
+        editingUser: true,
         error: null
     };
     case EDIT_USER_SUCCESS:
     return {
         ...state,
-        editingProfile: false,
-        currentProfile: action.payload
+        editingUser: false,
+        currentUser: action.payload
     };
     case EDIT_USER_FAILURE:
     return {
         ...state,
-        editingProfile: false,
+        editingUser: false,
         error: action.payload
     };
     case DELETE_USER:
     return {
         ...state,
-        deletingProfile: true,
+        deletingUser: true,
         error: null
     };
     case DELETE_USER_SUCCESS:
     return {
         ...state,
-        deletingProfile: false,
-        currentProfile: action.payload
+        deletingUser: false,
+        currentUser: action.payload
     };
     case DELETE_USER_FAILURE:
     return {
         ...state,
-        deletingProfile: false,
+        deletingUser: false,
         error: action.payload
     };
 
