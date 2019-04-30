@@ -113,21 +113,21 @@ switch (action.type) {
     };
     case ADD_USER:
     return {
-      ...state,
-      addingUser: true,
-      error: null
+        ...state,
+        addingUser: true,
+        error: null
     };
   case ADD_USER_SUCCESS:
     return {
-      ...state,
-      addingUser: false,
-      users: [...state.users, action.payload]
+        ...state,
+        addingUser: false,
+        users: [...state.users, action.payload]
     };
   case ADD_USER_FAILURE:
     return {
-      ...state,
-      addingUser: false,
-      error: action.payload
+        ...state,
+        addingUser: false,
+        error: action.payload
     };
     case EDIT_USER:
     return {
