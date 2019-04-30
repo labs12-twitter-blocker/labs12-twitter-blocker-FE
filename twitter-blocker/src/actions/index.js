@@ -57,7 +57,7 @@ export const GET_USERS_POINTS = "GET_USERS_POINTS";
 export const GET_USERS_POINTS_SUCCESS = "GET_USERS_POINTS_SUCCESS";
 export const GET_USERS_POINTS_FAILURE = "GET_USERS_POINTS_FAILURE";
 
-export const getUsers = () => dispatch => {
+export const getUsersPoints = () => dispatch => {
     dispatch({ type: GET_USERS_POINTS });
     axios
       .get("https://twitter-block.herokuapp.com/users/points")
@@ -507,10 +507,10 @@ export const DELETE_LIST_FOLLOW = "DELETE_LIST_FOLLOW";
 export const DELETE_LIST_FOLLOW_SUCCESS = "DELETE_LIST_FOLLOW_SUCCESS";
 export const DELETE_LIST_FOLLOW_FAILURE = "DELETE_LIST_FOLLOW_FAILURE";
 
-export const deleteListFollow = list_id => dispatch => {
+export const deleteListFollow = user_id => dispatch => {
   dispatch({ type: DELETE_LIST_FOLLOW });
   axios
-    .delete(`https://twitter-block.herokuapp.com/lists/${list_id}/unfollow/${user_id}`)
+    .delete(`https://twitter-block.herokuapp.com/lists/list_id/unfollow/${user_id}`) // <-- I don't feel good about this.
     .then(res => {
       console.log(res);
       dispatch({ type: DELETE_LIST_FOLLOW_SUCCESS, payload: res.data.data });
