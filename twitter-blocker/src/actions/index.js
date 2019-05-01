@@ -1,6 +1,27 @@
 import axios from "axios";
 
 
+
+//<------GET HELLO------>
+
+export const GET_HELLO = "GET_HELLO";
+export const GET_HELLO_SUCCESS = "GET_HELLO_SUCCESS";
+export const GET_HELLO_FAILURE = "GET_HELLO_FAILURE";
+
+export const getHello = () => dispatch => {
+  dispatch({ type: GET_HELLO });
+axios
+    .get("https://twitter-block.herokuapp.com/")
+    .then(res => {
+      console.log(res)
+      dispatch({ type: GET_HELLO_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: GET_HELLO_FAILURE, payload: err.message });
+    });
+  };
+
 //<------NEED SIGNIN ACTIONS------->
 
 
@@ -21,7 +42,7 @@ export const getUsers = () => dispatch => {
     .get("https://twitter-block.herokuapp.com/users")
     .then(res => {
       console.log(res);
-      dispatch({ type: GET_USERS_SUCCESS, payload: res.data.data });
+      dispatch({ type: GET_USERS_SUCCESS, payload: res.data });
     })
     .catch(err => {
       console.log(err);
@@ -42,7 +63,7 @@ export const getUser = user_id => dispatch => {
       .get(`https://twitter-block.herokuapp.com/users/${user_id}`)
       .then(res => {
         console.log(res);
-        dispatch({ type: GET_USER_SUCCESS, payload: res.data.data });
+        dispatch({ type: GET_USER_SUCCESS, payload: res.data });
       })
       .catch(err => {
         console.log(err);
@@ -63,7 +84,7 @@ export const getUsersPoints = () => dispatch => {
       .get("https://twitter-block.herokuapp.com/users/points")
       .then(res => {
         console.log(res);
-        dispatch({ type: GET_USERS_POINTS_SUCCESS, payload: res.data.data });
+        dispatch({ type: GET_USERS_POINTS_SUCCESS, payload: res.data });
       })
       .catch(err => {
         console.log(err);
@@ -84,7 +105,7 @@ export const getPremiumUsers = () => dispatch => {
       .get("https://twitter-block.herokuapp.com/users/premium")
       .then(res => {
         console.log(res);
-        dispatch({ type: GET_PREMIUM_USERS_SUCCESS, payload: res.data.data });
+        dispatch({ type: GET_PREMIUM_USERS_SUCCESS, payload: res.data });
       })
       .catch(err => {
         console.log(err);
@@ -104,7 +125,7 @@ export const getPremiumUsers = () => dispatch => {
 //       .get(`https://twitter-block.herokuapp.com/${user_id}`)
 //       .then(res => {
 //         console.log(res);
-//         dispatch({ type: GET_USER_SUCCESS, payload: res.data.data });
+//         dispatch({ type: GET_USER_SUCCESS, payload: res.data });
 //       })
 //       .catch(err => {
 //         console.log(err);
@@ -124,7 +145,7 @@ export const addUser = user => dispatch => {
     .post("https://twitter-block.herokuapp.com/users", user)
     .then(res => {
       console.log(res);
-      dispatch({ type: ADD_USER_SUCCESS, payload: res.data.data });
+      dispatch({ type: ADD_USER_SUCCESS, payload: res.data });
     })
     .catch(err => {
       console.log(err);
@@ -146,7 +167,7 @@ export const editUser = profile => dispatch => {
       profile
     )
     .then(res => {
-      dispatch({ type: EDIT_USER_SUCCESS, payload: res.data.data });
+      dispatch({ type: EDIT_USER_SUCCESS, payload: res.data });
     })
     .catch(err => {
       dispatch({ type: EDIT_USER_FAILURE, payload: err.message });
@@ -164,7 +185,7 @@ export const deleteUser = user_id => dispatch => {
     .delete(`https://twitter-block.herokuapp.com/users/${user_id}`)
     .then(res => {
       console.log(res);
-      dispatch({ type: DELETE_USER_SUCCESS, payload: res.data.data });
+      dispatch({ type: DELETE_USER_SUCCESS, payload: res.data });
     })
     .catch(err => {
       console.log(err);
@@ -186,7 +207,7 @@ export const getLists = () => dispatch => {
     .get("https://twitter-block.herokuapp.com/lists")
     .then(res => {
       console.log(res);
-      dispatch({ type: GET_LISTS_SUCCESS, payload: res.data.data });
+      dispatch({ type: GET_LISTS_SUCCESS, payload: res.data });
     })
     .catch(err => {
       console.log(err);
@@ -205,7 +226,7 @@ export const getPublicLists = () => dispatch => {
     .get("https://twitter-block.herokuapp.com/lists/public")
     .then(res => {
       console.log(res);
-      dispatch({ type: GET_PUBLIC_LISTS_SUCCESS, payload: res.data.data });
+      dispatch({ type: GET_PUBLIC_LISTS_SUCCESS, payload: res.data });
     })
     .catch(err => {
       console.log(err);
@@ -224,7 +245,7 @@ export const getPrivateLists = () => dispatch => {
     .get("https://twitter-block.herokuapp.com/lists/private")
     .then(res => {
       console.log(res);
-      dispatch({ type: GET_PRIVATE_LISTS_SUCCESS, payload: res.data.data });
+      dispatch({ type: GET_PRIVATE_LISTS_SUCCESS, payload: res.data });
     })
     .catch(err => {
       console.log(err);
@@ -243,7 +264,7 @@ export const getBlockLists = () => dispatch => {
     .get("https://twitter-block.herokuapp.com/lists/block")
     .then(res => {
       console.log(res);
-      dispatch({ type: GET_BLOCK_LISTS_SUCCESS, payload: res.data.data });
+      dispatch({ type: GET_BLOCK_LISTS_SUCCESS, payload: res.data });
     })
     .catch(err => {
       console.log(err);
@@ -262,7 +283,7 @@ export const getCoolLists = () => dispatch => {
     .get("https://twitter-block.herokuapp.com/lists/cool")
     .then(res => {
       console.log(res);
-      dispatch({ type: GET_COOL_LISTS_SUCCESS, payload: res.data.data });
+      dispatch({ type: GET_COOL_LISTS_SUCCESS, payload: res.data });
     })
     .catch(err => {
       console.log(err);
@@ -282,7 +303,7 @@ export const getList = list_id => dispatch => {
     .get(`https://twitter-block.herokuapp.com/lists/${list_id}`)
     .then(res => {
       console.log(res);
-      dispatch({ type: GET_LIST_SUCCESS, payload: res.data.data });
+      dispatch({ type: GET_LIST_SUCCESS, payload: res.data });
     })
     .catch(err => {
       console.log(err);
@@ -301,7 +322,7 @@ export const getUserList = user_id => dispatch => {
     .get(`https://twitter-block.herokuapp.com/lists/creator/${user_id}`)
     .then(res => {
       console.log(res);
-      dispatch({ type: GET_USER_LISTS_SUCCESS, payload: res.data.data });
+      dispatch({ type: GET_USER_LISTS_SUCCESS, payload: res.data });
     })
     .catch(err => {
       console.log(err);
@@ -320,7 +341,7 @@ export const getUserPublicList = user_id => dispatch => {
     .get(`https://twitter-block.herokuapp.com/lists/creator/public/${user_id}`)
     .then(res => {
       console.log(res);
-      dispatch({ type: GET_USER_PUBLIC_LISTS_SUCCESS, payload: res.data.data });
+      dispatch({ type: GET_USER_PUBLIC_LISTS_SUCCESS, payload: res.data });
     })
     .catch(err => {
       console.log(err);
@@ -339,7 +360,7 @@ export const getUserPrivateList = user_id => dispatch => {
     .get(`https://twitter-block.herokuapp.com/lists/creator/private/${user_id}`)
     .then(res => {
       console.log(res);
-      dispatch({ type: GET_USER_PRIVATE_LISTS_SUCCESS, payload: res.data.data });
+      dispatch({ type: GET_USER_PRIVATE_LISTS_SUCCESS, payload: res.data });
     })
     .catch(err => {
       console.log(err);
@@ -358,7 +379,7 @@ export const getUserBlockList = user_id => dispatch => {
     .get(`https://twitter-block.herokuapp.com/lists/creator/block/${user_id}`)
     .then(res => {
       console.log(res);
-      dispatch({ type: GET_USER_BLOCK_LISTS_SUCCESS, payload: res.data.data });
+      dispatch({ type: GET_USER_BLOCK_LISTS_SUCCESS, payload: res.data });
     })
     .catch(err => {
       console.log(err);
@@ -377,7 +398,7 @@ export const getUserCoolList = user_id => dispatch => {
     .get(`https://twitter-block.herokuapp.com/lists/creator/cool/${user_id}`)
     .then(res => {
       console.log(res);
-      dispatch({ type: GET_USER_COOL_LISTS_SUCCESS, payload: res.data.data });
+      dispatch({ type: GET_USER_COOL_LISTS_SUCCESS, payload: res.data });
     })
     .catch(err => {
       console.log(err);
@@ -396,7 +417,7 @@ export const getListSubscribers = list_id => dispatch => {
     .get(`https://twitter-block.herokuapp.com/lists/subscribers/${list_id}`)
     .then(res => {
       console.log(res);
-      dispatch({ type: GET_LIST_SUBSCRIBERS_SUCCESS, payload: res.data.data });
+      dispatch({ type: GET_LIST_SUBSCRIBERS_SUCCESS, payload: res.data });
     })
     .catch(err => {
       console.log(err);
@@ -415,7 +436,7 @@ export const getListPoints = () => dispatch => {
     .get("https://twitter-block.herokuapp.com/lists/points")
     .then(res => {
       console.log(res);
-      dispatch({ type: GET_LIST_POINTS_SUCCESS, payload: res.data.data });
+      dispatch({ type: GET_LIST_POINTS_SUCCESS, payload: res.data });
     })
     .catch(err => {
       console.log(err);
@@ -434,7 +455,7 @@ export const getListTimeline = list_id => dispatch => {
     .get(`https://twitter-block.herokuapp.com/lists/timeline/${list_id}`)
     .then(res => {
       console.log(res);
-      dispatch({ type: GET_LIST_TIMELINE_SUCCESS, payload: res.data.data });
+      dispatch({ type: GET_LIST_TIMELINE_SUCCESS, payload: res.data });
     })
     .catch(err => {
       console.log(err);
@@ -455,7 +476,7 @@ export const addList = post => dispatch => {
     .post("https://twitter-block.herokuapp.com/lists", post)
     .then(res => {
       console.log(res);
-      dispatch({ type: ADD_LIST_SUCCESS, payload: res.data.data });
+      dispatch({ type: ADD_LIST_SUCCESS, payload: res.data });
     })
     .catch(err => {
       console.log(err);
@@ -476,7 +497,7 @@ export const editList = list => dispatch => {
       list
     )
     .then(res => {
-      dispatch({ type: EDIT_LIST_SUCCESS, payload: res.data.data });
+      dispatch({ type: EDIT_LIST_SUCCESS, payload: res.data });
     })
     .catch(err => {
       dispatch({ type: EDIT_LIST_FAILURE, payload: err.message });
@@ -494,7 +515,7 @@ export const deleteList = list_id => dispatch => {
     .delete(`https://twitter-block.herokuapp.com/lists/${list_id}`)
     .then(res => {
       console.log(res);
-      dispatch({ type: DELETE_LIST_SUCCESS, payload: res.data.data });
+      dispatch({ type: DELETE_LIST_SUCCESS, payload: res.data });
     })
     .catch(err => {
       console.log(err);
@@ -513,7 +534,7 @@ export const deleteListFollow = user_id => dispatch => {
     .delete(`https://twitter-block.herokuapp.com/lists/list_id/unfollow/${user_id}`) // <-- I don't feel good about this.
     .then(res => {
       console.log(res);
-      dispatch({ type: DELETE_LIST_FOLLOW_SUCCESS, payload: res.data.data });
+      dispatch({ type: DELETE_LIST_FOLLOW_SUCCESS, payload: res.data });
     })
     .catch(err => {
       console.log(err);
@@ -536,7 +557,7 @@ export const addPost = post => dispatch => {
     .post("https://twitter-block.herokuapp.com/tweets", post)
     .then(res => {
       console.log(res);
-      dispatch({ type: ADD_POST_SUCCESS, payload: res.data.data });
+      dispatch({ type: ADD_POST_SUCCESS, payload: res.data });
     })
     .catch(err => {
       console.log(err);
@@ -562,7 +583,7 @@ export const handleError = () => {
 //     // .get("")
 //     .then(res => {
 //       console.log(res);
-//       dispatch({ type: GET_POSTS_SUCCESS, payload: res.data.data });
+//       dispatch({ type: GET_POSTS_SUCCESS, payload: res.data });
 //     })
 //     .catch(err => {
 //       console.log(err);
@@ -581,7 +602,7 @@ export const handleError = () => {
 //     // .get(``)
 //     .then(res => {
 //       console.log(res);
-//       dispatch({ type: GET_POST_SUCCESS, payload: res.data.data });
+//       dispatch({ type: GET_POST_SUCCESS, payload: res.data });
 //     })
 //     .catch(err => {
 //       console.log(err);
@@ -601,7 +622,7 @@ export const handleError = () => {
 //     // .delete(``)
 //     .then(res => {
 //       console.log(res);
-//       dispatch({ type: DELETE_POST_SUCCESS, payload: res.data.data });
+//       dispatch({ type: DELETE_POST_SUCCESS, payload: res.data });
 //     })
 //     .catch(err => {
 //       console.log(err);
