@@ -8,7 +8,7 @@ import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 import rootReducer from "./reducers/index";
 import { BrowserRouter as Router } from "react-router-dom";
-// import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+// import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";  <---This is commented out for now until we decide on theme.
 
 // const theme = createMuiTheme({
 //   palette: {
