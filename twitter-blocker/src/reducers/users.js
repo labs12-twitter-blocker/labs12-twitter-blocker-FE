@@ -1,4 +1,7 @@
 import {
+    GET_HELLO,
+    GET_HELLO_SUCCESS,
+    GET_HELLO_FAILURE,
     GET_USERS,
     GET_USERS_SUCCESS,
     GET_USERS_FAILURE,
@@ -23,10 +26,12 @@ import {
 } from '../actions/index.js';
 
 const initialState = {
+    greeting: "",
     users: [],
     points: null,
     premiumUsers: [],
     error: null,
+    fetchingHello: false,
     fetchingUsers: false,
     fetchingUsersPoints: false,
     fetchingPremiumUsers: false,
@@ -39,6 +44,24 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
 switch (action.type) {
+    case GET_HELLO:
+    return {
+        ...state,
+        fetchingHello: true,
+        error: null
+    };
+    case GET_HELLO_SUCCESS:
+    return {
+        ...state,
+        fetchingHello: false,
+        greeting: action.payload
+    };
+    case GET_HELLO_FAILURE:
+    return {
+        ...state,
+        fetchingHello: false,
+        error: action.payload
+    };
     case GET_USERS:
     return {
         ...state,
