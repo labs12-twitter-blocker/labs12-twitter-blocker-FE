@@ -1,4 +1,0 @@
-[[redirects]]
-  from = "https://twitter-blocker.netlify.com/auth/twitter/callback?oauth_token="
-  to = "/"
-  status = 300
