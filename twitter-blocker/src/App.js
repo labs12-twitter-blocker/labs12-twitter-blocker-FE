@@ -6,7 +6,6 @@ import OAuth from '../src/tweeper/OAuth';
 
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
-
 function App() {
   return (
     <Router>
