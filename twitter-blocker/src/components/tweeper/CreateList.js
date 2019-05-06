@@ -181,6 +181,9 @@ class CreateList extends React.Component {
             </form>
           </FormControl>
         </form>
+        <Button medium color="primary" variant="contained">
+        Generate New List
+        </Button>
       </React.Fragment>
     );
   }
