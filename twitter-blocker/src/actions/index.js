@@ -425,7 +425,7 @@ export const getListSubscribers = list_id => dispatch => {
     });
 };
 
-// Requests List Points
+// Requests Top Lists by Points
 export const GET_LIST_POINTS = "GET_LIST_POINTS";
 export const GET_LIST_POINTS_SUCCESS = "GET_LIST_POINTS_SUCCESS";
 export const GET_LIST_POINTS_FAILURE = "GET_LIST_POINTS_FAILURE";
@@ -433,7 +433,7 @@ export const GET_LIST_POINTS_FAILURE = "GET_LIST_POINTS_FAILURE";
 export const getListPoints = () => dispatch => {
   dispatch({ type: GET_LIST_POINTS });
   axios
-    .get("https://twitter-block.herokuapp.com/lists/points")
+    .get("https://twitter-block.herokuapp.com/lists/points/top")
     .then(res => {
       console.log(res);
       dispatch({ type: GET_LIST_POINTS_SUCCESS, payload: res.data });
