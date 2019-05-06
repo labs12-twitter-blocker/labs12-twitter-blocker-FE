@@ -4,23 +4,20 @@ import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider/Divider';
 import { unstable_Box as Box } from '@material-ui/core/Box';
 import styled from '@material-ui/styles/styled';
-import Header from '../components/tweeper/Header';
-import Tweet from '../components/tweeper/Tweet';
-import TrackWho from '../components/tweeper/TrackWho';
-import PopularNow from '../components/tweeper/PopularNow';
-import AccordingWhom from '../components/tweeper/AccordingWhom.js';
-import TweetFloat from '../components/tweeper/TweetFloat.js'
-import HeaderTest from '../tests/HeaderTest.js'
-import theme from '../theme/tweeper/theme';
-import withTheme from './withTheme';
-import atoms from '../components/atoms';
-import molecules from '../components/molecules';
+import Header from '../../components/tweeper/Header';
+import TweetFloat from '../../components/tweeper/TweetFloat.js'
+import HeaderTest from '../../tests/HeaderTest.js'
+import theme from '../../theme/tweeper/theme';
+import withTheme from '../withTheme';
+import ListTab from '../../components/tweeper/ListTab.js'
+import atoms from '../../components/atoms';
+import molecules from '../../components/molecules';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 
 const { Avatar, Icon, Typography, Button } = atoms;
-const { Tabs, Tab } = molecules;
+// const { Tabs, Tab } = molecules;
 
 const Content = styled('div')({
   maxWidth: 1000,
@@ -43,8 +40,6 @@ function Profile() {
       <CssBaseline />
       <HeaderTest />
       <Content>
-        <Grid container spacing={16}>
-          <Grid item xs={12} md={8}>
             <Feed>
               <Cover />
               <Box p={2} mb={1}>
@@ -92,26 +87,9 @@ function Profile() {
                   Followers
                 </Typography>
               </Box>
-              <Tabs value={0} variant="fullWidth">
-                <Tab label="Lists" />
-                <Tab label="Public Lists" />
-                <Tab label="Private Lists" />
-                <Tab label="Block" />
-              </Tabs>
+              <ListTab variant="fullWidth"/>
               <Divider />
-              <Tweet />
             </Feed>
-            {/* <Box mt="10px">
-              <AccordingWhom />
-            </Box> */}
-          </Grid>
-          <Grid item xs={12} md={4}>
-            {/* <Box mb="10px">
-              <TrackWho />
-            </Box> */}
-            <PopularNow />
-          </Grid>
-        </Grid>
         <TweetFloat />
       </Content>
     </React.Fragment>

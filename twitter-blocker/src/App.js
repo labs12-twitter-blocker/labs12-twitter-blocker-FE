@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Profile from '../src/tweeper/Profile';
+import Profile from '../src/tweeper/Home/Profile';
 import HelloWorld from '../src/tweeper/HelloWorld';
 import OAuth from '../src/tweeper/OAuth';
 
