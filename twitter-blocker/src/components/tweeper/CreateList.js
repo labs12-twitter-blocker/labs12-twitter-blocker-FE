@@ -86,7 +86,7 @@ class CreateList extends React.Component {
           onClose={this.handleClose}
           aria-labelledby="max-width-dialog-title"
         >
-          <DialogTitle id="max-width-dialog-title">Enter 5-10 Twitter Accounts</DialogTitle>
+          <DialogTitle id="max-width-dialog-title"><h4>Create Your List</h4>Enter 5-10 Twitter Accounts</DialogTitle>
           <DialogContent>
             <DialogContentText>
               We will use these users to create your custom list
