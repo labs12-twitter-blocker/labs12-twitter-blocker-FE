@@ -425,22 +425,60 @@ export const getListSubscribers = list_id => dispatch => {
     });
 };
 
-// Requests Top Lists by Points
-export const GET_LIST_POINTS = "GET_LIST_POINTS";
-export const GET_LIST_POINTS_SUCCESS = "GET_LIST_POINTS_SUCCESS";
-export const GET_LIST_POINTS_FAILURE = "GET_LIST_POINTS_FAILURE";
+// Requests All Top Lists by Points
+export const GET_ALL_LIST_POINTS = "GET_ALL_LIST_POINTS";
+export const GET_ALL_LIST_POINTS_SUCCESS = "GET_ALL_LIST_POINTS_SUCCESS";
+export const GET_ALL_LIST_POINTS_FAILURE = "GET_ALL_LIST_POINTS_FAILURE";
 
-export const getListPoints = () => dispatch => {
-  dispatch({ type: GET_LIST_POINTS });
+export const getAllListPoints = () => dispatch => {
+  dispatch({ type: GET_ALL_LIST_POINTS });
   axios
     .get("https://twitter-block.herokuapp.com/lists/points/top")
     .then(res => {
       console.log(res);
-      dispatch({ type: GET_LIST_POINTS_SUCCESS, payload: res.data });
+      dispatch({ type: GET_ALL_LIST_POINTS_SUCCESS, payload: res.data });
     })
     .catch(err => {
       console.log(err);
-      dispatch({ type: GET_LIST_POINTS_FAILURE, payload: err.message });
+      dispatch({ type: GET_ALL_LIST_POINTS_FAILURE, payload: err.message });
+    });
+};
+
+// Requests Top Follow Lists by Points
+export const GET_FOLLOW_LIST_POINTS = "GET_FOLLOW_LIST_POINTS";
+export const GET_FOLLOW_LIST_POINTS_SUCCESS = "GET_FOLLOW_LIST_POINTS_SUCCESS";
+export const GET_FOLLOW_LIST_POINTS_FAILURE = "GET_FOLLOW_LIST_POINTS_FAILURE";
+
+export const getFollowListPoints = () => dispatch => {
+  dispatch({ type: GET_FOLLOW_LIST_POINTS });
+  axios
+    .get("https://twitter-block.herokuapp.com/lists/points/follow")
+    .then(res => {
+      console.log(res);
+      dispatch({ type: GET_FOLLOW_LIST_POINTS_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: GET_FOLLOW_LIST_POINTS_FAILURE, payload: err.message });
+    });
+};
+
+// Requests Top Block Lists by Points
+export const GET_BLOCK_LIST_POINTS = "GET_BLOCK_LIST_POINTS";
+export const GET_BLOCK_LIST_POINTS_SUCCESS = "GET_BLOCK_LIST_POINTS_SUCCESS";
+export const GET_BLOCK_LIST_POINTS_FAILURE = "GET_BLOCK_LIST_POINTS_FAILURE";
+
+export const getBlockListPoints = () => dispatch => {
+  dispatch({ type: GET_BLOCK_LIST_POINTS });
+  axios
+    .get("https://twitter-block.herokuapp.com/lists/points/block")
+    .then(res => {
+      console.log(res);
+      dispatch({ type: GET_BLOCK_LIST_POINTS_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: GET_BLOCK_LIST_POINTS_FAILURE, payload: err.message });
     });
 };
 

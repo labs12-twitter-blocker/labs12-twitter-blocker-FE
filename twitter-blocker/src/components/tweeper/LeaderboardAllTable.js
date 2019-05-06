@@ -8,7 +8,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { getBlockListPoints } from '../../actions/index'
+import { getAllListPoints } from '../../actions/index'
 
 const styles = theme => ({
   root: {
@@ -28,21 +28,21 @@ function createData(list_name, description, member_count, subscriber_count, list
   return { id, list_name, description, member_count, subscriber_count, list_points };
 }
 
-class LeaderboardBlockTable extends Component {
+class LeaderboardAllTable extends Component {
     state={
         rows: [],
-        blockListRan: false,
+        allListRan: false,
     }
 
     
     componentDidMount() {
-        this.props.getBlockListPoints()
+        this.props.getAllListPoints()
         
     };
 
     componentDidUpdate() {
-        if (this.props.blockLists.length > 0 && this.state.blockListRan === false) {
-            this.getListRowBuilder(this.props.blockLists);
+        if (this.props.allLists.length > 0 && this.state.allListRan === false) {
+            this.getListRowBuilder(this.props.allLists);
         }
     }
 
@@ -56,7 +56,7 @@ class LeaderboardBlockTable extends Component {
                 return newRow;
         })
         // console.log(newRow);
-        this.setState({blockListRan: true})
+        this.setState({allListRan: true})
         this.setState({rows: newRow});
     };
 
@@ -64,7 +64,7 @@ class LeaderboardBlockTable extends Component {
 
     render() {
         
-        if (this.props.blockLists === null || this.props.blockLists.length === 0) {
+        if (this.props.allLists === null || this.props.allLists.length === 0) {
             return (<div>Loading</div>)
         } else {
         const { classes } = this.props;
@@ -73,21 +73,23 @@ class LeaderboardBlockTable extends Component {
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
+            <TableCell align="center">Vote</TableCell>
+            <TableCell align="center">Points</TableCell>
             <TableCell>Name</TableCell>
-            <TableCell align="center">Description</TableCell>
+            {/* <TableCell align="center">Description</TableCell> */}
             <TableCell align="center">Members</TableCell>
             <TableCell align="center">Subscribers</TableCell>
-            <TableCell align="center">Points</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {this.state.rows.map(row => (
             <TableRow key={row.id}>
-              <TableCell component="th" scope="row">{row.list_name}</TableCell>
-              <TableCell>{row.description}</TableCell>
+              <TableCell align="center">↑ ↓</TableCell>
+              <TableCell align="center">{row.list_points}</TableCell>
+              <TableCell component="th" scope="row">{row.list_name}<br></br>{row.description}</TableCell>
+              {/* <TableCell>{row.description}</TableCell> */}
               <TableCell align="center">{row.member_count}</TableCell>
               <TableCell align="center">{row.subscriber_count}</TableCell>
-              <TableCell align="center">{row.list_points}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -98,19 +100,19 @@ class LeaderboardBlockTable extends Component {
 }
 }
 
-LeaderboardBlockTable.propTypes = {
+LeaderboardAllTable.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
 
 const mapStateToProps = state => ({
-    blockLists: state.listsReducer.listPointsBlock
+    allLists: state.listsReducer.listPointsAll
   });
   
 
-const styledComponent = withStyles(styles)(LeaderboardBlockTable);
+const styledComponent = withStyles(styles)(LeaderboardAllTable);
 
 export default connect(
   mapStateToProps,
-  { getBlockListPoints }
+  { getAllListPoints }
 )(styledComponent);

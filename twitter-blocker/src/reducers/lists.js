@@ -35,9 +35,15 @@ import {
     GET_LIST_SUBSCRIBERS,
     GET_LIST_SUBSCRIBERS_SUCCESS,
     GET_LIST_SUBSCRIBERS_FAILURE,
-    GET_LIST_POINTS,
-    GET_LIST_POINTS_SUCCESS,
-    GET_LIST_POINTS_FAILURE,
+    GET_ALL_LIST_POINTS,
+    GET_ALL_LIST_POINTS_SUCCESS,
+    GET_ALL_LIST_POINTS_FAILURE,
+    GET_FOLLOW_LIST_POINTS,
+    GET_FOLLOW_LIST_POINTS_SUCCESS,
+    GET_FOLLOW_LIST_POINTS_FAILURE,
+    GET_BLOCK_LIST_POINTS,
+    GET_BLOCK_LIST_POINTS_SUCCESS,
+    GET_BLOCK_LIST_POINTS_FAILURE,
     GET_LIST_TIMELINE,
     GET_LIST_TIMELINE_SUCCESS,
     GET_LIST_TIMELINE_FAILURE,
@@ -69,7 +75,9 @@ const initialState = {
     userBlockLists: [],
     userCoolLists:[],
     listSubscribers:[],
-    listPoints: null,
+    listPointsAll: null,
+    listPointsFollow: null,
+    listPointsBlock: null,
     listTimeline: {},
     fetchingLists: false,
     fetchingPublicLists: false,
@@ -83,7 +91,9 @@ const initialState = {
     fetchingUserBlockLists: false,
     fetchingUserCoolLists: false,
     fetchingListSubscribers: false,
-    fetchingListPoints: false,
+    fetchingAllListPoints: false,
+    fetchingFollowListPoints: false,
+    fetchingBlockListPoints: false,
     fetchingListTimeline: false,
     addingList: false,
     updatingList: false,
@@ -309,22 +319,58 @@ const initialState = {
             fetchingListSubscribers: false,
             error: action.payload
         };
-        case  GET_LIST_POINTS:
+        case  GET_ALL_LIST_POINTS:
         return {
             ...state,
-            fetchingListPoints: true,
+            fetchingAllListPoints: true,
             error: null
         };
-        case  GET_LIST_POINTS_SUCCESS:
+        case  GET_ALL_LIST_POINTS_SUCCESS:
         return {
             ...state,
-            fetchingListPoints: false,
-            listPoints: action.payload
+            fetchingAllListPoints: false,
+            listPointsAll: action.payload
         };
-        case  GET_LIST_POINTS_FAILURE:
+        case  GET_ALL_LIST_POINTS_FAILURE:
         return {
             ...state,
-            fetchingListPoints: false,
+            fetchingAllListPoints: false,
+            error: action.payload
+        };
+        case  GET_FOLLOW_LIST_POINTS:
+        return {
+            ...state,
+            fetchingFollowListPoints: true,
+            error: null
+        };
+        case  GET_FOLLOW_LIST_POINTS_SUCCESS:
+        return {
+            ...state,
+            fetchingFollowListPoints: false,
+            listPointsFollow: action.payload
+        };
+        case  GET_FOLLOW_LIST_POINTS_FAILURE:
+        return {
+            ...state,
+            fetchingFollowListPoints: false,
+            error: action.payload
+        };
+        case  GET_BLOCK_LIST_POINTS:
+        return {
+            ...state,
+            fetchingBlockListPoints: true,
+            error: null
+        };
+        case  GET_BLOCK_LIST_POINTS_SUCCESS:
+        return {
+            ...state,
+            fetchingBlockListPoints: false,
+            listPointsBlock: action.payload
+        };
+        case  GET_BLOCK_LIST_POINTS_FAILURE:
+        return {
+            ...state,
+            fetchingBlockListPoints: false,
             error: action.payload
         };
         case  GET_LIST_TIMELINE:
