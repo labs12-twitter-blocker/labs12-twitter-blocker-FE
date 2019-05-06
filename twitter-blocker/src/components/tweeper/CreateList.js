@@ -76,132 +76,110 @@ class CreateList extends React.Component {
 
     return (
       <React.Fragment>
-        <Button medium color="primary" variant="contained" onClick={this.handleClickOpen}>
-        Create New List
-        </Button>
-        <Dialog
-          fullWidth={this.state.fullWidth}
-          maxWidth={this.state.maxWidth}
-          open={this.state.open}
-          onClose={this.handleClose}
-          aria-labelledby="max-width-dialog-title"
-        >
-          <DialogTitle id="max-width-dialog-title">Enter 5-10 Twitter Accounts</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              We will use these users to create your custom list
-            </DialogContentText>
-            <form className={classes.form} noValidate>
-              <FormControl className={classes.formControl}>
-                {/* <InputLabel htmlFor="max-width">maxWidth</InputLabel> */}
-                <form
-                  value={this.state.maxWidth}
-                  onChange={this.handleMaxWidthChange}
-                  inputProps={{
-                    name: 'max-width',
-                    id: 'max-width',
-                  }}
-                >
-                  <TextField
-                    id="outlined-name"
-                    label="Required"
-                    className={classes.textField}
-                    value={this.state.name}
-                    onChange={this.handleChange('name')}
-                    margin="normal"
-                    variant="outlined"
-                    />
-                <TextField
-                    id="outlined-name"
-                    label="Required"
-                    className={classes.textField}
-                    value={this.state.name}
-                    onChange={this.handleChange('name')}
-                    margin="normal"
-                    variant="outlined"
-                    />
-                <TextField
-                    id="outlined-name"
-                    label="Required"
-                    className={classes.textField}
-                    value={this.state.name}
-                    onChange={this.handleChange('name')}
-                    margin="normal"
-                    variant="outlined"
-                    />
-                <TextField
-                    id="outlined-name"
-                    label="Required"
-                    className={classes.textField}
-                    value={this.state.name}
-                    onChange={this.handleChange('name')}
-                    margin="normal"
-                    variant="outlined"
-                    />
-                <TextField
-                    id="outlined-name"
-                    label="Required"
-                    className={classes.textField}
-                    value={this.state.name}
-                    onChange={this.handleChange('name')}
-                    margin="normal"
-                    variant="outlined"
-                    />
-                <TextField
-                    id="outlined-name"
-                    label="Required"
-                    className={classes.textField}
-                    value={this.state.name}
-                    onChange={this.handleChange('name')}
-                    margin="normal"
-                    variant="outlined"
-                    />
-                <TextField
-                    id="outlined-name"
-                    label="Username"
-                    className={classes.textField}
-                    value={this.state.name}
-                    onChange={this.handleChange('name')}
-                    margin="normal"
-                    variant="outlined"
-                    />
-                <TextField
-                    id="outlined-name"
-                    label="Username"
-                    className={classes.textField}
-                    value={this.state.name}
-                    onChange={this.handleChange('name')}
-                    margin="normal"
-                    variant="outlined"
-                    />
-                <TextField
-                    id="outlined-name"
-                    label="Username"
-                    className={classes.textField}
-                    value={this.state.name}
-                    onChange={this.handleChange('name')}
-                    margin="normal"
-                    variant="outlined"
-                    />
-                <TextField
-                    id="outlined-name"
-                    label="Username"
-                    className={classes.textField}
-                    value={this.state.name}
-                    onChange={this.handleChange('name')}
-                    margin="normal"
-                    variant="outlined"
-                    />
-                </form>
-              </FormControl>
+        <form className={classes.form} noValidate>
+          <FormControl className={classes.formControl}>
+            {/* <InputLabel htmlFor="max-width">maxWidth</InputLabel> */}
+            <form
+              value={this.state.maxWidth}
+              // onChange={this.handleMaxWidthChange}
+              inputProps={{
+                name: 'max-width',
+                id: 'max-width',
+              }}
+            >
+              <TextField
+                id="outlined-name"
+                label="Required"
+                className={classes.textField}
+                value={this.state.name}
+                onChange={this.handleChange('name')}
+                margin="normal"
+                variant="outlined"
+              />
+              <TextField
+                id="outlined-name"
+                label="Required"
+                className={classes.textField}
+                value={this.state.name}
+                onChange={this.handleChange('name')}
+                margin="normal"
+                variant="outlined"
+              />
+              <TextField
+                id="outlined-name"
+                label="Required"
+                className={classes.textField}
+                value={this.state.name}
+                onChange={this.handleChange('name')}
+                margin="normal"
+                variant="outlined"
+              />
+              <TextField
+                id="outlined-name"
+                label="Required"
+                className={classes.textField}
+                value={this.state.name}
+                onChange={this.handleChange('name')}
+                margin="normal"
+                variant="outlined"
+              />
+              <TextField
+                id="outlined-name"
+                label="Required"
+                className={classes.textField}
+                value={this.state.name}
+                onChange={this.handleChange('name')}
+                margin="normal"
+                variant="outlined"
+              />
+              <TextField
+                id="outlined-name"
+                label="Required"
+                className={classes.textField}
+                value={this.state.name}
+                onChange={this.handleChange('name')}
+                margin="normal"
+                variant="outlined"
+              />
+              <TextField
+                id="outlined-name"
+                label="Username"
+                className={classes.textField}
+                value={this.state.name}
+                onChange={this.handleChange('name')}
+                margin="normal"
+                variant="outlined"
+              />
+              <TextField
+                id="outlined-name"
+                label="Username"
+                className={classes.textField}
+                value={this.state.name}
+                onChange={this.handleChange('name')}
+                margin="normal"
+                variant="outlined"
+              />
+              <TextField
+                id="outlined-name"
+                label="Username"
+                className={classes.textField}
+                value={this.state.name}
+                onChange={this.handleChange('name')}
+                margin="normal"
+                variant="outlined"
+              />
+              <TextField
+                id="outlined-name"
+                label="Username"
+                className={classes.textField}
+                value={this.state.name}
+                onChange={this.handleChange('name')}
+                margin="normal"
+                variant="outlined"
+              />
             </form>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary">    {/* need to make on click for creating new list */}
-              Create List
-            </Button>
-          </DialogActions>
-        </Dialog>
+          </FormControl>
+        </form>
       </React.Fragment>
     );
   }
