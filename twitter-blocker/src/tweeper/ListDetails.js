@@ -40,7 +40,20 @@ const Cover = styled('div')({
   backgroundColor: '#ccd6dd',
 });
 
-function ListDetails(props) {
+class ListDetails extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      list: []
+    }
+  }
+
+  componentDidMount(){
+    this.props.getList(this.props.match.params.id);
+    this.setState({note: this.props.list});
+}
+  
+render() {
   return (
     <React.Fragment>
       <CssBaseline />
@@ -48,7 +61,7 @@ function ListDetails(props) {
       <Content>
             <Feed>
               <List>
-                {props.list.map(i => {
+                {this.props.list.map(i => {
                   return (
                   <ListItem>
                     <Avatar />
@@ -66,6 +79,7 @@ function ListDetails(props) {
     </React.Fragment>
   );
 }
+}
 
 const mapStateToProps = state => {
   return {
@@ -76,7 +90,8 @@ const mapStateToProps = state => {
 const mapActionsToProps = {
   getList: getList,
   getListTimeline, getListTimeline,
-  getUser: getUser
+  getUser: getUser,
+  // deleteListItem: deleteListItem
 }
 
 export default connect( mapStateToProps, mapActionsToProps)(withTheme(theme)(ListDetails));
