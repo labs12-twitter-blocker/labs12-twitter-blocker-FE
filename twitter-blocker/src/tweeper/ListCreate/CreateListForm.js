@@ -57,7 +57,7 @@ class CreateListForm extends Component {
             >
               <TextField
                 id="outlined-name"
-                label="Required"
+                label="Username"
                 className={classes.textField}
                 value={this.state.name}
                 onChange={this.handleChange('name')}
