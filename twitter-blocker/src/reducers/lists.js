@@ -35,6 +35,9 @@ import {
     GET_LIST_SUBSCRIBERS,
     GET_LIST_SUBSCRIBERS_SUCCESS,
     GET_LIST_SUBSCRIBERS_FAILURE,
+    GET_LIST_MEMBERS,
+    GET_LIST_MEMBERS_SUCCESS,
+    GET_LIST_MEMBERS_FAILURE,
     GET_ALL_LIST_POINTS,
     GET_ALL_LIST_POINTS_SUCCESS,
     GET_ALL_LIST_POINTS_FAILURE,
@@ -75,6 +78,7 @@ const initialState = {
     userBlockLists: [],
     userCoolLists:[],
     listSubscribers:[],
+    listMembers: [],
     listPointsAll: null,
     listPointsFollow: null,
     listPointsBlock: null,
@@ -91,6 +95,7 @@ const initialState = {
     fetchingUserBlockLists: false,
     fetchingUserCoolLists: false,
     fetchingListSubscribers: false,
+    fetchingListMembers: false,
     fetchingAllListPoints: false,
     fetchingFollowListPoints: false,
     fetchingBlockListPoints: false,
@@ -317,6 +322,24 @@ const initialState = {
         return {
             ...state,
             fetchingListSubscribers: false,
+            error: action.payload
+        };
+        case  GET_LIST_MEMBERS:
+        return {
+            ...state,
+            fetchingListMembers: true,
+            error: null
+        };
+        case  GET_LIST_MEMBERS_SUCCESS:
+        return {
+            ...state,
+            fetchingListMembers: false,
+            listMembers: action.payload
+        };
+        case  GET_LIST_MEMBERS_FAILURE:
+        return {
+            ...state,
+            fetchingListMembers: false,
             error: action.payload
         };
         case  GET_ALL_LIST_POINTS:

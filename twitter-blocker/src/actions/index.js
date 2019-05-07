@@ -425,6 +425,25 @@ export const getListSubscribers = list_id => dispatch => {
     });
 };
 
+// Requests List Members
+export const GET_LIST_MEMBERS = "GET_LIST_MEMBERS";
+export const GET_LIST_MEMBERS_SUCCESS = "GET_LIST_MEMBERS_SUCCESS";
+export const GET_LIST_MEMBERS_FAILURE = "GET_LIST_MEMBERS_FAILURE";
+
+export const getListMembers = list_id => dispatch => {
+  dispatch({ type: GET_LIST_MEMBERS });
+  axios
+    .get(`https://twitter-block.herokuapp.com/lists/members/${list_id}`)
+    .then(res => {
+      console.log(res);
+      dispatch({ type: GET_LIST_MEMBERS_SUCCESS, payload: res.data[0].list_members });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: GET_LIST_MEMBERS_FAILURE, payload: err.message });
+    });
+};
+
 // Requests All Top Lists by Points
 export const GET_ALL_LIST_POINTS = "GET_ALL_LIST_POINTS";
 export const GET_ALL_LIST_POINTS_SUCCESS = "GET_ALL_LIST_POINTS_SUCCESS";
