@@ -8,7 +8,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { getListPoints } from '../../actions/index'
+import { getFollowListPoints } from '../../actions/index'
 
 const styles = theme => ({
   root: {
@@ -24,7 +24,7 @@ const styles = theme => ({
 let id = 0;
 function createData(list_name, description, member_count, subscriber_count, list_points) {
   id += 1;
-  console.log("createData", id)
+  // console.log("createData", id)
   return { id, list_name, description, member_count, subscriber_count, list_points };
 }
 
@@ -36,7 +36,7 @@ class LeaderboardFollowTable extends Component {
 
     
     componentDidMount() {
-        this.props.getListPoints()
+        this.props.getFollowListPoints()
         
     };
 
@@ -48,16 +48,14 @@ class LeaderboardFollowTable extends Component {
 
     getListRowBuilder = (list) => {
         let newRow = [];
-        console.log('here')
         list.map(list => {
-            console.log("list", list);
             let points = (list.list_upvotes - list.list_downvotes)
             newRow.push(createData(list.list_name, list.description, 
                 list.member_count, list.subscriber_count, 
                 points))
                 return newRow;
         })
-        console.log(newRow);
+        // console.log(newRow);
         this.setState({followListRan: true})
         this.setState({rows: newRow});
     };
@@ -83,7 +81,6 @@ class LeaderboardFollowTable extends Component {
           </TableRow>
         </TableHead>
         <TableBody>
-            {console.log("this.state.rows", this.state.rows)}
           {this.state.rows.map(row => (
             <TableRow key={row.id}>
               <TableCell component="th" scope="row">{row.list_name}</TableCell>
@@ -107,7 +104,7 @@ LeaderboardFollowTable.propTypes = {
 
 
 const mapStateToProps = state => ({
-    followLists: state.listsReducer.lists
+    followLists: state.listsReducer.listPointsFollow
   });
   
 
@@ -115,5 +112,5 @@ const styledComponent = withStyles(styles)(LeaderboardFollowTable);
 
 export default connect(
   mapStateToProps,
-  { getListPoints }
+  { getFollowListPoints }
 )(styledComponent);
