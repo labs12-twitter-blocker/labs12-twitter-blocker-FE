@@ -77,7 +77,6 @@ class ListCreate extends React.Component {
         <Button medium color="primary" variant="contained">
           Generate New List
         </Button>
-
         <GeneratedList />
       </React.Fragment>
     );

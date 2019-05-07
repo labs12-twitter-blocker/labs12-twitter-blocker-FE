@@ -11,30 +11,30 @@ const { Avatar, Typography } = atoms;
 
 const twitterList = [
   {
-    image: 'https://randomuser.me/api/portraits/women/1.jpg',
-    primary: 'Never stop thinking',
-    secondary: '@never_stop',
+    profile_img: 'https://randomuser.me/api/portraits/women/1.jpg',
+    name: 'Never stop thinking',
+    screen_name: '@never_stop',
   },
   {
-    image: 'https://randomuser.me/api/portraits/men/1.jpg',
-    primary: 'React Geek',
-    secondary: '@react',
+    profile_img: 'https://randomuser.me/api/portraits/men/1.jpg',
+    name: 'React Geek',
+    screen_name: '@react',
   },
   {
-    image: 'https://randomuser.me/api/portraits/women/2.jpg',
-    primary: 'Thailand',
-    secondary: '@wonderful_th',
+    profile_img: 'https://randomuser.me/api/portraits/women/2.jpg',
+    name: 'Thailand',
+    screen_name: '@wonderful_th',
   },
 ];
 
 function GeneratedList() {
   return (
     <List subheader={<ListSubheader>Your Generated List</ListSubheader>}>
-      {twitterList.map(({ image, primary, secondary }) => (
-        <React.Fragment key={primary}>
+      {twitterList.map(({ profile_img, name, screen_name }) => (
+        <React.Fragment key={name}>
           <ListItem button>
-            <Avatar link src={image} />
-            <ListItemText primary={primary} secondary={secondary} />
+            <Avatar link src={profile_img} />
+            <ListItemText primary={name} secondary={screen_name} />
             <Button variant="outlined" color="primary">
               Follow
             </Button>
