@@ -8,7 +8,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { getLists } from '../../actions/index'
+import { getUserPublicList } from '../../actions/index'
 
 const styles = theme => ({
   root: {
@@ -28,18 +28,7 @@ function createData(list_name, description, member_count, subscriber_count, list
   return { id, list_name, description, member_count, subscriber_count, list_upvotes, list_downvotes };
 }
 
-
-
-// const rows = [
-//   createData('Frozen yoghurt', 159, 6.0, 24),
-//   createData('Ice cream sandwich', 237, 9.0, 37),
-//   createData('Eclair', 262, 16.0, 24),
-//   createData('Cupcake', 305, 3.7, 67),
-//   createData('Gingerbread', 356, 16.0, 49),
-// ];
-
-
-class LeaderboardBlockTable extends Component {
+class ProfileBlockList extends Component {
   state = {
     rows: [],
     listRan: false,
@@ -47,7 +36,9 @@ class LeaderboardBlockTable extends Component {
 
 
   componentDidMount() {
-    this.props.getLists()
+    // const { match: { params } } = this.props;
+    let id = 221838349;
+    this.props.getUserPublicList(id)
 
   };
 
@@ -88,7 +79,7 @@ class LeaderboardBlockTable extends Component {
                 <TableCell>List Name</TableCell>
                 <TableCell align="center">List Description</TableCell>
                 <TableCell align="center">List Members</TableCell>
-                <TableCell align="center">List Subscribers</TableCell>
+                <TableCell align="center">List Subsribers</TableCell>
                 <TableCell align="center">List Up Votes</TableCell>
                 <TableCell align="center">List Down Votes</TableCell>
                 {/* <TableCell align="center">Protein (g)</TableCell> */}
@@ -116,7 +107,7 @@ class LeaderboardBlockTable extends Component {
   }
 }
 
-LeaderboardBlockTable.propTypes = {
+ProfileBlockList.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
@@ -127,9 +118,9 @@ const mapStateToProps = state => ({
 });
 
 
-const styledComponent = withStyles(styles)(LeaderboardBlockTable);
+const styledComponent = withStyles(styles)(ProfileBlockList);
 
 export default connect(
   mapStateToProps,
-  { getLists }
+  { getUserPublicList }
 )(styledComponent);
