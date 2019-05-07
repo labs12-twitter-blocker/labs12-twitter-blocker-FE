@@ -18,7 +18,7 @@ import {library} from '@fortawesome/fontawesome-svg-core'
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { List, ListItem, Tabs, Tab } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { getList, getUser, getListTimeline } from '../actions';
+import { getListMembers, getUser, getListTimeline } from '../actions';
 import { Link } from 'react-router-dom';
 
 library.add(faTimes)
@@ -51,8 +51,6 @@ class ListDetails extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      list: [],
-      timeline: [],
       value: 0
     }
   }
@@ -61,11 +59,15 @@ class ListDetails extends React.Component {
     this.setState({ value });
   };
 
+  removeFromList = (id) => {
+    
+  }
+
   componentDidMount(){
-    this.props.getList(this.props.match.params.id);
-    this.setState({note: this.props.list});
-    this.props.getListTimeline(this.props.match.params.id);
-    this.setState({timeline: this.props.timeline})
+    this.props.getListMembers("1098020800320270336");
+    // this.props.getList(this.props.match.params.id);
+    this.props.getListTimeline("1098020800320270336");
+    // this.props.getListTimeline(this.props.match.params.id);
   
 }
   
@@ -84,14 +86,14 @@ render() {
                 {value === 0 &&
               <TabContainer>
               <List>
-                {this.props.list.map(i => {
+                {this.props.listMembers.map(i => {
                   return (
                   <ListItem>
                     <Avatar src={i.profile_img}/>
-                    <Link to={`/test/${this.props.twitter_id}`}><Typography>{i.name}</Typography></Link>
+                    <Link to={`/test/${this.props.listMembers.twitter_user_id}`}><Typography>{i.name}</Typography></Link>
                     <Typography>{i.screen_name}</Typography>
                     <Typography>{i.description}</Typography>
-                    <FontAwesomeIcon icon="times" />
+                    {/* {this.props.user.twitter_id --- this.props.list.twitter_id? <FontAwesomeIcon icon="times" /> : null} */}
                   </ListItem>)
                 })}
               </List>
@@ -123,13 +125,14 @@ render() {
 
 const mapStateToProps = state => {
   return {
-    list: state.listsReducer.list,
-    timeline: state.listsReducer.listTimeline
+    listMembers: state.listsReducer.listMembers,
+    timeline: state.listsReducer.listTimeline,
+    user: state.usersReducer.currentUser
   }
 }
 
 const mapActionsToProps = {
-  getList: getList,
+  getListMembers: getListMembers,
   getListTimeline, getListTimeline,
   getUser: getUser,
   // deleteListItem: deleteListItem
