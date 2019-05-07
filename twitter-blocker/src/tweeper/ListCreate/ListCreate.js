@@ -1,5 +1,6 @@
 import React from 'react';
-import CreateListForm from './CreateListForm'
+import CreateListForm from './CreateListForm';
+import GeneratedList from './GeneratedList';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
@@ -76,6 +77,8 @@ class ListCreate extends React.Component {
         <Button medium color="primary" variant="contained">
           Generate New List
         </Button>
+
+        <GeneratedList />
       </React.Fragment>
     );
   }
