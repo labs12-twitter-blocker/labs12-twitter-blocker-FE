@@ -1,5 +1,6 @@
 import React from 'react';
-import ListCreate from '../../tweeper/ListCreate/ListCreate';
+import CreateListForm from './CreateListForm';
+import GeneratedList from './GeneratedList';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
@@ -9,13 +10,13 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import FormControl from '@material-ui/core/FormControl';
+
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
-import TextField from '@material-ui/core/TextField';
+
 
 const styles = theme => ({
   form: {
@@ -43,7 +44,7 @@ const styles = theme => ({
   },
 });
 
-class CreateList extends React.Component {
+class ListCreate extends React.Component {
   state = {
     open: false,
     fullWidth: true,
@@ -66,41 +67,24 @@ class CreateList extends React.Component {
     this.setState({ fullWidth: event.target.checked });
   };
 
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value,
-    });
-  };
-
   render() {
     const { classes } = this.props;
 
     return (
       <React.Fragment>
-        <Button medium color="primary" variant="contained" onClick={this.handleClickOpen}>
-          Create New List
+        <h1>Create Your List</h1>
+        <CreateListForm />
+        <Button medium color="primary" variant="contained">
+          Generate New List
         </Button>
-        <Dialog
-          fullWidth={this.state.fullWidth}
-          maxWidth={this.state.maxWidth}
-          open={this.state.open}
-          onClose={this.handleClose}
-          aria-labelledby="max-width-dialog-title"
-        >
-          <ListCreate />
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary">    {/* need to make on click for creating new list */}
-              Create List
-            </Button>
-          </DialogActions>
-        </Dialog>
+        <GeneratedList />
       </React.Fragment>
     );
   }
 }
 
-CreateList.propTypes = {
+ListCreate.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(CreateList);
+export default withStyles(styles)(ListCreate);
