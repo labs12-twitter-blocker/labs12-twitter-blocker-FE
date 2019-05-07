@@ -9,9 +9,9 @@ import Typography from '@material-ui/core/Typography';
 // import ListView from './ListViews';
 // import PublicListView from './PublicListView';
 // import PrivateListView from './PrivateListView';
-// import BlockListView from './BlockListView';
-import ProfilePublicList from './ProfilePublicList'
-import ProfileBlockList from './ProfileBlockList'
+// import BlockListView from '../../components/tweeper/BlockListView';
+import ProfilePublicTable from './ProfilePublicTable'
+import ProfileBlockTable from './ProfileBlockTable'
 
 function TabContainer({ children, dir }) {
   return (
@@ -44,7 +44,7 @@ class FullWidthTabs extends React.Component {
   };
 
   handleChange = (event, value) => {
-    // this.setState({ value });
+    this.setState({ value });
   };
 
   handleChangeIndex = index => {
@@ -73,8 +73,8 @@ class FullWidthTabs extends React.Component {
           index={this.state.value}
           onChangeIndex={this.handleChangeIndex}
         >
-          <TabContainer dir={theme.direction}><ProfilePublicList /></TabContainer>
-          <TabContainer dir={theme.direction}><ProfileBlockList /></TabContainer>
+          <TabContainer dir={theme.direction}><ProfilePublicTable /></TabContainer>
+          <TabContainer dir={theme.direction}><ProfileBlockTable /></TabContainer>
         </SwipeableViews>
       </div>
     );
