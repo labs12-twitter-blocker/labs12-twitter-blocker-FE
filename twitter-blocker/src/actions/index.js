@@ -440,7 +440,7 @@ export const getListMembers = list_id => dispatch => {
     })
     .catch(err => {
       console.log(err);
-      dispatch({ type: GET_LIST_MEMBESR_FAILURE, payload: err.message });
+      dispatch({ type: GET_LIST_MEMBERS_FAILURE, payload: err.message });
     });
 };
 
