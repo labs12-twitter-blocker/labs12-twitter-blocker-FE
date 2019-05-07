@@ -5,6 +5,7 @@ import HelloWorld from '../src/tweeper/HelloWorld';
 import OAuth from '../src/tweeper/OAuth';
 import ListCreate from '../src/tweeper/ListCreate/ListCreate';
 import CreateList from '../src/tweeper/CreateList';
+import ListDetails from '../src/tweeper/ListDetails';
 import Leaderboard from './tweeper/Leaderboard/Leaderboard';
 
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
@@ -18,6 +19,7 @@ function App() {
         <Route path="/hello" component={HelloWorld} />
         <Route path="/create" component={ListCreate} />
         <Route path="/createtest" component={CreateList} />
+        {/* <Route path="/details" component={ListDetails} /> */}
         <Route path="/leaderboard" component={Leaderboard} />
       </div>
     </Router>

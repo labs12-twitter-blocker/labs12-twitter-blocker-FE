@@ -14,7 +14,13 @@ import atoms from '../components/atoms';
 import molecules from '../components/molecules';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import {library} from '@fortawesome/fontawesome-svg-core'
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { List, ListItem } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { getList, getUser, getListTimeline } from '../actions';
+
+library.add(faTimes)
 
 const { Avatar, Icon, Typography, Button } = atoms;
 // const { Tabs, Tab } = molecules;
@@ -34,14 +40,38 @@ const Cover = styled('div')({
   backgroundColor: '#ccd6dd',
 });
 
-function CreateList() {
+class ListDetails extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      list: []
+    }
+  }
+
+  componentDidMount(){
+    this.props.getList(this.props.match.params.id);
+    this.setState({note: this.props.list});
+}
+  
+render() {
   return (
     <React.Fragment>
       <CssBaseline />
       <HeaderTest />
       <Content>
             <Feed>
-              
+              <List>
+                {this.props.list.map(i => {
+                  return (
+                  <ListItem>
+                    <Avatar />
+                    <Typography>{i.name}</Typography>
+                    <Typography>{i.screen_name}</Typography>
+                    <Typography>{i.description}</Typography>
+                    <FontAwesomeIcon icon="times" />
+                  </ListItem>)
+                })}
+              </List>
               <Divider />
             </Feed>
         <TweetFloat />
@@ -49,5 +79,19 @@ function CreateList() {
     </React.Fragment>
   );
 }
+}
 
-export default withTheme(theme)(CreateList);
+const mapStateToProps = state => {
+  return {
+    list: state.listsReducer.list
+  }
+}
+
+const mapActionsToProps = {
+  getList: getList,
+  getListTimeline, getListTimeline,
+  getUser: getUser,
+  // deleteListItem: deleteListItem
+}
+
+export default connect( mapStateToProps, mapActionsToProps)(withTheme(theme)(ListDetails));

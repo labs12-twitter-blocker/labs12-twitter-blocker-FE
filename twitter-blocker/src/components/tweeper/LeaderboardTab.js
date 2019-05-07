@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 // import PublicListView from './PublicListView';
 // import PrivateListView from './PrivateListView';
 // import BlockListView from './BlockListView';
+import LeaderboardAllTable from './LeaderboardAllTable'
 import LeaderboardFollowTable from './LeaderboardFollowTable'
 import LeaderboardBlockTable from './LeaderboardBlockTable'
 
@@ -64,6 +65,7 @@ class FullWidthTabs extends React.Component {
             textColor="primary"
             variant="fullWidth"
           >
+            <Tab label="Top Lists" />
             <Tab label="Top Follow Lists" />
             <Tab label="Top Block Lists" />
           </Tabs>
@@ -73,6 +75,7 @@ class FullWidthTabs extends React.Component {
           index={this.state.value}
           onChangeIndex={this.handleChangeIndex}
         >
+          <TabContainer dir={theme.direction}><LeaderboardAllTable  /></TabContainer>
           <TabContainer dir={theme.direction}><LeaderboardFollowTable  /></TabContainer>
           <TabContainer dir={theme.direction}><LeaderboardBlockTable /></TabContainer>
         </SwipeableViews>
