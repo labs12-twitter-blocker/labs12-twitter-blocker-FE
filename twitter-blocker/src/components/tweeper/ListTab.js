@@ -7,9 +7,9 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import ListView from './ListViews';
-import PublicListView from './PublicListView';
-import PrivateListView from './PrivateListView';
-import BlockListView from './BlockListView';
+import PublicListsTable from './PublicListsTable';
+import PrivateListsTable from './PrivateListsTable';
+import BlockListsTable from './BlockListsTable';
 import AllListsTable from './AllListsTable'
 
 function TabContainer({ children, dir }) {
@@ -72,9 +72,9 @@ class FullWidthTabs extends React.Component {
           onChangeIndex={this.handleChangeIndex}
         >
           <TabContainer dir={theme.direction}><AllListsTable  /></TabContainer>
-          <TabContainer dir={theme.direction}><PublicListView /></TabContainer>
-          <TabContainer dir={theme.direction}><PrivateListView /></TabContainer>
-          <TabContainer dir={theme.direction}><BlockListView /></TabContainer>
+          <TabContainer dir={theme.direction}><PublicListsTable /></TabContainer>
+          <TabContainer dir={theme.direction}><PrivateListsTable /></TabContainer>
+          <TabContainer dir={theme.direction}><BlockListsTable /></TabContainer>
         </SwipeableViews>
       </div>
     );

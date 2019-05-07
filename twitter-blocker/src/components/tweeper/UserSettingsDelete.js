@@ -28,3 +28,15 @@ DeleteButton.propTypes = {
 };
 
 export default withStyles(styles)(DeleteButton);
+
+// const mapStateToProps = state => ({
+//     publicLists: state.listsReducer.publicLists
+//     });
+    
+  
+//   const styledComponent = withStyles(styles)(PublicListsTable);
+  
+//   export default connect(
+//     mapStateToProps,
+//     { getPublicLists }
+//   )(styledComponent);
