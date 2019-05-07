@@ -8,7 +8,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { getAllListPoints } from '../../actions/index'
+import { getAllListPoints, addUserVote } from '../../actions/index'
 
 const styles = theme => ({
   root: {
@@ -22,45 +22,64 @@ const styles = theme => ({
 });
 
 let id = 0;
-function createData(list_name, description, member_count, subscriber_count, list_points) {
+function createData(list_name, description, member_count, subscriber_count, list_points, twitter_list_id) {
   id += 1;
   // console.log("createData", id)
-  return { id, list_name, description, member_count, subscriber_count, list_points };
+  return { id, list_name, description, member_count, subscriber_count, list_points, twitter_list_id };
 }
 
 class LeaderboardAllTable extends Component {
     state={
         rows: [],
         allListRan: false,
+        twitter_user_id: "1123316691100786688" //somehow I need to set this up?!?!?
     }
 
     
     componentDidMount() {
         this.props.getAllListPoints()
         
-    };
-
-    componentDidUpdate() {
+      };
+      
+      componentDidUpdate() {
         if (this.props.allLists.length > 0 && this.state.allListRan === false) {
-            this.getListRowBuilder(this.props.allLists);
+          this.getListRowBuilder(this.props.allLists);
         }
-    }
-
-    getListRowBuilder = (list) => {
+      }
+      
+      getListRowBuilder = (list) => {
         let newRow = [];
         list.map(list => {
-            let points = (list.list_upvotes - list.list_downvotes)
-            newRow.push(createData(list.list_name, list.description, 
-                list.member_count, list.subscriber_count, 
-                points))
-                return newRow;
-        })
-        // console.log(newRow);
-        this.setState({allListRan: true})
-        this.setState({rows: newRow});
-    };
+          newRow.push(createData(list.list_name, list.description, 
+            list.member_count, list.subscriber_count, 
+            list.list_points, list.twitter_list_id))
+            return newRow;
+          })
+          // console.log(newRow);
+          this.setState({allListRan: true})
+          this.setState({rows: newRow});
+      }; 
 
+      up = e => {
+        let upvote = {
+          "twitter_list_id": e.target.id, 
+          "twitter_user_id": this.state.twitter_user_id,
+          "vote": 1
+        }
+        this.props.addUserVote(upvote)
+      }
+      down = e => {
+        let downvote = {
+          "twitter_list_id": e.target.id, 
+          "twitter_user_id": this.state.twitter_user_id,
+          "vote": -1
+        }
+        this.props.addUserVote(downvote)
+      }
 
+      upvoteHERE = (twitter_list_id, twitter_user_id) => {
+
+      }
 
     render() {
         
@@ -83,8 +102,12 @@ class LeaderboardAllTable extends Component {
         </TableHead>
         <TableBody>
           {this.state.rows.map(row => (
+
             <TableRow key={row.id}>
-              <TableCell align="center">↑ ↓</TableCell>
+              <TableCell align="center">
+                <button id={row.twitter_list_id} onClick={this.up } >↑</button>
+                <button id={row.twitter_list_id} onClick={this.down}>↓</button> 
+              </TableCell>
               <TableCell align="center">{row.list_points}</TableCell>
               <TableCell component="th" scope="row">{row.list_name}<br></br>{row.description}</TableCell>
               {/* <TableCell>{row.description}</TableCell> */}
@@ -114,5 +137,5 @@ const styledComponent = withStyles(styles)(LeaderboardAllTable);
 
 export default connect(
   mapStateToProps,
-  { getAllListPoints }
+  { getAllListPoints, addUserVote }
 )(styledComponent);

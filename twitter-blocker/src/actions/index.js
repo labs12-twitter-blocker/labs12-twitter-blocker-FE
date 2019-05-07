@@ -603,6 +603,68 @@ export const addPost = post => dispatch => {
     });
 };
 
+//<------Votes------->
+
+// Get List votes by twitter_list_id
+export const GET_LIST_VOTES = "GET_LIST_VOTES";
+export const GET_LIST_VOTES_SUCCESS = "GET_LIST_VOTES_SUCCESS";
+export const GET_LIST_VOTES_FAILURE = "GET_LIST_VOTES_FAILURE";
+
+export const getListVotes = twitter_list_id => dispatch => {
+  dispatch({ type: GET_LIST_VOTES });
+  axios
+    .get(`https://twitter-block.herokuapp.com/votes/list/${twitter_list_id}`)
+    .then(res => {
+      console.log(res);
+      dispatch({ type: GET_LIST_VOTES_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: GET_LIST_VOTES_FAILURE, payload: err.message });
+    });
+};
+
+// Get A Users votes by twitter_user_id
+export const GET_USER_VOTES = "GET_USER_VOTES";
+export const GET_USER_VOTES_SUCCESS = "GET_USER_VOTES_SUCCESS";
+export const GET_USER_VOTES_FAILURE = "GET_USER_VOTES_FAILURE";
+
+export const getUserVotes = twitter_user_id => dispatch => {
+  dispatch({ type: GET_USER_VOTES });
+  axios
+    .get(`https://twitter-block.herokuapp.com/votes/user/${twitter_user_id}`)
+    .then(res => {
+      console.log(res);
+      dispatch({ type: GET_USER_VOTES_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: GET_USER_VOTES_FAILURE, payload: err.message });
+    });
+};
+
+// POST A Users vote
+export const ADD_USER_VOTE = "ADD_USER_VOTE";
+export const ADD_USER_VOTE_SUCCESS = "ADD_USER_VOTE_SUCCESS";
+export const ADD_USER_VOTE_FAILURE = "ADD_USER_VOTE_FAILURE";
+
+export const addUserVote = vote => dispatch => {
+  dispatch({ type: ADD_USER_VOTE });
+  axios
+    .post(`https://twitter-block.herokuapp.com/votes/`, vote)
+    .then(res => {
+      console.log(res);
+      dispatch({ type: ADD_USER_VOTE_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: ADD_USER_VOTE_FAILURE, payload: err.message });
+    });
+};
+
+
+
+
 export const ERROR_HANDLER = "ERROR_HANDLER";
 
 export const handleError = () => {
