@@ -8,6 +8,7 @@ import CreateList from '../src/tweeper/CreateList';
 import ListDetails from '../src/tweeper/ListDetails';
 import Leaderboard from './tweeper/Leaderboard/Leaderboard';
 import AccordingWhom from './components/tweeper/AccordingWhom';
+import Settings from './tweeper/Settings/Settings.js'
 
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
@@ -21,6 +22,7 @@ function App() {
         <Route path="/create" component={ListCreate} />
         {/* <Route path="/details" component={ListDetails} /> */}
         <Route path="/leaderboard" component={Leaderboard} />
+        <Route path="/settings" component={Settings} />
       </div>
     </Router>
   );

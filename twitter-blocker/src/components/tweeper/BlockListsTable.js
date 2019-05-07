@@ -8,7 +8,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { getLists } from '../../actions/index'
+import { getBlockLists } from '../../actions/index'
 
 const styles = theme => ({
   root: {
@@ -29,7 +29,7 @@ function createData(list_name, description, member_count, subscriber_count, list
 }
 
 
-class AllListsTable extends Component {
+class BlockListsTable extends Component {
     state={
         rows: [],
         listRan: false,
@@ -37,13 +37,13 @@ class AllListsTable extends Component {
 
     
     componentDidMount() {
-        this.props.getLists()
+        this.props.getBlockLists()
         
     };
 
     componentDidUpdate() {
-        if (this.props.lists.length > 0 && this.state.listRan === false) {
-            this.getListRowBuilder(this.props.lists);
+        if (this.props.blockLists.length > 0 && this.state.listRan === false) {
+            this.getListRowBuilder(this.props.blockLists);
         }
     }
 
@@ -65,7 +65,7 @@ class AllListsTable extends Component {
 
     render() {
         
-        if (this.props.lists === null || this.props.lists.length === 0) {
+        if (this.props.blockLists === null || this.props.blockLists.length === 0) {
             return (<div>Loading</div>)
         } else {
         const { classes } = this.props;
@@ -105,20 +105,20 @@ class AllListsTable extends Component {
 }
 }
 
-AllListsTable.propTypes = {
+BlockListsTable.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-// export default withStyles(styles)(AllListsTable);
+// export default withStyles(styles)(BlockListsTable);
 
 const mapStateToProps = state => ({
-    lists: state.listsReducer.lists
+  blockLists: state.listsReducer.blockLists
   });
   
 
-const styledComponent = withStyles(styles)(AllListsTable);
+const styledComponent = withStyles(styles)(BlockListsTable);
 
 export default connect(
   mapStateToProps,
-  { getLists }
+  { getBlockLists }
 )(styledComponent);
