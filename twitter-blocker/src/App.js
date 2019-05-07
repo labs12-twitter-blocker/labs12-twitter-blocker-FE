@@ -19,10 +19,8 @@ function App() {
         <Route path="/test" component={Profile} />
         <Route path="/hello" component={HelloWorld} />
         <Route path="/create" component={ListCreate} />
-        <Route path="/createtest" component={CreateList} />
         {/* <Route path="/details" component={ListDetails} /> */}
         <Route path="/leaderboard" component={Leaderboard} />
-        <Route path="/whom" component={AccordingWhom} />
       </div>
     </Router>
   );
