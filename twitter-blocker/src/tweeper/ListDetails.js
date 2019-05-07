@@ -16,7 +16,12 @@ import molecules from '../components/molecules';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {library} from '@fortawesome/fontawesome-svg-core'
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { List, ListItem, Tabs, Tab } from '@material-ui/core';
+import { List, 
+  ListItem, 
+  Tabs, Tab,
+  Card, 
+  CardActions,
+  CardContent } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { getListMembers, getUser, getListTimeline } from '../actions';
 import { Link } from 'react-router-dom';
@@ -59,7 +64,8 @@ class ListDetails extends React.Component {
     this.setState({ value });
   };
 
-  removeFromList = (id) => {
+  removeFromList = (member) => {
+    
     
   }
 
@@ -68,7 +74,6 @@ class ListDetails extends React.Component {
     // this.props.getList(this.props.match.params.id);
     this.props.getListTimeline("1098020800320270336");
     // this.props.getListTimeline(this.props.match.params.id);
-  
 }
   
 render() {
@@ -89,11 +94,15 @@ render() {
                 {this.props.listMembers.map(i => {
                   return (
                   <ListItem>
-                    <Avatar src={i.profile_img}/>
-                    <Link to={`/test/${this.props.listMembers.twitter_user_id}`}><Typography>{i.name}</Typography></Link>
-                    <Typography>{i.screen_name}</Typography>
-                    <Typography>{i.description}</Typography>
-                    {/* {this.props.user.twitter_id --- this.props.list.twitter_id? <FontAwesomeIcon icon="times" /> : null} */}
+                    <Card>
+                      <CardContent>
+                        <Avatar src={i.profile_img}/>
+                        <Link to={`/test/${this.props.listMembers.twitter_user_id}`}><Typography>{i.name}</Typography></Link>
+                        <Typography>{i.screen_name}</Typography>
+                        <Typography>{i.description}</Typography>
+                        {/* {this.props.user.twitter_id --- this.props.list.twitter_id? <FontAwesomeIcon icon="times" /> : null} */}
+                        </CardContent>
+                    </Card>
                   </ListItem>)
                 })}
               </List>
@@ -104,11 +113,14 @@ render() {
                 <List>
                   {this.props.timeline.map(i => {
                     return (
-                      <div>
-                        <Typography>{i.user.name}</Typography>
-                      <Typography>{i.entities.text}</Typography>
-                      <Typography>{i.entities.hashtags.text}</Typography>
-                      </div>
+                      <Card>
+                        <CardContent>
+                          <Avatar src={i.user.profile_image_url} />
+                          <Typography>{i.user.name}</Typography>
+                          <Typography>{i.text}</Typography>
+                          <Typography>{i.entities.hashtags.text}</Typography>
+                        </CardContent>
+                      </Card>
                     )
                   })}
                   </List>
@@ -139,3 +151,4 @@ const mapActionsToProps = {
 }
 
 export default connect( mapStateToProps, mapActionsToProps)(withTheme(theme)(ListDetails));
+
