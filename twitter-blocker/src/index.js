@@ -7,7 +7,7 @@ import logger from "redux-logger";
 import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 import rootReducer from "./reducers/index";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, withRouter } from "react-router-dom";
 // import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";  <---This is commented out for now until we decide on theme.
 
 // const theme = createMuiTheme({
@@ -27,6 +27,8 @@ import { BrowserRouter as Router } from "react-router-dom";
 //   }
 // });
 
+const AppWithRouter = withRouter(App);
+
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   rootReducer,
@@ -37,7 +39,7 @@ ReactDOM.render(
   <Provider store={store}>
     <Router>
       {/* <MuiThemeProvider theme={theme}> */}
-        <App />
+      <AppWithRouter />
       {/* </MuiThemeProvider> */}
     </Router>
   </Provider>,
