@@ -10,7 +10,7 @@ export const GET_HELLO_FAILURE = "GET_HELLO_FAILURE";
 
 export const getHello = () => dispatch => {
   dispatch({ type: GET_HELLO });
-axios
+  axios
     .get("https://twitter-block.herokuapp.com/")
     .then(res => {
       console.log(res)
@@ -20,7 +20,7 @@ axios
       console.log(err);
       dispatch({ type: GET_HELLO_FAILURE, payload: err.message });
     });
-  };
+};
 
 //<------NEED SIGNIN ACTIONS------->
 
@@ -58,18 +58,18 @@ export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
 export const GET_USER_FAILURE = "GET_USER_FAILURE";
 
 export const getUser = user_id => dispatch => {
-    dispatch({ type: GET_USER });
-    axios
-      .get(`https://twitter-block.herokuapp.com/users/${user_id}`)
-      .then(res => {
-        console.log(res);
-        dispatch({ type: GET_USER_SUCCESS, payload: res.data });
-      })
-      .catch(err => {
-        console.log(err);
-        dispatch({ type: GET_USER_FAILURE, payload: err.message });
-      });
-  };
+  dispatch({ type: GET_USER });
+  axios
+    .get(`https://twitter-block.herokuapp.com/users/${user_id}`)
+    .then(res => {
+      console.log(res);
+      dispatch({ type: GET_USER_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: GET_USER_FAILURE, payload: err.message });
+    });
+};
 
 
 // Requests the Users Ordered By Number of Points
@@ -79,18 +79,18 @@ export const GET_USERS_POINTS_SUCCESS = "GET_USERS_POINTS_SUCCESS";
 export const GET_USERS_POINTS_FAILURE = "GET_USERS_POINTS_FAILURE";
 
 export const getUsersPoints = () => dispatch => {
-    dispatch({ type: GET_USERS_POINTS });
-    axios
-      .get("https://twitter-block.herokuapp.com/users/points")
-      .then(res => {
-        console.log(res);
-        dispatch({ type: GET_USERS_POINTS_SUCCESS, payload: res.data });
-      })
-      .catch(err => {
-        console.log(err);
-        dispatch({ type: GET_USERS_POINTS_FAILURE, payload: err.message });
-      });
-  };
+  dispatch({ type: GET_USERS_POINTS });
+  axios
+    .get("https://twitter-block.herokuapp.com/users/points")
+    .then(res => {
+      console.log(res);
+      dispatch({ type: GET_USERS_POINTS_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: GET_USERS_POINTS_FAILURE, payload: err.message });
+    });
+};
 
 
 // Requests the entire Premium users array
@@ -100,18 +100,18 @@ export const GET_PREMIUM_USERS_SUCCESS = "GET_PREMIUM_USERS_SUCCESS";
 export const GET_PREMIUM_USERS_FAILURE = "GET_PREMIUM_USERS_FAILURE";
 
 export const getPremiumUsers = () => dispatch => {
-    dispatch({ type: GET_PREMIUM_USERS });
-    axios
-      .get("https://twitter-block.herokuapp.com/users/premium")
-      .then(res => {
-        console.log(res);
-        dispatch({ type: GET_PREMIUM_USERS_SUCCESS, payload: res.data });
-      })
-      .catch(err => {
-        console.log(err);
-        dispatch({ type: GET_PREMIUM_USERS_FAILURE, payload: err.message });
-      });
-  };
+  dispatch({ type: GET_PREMIUM_USERS });
+  axios
+    .get("https://twitter-block.herokuapp.com/users/premium")
+    .then(res => {
+      console.log(res);
+      dispatch({ type: GET_PREMIUM_USERS_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: GET_PREMIUM_USERS_FAILURE, payload: err.message });
+    });
+};
 
 
 // Requests a specific user by id --> Similar to Get User above /users/:user_id
@@ -160,10 +160,10 @@ export const EDIT_USER_SUCCESS = "EDIT_USER_SUCCESS";
 export const EDIT_USER_FAILURE = "EDIT_USER_FAILURE";
 
 export const editUser = profile => dispatch => {
-  dispatch({ type: EDIT_USER});
+  dispatch({ type: EDIT_USER });
   axios
     .put(
-      `https://twitter-block.herokuapp.com/users/${profile.user_id}`, 
+      `https://twitter-block.herokuapp.com/users/${profile.user_id}`,
       profile
     )
     .then(res => {
@@ -444,65 +444,60 @@ export const getListMembers = list_id => dispatch => {
     });
 };
 
-// Updates List Members
-export const UPDATE_LIST_MEMBERS = "UPDATE_LIST_MEMBERS";
-export const UPDATE_LIST_MEMBERS_SUCCESS = "UPDATE_LIST_MEMBERS_SUCCESS";
-export const UPDATE_LIST_MEMBERS_FAILURE = "UPDATE_LIST_MEMBERS_FAILURE";
-<<<<<<< HEAD
-=======
-
-export const updateListMembers = listMembers => dispatch => {
-  dispatch({ type: UPDATE_LIST_MEMBERS});
-  axios
-    .put(
-      `https://twitter-block.herokuapp.com/lists/${listMembers.list_members_id}`, 
-      listMembers
-    )
-    .then(res => {
-      dispatch({ type: UPDATE_LIST_MEMBERS_SUCCESS, payload: res.data });
-    })
-    .catch(err => {
-      dispatch({ type: UPDATE_LIST_MEMBERS_FAILURE, payload: err.message });
-    });
-};
-
 // Requests All Top Lists by Points
 export const GET_ALL_LIST_POINTS = "GET_ALL_LIST_POINTS";
 export const GET_ALL_LIST_POINTS_SUCCESS = "GET_ALL_LIST_POINTS_SUCCESS";
 export const GET_ALL_LIST_POINTS_FAILURE = "GET_ALL_LIST_POINTS_FAILURE";
->>>>>>> master
 
-export const updateListMembers = listMembers => dispatch => {
-  dispatch({ type: UPDATE_LIST_MEMBERS});
+export const getAllListPoints = () => dispatch => {
+  dispatch({ type: GET_ALL_LIST_POINTS });
   axios
-    .put(
-      `https://twitter-block.herokuapp.com/lists/${listMembers.list_members_id}`, 
-      listMembers
-    )
-    .then(res => {
-      dispatch({ type: UPDATE_LIST_MEMBERS_SUCCESS, payload: res.data });
-    })
-    .catch(err => {
-      dispatch({ type: UPDATE_LIST_MEMBERS_FAILURE, payload: err.message });
-    });
-};
-
-// Requests List Points
-export const GET_LIST_POINTS = "GET_LIST_POINTS";
-export const GET_LIST_POINTS_SUCCESS = "GET_LIST_POINTS_SUCCESS";
-export const GET_LIST_POINTS_FAILURE = "GET_LIST_POINTS_FAILURE";
-
-export const getListPoints = () => dispatch => {
-  dispatch({ type: GET_LIST_POINTS });
-  axios
-    .get("https://twitter-block.herokuapp.com/lists/points")
+    .get("https://twitter-block.herokuapp.com/lists/points/top")
     .then(res => {
       console.log(res);
-      dispatch({ type: GET_LIST_POINTS_SUCCESS, payload: res.data });
+      dispatch({ type: GET_ALL_LIST_POINTS_SUCCESS, payload: res.data });
     })
     .catch(err => {
       console.log(err);
-      dispatch({ type: GET_LIST_POINTS_FAILURE, payload: err.message });
+      dispatch({ type: GET_ALL_LIST_POINTS_FAILURE, payload: err.message });
+    });
+};
+
+// Requests Top Follow Lists by Points
+export const GET_FOLLOW_LIST_POINTS = "GET_FOLLOW_LIST_POINTS";
+export const GET_FOLLOW_LIST_POINTS_SUCCESS = "GET_FOLLOW_LIST_POINTS_SUCCESS";
+export const GET_FOLLOW_LIST_POINTS_FAILURE = "GET_FOLLOW_LIST_POINTS_FAILURE";
+
+export const getFollowListPoints = () => dispatch => {
+  dispatch({ type: GET_FOLLOW_LIST_POINTS });
+  axios
+    .get("https://twitter-block.herokuapp.com/lists/points/follow")
+    .then(res => {
+      console.log(res);
+      dispatch({ type: GET_FOLLOW_LIST_POINTS_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: GET_FOLLOW_LIST_POINTS_FAILURE, payload: err.message });
+    });
+};
+
+// Requests Top Block Lists by Points
+export const GET_BLOCK_LIST_POINTS = "GET_BLOCK_LIST_POINTS";
+export const GET_BLOCK_LIST_POINTS_SUCCESS = "GET_BLOCK_LIST_POINTS_SUCCESS";
+export const GET_BLOCK_LIST_POINTS_FAILURE = "GET_BLOCK_LIST_POINTS_FAILURE";
+
+export const getBlockListPoints = () => dispatch => {
+  dispatch({ type: GET_BLOCK_LIST_POINTS });
+  axios
+    .get("https://twitter-block.herokuapp.com/lists/points/block")
+    .then(res => {
+      console.log(res);
+      dispatch({ type: GET_BLOCK_LIST_POINTS_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: GET_BLOCK_LIST_POINTS_FAILURE, payload: err.message });
     });
 };
 
@@ -552,10 +547,10 @@ export const EDIT_LIST_SUCCESS = "EDIT_LIST_SUCCESS";
 export const EDIT_LIST_FAILURE = "EDIT_LIST_FAILURE";
 
 export const editList = list => dispatch => {
-  dispatch({ type: EDIT_LIST});
+  dispatch({ type: EDIT_LIST });
   axios
     .put(
-      `https://twitter-block.herokuapp.com/lists/${list.list_id}`, 
+      `https://twitter-block.herokuapp.com/lists/${list.list_id}`,
       list
     )
     .then(res => {
@@ -563,6 +558,26 @@ export const editList = list => dispatch => {
     })
     .catch(err => {
       dispatch({ type: EDIT_LIST_FAILURE, payload: err.message });
+    });
+};
+
+// Updates List Members
+export const UPDATE_LIST_MEMBERS = "UPDATE_LIST_MEMBERS";
+export const UPDATE_LIST_MEMBERS_SUCCESS = "UPDATE_LIST_MEMBERS_SUCCESS";
+export const UPDATE_LIST_MEMBERS_FAILURE = "UPDATE_LIST_MEMBERS_FAILURE";
+
+export const updateListMembers = listMembers => dispatch => {
+  dispatch({ type: UPDATE_LIST_MEMBERS});
+  axios
+    .put(
+      `https://twitter-block.herokuapp.com/lists/${listMembers.list_members_id}`, 
+      listMembers
+    )
+    .then(res => {
+      dispatch({ type: UPDATE_LIST_MEMBERS_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      dispatch({ type: UPDATE_LIST_MEMBERS_FAILURE, payload: err.message });
     });
 };
 
@@ -624,23 +639,6 @@ export const subscribeToList = (listId, userId) => dispatch => {
     });
 }
 
-export const SUBSCRIBE_LIST = "SUBSCRIBE_LIST";
-export const SUBSCRIBE_LIST_SUCCESS = "SUBSCRIBE_LIST_SUCCESS";
-export const SUBSCRIBE_LIST_FAILURE = "SUBSCRIBE_LIST_FAILURE";
-
-export const subscribeToList = (listId, userId) => dispatch => {
-  dispatch({type: SUBSCRIBE_LIST});
-  axios
-    .post(`https://twitter-block.herokuapp.com/lists//${listId}/follow/${userId}`)
-    .then(res => {
-      console.log(res);
-      dispatch({ type: SUBSCRIBE_LIST_SUCCESS, payload: res.data });
-    })
-    .catch(err => {
-      console.log(err);
-      dispatch({ type: SUBSCRIBE_LIST_FAILURE, payload: err.message });
-    });
-}
 
 
 //<------TWEETS------->
@@ -663,6 +661,68 @@ export const addPost = post => dispatch => {
       dispatch({ type: ADD_POST_FAILURE, payload: err.message });
     });
 };
+
+//<------Votes------->
+
+// Get List votes by twitter_list_id
+export const GET_LIST_VOTES = "GET_LIST_VOTES";
+export const GET_LIST_VOTES_SUCCESS = "GET_LIST_VOTES_SUCCESS";
+export const GET_LIST_VOTES_FAILURE = "GET_LIST_VOTES_FAILURE";
+
+export const getListVotes = twitter_list_id => dispatch => {
+  dispatch({ type: GET_LIST_VOTES });
+  axios
+    .get(`https://twitter-block.herokuapp.com/votes/list/${twitter_list_id}`)
+    .then(res => {
+      console.log(res);
+      dispatch({ type: GET_LIST_VOTES_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: GET_LIST_VOTES_FAILURE, payload: err.message });
+    });
+};
+
+// Get A Users votes by twitter_user_id
+export const GET_USER_VOTES = "GET_USER_VOTES";
+export const GET_USER_VOTES_SUCCESS = "GET_USER_VOTES_SUCCESS";
+export const GET_USER_VOTES_FAILURE = "GET_USER_VOTES_FAILURE";
+
+export const getUserVotes = twitter_user_id => dispatch => {
+  dispatch({ type: GET_USER_VOTES });
+  axios
+    .get(`https://twitter-block.herokuapp.com/votes/user/${twitter_user_id}`)
+    .then(res => {
+      console.log(res);
+      dispatch({ type: GET_USER_VOTES_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: GET_USER_VOTES_FAILURE, payload: err.message });
+    });
+};
+
+// POST A Users vote
+export const ADD_USER_VOTE = "ADD_USER_VOTE";
+export const ADD_USER_VOTE_SUCCESS = "ADD_USER_VOTE_SUCCESS";
+export const ADD_USER_VOTE_FAILURE = "ADD_USER_VOTE_FAILURE";
+
+export const addUserVote = vote => dispatch => {
+  dispatch({ type: ADD_USER_VOTE });
+  axios
+    .post(`https://twitter-block.herokuapp.com/votes/`, vote)
+    .then(res => {
+      console.log(res);
+      dispatch({ type: ADD_USER_VOTE_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: ADD_USER_VOTE_FAILURE, payload: err.message });
+    });
+};
+
+
+
 
 export const ERROR_HANDLER = "ERROR_HANDLER";
 
@@ -728,5 +788,4 @@ export const handleError = () => {
 //       dispatch({ type: DELETE_POST_FAILURE, payload: err.message });
 //     });
 // };
-
 
