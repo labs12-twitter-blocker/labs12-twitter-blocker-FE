@@ -10,7 +10,7 @@ export const GET_HELLO_FAILURE = "GET_HELLO_FAILURE";
 
 export const getHello = () => dispatch => {
   dispatch({ type: GET_HELLO });
-axios
+  axios
     .get("https://twitter-block.herokuapp.com/")
     .then(res => {
       console.log(res)
@@ -20,7 +20,7 @@ axios
       console.log(err);
       dispatch({ type: GET_HELLO_FAILURE, payload: err.message });
     });
-  };
+};
 
 //<------NEED SIGNIN ACTIONS------->
 
@@ -58,18 +58,18 @@ export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
 export const GET_USER_FAILURE = "GET_USER_FAILURE";
 
 export const getUser = user_id => dispatch => {
-    dispatch({ type: GET_USER });
-    axios
-      .get(`https://twitter-block.herokuapp.com/users/${user_id}`)
-      .then(res => {
-        console.log(res);
-        dispatch({ type: GET_USER_SUCCESS, payload: res.data });
-      })
-      .catch(err => {
-        console.log(err);
-        dispatch({ type: GET_USER_FAILURE, payload: err.message });
-      });
-  };
+  dispatch({ type: GET_USER });
+  axios
+    .get(`https://twitter-block.herokuapp.com/users/${user_id}`)
+    .then(res => {
+      console.log(res);
+      dispatch({ type: GET_USER_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: GET_USER_FAILURE, payload: err.message });
+    });
+};
 
 
 // Requests the Users Ordered By Number of Points
@@ -79,18 +79,18 @@ export const GET_USERS_POINTS_SUCCESS = "GET_USERS_POINTS_SUCCESS";
 export const GET_USERS_POINTS_FAILURE = "GET_USERS_POINTS_FAILURE";
 
 export const getUsersPoints = () => dispatch => {
-    dispatch({ type: GET_USERS_POINTS });
-    axios
-      .get("https://twitter-block.herokuapp.com/users/points")
-      .then(res => {
-        console.log(res);
-        dispatch({ type: GET_USERS_POINTS_SUCCESS, payload: res.data });
-      })
-      .catch(err => {
-        console.log(err);
-        dispatch({ type: GET_USERS_POINTS_FAILURE, payload: err.message });
-      });
-  };
+  dispatch({ type: GET_USERS_POINTS });
+  axios
+    .get("https://twitter-block.herokuapp.com/users/points")
+    .then(res => {
+      console.log(res);
+      dispatch({ type: GET_USERS_POINTS_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: GET_USERS_POINTS_FAILURE, payload: err.message });
+    });
+};
 
 
 // Requests the entire Premium users array
@@ -100,18 +100,18 @@ export const GET_PREMIUM_USERS_SUCCESS = "GET_PREMIUM_USERS_SUCCESS";
 export const GET_PREMIUM_USERS_FAILURE = "GET_PREMIUM_USERS_FAILURE";
 
 export const getPremiumUsers = () => dispatch => {
-    dispatch({ type: GET_PREMIUM_USERS });
-    axios
-      .get("https://twitter-block.herokuapp.com/users/premium")
-      .then(res => {
-        console.log(res);
-        dispatch({ type: GET_PREMIUM_USERS_SUCCESS, payload: res.data });
-      })
-      .catch(err => {
-        console.log(err);
-        dispatch({ type: GET_PREMIUM_USERS_FAILURE, payload: err.message });
-      });
-  };
+  dispatch({ type: GET_PREMIUM_USERS });
+  axios
+    .get("https://twitter-block.herokuapp.com/users/premium")
+    .then(res => {
+      console.log(res);
+      dispatch({ type: GET_PREMIUM_USERS_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: GET_PREMIUM_USERS_FAILURE, payload: err.message });
+    });
+};
 
 
 // Requests a specific user by id --> Similar to Get User above /users/:user_id
@@ -160,10 +160,10 @@ export const EDIT_USER_SUCCESS = "EDIT_USER_SUCCESS";
 export const EDIT_USER_FAILURE = "EDIT_USER_FAILURE";
 
 export const editUser = profile => dispatch => {
-  dispatch({ type: EDIT_USER});
+  dispatch({ type: EDIT_USER });
   axios
     .put(
-      `https://twitter-block.herokuapp.com/users/${profile.user_id}`, 
+      `https://twitter-block.herokuapp.com/users/${profile.user_id}`,
       profile
     )
     .then(res => {
@@ -547,10 +547,10 @@ export const EDIT_LIST_SUCCESS = "EDIT_LIST_SUCCESS";
 export const EDIT_LIST_FAILURE = "EDIT_LIST_FAILURE";
 
 export const editList = list => dispatch => {
-  dispatch({ type: EDIT_LIST});
+  dispatch({ type: EDIT_LIST });
   axios
     .put(
-      `https://twitter-block.herokuapp.com/lists/${list.list_id}`, 
+      `https://twitter-block.herokuapp.com/lists/${list.list_id}`,
       list
     )
     .then(res => {

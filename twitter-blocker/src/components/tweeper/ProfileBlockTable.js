@@ -8,7 +8,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { getBlockListPoints } from '../../actions/index'
+import { getUserBlockList, getUserPublicList } from '../../actions/index'
 
 const styles = theme => ({
   root: {
@@ -24,11 +24,11 @@ const styles = theme => ({
 let id = 0;
 function createData(list_name, description, member_count, subscriber_count, list_points) {
   id += 1;
-  // console.log("createData", id)
+  console.log("createData", id)
   return { id, list_name, description, member_count, subscriber_count, list_points };
 }
 
-class LeaderboardBlockTable extends Component {
+class ProfilePublicTable extends Component {
   state = {
     rows: [],
     blockListRan: false,
@@ -36,8 +36,7 @@ class LeaderboardBlockTable extends Component {
 
 
   componentDidMount() {
-    this.props.getBlockListPoints()
-
+    this.props.getUserPublicList("802197601592508416")
   };
 
   componentDidUpdate() {
@@ -49,18 +48,17 @@ class LeaderboardBlockTable extends Component {
   getListRowBuilder = (list) => {
     let newRow = [];
     list.map(list => {
+      console.log("list", list);
       let points = (list.list_upvotes - list.list_downvotes)
       newRow.push(createData(list.list_name, list.description,
         list.member_count, list.subscriber_count,
         points))
       return newRow;
     })
-    // console.log(newRow);
-    this.setState({ blockListRan: true })
+    console.log(newRow);
+    this.setState({ followListRan: true })
     this.setState({ rows: newRow });
   };
-
-
 
   render() {
 
@@ -81,6 +79,7 @@ class LeaderboardBlockTable extends Component {
               </TableRow>
             </TableHead>
             <TableBody>
+              {console.log("this.state.rows", this.state.rows)}
               {this.state.rows.map(row => (
                 <TableRow key={row.id}>
                   <TableCell component="th" scope="row">{row.list_name}</TableCell>
@@ -98,19 +97,19 @@ class LeaderboardBlockTable extends Component {
   }
 }
 
-LeaderboardBlockTable.propTypes = {
+ProfilePublicTable.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
 
 const mapStateToProps = state => ({
-  blockLists: state.listsReducer.listPointsBlock
+  blockLists: state.listsReducer.blockLists
 });
 
 
-const styledComponent = withStyles(styles)(LeaderboardBlockTable);
+const styledComponent = withStyles(styles)(ProfilePublicTable);
 
 export default connect(
   mapStateToProps,
-  { getBlockListPoints }
+  { getUserBlockList, getUserPublicList }
 )(styledComponent);

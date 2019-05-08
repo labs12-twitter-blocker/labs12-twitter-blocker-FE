@@ -8,7 +8,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { getBlockListPoints } from '../../actions/index'
+import { getUserPublicList, getLists } from '../../actions/index'
 
 const styles = theme => ({
   root: {
@@ -24,39 +24,41 @@ const styles = theme => ({
 let id = 0;
 function createData(list_name, description, member_count, subscriber_count, list_points) {
   id += 1;
-  // console.log("createData", id)
+  console.log("createData", id)
   return { id, list_name, description, member_count, subscriber_count, list_points };
 }
 
-class LeaderboardBlockTable extends Component {
+class ProfilePublicTable extends Component {
   state = {
     rows: [],
-    blockListRan: false,
+    followListRan: false,
   }
 
 
   componentDidMount() {
-    this.props.getBlockListPoints()
-
+    // this.props.getLists()
+    this.props.getUserPublicList("802197601592508416")
   };
 
   componentDidUpdate() {
-    if (this.props.blockLists.length > 0 && this.state.blockListRan === false) {
-      this.getListRowBuilder(this.props.blockLists);
+    if (this.props.followLists.length > 0 && this.state.followListRan === false) {
+      this.getListRowBuilder(this.props.followLists);
     }
   }
 
   getListRowBuilder = (list) => {
     let newRow = [];
+    console.log('here')
     list.map(list => {
+      console.log("list", list);
       let points = (list.list_upvotes - list.list_downvotes)
       newRow.push(createData(list.list_name, list.description,
         list.member_count, list.subscriber_count,
         points))
       return newRow;
     })
-    // console.log(newRow);
-    this.setState({ blockListRan: true })
+    console.log(newRow);
+    this.setState({ followListRan: true })
     this.setState({ rows: newRow });
   };
 
@@ -64,7 +66,7 @@ class LeaderboardBlockTable extends Component {
 
   render() {
 
-    if (this.props.blockLists === null || this.props.blockLists.length === 0) {
+    if (this.props.followLists === null || this.props.followLists.length === 0) {
       return (<div>Loading</div>)
     } else {
       const { classes } = this.props;
@@ -81,6 +83,7 @@ class LeaderboardBlockTable extends Component {
               </TableRow>
             </TableHead>
             <TableBody>
+              {console.log("this.state.rows", this.state.rows)}
               {this.state.rows.map(row => (
                 <TableRow key={row.id}>
                   <TableCell component="th" scope="row">{row.list_name}</TableCell>
@@ -98,19 +101,19 @@ class LeaderboardBlockTable extends Component {
   }
 }
 
-LeaderboardBlockTable.propTypes = {
+ProfilePublicTable.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
 
 const mapStateToProps = state => ({
-  blockLists: state.listsReducer.listPointsBlock
+  followLists: state.listsReducer.userPublicLists
 });
 
 
-const styledComponent = withStyles(styles)(LeaderboardBlockTable);
+const styledComponent = withStyles(styles)(ProfilePublicTable);
 
 export default connect(
   mapStateToProps,
-  { getBlockListPoints }
+  { getUserPublicList, getLists }
 )(styledComponent);
