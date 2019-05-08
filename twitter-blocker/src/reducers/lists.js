@@ -1,4 +1,5 @@
 import {
+<<<<<<< HEAD
   GET_LISTS,
   GET_LISTS_SUCCESS,
   GET_LISTS_FAILURE,
@@ -478,7 +479,56 @@ const reducer = (state = initialState, action) => {
         updatingList: false,
         error: action.payload
       };
+    case UPDATE_LIST_MEMBERS_SUCCESS:
+      return {
+        ...state,
+        updatingListMembers: false,
+        listMembers: action.payload
+      };
+    case UPDATE_LIST_MEMBERS_FAILURE:
+      return {
+        ...state,
+        updatingListMembers: false,
+        error: action.payload
+      };
+    case SUBSCRIBE_LIST:
+      return {
+        ...state,
+        addingList: true,
+        error: null
+      };
+    case SUBSCRIBE_LIST_SUCCESS:
+      return {
+        ...state,
+        addingList: false,
+        lists: [...state.lists, action.payload]
+      };
+    case SUBSCRIBE_LIST_FAILURE:
+      return {
+        ...state,
+        addingList: false,
+        error: action.payload
+      };
+    case UPDATE_LIST_MEMBERS:
+      return {
+        ...state,
+        updatingListMembers: true,
+        error: null
+      };
+    case UPDATE_LIST_MEMBERS_SUCCESS:
+      return {
+        ...state,
+        updatingListMembers: false,
+        listMembers: action.payload
+      };
+    case UPDATE_LIST_MEMBERS_FAILURE:
+      return {
+        ...state,
+        updatingListMembers: false,
+        error: action.payload
+      };
     //
+>>>>>>> 44a6fd840d99c2d9a53b29a4f06a509e4cb048f2
     case DELETE_LIST:
       return {
         ...state,

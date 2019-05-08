@@ -13,6 +13,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import atoms from '../atoms';
+import { addPost } from '../../actions';
+import { connect } from 'react-redux';
 
 
 const fabDesign = {
@@ -26,9 +28,10 @@ const tweetBox = {
     height: '100px',
 }
 
-export default class TweetFloat extends React.Component {
+class TweetFloat extends React.Component {
   state = {
     open: false,
+    tweet: ""
   };
 
   handleClickOpen = () => {
@@ -38,6 +41,15 @@ export default class TweetFloat extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
   };
+
+  handleChange = (event) => {
+    this.setState({tweet: event.target.value})
+  }
+
+  sendTweet = () => {
+    this.props.addPost(this.state.tweet);
+    this.handleClose();
+  }
 
   render() {
     return (
@@ -64,13 +76,14 @@ export default class TweetFloat extends React.Component {
             //   value={this.state.name}
               inputProps={{ maxLength: 280 }}
               fullWidth
+              onChange={this.handleChange}
             />
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={this.sendTweet} color="primary">
               Post Tweet
             </Button>
           </DialogActions>
@@ -79,3 +92,14 @@ export default class TweetFloat extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+  }
+}
+
+const mapActionsToProps = {
+  addPost
+}
+
+export default connect( mapStateToProps, mapActionsToProps)(TweetFloat);

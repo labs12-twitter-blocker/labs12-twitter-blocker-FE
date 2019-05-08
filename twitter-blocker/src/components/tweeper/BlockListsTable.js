@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -66,7 +67,12 @@ class BlockListsTable extends Component {
     render() {
         
         if (this.props.blockLists === null || this.props.blockLists.length === 0) {
-            return (<div>Loading</div>)
+            return (<div>
+              <h3>You don't have any Block Lists Yet!</h3>
+              <Button medium color="primary" variant="contained">
+                Create New List
+              </Button>
+              </div>)
         } else {
         const { classes } = this.props;
   return (
