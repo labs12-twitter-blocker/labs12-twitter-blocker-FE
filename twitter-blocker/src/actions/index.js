@@ -561,6 +561,26 @@ export const editList = list => dispatch => {
     });
 };
 
+// Updates List Members
+export const UPDATE_LIST_MEMBERS = "UPDATE_LIST_MEMBERS";
+export const UPDATE_LIST_MEMBERS_SUCCESS = "UPDATE_LIST_MEMBERS_SUCCESS";
+export const UPDATE_LIST_MEMBERS_FAILURE = "UPDATE_LIST_MEMBERS_FAILURE";
+
+export const updateListMembers = listMembers => dispatch => {
+  dispatch({ type: UPDATE_LIST_MEMBERS});
+  axios
+    .put(
+      `https://twitter-block.herokuapp.com/lists/${listMembers.list_members_id}`, 
+      listMembers
+    )
+    .then(res => {
+      dispatch({ type: UPDATE_LIST_MEMBERS_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      dispatch({ type: UPDATE_LIST_MEMBERS_FAILURE, payload: err.message });
+    });
+};
+
 // Delete a List
 export const DELETE_LIST = "DELETE_LIST";
 export const DELETE_LIST_SUCCESS = "DELETE_LIST_SUCCESS";
@@ -598,6 +618,26 @@ export const deleteListFollow = user_id => dispatch => {
       dispatch({ type: DELETE_LIST_FOLLOW_FAILURE, payload: err.message });
     });
 };
+
+// Subscribe to a List
+
+export const SUBSCRIBE_LIST = "SUBSCRIBE_LIST";
+export const SUBSCRIBE_LIST_SUCCESS = "SUBSCRIBE_LIST_SUCCESS";
+export const SUBSCRIBE_LIST_FAILURE = "SUBSCRIBE_LIST_FAILURE";
+
+export const subscribeToList = (listId, userId) => dispatch => {
+  dispatch({type: SUBSCRIBE_LIST});
+  axios
+    .post(`https://twitter-block.herokuapp.com/lists//${listId}/follow/${userId}`)
+    .then(res => {
+      console.log(res);
+      dispatch({ type: SUBSCRIBE_LIST_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: SUBSCRIBE_LIST_FAILURE, payload: err.message });
+    });
+}
 
 
 
@@ -748,5 +788,4 @@ export const handleError = () => {
 //       dispatch({ type: DELETE_POST_FAILURE, payload: err.message });
 //     });
 // };
-
 

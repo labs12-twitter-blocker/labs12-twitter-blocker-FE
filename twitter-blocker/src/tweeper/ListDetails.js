@@ -17,13 +17,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {library} from '@fortawesome/fontawesome-svg-core'
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { List, 
-  ListItem, 
-  Tabs, Tab,
-  Card, 
-  CardActions,
-  CardContent } from '@material-ui/core';
+      ListItem, 
+      Tabs, Tab,
+      Card, 
+      CardActions,
+      CardContent } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { getListMembers, getUser, getListTimeline } from '../actions';
+import { getList, 
+        getListMembers, 
+        getUser, 
+        getListTimeline, 
+        updateListMembers,
+        subscribeToList } from '../actions';
 import { Link } from 'react-router-dom';
 
 library.add(faTimes)
@@ -65,13 +70,20 @@ class ListDetails extends React.Component {
   };
 
   removeFromList = (member) => {
-    
-    
+    let listMembers = this.props.listmembers;
+    for(let i = 0; i < listMembers.length; i++) {
+      if(listMembers[i].twitter_user_id === member.twitter_user_id){
+        listMembers.splice(i, 1);
+      }
+    }
+    this.props.updateListMembers(listMembers)
   }
 
   componentDidMount(){
-    this.props.getListMembers("1098020800320270336");
+    // this.props.getList("1098020800320270336");
     // this.props.getList(this.props.match.params.id);
+    this.props.getListMembers("1098020800320270336");
+    // this.props.getListMembers(this.props.match.params.id);
     this.props.getListTimeline("1098020800320270336");
     // this.props.getListTimeline(this.props.match.params.id);
 }
@@ -86,8 +98,10 @@ render() {
             <Feed>
               <Tabs onChange={this.handleChange}>
                 <Tab label='Members'/>
-                <Tab label="Timeline"/>
+                <Tab label='Timeline'/>
                 </Tabs>
+                {/* if current user is not already subscribed, add subscribe button */}
+                <Button >Subscribe to List</Button>
                 {value === 0 &&
               <TabContainer>
               <List>
@@ -100,7 +114,7 @@ render() {
                         <Link to={`/test/${this.props.listMembers.twitter_user_id}`}><Typography>{i.name}</Typography></Link>
                         <Typography>{i.screen_name}</Typography>
                         <Typography>{i.description}</Typography>
-                        {/* {this.props.user.twitter_id --- this.props.list.twitter_id? <FontAwesomeIcon icon="times" /> : null} */}
+                        {/* {this.props.user.twitter_id === this.props.list.twitter_id ? <FontAwesomeIcon icon="times" onClick={this.removeFromList(i)/> : null} */}
                         </CardContent>
                     </Card>
                   </ListItem>)
@@ -139,15 +153,18 @@ const mapStateToProps = state => {
   return {
     listMembers: state.listsReducer.listMembers,
     timeline: state.listsReducer.listTimeline,
-    user: state.usersReducer.currentUser
+    user: state.usersReducer.currentUser,
+    list: state.listsReducer.list
   }
 }
 
 const mapActionsToProps = {
+  getList: getList,
   getListMembers: getListMembers,
   getListTimeline, getListTimeline,
   getUser: getUser,
-  // deleteListItem: deleteListItem
+  updateListMembers: updateListMembers,
+  subscribeToList: subscribeToList
 }
 
 export default connect( mapStateToProps, mapActionsToProps)(withTheme(theme)(ListDetails));
