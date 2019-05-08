@@ -436,7 +436,7 @@ export const getListMembers = list_id => dispatch => {
     .get(`https://twitter-block.herokuapp.com/lists/members/${list_id}`)
     .then(res => {
       console.log(res);
-      dispatch({ type: GET_LIST_MEMBERS_SUCCESS, payload: res.data[0].list_members });
+      dispatch({ type: GET_LIST_MEMBERS_SUCCESS, payload: res.data[ 0 ].list_members });
     })
     .catch(err => {
       console.log(err);
@@ -452,7 +452,8 @@ export const GET_ALL_LIST_POINTS_FAILURE = "GET_ALL_LIST_POINTS_FAILURE";
 export const getAllListPoints = () => dispatch => {
   dispatch({ type: GET_ALL_LIST_POINTS });
   axios
-    .get("https://twitter-block.herokuapp.com/lists/points/top")
+    .get("https://desolate-escarpment-65092.herokuapp.com/lists/points/top", { withCredentials: true })
+    // .get("https://twitter-block.herokuapp.com/lists/points/top")
     .then(res => {
       console.log(res);
       dispatch({ type: GET_ALL_LIST_POINTS_SUCCESS, payload: res.data });
