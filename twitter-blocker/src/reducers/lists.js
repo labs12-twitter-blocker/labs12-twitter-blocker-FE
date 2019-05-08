@@ -44,6 +44,9 @@ import {
     GET_LIST_TIMELINE,
     GET_LIST_TIMELINE_SUCCESS,
     GET_LIST_TIMELINE_FAILURE,
+    SUBSCRIBE_LIST,
+    SUBSCRIBE_LIST_SUCCESS,
+    SUBSCRIBE_LIST_FAILURE,
     ADD_LIST,
     ADD_LIST_SUCCESS,
     ADD_LIST_FAILURE,
@@ -370,6 +373,24 @@ const initialState = {
             ...state,
             fetchingListTimeline: false,
             error: action.payload
+        };
+        case SUBSCRIBE_LIST:
+        return {
+          ...state,
+          addingList: true,
+          error: null
+        };
+      case SUBSCRIBE_LIST_SUCCESS:
+        return {
+          ...state,
+          addingList: false,
+          lists: [...state.lists, action.payload]
+        };
+      case SUBSCRIBE_LIST_FAILURE:
+        return {
+          ...state,
+          addingList: false,
+          error: action.payload
         };
         case ADD_LIST:
         return {
