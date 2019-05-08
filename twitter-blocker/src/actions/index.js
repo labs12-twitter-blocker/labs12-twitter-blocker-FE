@@ -22,10 +22,25 @@ export const getHello = () => dispatch => {
     });
 };
 
-//<------NEED SIGNIN ACTIONS------->
+//<------LOGIN ACTIONS------->
 
+export const GET_LOGIN = "GET_LOGIN";
+export const GET_LOGIN_SUCCESS = "GET_LOGIN_SUCCESS";
+export const GET_LOGIN_FAILURE = "GET_LOGIN_FAILURE";
 
-
+export const getLogin = () => dispatch => {
+  dispatch({ type: GET_LOGIN });
+axios
+    .get("https://twitter-block.herokuapp.com/auth/twitter/login/success")
+    .then(res => {
+      console.log(res)
+      dispatch({ type: GET_LOGIN_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: GET_LOGIN_FAILURE, payload: err.message });
+    });
+  };
 
 
 //<------USERS------->

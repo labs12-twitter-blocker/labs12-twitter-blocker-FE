@@ -8,6 +8,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
 import { getLists } from '../../actions/index'
 
 const styles = theme => ({
@@ -66,7 +67,12 @@ class AllListsTable extends Component {
     render() {
         
         if (this.props.lists === null || this.props.lists.length === 0) {
-            return (<div>Loading</div>)
+            return (<div>
+              <h3>Create Your First List!</h3>
+              <Button medium color="primary" variant="contained">
+                Create New List
+              </Button>
+              </div>)
         } else {
         const { classes } = this.props;
   return (
