@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from "react-redux";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
@@ -14,7 +14,7 @@ import withTheme from '../withTheme';
 import ListTab from '../../components/tweeper/ListTab.js'
 import atoms from '../../components/atoms';
 import molecules from '../../components/molecules';
-import { getUser } from '../../actions/index.js';
+import { getUser, getLogin } from '../../actions/index.js';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
@@ -37,7 +37,16 @@ const Cover = styled('div')({
   backgroundColor: '#ccd6dd',
 });
 
-function Profile() {
+class Profile extends Component {
+
+  componentDidMount() {
+    this.props.getLogin()
+    console.log("this.props.user", this.props.user)
+  }
+
+
+  render() {
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -90,11 +99,15 @@ function Profile() {
     </React.Fragment>
   );
 }
+}
+
 
 // export default withTheme(theme)(Profile);
 
 const mapStateToProps = state => ({
-  currentUser: state.usersReducer.currentUser
+  currentUser: state.usersReducer.currentUser,
+  user: state.loginReducer.user
+
   });
   
 
@@ -102,5 +115,5 @@ const styledComponent = withTheme(theme)(Profile);
 
 export default connect(
   mapStateToProps,
-  { getUser}
+  { getUser, getLogin}
 )(styledComponent);
