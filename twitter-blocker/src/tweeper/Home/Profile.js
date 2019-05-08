@@ -1,9 +1,11 @@
 import React from 'react';
+import { connect } from "react-redux";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider/Divider';
 import { unstable_Box as Box } from '@material-ui/core/Box';
 import styled from '@material-ui/styles/styled';
+import { withStyles } from '@material-ui/core/styles';
 import Header from '../../components/tweeper/Header';
 import TweetFloat from '../../components/tweeper/TweetFloat.js'
 import HeaderTest from '../../tests/HeaderTest.js'
@@ -12,6 +14,7 @@ import withTheme from '../withTheme';
 import ListTab from '../../components/tweeper/ListTab.js'
 import atoms from '../../components/atoms';
 import molecules from '../../components/molecules';
+import { getUser } from '../../actions/index.js';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
@@ -58,22 +61,14 @@ function Profile() {
                       './assets/austen.png'
                     }
                   />
-                  <Button large color="primary" variant="outlined">
+                  {/* <Button large color="primary" variant="outlined">
                     Edit Profile
-                  </Button>
+                  </Button> */}
                 </Box>
                 <Typography primary>Austen Allred</Typography>
                 <Typography light gutterBottom>
                   @austen
                 </Typography>
-                <div>
-                  <Icon text light>
-                    <FontAwesomeIcon icon={faCalendarAlt} color='#38A1F3'/>
-                  </Icon>
-                  <Typography light inline indented gutterBottom>
-                    Joined December 2010
-                  </Typography>
-                </div>
                 <Typography bold inline>
                     10.8K
                 </Typography>
@@ -96,4 +91,16 @@ function Profile() {
   );
 }
 
-export default withTheme(theme)(Profile);
+// export default withTheme(theme)(Profile);
+
+const mapStateToProps = state => ({
+  currentUser: state.usersReducer.currentUser
+  });
+  
+
+const styledComponent = withTheme(theme)(Profile);
+
+export default connect(
+  mapStateToProps,
+  { getUser}
+)(styledComponent);

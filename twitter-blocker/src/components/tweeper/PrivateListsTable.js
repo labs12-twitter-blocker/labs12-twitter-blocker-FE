@@ -8,7 +8,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { getLists } from '../../actions/index'
+import { getPrivateLists } from '../../actions/index'
 
 const styles = theme => ({
   root: {
@@ -29,7 +29,7 @@ function createData(list_name, description, member_count, subscriber_count, list
 }
 
 
-class AllListsTable extends Component {
+class PrivateListsTable extends Component {
     state={
         rows: [],
         listRan: false,
@@ -37,13 +37,13 @@ class AllListsTable extends Component {
 
     
     componentDidMount() {
-        this.props.getLists()
+        this.props.getPrivateLists()
         
     };
 
     componentDidUpdate() {
-        if (this.props.lists.length > 0 && this.state.listRan === false) {
-            this.getListRowBuilder(this.props.lists);
+        if (this.props.privateLists.length > 0 && this.state.listRan === false) {
+            this.getListRowBuilder(this.props.privateLists);
         }
     }
 
@@ -65,7 +65,7 @@ class AllListsTable extends Component {
 
     render() {
         
-        if (this.props.lists === null || this.props.lists.length === 0) {
+        if (this.props.privateLists === null || this.props.privateLists.length === 0) {
             return (<div>Loading</div>)
         } else {
         const { classes } = this.props;
@@ -77,7 +77,7 @@ class AllListsTable extends Component {
             <TableCell>List Name</TableCell>
             <TableCell align="center">List Description</TableCell>
             <TableCell align="center">List Members</TableCell>
-            <TableCell align="center">List Subsribers</TableCell>
+            <TableCell align="center">List Subscribers</TableCell>
             <TableCell align="center">List Up Votes</TableCell>
             <TableCell align="center">List Down Votes</TableCell>
             {/* <TableCell align="center">Protein (g)</TableCell> */}
@@ -105,20 +105,20 @@ class AllListsTable extends Component {
 }
 }
 
-AllListsTable.propTypes = {
+PrivateListsTable.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-// export default withStyles(styles)(AllListsTable);
+// export default withStyles(styles)(PrivateListsTable);
 
 const mapStateToProps = state => ({
-    lists: state.listsReducer.lists
+  privateLists: state.listsReducer.privateLists
   });
   
 
-const styledComponent = withStyles(styles)(AllListsTable);
+const styledComponent = withStyles(styles)(PrivateListsTable);
 
 export default connect(
   mapStateToProps,
-  { getLists }
+  { getPrivateLists }
 )(styledComponent);

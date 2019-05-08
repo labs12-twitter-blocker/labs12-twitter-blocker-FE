@@ -8,7 +8,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { getLists } from '../../actions/index'
+import { getPublicLists } from '../../actions/index'
 
 const styles = theme => ({
   root: {
@@ -24,12 +24,14 @@ const styles = theme => ({
 let id = 0;
 function createData(list_name, description, member_count, subscriber_count, list_upvotes, list_downvotes) {
   id += 1;
-  console.log("createData", id)
+  //console.log("createData", id)
   return { id, list_name, description, member_count, subscriber_count, list_upvotes, list_downvotes };
 }
 
 
-class AllListsTable extends Component {
+
+
+class PublicListsTable extends Component {
     state={
         rows: [],
         listRan: false,
@@ -37,26 +39,26 @@ class AllListsTable extends Component {
 
     
     componentDidMount() {
-        this.props.getLists()
+        this.props.getPublicLists()
         
     };
 
     componentDidUpdate() {
-        if (this.props.lists.length > 0 && this.state.listRan === false) {
-            this.getListRowBuilder(this.props.lists);
+        if (this.props.publicLists.length > 0 && this.state.listRan === false) {
+            this.getListRowBuilder(this.props.publicLists);
         }
     }
 
     getListRowBuilder = (list) => {
         let newRow = [];
-        console.log('here')
+        //console.log('here')
         list.map(list => {
-            console.log("list", list);
+           // console.log("list", list);
             newRow.push(createData(list.list_name, list.description, 
                 list.member_count, list.subscriber_count, 
                 list.list_upvotes, list.list_downvotes))
         })
-        console.log(newRow);
+        // console.log(newRow);
         this.setState({listRan: true})
         this.setState({rows: newRow});
     };
@@ -65,7 +67,7 @@ class AllListsTable extends Component {
 
     render() {
         
-        if (this.props.lists === null || this.props.lists.length === 0) {
+        if (this.props.publicLists === null || this.props.publicLists.length === 0) {
             return (<div>Loading</div>)
         } else {
         const { classes } = this.props;
@@ -84,7 +86,7 @@ class AllListsTable extends Component {
           </TableRow>
         </TableHead>
         <TableBody>
-            {console.log("this.state.rows", this.state.rows)}
+            {/* {console.log("this.state.rows", this.state.rows)} */}
           {this.state.rows.map(row => (
             <TableRow key={row.id}>
               <TableCell component="th" scope="row">
@@ -105,20 +107,20 @@ class AllListsTable extends Component {
 }
 }
 
-AllListsTable.propTypes = {
+PublicListsTable.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-// export default withStyles(styles)(AllListsTable);
+// export default withStyles(styles)(PublicListsTable);
 
 const mapStateToProps = state => ({
-    lists: state.listsReducer.lists
+  publicLists: state.listsReducer.publicLists
   });
   
 
-const styledComponent = withStyles(styles)(AllListsTable);
+const styledComponent = withStyles(styles)(PublicListsTable);
 
 export default connect(
   mapStateToProps,
-  { getLists }
+  { getPublicLists }
 )(styledComponent);

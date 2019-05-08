@@ -14,10 +14,27 @@ import atoms from '../components/atoms';
 import molecules from '../components/molecules';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import {library} from '@fortawesome/fontawesome-svg-core'
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { List, 
+  ListItem, 
+  Tabs, Tab,
+  Card, 
+  CardActions,
+  CardContent } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { getListMembers, getUser, getListTimeline } from '../actions';
+import { Link } from 'react-router-dom';
+
+library.add(faTimes)
 
 const { Avatar, Icon, Typography, Button } = atoms;
 // const { Tabs, Tab } = molecules;
+
+const TabContainer = styled('div') ({
+  padding: theme.spacing.unit * 4,
+  margin: 'auto'
+})
 
 const Content = styled('div')({
   maxWidth: 1000,
@@ -34,14 +51,81 @@ const Cover = styled('div')({
   backgroundColor: '#ccd6dd',
 });
 
-function CreateList() {
+
+class ListDetails extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      value: 0
+    }
+  }
+
+  handleChange = (event, value) => {
+    this.setState({ value });
+  };
+
+  removeFromList = (member) => {
+    
+    
+  }
+
+  componentDidMount(){
+    this.props.getListMembers("1098020800320270336");
+    // this.props.getList(this.props.match.params.id);
+    this.props.getListTimeline("1098020800320270336");
+    // this.props.getListTimeline(this.props.match.params.id);
+}
+  
+render() {
+  const { value } = this.state;
   return (
     <React.Fragment>
       <CssBaseline />
       <HeaderTest />
       <Content>
             <Feed>
-              
+              <Tabs onChange={this.handleChange}>
+                <Tab label='Members'/>
+                <Tab label="Timeline"/>
+                </Tabs>
+                {value === 0 &&
+              <TabContainer>
+              <List>
+                {this.props.listMembers.map(i => {
+                  return (
+                  <ListItem>
+                    <Card>
+                      <CardContent>
+                        <Avatar src={i.profile_img}/>
+                        <Link to={`/test/${this.props.listMembers.twitter_user_id}`}><Typography>{i.name}</Typography></Link>
+                        <Typography>{i.screen_name}</Typography>
+                        <Typography>{i.description}</Typography>
+                        {/* {this.props.user.twitter_id --- this.props.list.twitter_id? <FontAwesomeIcon icon="times" /> : null} */}
+                        </CardContent>
+                    </Card>
+                  </ListItem>)
+                })}
+              </List>
+              </TabContainer>
+              }
+              {value === 1 &&
+              <TabContainer>
+                <List>
+                  {this.props.timeline.map(i => {
+                    return (
+                      <Card>
+                        <CardContent>
+                          <Avatar src={i.user.profile_image_url} />
+                          <Typography>{i.user.name}</Typography>
+                          <Typography>{i.text}</Typography>
+                          <Typography>{i.entities.hashtags.text}</Typography>
+                        </CardContent>
+                      </Card>
+                    )
+                  })}
+                  </List>
+                </TabContainer>
+              }
               <Divider />
             </Feed>
         <TweetFloat />
@@ -49,5 +133,22 @@ function CreateList() {
     </React.Fragment>
   );
 }
+}
 
-export default withTheme(theme)(CreateList);
+const mapStateToProps = state => {
+  return {
+    listMembers: state.listsReducer.listMembers,
+    timeline: state.listsReducer.listTimeline,
+    user: state.usersReducer.currentUser
+  }
+}
+
+const mapActionsToProps = {
+  getListMembers: getListMembers,
+  getListTimeline, getListTimeline,
+  getUser: getUser,
+  // deleteListItem: deleteListItem
+}
+
+export default connect( mapStateToProps, mapActionsToProps)(withTheme(theme)(ListDetails));
+

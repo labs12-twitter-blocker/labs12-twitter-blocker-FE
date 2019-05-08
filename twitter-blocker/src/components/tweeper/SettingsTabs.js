@@ -6,11 +6,9 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-import ListView from './ListViews';
-import PublicListsTable from './PublicListsTable';
-import PrivateListsTable from './PrivateListsTable';
-import BlockListsTable from './BlockListsTable';
-import AllListsTable from './AllListsTable'
+import UserSettingsTextField from './UserSettingsTextField';
+import UserSettingsPaymentField from './UserSettingsPaymentTextField'
+import UserSettingsDelete from './UserSettingsDelete';
 
 function TabContainer({ children, dir }) {
   return (
@@ -29,12 +27,13 @@ const styles = theme => ({
   root: {
     backgroundColor: theme.palette.background.paper,
     maxWidth: 850,
-    padding: theme.spacing.unit * 4,
     margin: 'auto',
+    marginTop: 30    
+    
   },
 });
 
-class FullWidthTabs extends React.Component {
+class SettingsTabs extends React.Component {
   state = {
     value: 0,
   };
@@ -60,10 +59,9 @@ class FullWidthTabs extends React.Component {
             textColor="primary"
             variant="fullWidth"
           >
-            <Tab label="Lists" />
-            <Tab label="Public Lists" />
-            <Tab label="Private Lists" />
-            <Tab label="Block Lists" />
+            <Tab label="User Settings" />
+            <Tab label="Payment Settings" />
+            <Tab label="Delete Account" />
           </Tabs>
         </AppBar>
         <SwipeableViews
@@ -71,19 +69,18 @@ class FullWidthTabs extends React.Component {
           index={this.state.value}
           onChangeIndex={this.handleChangeIndex}
         >
-          <TabContainer dir={theme.direction}><AllListsTable  /></TabContainer>
-          <TabContainer dir={theme.direction}><PublicListsTable /></TabContainer>
-          <TabContainer dir={theme.direction}><PrivateListsTable /></TabContainer>
-          <TabContainer dir={theme.direction}><BlockListsTable /></TabContainer>
+          <TabContainer dir={theme.direction}><UserSettingsTextField /> </TabContainer>
+          <TabContainer dir={theme.direction}><UserSettingsPaymentField /></TabContainer>
+          <TabContainer dir={theme.direction}><UserSettingsDelete /></TabContainer>
         </SwipeableViews>
       </div>
     );
   }
 }
 
-FullWidthTabs.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles, { withTheme: true })(FullWidthTabs);
+SettingsTabs.propTypes = {
+    classes: PropTypes.object.isRequired,
+    theme: PropTypes.object.isRequired,
+  };
+  
+  export default withStyles(styles, { withTheme: true })(SettingsTabs);
