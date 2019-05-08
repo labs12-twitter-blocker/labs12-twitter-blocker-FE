@@ -38,15 +38,9 @@ import {
     GET_LIST_MEMBERS,
     GET_LIST_MEMBERS_SUCCESS,
     GET_LIST_MEMBERS_FAILURE,
-    GET_ALL_LIST_POINTS,
-    GET_ALL_LIST_POINTS_SUCCESS,
-    GET_ALL_LIST_POINTS_FAILURE,
-    GET_FOLLOW_LIST_POINTS,
-    GET_FOLLOW_LIST_POINTS_SUCCESS,
-    GET_FOLLOW_LIST_POINTS_FAILURE,
-    GET_BLOCK_LIST_POINTS,
-    GET_BLOCK_LIST_POINTS_SUCCESS,
-    GET_BLOCK_LIST_POINTS_FAILURE,
+    GET_LIST_POINTS,
+    GET_LIST_POINTS_SUCCESS,
+    GET_LIST_POINTS_FAILURE,
     GET_LIST_TIMELINE,
     GET_LIST_TIMELINE_SUCCESS,
     GET_LIST_TIMELINE_FAILURE,
@@ -56,6 +50,9 @@ import {
     EDIT_LIST,
     EDIT_LIST_SUCCESS,
     EDIT_LIST_FAILURE,
+    UPDATE_LIST_MEMBERS,
+    UPDATE_LIST_MEMBERS_SUCCESS,
+    UPDATE_LIST_MEMBERS_FAILURE,
     DELETE_LIST,
     DELETE_LIST_SUCCESS,
     DELETE_LIST_FAILURE,
@@ -79,10 +76,8 @@ const initialState = {
     userCoolLists:[],
     listSubscribers:[],
     listMembers: [],
-    listPointsAll: null,
-    listPointsFollow: null,
-    listPointsBlock: null,
-    listTimeline: {},
+    listPoints: null,
+    listTimeline: [],
     fetchingLists: false,
     fetchingPublicLists: false,
     fetchingPrivateLists: false,
@@ -95,13 +90,11 @@ const initialState = {
     fetchingUserBlockLists: false,
     fetchingUserCoolLists: false,
     fetchingListSubscribers: false,
-    fetchingListMembers: false,
-    fetchingAllListPoints: false,
-    fetchingFollowListPoints: false,
-    fetchingBlockListPoints: false,
+    fetchingListPoints: false,
     fetchingListTimeline: false,
     addingList: false,
     updatingList: false,
+    updatingListMembers: false,
     deletingList: false,
     error: null
   };
@@ -208,7 +201,7 @@ const initialState = {
         return {
             ...state,
             fetchingList: false,
-            list: action.payload
+            listMembers: action.payload
         };
         case  GET_LIST_FAILURE:
         return {
@@ -342,58 +335,22 @@ const initialState = {
             fetchingListMembers: false,
             error: action.payload
         };
-        case  GET_ALL_LIST_POINTS:
+        case  GET_LIST_POINTS:
         return {
             ...state,
-            fetchingAllListPoints: true,
+            fetchingListPoints: true,
             error: null
         };
-        case  GET_ALL_LIST_POINTS_SUCCESS:
+        case  GET_LIST_POINTS_SUCCESS:
         return {
             ...state,
-            fetchingAllListPoints: false,
-            listPointsAll: action.payload
+            fetchingListPoints: false,
+            listPoints: action.payload
         };
-        case  GET_ALL_LIST_POINTS_FAILURE:
+        case  GET_LIST_POINTS_FAILURE:
         return {
             ...state,
-            fetchingAllListPoints: false,
-            error: action.payload
-        };
-        case  GET_FOLLOW_LIST_POINTS:
-        return {
-            ...state,
-            fetchingFollowListPoints: true,
-            error: null
-        };
-        case  GET_FOLLOW_LIST_POINTS_SUCCESS:
-        return {
-            ...state,
-            fetchingFollowListPoints: false,
-            listPointsFollow: action.payload
-        };
-        case  GET_FOLLOW_LIST_POINTS_FAILURE:
-        return {
-            ...state,
-            fetchingFollowListPoints: false,
-            error: action.payload
-        };
-        case  GET_BLOCK_LIST_POINTS:
-        return {
-            ...state,
-            fetchingBlockListPoints: true,
-            error: null
-        };
-        case  GET_BLOCK_LIST_POINTS_SUCCESS:
-        return {
-            ...state,
-            fetchingBlockListPoints: false,
-            listPointsBlock: action.payload
-        };
-        case  GET_BLOCK_LIST_POINTS_FAILURE:
-        return {
-            ...state,
-            fetchingBlockListPoints: false,
+            fetchingListPoints: false,
             error: action.payload
         };
         case  GET_LIST_TIMELINE:
@@ -456,6 +413,26 @@ const initialState = {
           updatingList: false,
           error: action.payload
         };
+
+        case UPDATE_LIST_MEMBERS:
+        return {
+          ...state,
+          updatingListMembers: true,
+          error: null
+        };
+      case UPDATE_LIST_MEMBERS_SUCCESS:
+        return {
+          ...state,
+          updatingListMembers: false,
+          listMembers: action.payload
+        };
+      case UPDATE_LIST_MEMBERS_FAILURE:
+        return {
+          ...state,
+          updatingListMembers: false,
+          error: action.payload
+        };
+
         //
     case DELETE_LIST:
       return {

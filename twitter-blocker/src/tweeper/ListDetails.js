@@ -23,7 +23,7 @@ import { List,
   CardActions,
   CardContent } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { getListMembers, getUser, getListTimeline } from '../actions';
+import { getListMembers, getUser, getListTimeline, updateListMembers } from '../actions';
 import { Link } from 'react-router-dom';
 
 library.add(faTimes)
@@ -65,8 +65,13 @@ class ListDetails extends React.Component {
   };
 
   removeFromList = (member) => {
-    
-    
+    let listMembers = this.props.listmembers;
+    for(let i = 0; i < listMembers.length; i++) {
+      if(listMembers[i].twitter_user_id === member.twitter_user_id){
+        listMembers.splice(i, 1);
+      }
+    }
+    this.props.updateListMembers(listMembers)
   }
 
   componentDidMount(){
@@ -86,7 +91,7 @@ render() {
             <Feed>
               <Tabs onChange={this.handleChange}>
                 <Tab label='Members'/>
-                <Tab label="Timeline"/>
+                <Tab label='Timeline'/>
                 </Tabs>
                 {value === 0 &&
               <TabContainer>
@@ -100,7 +105,7 @@ render() {
                         <Link to={`/test/${this.props.listMembers.twitter_user_id}`}><Typography>{i.name}</Typography></Link>
                         <Typography>{i.screen_name}</Typography>
                         <Typography>{i.description}</Typography>
-                        {/* {this.props.user.twitter_id --- this.props.list.twitter_id? <FontAwesomeIcon icon="times" /> : null} */}
+                        {/* {this.props.user.twitter_id --- this.props.list.twitter_id? <FontAwesomeIcon icon="times" onClick={this.removeFromList(i)/> : null} */}
                         </CardContent>
                     </Card>
                   </ListItem>)
@@ -147,7 +152,7 @@ const mapActionsToProps = {
   getListMembers: getListMembers,
   getListTimeline, getListTimeline,
   getUser: getUser,
-  // deleteListItem: deleteListItem
+  updateListMembers: updateListMembers
 }
 
 export default connect( mapStateToProps, mapActionsToProps)(withTheme(theme)(ListDetails));

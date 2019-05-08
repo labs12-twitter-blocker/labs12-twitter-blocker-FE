@@ -444,6 +444,26 @@ export const getListMembers = list_id => dispatch => {
     });
 };
 
+// Updates List Members
+export const UPDATE_LIST_MEMBERS = "UPDATE_LIST_MEMBERS";
+export const UPDATE_LIST_MEMBERS_SUCCESS = "UPDATE_LIST_MEMBERS_SUCCESS";
+export const UPDATE_LIST_MEMBERS_FAILURE = "UPDATE_LIST_MEMBERS_FAILURE";
+
+export const updateListMembers = listMembers => dispatch => {
+  dispatch({ type: UPDATE_LIST_MEMBERS});
+  axios
+    .put(
+      `https://twitter-block.herokuapp.com/lists/${listMembers.list_members_id}`, 
+      listMembers
+    )
+    .then(res => {
+      dispatch({ type: UPDATE_LIST_MEMBERS_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      dispatch({ type: UPDATE_LIST_MEMBERS_FAILURE, payload: err.message });
+    });
+};
+
 // Requests All Top Lists by Points
 export const GET_ALL_LIST_POINTS = "GET_ALL_LIST_POINTS";
 export const GET_ALL_LIST_POINTS_SUCCESS = "GET_ALL_LIST_POINTS_SUCCESS";
