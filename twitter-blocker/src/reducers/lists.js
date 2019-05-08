@@ -38,9 +38,9 @@ import {
     GET_LIST_MEMBERS,
     GET_LIST_MEMBERS_SUCCESS,
     GET_LIST_MEMBERS_FAILURE,
-    GET_LIST_POINTS,
-    GET_LIST_POINTS_SUCCESS,
-    GET_LIST_POINTS_FAILURE,
+    GET_ALL_LIST_POINTS,
+    GET_ALL_LIST_POINTS_SUCCESS,
+    GET_ALL_LIST_POINTS_FAILURE,
     GET_LIST_TIMELINE,
     GET_LIST_TIMELINE_SUCCESS,
     GET_LIST_TIMELINE_FAILURE,
@@ -339,19 +339,19 @@ const initialState = {
             fetchingListMembers: false,
             error: action.payload
         };
-        case  GET_LIST_POINTS:
+        case  GET_ALL_LIST_POINTS:
         return {
             ...state,
             fetchingListPoints: true,
             error: null
         };
-        case  GET_LIST_POINTS_SUCCESS:
+        case  GET_ALL_LIST_POINTS_SUCCESS:
         return {
             ...state,
             fetchingListPoints: false,
             listPoints: action.payload
         };
-        case  GET_LIST_POINTS_FAILURE:
+        case  GET_ALL_LIST_POINTS_FAILURE:
         return {
             ...state,
             fetchingListPoints: false,
@@ -435,10 +435,18 @@ const initialState = {
           updatingList: false,
           error: action.payload
         };
-<<<<<<< HEAD
-
-        case UPDATE_LIST_MEMBERS:
-=======
+      case UPDATE_LIST_MEMBERS_SUCCESS:
+        return {
+          ...state,
+          updatingListMembers: false,
+          listMembers: action.payload
+        };
+      case UPDATE_LIST_MEMBERS_FAILURE:
+        return {
+          ...state,
+          updatingListMembers: false,
+          error: action.payload
+        };
         case SUBSCRIBE_LIST:
         return {
           ...state,
