@@ -20,12 +20,9 @@ function App() {
         <Route exact path="/" component={OAuth} />
         <Route path="/test" component={Profile} />
         <Route path="/hello" component={HelloWorld} />
-<<<<<<< HEAD
         <Route path="/profile/:user_id" component={PublicProfile} />
-=======
         <Route path="/create" component={ListCreate} />
         {/* <Route path="/details" component={ListDetails} /> */}
->>>>>>> 5f67bc124a6e57ba13b968e512d628b34fe354e4
         <Route path="/leaderboard" component={Leaderboard} />
         <Route path="/settings" component={Settings} />
       </div>
