@@ -50,6 +50,9 @@ import {
     ADD_LIST,
     ADD_LIST_SUCCESS,
     ADD_LIST_FAILURE,
+    SUBSCRIBE_LIST,
+    SUBSCRIBE_LIST_SUCCESS,
+    SUBSCRIBE_LIST_FAILURE,
     EDIT_LIST,
     EDIT_LIST_SUCCESS,
     EDIT_LIST_FAILURE,
@@ -434,8 +437,29 @@ const initialState = {
           updatingList: false,
           error: action.payload
         };
+<<<<<<< HEAD
 
         case UPDATE_LIST_MEMBERS:
+=======
+        case SUBSCRIBE_LIST:
+        return {
+          ...state,
+          addingList: true,
+          error: null
+        };
+      case SUBSCRIBE_LIST_SUCCESS:
+        return {
+          ...state,
+          addingList: false,
+          lists: [...state.lists, action.payload]
+        };
+      case SUBSCRIBE_LIST_FAILURE:
+        return {
+          ...state,
+          addingList: false,
+          error: action.payload
+        };
+         case UPDATE_LIST_MEMBERS:
         return {
           ...state,
           updatingListMembers: true,
@@ -453,7 +477,6 @@ const initialState = {
           updatingListMembers: false,
           error: action.payload
         };
-
         //
     case DELETE_LIST:
       return {
