@@ -30,7 +30,7 @@ export const GET_LOGIN_FAILURE = "GET_LOGIN_FAILURE";
 
 export const getLogin = () => dispatch => {
   dispatch({ type: GET_LOGIN });
-axios
+  axios
     .get("https://twitter-block.herokuapp.com/auth/twitter/login/success")
     .then(res => {
       console.log(res)
@@ -40,7 +40,7 @@ axios
       console.log(err);
       dispatch({ type: GET_LOGIN_FAILURE, payload: err.message });
     });
-  };
+};
 
 
 //<------USERS------->
@@ -536,7 +536,7 @@ export const getListTimeline = list_id => dispatch => {
 };
 
 
-// Add a new List
+// Add a new List to the database
 
 export const ADD_LIST = "ADD_LIST";
 export const ADD_LIST_SUCCESS = "ADD_LIST_SUCCESS";
@@ -545,7 +545,7 @@ export const ADD_LIST_FAILURE = "ADD_LIST_FAILURE";
 export const addList = post => dispatch => {
   dispatch({ type: ADD_LIST });
   axios
-    .post("https://twitter-block.herokuapp.com/lists", post)
+    .post("https://twitter-block.herokuapp.com/lists/", post)
     .then(res => {
       console.log(res);
       dispatch({ type: ADD_LIST_SUCCESS, payload: res.data });
@@ -556,7 +556,7 @@ export const addList = post => dispatch => {
     });
 };
 
-// Create a new List
+// Create a new List (using Data Science magic)
 
 export const CREATE_LIST = "CREATE_LIST";
 export const CREATE_LIST_SUCCESS = "CREATE_LIST_SUCCESS";
@@ -602,10 +602,10 @@ export const UPDATE_LIST_MEMBERS_SUCCESS = "UPDATE_LIST_MEMBERS_SUCCESS";
 export const UPDATE_LIST_MEMBERS_FAILURE = "UPDATE_LIST_MEMBERS_FAILURE";
 
 export const updateListMembers = listMembers => dispatch => {
-  dispatch({ type: UPDATE_LIST_MEMBERS});
+  dispatch({ type: UPDATE_LIST_MEMBERS });
   axios
     .put(
-      `https://twitter-block.herokuapp.com/lists/${listMembers.list_members_id}`, 
+      `https://twitter-block.herokuapp.com/lists/${listMembers.list_members_id}`,
       listMembers
     )
     .then(res => {
@@ -661,7 +661,7 @@ export const SUBSCRIBE_LIST_SUCCESS = "SUBSCRIBE_LIST_SUCCESS";
 export const SUBSCRIBE_LIST_FAILURE = "SUBSCRIBE_LIST_FAILURE";
 
 export const subscribeToList = (listId, userId) => dispatch => {
-  dispatch({type: SUBSCRIBE_LIST});
+  dispatch({ type: SUBSCRIBE_LIST });
   axios
     .post(`https://twitter-block.herokuapp.com/lists//${listId}/follow/${userId}`)
     .then(res => {
