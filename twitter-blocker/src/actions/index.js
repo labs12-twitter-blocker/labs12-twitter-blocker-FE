@@ -541,6 +541,26 @@ export const addList = post => dispatch => {
     });
 };
 
+// Create a new List
+
+export const CREATE_LIST = "CREATE_LIST";
+export const CREATE_LIST_SUCCESS = "CREATE_LIST_SUCCESS";
+export const CREATE_LIST_FAILURE = "CREATE_LIST_FAILURE";
+
+export const createList = post => dispatch => {
+  dispatch({ type: CREATE_LIST });
+  axios
+    .post("https://twitter-block.herokuapp.com/lists/create", post)
+    .then(res => {
+      console.log(res);
+      dispatch({ type: CREATE_LIST_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: CREATE_LIST_FAILURE, payload: err.message });
+    });
+};
+
 // Edit a List
 export const EDIT_LIST = "EDIT_LIST";
 export const EDIT_LIST_SUCCESS = "EDIT_LIST_SUCCESS";
