@@ -8,7 +8,7 @@ import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { addList } from '../../actions';
+import { addList, createList } from '../../actions';
 import { connect } from "react-redux";
 
 
@@ -77,6 +77,7 @@ class CreateListForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.addList(this.state);
+    this.props.createList(this.state);
     this.setState({ list: { ...this.state } });
     console.log("I'm firing")
   };
@@ -224,5 +225,5 @@ const styledComponent = withStyles(styles)(CreateListForm);
 
 export default connect(
   mapStateToProps,
-  { addList }
+  { addList, createList }
 )(styledComponent);
