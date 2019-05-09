@@ -9,7 +9,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { getBlockLists } from '../../actions/index'
+import { getUserBlockList } from '../../actions/index'
 
 const styles = theme => ({
   root: {
@@ -38,7 +38,7 @@ class BlockListsTable extends Component {
 
     
     componentDidMount() {
-        this.props.getBlockLists()
+        this.props.getUserBlockList(localStorage.getItem("twitter_user_id"))
         
     };
 
@@ -118,7 +118,7 @@ BlockListsTable.propTypes = {
 // export default withStyles(styles)(BlockListsTable);
 
 const mapStateToProps = state => ({
-  blockLists: state.listsReducer.blockLists
+  blockLists: state.listsReducer.userBlockLists
   });
   
 
@@ -126,5 +126,5 @@ const styledComponent = withStyles(styles)(BlockListsTable);
 
 export default connect(
   mapStateToProps,
-  { getBlockLists }
+  { getUserBlockList }
 )(styledComponent);

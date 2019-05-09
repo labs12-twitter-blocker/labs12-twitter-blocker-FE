@@ -118,7 +118,7 @@ AllListsTable.propTypes = {
 // export default withStyles(styles)(AllListsTable);
 
 const mapStateToProps = state => ({
-    lists: state.listsReducer.lists
+    lists: state.listsReducer.userLists
   });
   
 
