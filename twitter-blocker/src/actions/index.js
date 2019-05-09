@@ -38,6 +38,8 @@ export const getLogin = (response) => dispatch => {
     console.log("DISPATCH USER: ", user)
     if (token) {
       localStorage.setItem("twitter_user_id", user.id)
+      localStorage.setItem("token", token)
+
       dispatch({ type: GET_LOGIN_SUCCESS, payload: user });
       // this.setState({isAuthenticated: true, user: user, token: token});
     }
