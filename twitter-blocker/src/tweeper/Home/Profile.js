@@ -14,10 +14,13 @@ import withTheme from '../withTheme';
 import ListTab from '../../components/tweeper/ListTab.js'
 import atoms from '../../components/atoms';
 import molecules from '../../components/molecules';
-import { getUser, getLogin } from '../../actions/index.js';
+import { getUser } from '../../actions/index.js';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import axios from "axios";
+require('dotenv').config();
+const url = process.env.REACT_APP_BACKEND_BASE_URL
 
 const { Avatar, Icon, Typography, Button } = atoms;
 // const { Tabs, Tab } = molecules;
@@ -40,9 +43,31 @@ const Cover = styled('div')({
 class Profile extends Component {
 
   componentDidMount() {
-    this.props.getLogin()
+    // this.props.getLogin()
     console.log("this.props.user", this.props.user)
+    console.log("this.props.loggedIn", this.props.loggedIn)
+    this.props.getUser(localStorage.getItem("twitter_user_id"))
+    const token = localStorage.getItem("token")
+    axios.get(`${url}/auth/me`, {
+      headers: {
+          "x-auth-token": token
+      }
+    })
+    .then(res => {
+      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~res", res.data);
+    })
+
   }
+
+  // componentDidUpdate(prevProps) {
+  //   console.log("CDUpdate");
+  //   console.log("this.state.loggedIn", this.state.loggedIn);
+  //   console.log("this.state.user", this.state.user);
+  //   console.log("this.props.user", this.props.user);
+  //   if (this.props.user.id !== prevProps.user.id) {
+  //     this.props.getUser(this.props.user.id)
+  //   }
+  // }
 
 
   render() {
@@ -76,7 +101,7 @@ class Profile extends Component {
                 </Box>
                 <Typography primary>Austen Allred</Typography>
                 <Typography light gutterBottom>
-                  @austen
+                  @austen {console.log(this.props.currentUser)}
                 </Typography>
                 <Typography bold inline>
                     10.8K
@@ -106,7 +131,8 @@ class Profile extends Component {
 
 const mapStateToProps = state => ({
   currentUser: state.usersReducer.currentUser,
-  user: state.loginReducer.user
+  user: state.loginReducer.user,
+  loggedIn: state.loginReducer.loggedIn
 
   });
   
@@ -115,5 +141,5 @@ const styledComponent = withTheme(theme)(Profile);
 
 export default connect(
   mapStateToProps,
-  { getUser, getLogin}
+  { getUser }
 )(styledComponent);
