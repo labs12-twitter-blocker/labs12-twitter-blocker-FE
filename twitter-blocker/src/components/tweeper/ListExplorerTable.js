@@ -33,7 +33,8 @@ class LeaderboardAllTable extends Component {
     state={
         rows: [],
         allListRan: false,
-        twitter_user_id: "1123316691100786688" //somehow I need to set this up?!?!?
+        twitter_user_id: "1123316691100786688", //somehow I need to set this up?!?!?
+        lists: []
     }
 
     
@@ -42,8 +43,8 @@ class LeaderboardAllTable extends Component {
         
       };
       
-      componentDidUpdate() {
-        if (this.props.allLists.length > 0 && this.state.allListRan === false) {
+      componentDidUpdate(prevProps) {
+        if (this.props.allLists.length !== prevProps.allLists.length) {
           this.getListRowBuilder(this.props.allLists);
         }
       }

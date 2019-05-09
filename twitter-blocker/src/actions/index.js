@@ -767,7 +767,7 @@ export function searchLists (searchTerm) {
         .then(({data}) => {
             console.log(data);
             let filtered = data.filter(list => {
-                return list.list_name.includes(searchTerm.toLowerCase()) || list.description.includes(searchTerm.toLowerCase())
+                return list.list_name.toLowerCase().includes(searchTerm.toLowerCase()) || list.description.toLowerCase().includes(searchTerm.toLowerCase())
             })
             console.log(filtered);
             dispatch({type: SEARCH_LISTS_SUCCESS, payload: filtered})

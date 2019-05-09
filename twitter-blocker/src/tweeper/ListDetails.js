@@ -107,7 +107,7 @@ render() {
                     <Card>
                       <CardContent>
                         <Avatar src={i.profile_img}/>
-                        <Link to={`/test/${this.props.listMembers.twitter_user_id}`}><Typography>{i.name}</Typography></Link>
+                        <Link to={`/profile/${this.props.listMembers.twitter_user_id}`}><Typography>{i.name}</Typography></Link>
                         <Typography>{i.screen_name}</Typography>
                         <Typography>{i.description}</Typography>
                         {/* {this.props.user.twitter_id === this.props.list.twitter_id ? <FontAwesomeIcon icon="times" onClick={this.removeFromList(i)/> : null} */}
