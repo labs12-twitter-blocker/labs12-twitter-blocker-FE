@@ -80,12 +80,8 @@ class ListDetails extends React.Component {
   }
 
   componentDidMount(){
-    // this.props.getList("1098020800320270336");
-    // this.props.getList(this.props.match.params.id);
-    this.props.getListMembers("1098020800320270336");
-    // this.props.getListMembers(this.props.match.params.id);
-    this.props.getListTimeline("1098020800320270336");
-    // this.props.getListTimeline(this.props.match.params.id);
+    this.props.getListMembers(this.props.match.params.twitter_list_id);
+    this.props.getListTimeline(this.props.match.params.twitter_list_id);
 }
   
 render() {
@@ -93,7 +89,7 @@ render() {
   return (
     <React.Fragment>
       <CssBaseline />
-      <HeaderTest />
+      <Header />
       <Content>
             <Feed>
               <Tabs onChange={this.handleChange}>
@@ -111,7 +107,7 @@ render() {
                     <Card>
                       <CardContent>
                         <Avatar src={i.profile_img}/>
-                        <Link to={`/test/${this.props.listMembers.twitter_user_id}`}><Typography>{i.name}</Typography></Link>
+                        <Link to={`/profile/${this.props.listMembers.twitter_user_id}`}><Typography>{i.name}</Typography></Link>
                         <Typography>{i.screen_name}</Typography>
                         <Typography>{i.description}</Typography>
                         {/* {this.props.user.twitter_id === this.props.list.twitter_id ? <FontAwesomeIcon icon="times" onClick={this.removeFromList(i)/> : null} */}

@@ -549,7 +549,7 @@ const reducer = (state = initialState, action) => {
     case SEARCH_LISTS:
       return {
         ...state,
-        fetchingLists: true,
+        searchingLists: true,
         error: null
       };
     case SEARCH_LISTS_SUCCESS:
