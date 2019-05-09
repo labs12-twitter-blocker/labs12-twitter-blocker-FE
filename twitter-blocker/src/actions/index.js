@@ -32,7 +32,7 @@ export const GET_LOGIN_FAILURE = "GET_LOGIN_FAILURE";
 export const getLogin = (response) => dispatch => {
   dispatch({ type: GET_LOGIN });
   const token = response.headers.get('x-auth-token');
-  console.log(token)
+  console.log("=========================TOKEN++++++++++++++++++++++++++++++++++++", token)
   response.json()
   .then(user => {
     console.log("DISPATCH USER: ", user)
