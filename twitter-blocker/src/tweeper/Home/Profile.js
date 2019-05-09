@@ -45,7 +45,7 @@ class Profile extends Component {
     // this.props.getLogin()
     console.log("this.props.user", this.props.user)
     console.log("this.props.loggedIn", this.props.loggedIn)
-    const token = localStorage.getIten("token")
+    const token = localStorage.getItem("token")
     const headers = `{"authorization": ${token}}`
     this.props.getUser(localStorage.getItem("twitter_user_id"))
     axios.get(`${url}/auth/me` , headers)
