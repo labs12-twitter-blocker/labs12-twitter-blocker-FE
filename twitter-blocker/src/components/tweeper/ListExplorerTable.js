@@ -8,7 +8,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { getLists, addUserVote } from '../../actions/index'
+import { getLists, addUserVote } from '../../actions/index';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
   root: {
@@ -109,7 +110,8 @@ class LeaderboardAllTable extends Component {
                 <button id={row.twitter_list_id} onClick={this.down}>↓</button> 
               </TableCell>
               <TableCell align="center">{row.list_points}</TableCell>
-              <TableCell component="th" scope="row">{row.list_name}<br></br>{row.description}</TableCell>
+              <Link to={`/details/${row.twitter_list_id}`}>
+              <TableCell component="th" scope="row">{row.list_name}<br></br>{row.description}</TableCell></Link>
               {/* <TableCell>{row.description}</TableCell> */}
               <TableCell align="center">{row.member_count}</TableCell>
               <TableCell align="center">{row.subscriber_count}</TableCell>

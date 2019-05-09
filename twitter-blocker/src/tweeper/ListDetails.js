@@ -80,12 +80,8 @@ class ListDetails extends React.Component {
   }
 
   componentDidMount(){
-    // this.props.getList("1098020800320270336");
-    // this.props.getList(this.props.match.params.id);
-    this.props.getListMembers("1098020800320270336");
-    // this.props.getListMembers(this.props.match.params.id);
-    this.props.getListTimeline("1098020800320270336");
-    // this.props.getListTimeline(this.props.match.params.id);
+    this.props.getListMembers(this.props.match.params.twitter_list_id);
+    this.props.getListTimeline(this.props.match.params.twitter_list_id);
 }
   
 render() {
@@ -93,7 +89,7 @@ render() {
   return (
     <React.Fragment>
       <CssBaseline />
-      <HeaderTest />
+      <Header />
       <Content>
             <Feed>
               <Tabs onChange={this.handleChange}>
