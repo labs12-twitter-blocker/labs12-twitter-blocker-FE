@@ -9,7 +9,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import { getLists } from '../../actions/index'
+import { getUserList } from '../../actions/index'
 
 const styles = theme => ({
   root: {
@@ -38,8 +38,8 @@ class AllListsTable extends Component {
 
     
     componentDidMount() {
-        this.props.getLists()
-        
+        // this.props.getLists()
+        this.props.getUserList(localStorage.getItem("twitter_user_id"))
     };
 
     componentDidUpdate() {
@@ -126,5 +126,5 @@ const styledComponent = withStyles(styles)(AllListsTable);
 
 export default connect(
   mapStateToProps,
-  { getLists }
+  { getUserList }
 )(styledComponent);

@@ -19,6 +19,8 @@ import { getUser } from '../../actions/index.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
+require('dotenv').config();
+const url = process.env.REACT_APP_BACKEND_BASE_URL
 
 const { Avatar, Icon, Typography, Button } = atoms;
 // const { Tabs, Tab } = molecules;
@@ -45,7 +47,15 @@ class Profile extends Component {
     console.log("this.props.user", this.props.user)
     console.log("this.props.loggedIn", this.props.loggedIn)
     this.props.getUser(localStorage.getItem("twitter_user_id"))
-    
+    const token = localStorage.getItem("token")
+    axios.get(`${url}/auth/me`, {
+      headers: {
+          "x-auth-token": token
+      }
+    })
+    .then(res => {
+      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~res", res.data);
+    })
 
   }
 
