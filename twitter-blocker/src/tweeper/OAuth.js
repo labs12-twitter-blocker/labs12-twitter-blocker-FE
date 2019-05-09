@@ -95,9 +95,9 @@ class OAuth extends Component {
         </div>
       ) :
       (
-        <TwitterLogin loginUrl="http://localhost:5000/auth/twitter/"
+        <TwitterLogin loginUrl={`${url}/auth/twitter/`}
           onFailure={this.onFailed} onSuccess={this.props.getLogin}
-          requestTokenUrl="http://localhost:5000/auth/twitter/reverse" />
+          requestTokenUrl={`${url}/auth/twitter/reverse`} />
       );
 
     return (
