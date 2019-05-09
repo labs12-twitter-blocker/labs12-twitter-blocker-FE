@@ -1,7 +1,7 @@
 import axios from "axios";
-
+require('dotenv').config();
 // const url = "https://twitter-block.herokuapp.com"
-const url = "http://localhost:5000"
+const url = process.env.REACT_APP_BACKEND_BASE_URL
 
 //<------GET HELLO------>
 
