@@ -51,8 +51,8 @@ class Profile extends Component {
     //   headers:{
     //     'authorization': token
     //   })
-    .then(res=> {
-    console.log(res)})
+  //   .then(res=> {
+  //   console.log(res)})
   }
 
 //   axios.get(url, {
