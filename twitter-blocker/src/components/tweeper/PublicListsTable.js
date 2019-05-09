@@ -8,7 +8,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { getPublicLists } from '../../actions/index'
+import Button from '@material-ui/core/Button';
+import { getUserPublicList } from '../../actions/index'
 
 const styles = theme => ({
   root: {
@@ -39,7 +40,7 @@ class PublicListsTable extends Component {
 
     
     componentDidMount() {
-        this.props.getPublicLists()
+        this.props.getUserPublicList(localStorage.getItem("twitter_user_id"))
         
     };
 
@@ -68,7 +69,12 @@ class PublicListsTable extends Component {
     render() {
         
         if (this.props.publicLists === null || this.props.publicLists.length === 0) {
-            return (<div>Loading</div>)
+          return (<div>
+            <h3>Create Your First List!</h3>
+            <Button medium color="primary" variant="contained">
+              Create New List
+            </Button>
+            </div>)
         } else {
         const { classes } = this.props;
   return (
@@ -114,7 +120,7 @@ PublicListsTable.propTypes = {
 // export default withStyles(styles)(PublicListsTable);
 
 const mapStateToProps = state => ({
-  publicLists: state.listsReducer.publicLists
+  publicLists: state.listsReducer.userPublicLists
   });
   
 
@@ -122,5 +128,5 @@ const styledComponent = withStyles(styles)(PublicListsTable);
 
 export default connect(
   mapStateToProps,
-  { getPublicLists }
+  { getUserPublicList }
 )(styledComponent);
