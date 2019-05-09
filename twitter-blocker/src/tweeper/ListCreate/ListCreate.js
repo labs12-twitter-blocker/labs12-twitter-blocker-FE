@@ -67,6 +67,7 @@ class ListCreate extends React.Component {
     this.setState({ fullWidth: event.target.checked });
   };
 
+
   render() {
     const { classes } = this.props;
 
@@ -74,9 +75,6 @@ class ListCreate extends React.Component {
       <React.Fragment>
         <h1>Create Your List</h1>
         <CreateListForm />
-        <Button medium color="primary" variant="contained">
-          Generate New List
-        </Button>
         <GeneratedList />
       </React.Fragment>
     );

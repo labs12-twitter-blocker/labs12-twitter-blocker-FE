@@ -25,7 +25,7 @@ const styles = theme => ({
 let id = 0;
 function createData(list_name, description, member_count, subscriber_count, list_upvotes, list_downvotes) {
   id += 1;
-  console.log("createData", id)
+  // console.log("createData", id)
   return { id, list_name, description, member_count, subscriber_count, list_upvotes, list_downvotes };
 }
 
@@ -50,14 +50,14 @@ class AllListsTable extends Component {
 
     getListRowBuilder = (list) => {
         let newRow = [];
-        console.log('here')
+        // console.log('here')
         list.map(list => {
-            console.log("list", list);
+            // console.log("list", list);
             newRow.push(createData(list.list_name, list.description, 
                 list.member_count, list.subscriber_count, 
                 list.list_upvotes, list.list_downvotes))
         })
-        console.log(newRow);
+        // console.log(newRow);
         this.setState({listRan: true})
         this.setState({rows: newRow});
     };
@@ -90,7 +90,7 @@ class AllListsTable extends Component {
           </TableRow>
         </TableHead>
         <TableBody>
-            {console.log("this.state.rows", this.state.rows)}
+            {/* {console.log("this.state.rows", this.state.rows)} */}
           {this.state.rows.map(row => (
             <TableRow key={row.id}>
               <TableCell component="th" scope="row">
