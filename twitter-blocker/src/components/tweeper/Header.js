@@ -68,7 +68,7 @@ handleChange = (event) => {
         </Grid>
         <Hidden smDown>
           <Grid item sm>
-            <TextField onSubmit={this.searchLists}
+            <TextField 
               fullWidth
               placeholder="Find Lists"
               InputProps={{
