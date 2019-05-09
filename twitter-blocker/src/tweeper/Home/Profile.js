@@ -19,6 +19,7 @@ import { getUser } from '../../actions/index.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
+require('dotenv').config();
 
 const { Avatar, Icon, Typography, Button } = atoms;
 // const { Tabs, Tab } = molecules;
@@ -37,7 +38,7 @@ const Cover = styled('div')({
   height: 200,
   backgroundColor: '#ccd6dd',
 });
-
+const url = process.env.REACT_APP_BACKEND_BASE_URL
 class Profile extends Component {
 
   componentDidMount() {
@@ -45,8 +46,8 @@ class Profile extends Component {
     console.log("this.props.user", this.props.user)
     console.log("this.props.loggedIn", this.props.loggedIn)
     this.props.getUser(localStorage.getItem("twitter_user_id"))
-    
-
+    axios.get(`${url}/auth/me`).then(res=> {
+      console.log(res)})
   }
 
   // componentDidUpdate(prevProps) {
@@ -125,7 +126,7 @@ const mapStateToProps = state => ({
   loggedIn: state.loginReducer.loggedIn
 
   });
-  
+
 
 const styledComponent = withTheme(theme)(Profile);
 
