@@ -5,11 +5,12 @@ import Hidden from '@material-ui/core/Hidden';
 import ListItemText from '@material-ui/core/ListItemText';
 import CreateList from './CreateList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faSearch, faBell, faEnvelope, faList, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faSearch, faBell, faEnvelope, faList, faPlus, faCog } from '@fortawesome/free-solid-svg-icons';
 import atoms from '../atoms';
 import molecules from '../molecules';
 import { searchLists } from '../../actions';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const { AppBar, Avatar, Badge, Icon, Toolbar, Button } = atoms;
 const { Tabs, Tab, ListItem, InputAdornment } = molecules;
@@ -50,19 +51,32 @@ handleChange = (event) => {
               onlyIcon
               icon={
                 <Badge dotted badgeContent="">
+                <Link to="/profile">
                   <FontAwesomeIcon icon={faHome} size="2x" color='#38A1F3'/>
+                  </Link>
                 </Badge>
               }
             />
             <Tab onlyIcon icon={<FontAwesomeIcon icon={faPlus} size="2x" color='#38A1F3'/>} />
+            
             <Tab
               onlyIcon
               icon={
                 <Badge >
+                <Link to="/explorer">
                   <FontAwesomeIcon icon={faList} size="2x" color='#38A1F3'/>
+                  </Link>
                 </Badge>
               }
             />
+            
+            
+            <Tab onlyIcon icon={
+              <Link to="/settings">
+                <FontAwesomeIcon icon={faCog} size="2x" color='#38A1F3' />
+              </Link>}/>
+            
+            
             {/* <Tab onlyIcon icon={<FontAwesomeIcon icon={faEnvelope} size="2x" color='#38A1F3'/>} /> */}
           </Tabs>
         </Grid>
