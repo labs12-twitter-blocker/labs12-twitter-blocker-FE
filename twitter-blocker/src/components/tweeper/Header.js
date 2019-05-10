@@ -5,9 +5,12 @@ import Hidden from '@material-ui/core/Hidden';
 import ListItemText from '@material-ui/core/ListItemText';
 import CreateList from './CreateList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faSearch, faBell, faEnvelope, faList, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faSearch, faBell, faEnvelope, faList, faPlus, faCog } from '@fortawesome/free-solid-svg-icons';
 import atoms from '../atoms';
 import molecules from '../molecules';
+import { searchLists } from '../../actions';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const { AppBar, Avatar, Badge, Icon, Toolbar, Button } = atoms;
 const { Tabs, Tab, ListItem, InputAdornment } = molecules;
@@ -21,8 +24,25 @@ const searchIcon = {
 }
 
 
-const Header = () => (
-  <AppBar position="sticky" elevation={1}>
+class Header extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchTerm: ""
+    }
+  }
+
+handleChange = (event) => {
+  this.setState({searchTerm: event.target.value});
+}
+  searchLists = (event) => {
+    this.props.searchLists(event.target.value);
+    // this.setState({searchTerm: ""})
+  }
+
+  render() {
+    return (
+      <AppBar position="sticky" elevation={1}>
     <Toolbar>
       <Grid container alignItems="center" spacing={16}>
         <Grid item xs={6} sm={4}>
@@ -31,25 +51,38 @@ const Header = () => (
               onlyIcon
               icon={
                 <Badge dotted badgeContent="">
+                <Link to="/profile">
                   <FontAwesomeIcon icon={faHome} size="2x" color='#38A1F3'/>
+                  </Link>
                 </Badge>
               }
             />
             <Tab onlyIcon icon={<FontAwesomeIcon icon={faPlus} size="2x" color='#38A1F3'/>} />
+            
             <Tab
               onlyIcon
               icon={
                 <Badge >
+                <Link to="/explorer">
                   <FontAwesomeIcon icon={faList} size="2x" color='#38A1F3'/>
+                  </Link>
                 </Badge>
               }
             />
+            
+            
+            <Tab onlyIcon icon={
+              <Link to="/settings">
+                <FontAwesomeIcon icon={faCog} size="2x" color='#38A1F3' />
+              </Link>}/>
+            
+            
             {/* <Tab onlyIcon icon={<FontAwesomeIcon icon={faEnvelope} size="2x" color='#38A1F3'/>} /> */}
           </Tabs>
         </Grid>
         <Hidden smDown>
           <Grid item sm>
-            <TextField
+            <TextField 
               fullWidth
               placeholder="Find Lists"
               InputProps={{
@@ -60,6 +93,8 @@ const Header = () => (
                   </InputAdornment>
                 ),
               }}
+              onChange={this.searchLists}
+              
             />
           </Grid>
         </Hidden>
@@ -78,6 +113,18 @@ const Header = () => (
       </Grid>
     </Toolbar>
   </AppBar>
-);
+    )
+  }
+  
+}
 
-export default Header;
+const mapStateToProps = state => {
+  return {
+  }
+}
+
+const mapActionsToProps = {
+  searchLists
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(Header);

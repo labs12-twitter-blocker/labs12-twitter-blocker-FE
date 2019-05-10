@@ -14,9 +14,12 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faHome, faSearch, faBell, faEnvelope, faList,  } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faHome, faSearch, faBell, faEnvelope, faList, faCog } from '@fortawesome/free-solid-svg-icons';
 import atoms from '../components/atoms';
 import molecules from '../components/molecules';
+import { searchLists } from '../actions';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const { AppBar, Avatar, Badge, Icon, Toolbar, Button } = atoms;
 const { Tabs, Tab, ListItem, InputAdornment } = molecules;
@@ -35,10 +38,19 @@ const avatarStyle = {
     marginLeft: '8px'
   }
 
-export default class HeaderTest extends React.Component {
+class HeaderTest extends React.Component {
   state = {
     open: false,
+    searchTerm: "",
   };
+
+  handleChange = (event) => {
+  this.setState({searchTerm: event.target.value});
+}
+  searchLists = (event) => {
+    this.props.searchLists(event.target.value);
+    // this.setState({searchTerm: ""})
+  }
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -60,7 +72,9 @@ export default class HeaderTest extends React.Component {
           onlyIcon
           icon={
             <Badge dotted badgeContent="">
+            <Link to="/profile">
               <FontAwesomeIcon icon={faHome} size="2x" color='#38A1F3'/>
+              </Link>
             </Badge>
           }
         />
@@ -104,10 +118,16 @@ export default class HeaderTest extends React.Component {
           onlyIcon
           icon={
             <Badge >
+            <Link to="/explorer">
               <FontAwesomeIcon icon={faList} size="2x" color='#38A1F3'/>
+              </Link>
             </Badge>
           }
         />
+        <Tab onlyIcon icon={
+              <Link to="/settings">
+                <FontAwesomeIcon icon={faCog} size="2x" color='#38A1F3' />
+              </Link>}/>
         {/* <Tab onlyIcon icon={<FontAwesomeIcon icon={faEnvelope} size="2x" color='#38A1F3'/>} /> */}
       </Tabs>
     </Grid>
@@ -124,6 +144,7 @@ export default class HeaderTest extends React.Component {
               </InputAdornment>
             ),
           }}
+          onChange={this.searchLists}
         />
       </Grid>
     </Hidden>
@@ -146,3 +167,13 @@ export default class HeaderTest extends React.Component {
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+  }
+}
+
+const mapActionsToProps = {
+  searchLists
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(HeaderTest);

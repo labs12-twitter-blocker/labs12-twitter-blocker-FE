@@ -36,6 +36,7 @@ const initialState = {
     fetchingUsersPoints: false,
     fetchingPremiumUsers: false,
     currentUser: null,
+    gotCurrentUser: false,
     fetchingUser: false,
     editingUser: false,
     addingUser: false,
@@ -84,18 +85,21 @@ switch (action.type) {
     return {
         ...state,
         fetchingUser: true,
+        gotCurrentUser: false,
         error: null
     };
     case GET_USER_SUCCESS:
     return {
         ...state,
         fetchingUser: false,
+        gotCurrentUser: true,
         currentUser: action.payload
     };
     case GET_USER_FAILURE:
     return {
         ...state,
         fetchingUser: false,
+        gotCurrentUser: false,
         error: action.payload
     };
     case  GET_USERS_POINTS:

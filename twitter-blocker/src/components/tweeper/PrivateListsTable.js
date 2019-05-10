@@ -8,7 +8,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { getPrivateLists } from '../../actions/index'
+import Button from '@material-ui/core/Button';
+import { getUserPrivateList } from '../../actions/index'
 
 const styles = theme => ({
   root: {
@@ -37,7 +38,7 @@ class PrivateListsTable extends Component {
 
     
     componentDidMount() {
-        this.props.getPrivateLists()
+        this.props.getUserPrivateList(localStorage.getItem("twitter_user_id"))
         
     };
 
@@ -66,7 +67,12 @@ class PrivateListsTable extends Component {
     render() {
         
         if (this.props.privateLists === null || this.props.privateLists.length === 0) {
-            return (<div>Loading</div>)
+          return (<div>
+            <h3>Create Your First List!</h3>
+            <Button medium color="primary" variant="contained">
+              Create New List
+            </Button>
+            </div>)
         } else {
         const { classes } = this.props;
   return (
@@ -112,7 +118,7 @@ PrivateListsTable.propTypes = {
 // export default withStyles(styles)(PrivateListsTable);
 
 const mapStateToProps = state => ({
-  privateLists: state.listsReducer.privateLists
+  privateLists: state.listsReducer.userPrivateLists
   });
   
 
@@ -120,5 +126,5 @@ const styledComponent = withStyles(styles)(PrivateListsTable);
 
 export default connect(
   mapStateToProps,
-  { getPrivateLists }
+  { getUserPrivateList }
 )(styledComponent);

@@ -8,7 +8,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { getAllListPoints, addUserVote } from '../../actions/index'
+import { getLists, addUserVote } from '../../actions/index';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
   root: {
@@ -32,17 +33,18 @@ class LeaderboardAllTable extends Component {
     state={
         rows: [],
         allListRan: false,
-        twitter_user_id: ""
+        twitter_user_id: "1123316691100786688", //somehow I need to set this up?!?!?
+        lists: []
     }
 
     
     componentDidMount() {
-        this.props.getAllListPoints()
-        this.setState({"twitter_user_id": localStorage.getItem("twitter_user_id") })
+        this.props.getLists()
+        
       };
       
-      componentDidUpdate() {
-        if (this.props.allLists !== null  && this.state.allListRan === false && this.state.twitter_user_id !== "" ) {
+      componentDidUpdate(prevProps) {
+        if (this.props.allLists.length !== prevProps.allLists.length) {
           this.getListRowBuilder(this.props.allLists);
         }
       }
@@ -83,7 +85,7 @@ class LeaderboardAllTable extends Component {
 
     render() {
         
-        if (this.props.allLists === null || this.props.allLists.length === 0 || this.state.twitter_user_id === "" ) {
+        if (this.props.allLists === null || this.props.allLists.length === 0) {
             return (<div>Loading</div>)
         } else {
         const { classes } = this.props;
@@ -109,7 +111,8 @@ class LeaderboardAllTable extends Component {
                 <button id={row.twitter_list_id} onClick={this.down}>↓</button> 
               </TableCell>
               <TableCell align="center">{row.list_points}</TableCell>
-              <TableCell component="th" scope="row">{row.list_name}<br></br>{row.description}</TableCell>
+              <Link to={`/details/${row.twitter_list_id}`}>
+              <TableCell component="th" scope="row">{row.list_name}<br></br>{row.description}</TableCell></Link>
               {/* <TableCell>{row.description}</TableCell> */}
               <TableCell align="center">{row.member_count}</TableCell>
               <TableCell align="center">{row.subscriber_count}</TableCell>
@@ -129,7 +132,7 @@ LeaderboardAllTable.propTypes = {
 
 
 const mapStateToProps = state => ({
-    allLists: state.listsReducer.listPointsAll
+    allLists: state.listsReducer.lists
   });
   
 
@@ -137,5 +140,5 @@ const styledComponent = withStyles(styles)(LeaderboardAllTable);
 
 export default connect(
   mapStateToProps,
-  { getAllListPoints, addUserVote }
+  { getLists, addUserVote }
 )(styledComponent);

@@ -767,7 +767,28 @@ export const addUserVote = vote => dispatch => {
     });
 };
 
+export const SEARCH_LISTS = "SEARCH_LISTS";
+export const SEARCH_LISTS_SUCCESS = "SEARCH_LISTS_SUCCESS";
+export const SEARCH_LISTS_FAILURE = "SEARCH_LISTS_FAILURE";
 
+export function searchLists (searchTerm) {
+    return (dispatch) => {
+        dispatch({type: SEARCH_LISTS});
+        axios.get(`https://twitter-block.herokuapp.com/lists`)
+        .then(({data}) => {
+            console.log(data);
+            let filtered = data.filter(list => {
+                return list.list_name.toLowerCase().includes(searchTerm.toLowerCase()) || list.description.toLowerCase().includes(searchTerm.toLowerCase())
+            })
+            console.log(filtered);
+            dispatch({type: SEARCH_LISTS_SUCCESS, payload: filtered})
+        })
+        .catch(err => {
+            console.log(err);
+            dispatch({type: SEARCH_LISTS_FAILURE})
+        })
+    }
+}
 
 
 export const ERROR_HANDLER = "ERROR_HANDLER";
