@@ -110,7 +110,7 @@ render() {
                         <Link to={`/profile/${this.props.listMembers.twitter_user_id}`}><Typography>{i.name}</Typography></Link>
                         <Typography>{i.screen_name}</Typography>
                         <Typography>{i.description}</Typography>
-                        {/* {this.props.user.twitter_id === this.props.list.twitter_id ? <FontAwesomeIcon icon="times" onClick={this.removeFromList(i)/> : null} */}
+                        {localStorage.getItem("twitter_user_id") === this.props.list.twitter_id ? <FontAwesomeIcon icon="times" onClick={this.removeFromList(i)}/> : null}
                         </CardContent>
                     </Card>
                   </ListItem>)
