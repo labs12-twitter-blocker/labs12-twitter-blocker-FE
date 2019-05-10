@@ -89,6 +89,7 @@ class Profile extends Component {
   };
 
   render() {
+<<<<<<< HEAD
     let content = ((!!this.props.loggedIn || this.state.twitter_user_id) && this.props.currentUser.users)?
       (
         <React.Fragment>
@@ -154,6 +155,68 @@ class Profile extends Component {
       </React.Fragment>
     );
 }
+=======
+
+    if (this.props.currentUser === null || this.props.currentUser.length === 0) {
+      return (<h3>Loading</h3>)
+    } else {
+      return (
+        <React.Fragment>
+          <CssBaseline />
+          <HeaderTest />
+          <Content>
+                <Feed>
+                  <Cover />
+                  <Box p={2} mb={1}>
+                    <Box
+                      css={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        textAlign: 'right',
+                      }}
+                    >
+                      {/* <Avatar
+                        style={{ marginTop: '-18%', marginBottom: 14 }}
+                        ultraLarge
+                        bordered
+                        src={
+                          './assets/austen.png'
+                        }
+                      /> */}
+                      {/* <Button large color="primary" variant="outlined">
+                        Edit Profile
+                      </Button> */}
+                    </Box>
+                    {/* <Typography primary>Austen Allred</Typography> */}
+                    <Typography light gutterBottom>
+                      {this.props.currentUser.users.screen_name}
+                      {console.log("++++this.props.currentUser", this.props.currentUser)}
+                    </Typography>
+                    {/* <Typography bold inline>
+                        10.8K
+                    </Typography>
+                    <Typography light inline indented>
+                      Following
+                    </Typography>
+                    <Typography bold inline indentedLarge>
+                      100K
+                    </Typography>
+                    <Typography light inline indented>
+                      Followers
+                    </Typography> */}
+                  </Box>
+                  <ListTab variant="fullWidth"/>
+                  <Divider />
+                </Feed>
+            <TweetFloat />
+          </Content>
+        </React.Fragment>
+      );
+    }
+    }
+
+  
+>>>>>>> origin
 }
 
 
