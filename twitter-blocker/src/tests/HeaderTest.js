@@ -41,7 +41,7 @@ const avatarStyle = {
 class HeaderTest extends React.Component {
   state = {
     open: false,
-    searchTerm: "",
+    searchTerm: ""
   };
 
   handleChange = (event) => {
@@ -66,7 +66,7 @@ class HeaderTest extends React.Component {
       <AppBar position="sticky" elevation={1}>
 <Toolbar>
   <Grid container alignItems="center" spacing={16}>
-    <Grid item xs={6} sm={4}>
+    <Grid item xs={12} sm={4}>
       <Tabs value={0} variant="fullWidth">
         <Tab
           onlyIcon
@@ -131,8 +131,8 @@ class HeaderTest extends React.Component {
         {/* <Tab onlyIcon icon={<FontAwesomeIcon icon={faEnvelope} size="2x" color='#38A1F3'/>} /> */}
       </Tabs>
     </Grid>
-    <Hidden smDown>
-      <Grid item sm>
+    
+      <Grid item sm xs={12}>
         <TextField
           fullWidth
           placeholder="Find Lists"
@@ -147,8 +147,8 @@ class HeaderTest extends React.Component {
           onChange={this.searchLists}
         />
       </Grid>
-    </Hidden>
-    <Grid item xs={6} sm="auto">
+   
+    <Grid item xs={6} sm="auto" >
       <ListItem>
         <Avatar src="./assets/austen.png" style={avatarStyle} />
         {/* <ListItemText primary="austen" /> */}
