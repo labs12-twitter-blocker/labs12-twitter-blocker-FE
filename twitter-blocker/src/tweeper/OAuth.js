@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import TwitterLogin from 'react-twitter-auth';
-import {  getUser, getLogin } from '../actions/index.js';
+import { getUser, getLogin } from '../actions/index.js';
 
 require('dotenv').config();
 const url = process.env.REACT_APP_BACKEND_BASE_URL;
@@ -10,9 +10,11 @@ class OAuth extends Component {
   constructor() {
     super();
 
-    this.state = { loggedIn: false, 
-      user: null, 
-      token: ''};
+    this.state = {
+      loggedIn: false,
+      user: null,
+      token: ''
+    };
   }
 
   componentDidMount() {
@@ -71,9 +73,9 @@ class OAuth extends Component {
         <div>
           <p>Authenticated</p>
           <div>
-            "id"{this.props.user.id} <br/>
+            "id"{this.props.user.id} <br />
             {/* twitter_id{this.state.user.twitter_id}<br/> */}
-          username{this.props.user.username}<br/>
+            username{this.props.user.username}<br />
             {/* created_at{this.state.user.created_at}<br/>
             updated_at{this.state.user.updated_at}<br/>
             is_paying{this.state.user.is_paying}<br/>
@@ -94,8 +96,8 @@ class OAuth extends Component {
       ) :
       (
         <TwitterLogin loginUrl={`${url}/auth/twitter/`}
-                      onFailure={this.onFailed} onSuccess={this.props.getLogin}
-                      requestTokenUrl={`${url}/auth/twitter/reverse`}/>
+          onFailure={this.onFailed} onSuccess={this.props.getLogin}
+          requestTokenUrl={`${url}/auth/twitter/reverse`} />
       );
 
     return (
@@ -112,9 +114,9 @@ const mapStateToProps = state => ({
   user: state.loginReducer.user,
   loggedIn: state.loginReducer.loggedIn
 
-  });
+});
 
 export default connect(
   mapStateToProps,
-  {  getUser, getLogin }
+  { getUser, getLogin }
 )(OAuth);

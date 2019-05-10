@@ -16,6 +16,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
+import Divider from '@material-ui/core/Divider/Divider';
 
 
 const styles = theme => ({
@@ -75,6 +76,7 @@ class ListCreate extends React.Component {
       <React.Fragment>
         <h1>Create Your List</h1>
         <CreateListForm />
+        <Divider />
         <GeneratedList />
       </React.Fragment>
     );

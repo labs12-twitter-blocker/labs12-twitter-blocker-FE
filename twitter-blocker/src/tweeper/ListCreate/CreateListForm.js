@@ -60,7 +60,8 @@ class CreateListForm extends Component {
       user2: '',
       user3: '',
       user4: '',
-      user5: ''
+      user5: '',
+
     }
   };
 
@@ -76,10 +77,25 @@ class CreateListForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.addList(this.state);
-    this.props.createList(this.state);
-    this.setState({ list: { ...this.state } });
-    console.log("I'm firing")
+    const token = localStorage.getItem("token");
+    const username = localStorage.getItem("username")
+    console.log(token);
+    const search_users = [this.state.user1, this.state.user2, this.state.user3, this.state.user4, this.state.user5]
+    console.log(this.state);
+    const params = {
+      "original_user": username,
+      "TWITTER_ACCESS_TOKEN": token,
+      "search_users": search_users
+    }
+    const listParams = {
+      "title": this.state.title,
+      "mode": this.state.mode,
+      "description": this.state.description
+    }
+    this.setState({ ...this.state });
+    this.props.createList(listParams);
+    this.props.addList(params);
+    // console.log("I'm firing");
   };
 
   render() {
@@ -119,7 +135,7 @@ class CreateListForm extends Component {
         {/* /////-----Is The List Private-------/////////  */}
 
         <h2>Do you want your list to be private?</h2>
-        <p>Public</p>
+        <h4>Public</h4>
         <Radio
           checked={this.state.mode === 'public'}
           onChange={this.handlePrivateChange}
@@ -127,7 +143,7 @@ class CreateListForm extends Component {
           name="radio-button-demo"
           aria-label="A"
         />
-        <p>Private</p>
+        <h4>Private</h4>
         <Radio
           checked={this.state.mode === 'private'}
           onChange={this.handlePrivateChange}
