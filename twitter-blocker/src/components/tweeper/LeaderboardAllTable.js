@@ -32,17 +32,17 @@ class LeaderboardAllTable extends Component {
     state={
         rows: [],
         allListRan: false,
-        twitter_user_id: "1123316691100786688" //somehow I need to set this up?!?!?
+        twitter_user_id: ""
     }
 
     
     componentDidMount() {
         this.props.getAllListPoints()
-        
+        this.setState({"twitter_user_id": localStorage.getItem("twitter_user_id") })
       };
       
       componentDidUpdate() {
-        if (this.props.allLists.length > 0 && this.state.allListRan === false) {
+        if (this.props.allLists !== null  && this.state.allListRan === false && this.state.twitter_user_id !== "" ) {
           this.getListRowBuilder(this.props.allLists);
         }
       }
@@ -83,7 +83,7 @@ class LeaderboardAllTable extends Component {
 
     render() {
         
-        if (this.props.allLists === null || this.props.allLists.length === 0) {
+        if (this.props.allLists === null || this.props.allLists.length === 0 || this.state.twitter_user_id === "" ) {
             return (<div>Loading</div>)
         } else {
         const { classes } = this.props;

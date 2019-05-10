@@ -14,7 +14,8 @@ import withTheme from '../withTheme';
 import ListTab from '../../components/tweeper/ListTab.js'
 import atoms from '../../components/atoms';
 import molecules from '../../components/molecules';
-import { getUser } from '../../actions/index.js';
+import { getUser, getLogin } from '../../actions/index.js';
+import TwitterLogin from 'react-twitter-auth';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
@@ -41,88 +42,117 @@ const Cover = styled('div')({
 });
 
 class Profile extends Component {
+  constructor() {
+    super();
+
+    this.state = { 
+      loggedIn: false, 
+      user: null, 
+      token: '',
+      twitter_user_id: null
+    };
+  }
 
   componentDidMount() {
-    // this.props.getLogin()
-    console.log("this.props.user", this.props.user)
-    console.log("this.props.loggedIn", this.props.loggedIn)
     this.props.getUser(localStorage.getItem("twitter_user_id"))
-    const token = localStorage.getItem("token")
-    axios.get(`${url}/auth/me`, {
-      headers: {
-          "x-auth-token": token
-      }
-    })
-    .then(res => {
-      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~res", res.data);
-    })
+    if (localStorage.getItem("twitter_user_id")) {
+      this.setState({twitter_user_id: localStorage.getItem("twitter_user_id")})
+    }
+    localStorage.getItem("twitter_user_id")
+    // console.log("++++++++++++++this.props.currentUser", this.props.currentUser)
+
+    // const token = localStorage.getItem("token")
+    // axios.get(`${url}/auth/me`, {
+    //   headers: {
+    //       "x-auth-token": token
+    //   }
+    // })
+    // .then(res => {
+    //   console.log("~~~~~~~~~~~~~~~~~~~~~~~~~res", res.data);
+    // })
 
   }
 
-  // componentDidUpdate(prevProps) {
-  //   console.log("CDUpdate");
-  //   console.log("this.state.loggedIn", this.state.loggedIn);
-  //   console.log("this.state.user", this.state.user);
-  //   console.log("this.props.user", this.props.user);
-  //   if (this.props.user.id !== prevProps.user.id) {
-  //     this.props.getUser(this.props.user.id)
-  //   }
-  // }
+    componentDidUpdate(prevProps) {
+      console.log("CDUpdate");
+      console.log("this.state.loggedIn", this.state.loggedIn);
+      console.log("this.props.currentUser", this.props.currentUser);
+      console.log("this.props.user", this.props.user);
+      if (this.props.user.id !== prevProps.user.id) {
+        this.props.getUser(this.props.user.id)
+      }
+      console.log("twitter_user_id", this.state.twitter_user_id);
+    }
 
+  onFailed = (error) => {
+    alert(error);
+  };
 
   render() {
-
-  return (
-    <React.Fragment>
-      <CssBaseline />
-      <HeaderTest />
-      <Content>
-            <Feed>
-              <Cover />
-              <Box p={2} mb={1}>
-                <Box
-                  css={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    textAlign: 'right',
-                  }}
-                >
-                  <Avatar
-                    style={{ marginTop: '-18%', marginBottom: 14 }}
-                    ultraLarge
-                    bordered
-                    src={
-                      './assets/austen.png'
-                    }
-                  />
-                  {/* <Button large color="primary" variant="outlined">
-                    Edit Profile
-                  </Button> */}
+    let content = ((!!this.props.loggedIn || this.state.twitter_user_id) && this.props.currentUser.users)?
+      (
+        <React.Fragment>
+        <CssBaseline />
+        <HeaderTest />
+        <Content>
+              <Feed>
+                <Cover />
+                <Box p={2} mb={1}>
+                  <Box
+                    css={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      textAlign: 'right',
+                    }}
+                  >
+                    {/* <Avatar
+                      style={{ marginTop: '-18%', marginBottom: 14 }}
+                      ultraLarge
+                      bordered
+                      src={
+                        './assets/austen.png'
+                      }
+                    /> */}
+                    {/* <Button large color="primary" variant="outlined">
+                      Edit Profile
+                    </Button> */}
+                  </Box>
+                  {/* <Typography primary>Austen Allred</Typography> */}
+                  <Typography light gutterBottom>
+                    {this.props.currentUser.users.screen_name}
+                    {console.log("++++this.props.currentUser", this.props.currentUser)}
+                  </Typography>
+                  {/* <Typography bold inline>
+                      10.8K
+                  </Typography>
+                  <Typography light inline indented>
+                    Following
+                  </Typography>
+                  <Typography bold inline indentedLarge>
+                    100K
+                  </Typography>
+                  <Typography light inline indented>
+                    Followers
+                  </Typography> */}
                 </Box>
-                <Typography primary>Austen Allred</Typography>
-                <Typography light gutterBottom>
-                  @austen {console.log(this.props.currentUser)}
-                </Typography>
-                <Typography bold inline>
-                    10.8K
-                </Typography>
-                <Typography light inline indented>
-                  Following
-                </Typography>
-                <Typography bold inline indentedLarge>
-                  100K
-                </Typography>
-                <Typography light inline indented>
-                  Followers
-                </Typography>
-              </Box>
-              <ListTab variant="fullWidth"/>
-              <Divider />
-            </Feed>
-        <TweetFloat />
-      </Content>
-    </React.Fragment>
-  );
+                <ListTab variant="fullWidth"/>
+                <Divider />
+              </Feed>
+          <TweetFloat />
+        </Content>
+      </React.Fragment>
+      ) :
+      (
+        <TwitterLogin loginUrl={`${url}/auth/twitter/`}
+                      onFailure={this.onFailed} onSuccess={this.props.getLogin}
+                      requestTokenUrl={`${url}/auth/twitter/reverse`}/>
+      );
+
+    return (
+      <React.Fragment> 
+        {content}
+      </React.Fragment>
+    );
 }
 }
 
@@ -141,5 +171,5 @@ const styledComponent = withTheme(theme)(Profile);
 
 export default connect(
   mapStateToProps,
-  { getUser }
+  { getUser, getLogin }
 )(styledComponent);
