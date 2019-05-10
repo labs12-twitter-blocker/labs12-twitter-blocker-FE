@@ -6,15 +6,15 @@ import Radio from '@material-ui/core/Radio';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { addList, createList } from '../../actions';
+import { addList, createList, getUser } from '../../actions';
 import { connect } from "react-redux";
 
 
 const styles = theme => ({
   root: {
-    color: green[600],
+    color: green[ 600 ],
     '&$checked': {
-      color: green[500],
+      color: green[ 500 ],
     },
   },
   checked: {},
@@ -62,10 +62,18 @@ class CreateListForm extends Component {
 
     }
   };
+  componentDidMount() {
+    this.props.getUser(localStorage.getItem("twitter_user_id"))
+    if (localStorage.getItem("twitter_user_id")) {
+      this.setState({ twitter_user_id: localStorage.getItem("twitter_user_id") })
+    }
+    localStorage.getItem("twitter_user_id")
+    console.log("++++++++++++++this.props.currentUser", this.props.currentUser)
+  }
 
   handleChange = event => {
     this.setState({
-      [event.target.name]: event.target.value,
+      [ event.target.name ]: event.target.value,
     });
   };
 
@@ -77,16 +85,21 @@ class CreateListForm extends Component {
     e.preventDefault();
     const token = localStorage.getItem("token");
     const username = localStorage.getItem("username")
-    console.log(token);
-    const search_users = [this.state.user1, this.state.user2, this.state.user3, this.state.user4, this.state.user5]
-    console.log(this.state);
+    const id = localStorage.getItem("twitter_user_id")
+    console.log("ID____________________", id);
+    console.log("TOKEN", token);
+    const search_users = [ this.state.user1, this.state.user2, this.state.user3, this.state.user4, this.state.user5 ]
+    console.log("THIS.STATE", this.state);
     const params = {
+      "name": this.state.title,
+      "user_id": id,
       "original_user": username,
       "TWITTER_ACCESS_TOKEN": token,
       "search_users": search_users
     }
     const listParams = {
-      "title": this.state.title,
+      "user_id": id,
+      "name": this.state.title,
       "mode": this.state.mode,
       "description": this.state.description
     }
@@ -224,6 +237,7 @@ class CreateListForm extends Component {
   }
 }
 
+
 CreateListForm.propTypes = {
   classes: PropTypes.object.isRequired,
 };
@@ -239,5 +253,5 @@ const styledComponent = withStyles(styles)(CreateListForm);
 
 export default connect(
   mapStateToProps,
-  { addList, createList }
+  { addList, createList, getUser }
 )(styledComponent);

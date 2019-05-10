@@ -44,8 +44,8 @@ class OAuth extends Component {
         <div>
           <p>Authenticated</p>
           <div>
-            "id"{this.props.user.id} <br/>
-            username: {this.props.user.username}<br/>
+            "id"{this.props.user.id} <br />
+            username: {this.props.user.username}<br />
           </div>
           <div>
             <button onClick={this.logout} className="button" >

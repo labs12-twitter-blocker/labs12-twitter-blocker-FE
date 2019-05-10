@@ -21,7 +21,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
 require('dotenv').config();
+
 const url = process.env.REACT_APP_BACKEND_BASE_URL
+
 
 const { Avatar, Icon, Typography, Button } = atoms;
 // const { Tabs, Tab } = molecules;
@@ -45,9 +47,9 @@ class Profile extends Component {
   constructor() {
     super();
 
-    this.state = { 
-      loggedIn: false, 
-      user: null, 
+    this.state = {
+      loggedIn: false,
+      user: null,
       token: '',
       twitter_user_id: null
     };
@@ -60,6 +62,7 @@ class Profile extends Component {
     }
     localStorage.getItem("twitter_user_id")
     console.log("++++++++++++++this.props.currentUser", this.props.currentUser)
+
 
   }
 
@@ -141,7 +144,7 @@ class Profile extends Component {
       );
 
     return (
-      <React.Fragment> 
+      <React.Fragment>
         {content}
       </React.Fragment>
     );
@@ -158,7 +161,7 @@ const mapStateToProps = state => ({
   loggedIn: state.loginReducer.loggedIn
 
   });
-  
+
 
 const styledComponent = withTheme(theme)(Profile);
 

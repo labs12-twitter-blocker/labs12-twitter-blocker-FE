@@ -1,8 +1,8 @@
 import axios from "axios";
 require('dotenv').config();
 
-// const url = "https://twitter-block.herokuapp.com"
-const url = process.env.REACT_APP_BACKEND_BASE_URL
+
+const url = process.env.REACT_APP_BACKEND_BASE_URL;
 
 //<------GET HELLO------>
 
@@ -33,7 +33,9 @@ export const GET_LOGIN_FAILURE = "GET_LOGIN_FAILURE";
 export const getLogin = (response) => dispatch => {
   dispatch({ type: GET_LOGIN });
   const token = response.headers.get('x-auth-token');
+
   console.log("*************token: ", token)
+
   response.json()
     .then(user => {
       console.log("DISPATCH USER: ", user)
@@ -466,7 +468,7 @@ export const getListMembers = list_id => dispatch => {
     .get(`${url}/lists/members/${list_id}`)
     .then(res => {
       console.log(res);
-      dispatch({ type: GET_LIST_MEMBERS_SUCCESS, payload: res.data[0].list_members });
+      dispatch({ type: GET_LIST_MEMBERS_SUCCESS, payload: res.data[ 0 ].list_members });
     })
     .catch(err => {
       console.log(err);
