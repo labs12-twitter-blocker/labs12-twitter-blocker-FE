@@ -54,12 +54,14 @@ class CreateListForm extends Component {
       title: '',
       mode: 'public',
       description: '',
-      user1: '',
-      user2: '',
-      user3: '',
-      user4: '',
-      user5: '',
-
+      user1: "",
+      user2: "",
+      user3: "",
+      user4: "",
+      user5: "",
+      search_users: null,
+      listParams: null,
+      newListResponseUpdated: false,
     }
   };
   componentDidMount() {
@@ -88,26 +90,69 @@ class CreateListForm extends Component {
     const id = localStorage.getItem("twitter_user_id")
     console.log("ID____________________", id);
     console.log("TOKEN", token);
-    const search_users = [ this.state.user1, this.state.user2, this.state.user3, this.state.user4, this.state.user5 ]
+    // let search_users = [ this.state.user1, this.state.user2, this.state.user3, this.state.user4, this.state.user5 ]
     console.log("THIS.STATE", this.state);
-    const params = {
-      "name": this.state.title,
-      "user_id": id,
-      "original_user": username,
-      "TWITTER_ACCESS_TOKEN": token,
-      "search_users": search_users
-    }
+    // console.log("search_users", search_users);
+    // this.setState({ search_users: search_users });
+
+    // const params = {
+    //   "name": this.state.title,
+    //   "user_id": id,
+    //   "original_user": username,
+    //   "TWITTER_ACCESS_TOKEN": token,
+    //   "search_users": search_users
+    // }
+
     const listParams = {
       "user_id": id,
       "name": this.state.title,
       "mode": this.state.mode,
       "description": this.state.description
     }
+
+    this.setState({ listParams: listParams });
+
     this.setState({ ...this.state });
-    this.props.createList(listParams);
-    this.props.addList(params);
+    this.props.createList(listParams); //POST to /list/create to make a new list
+    // this.props.addList(params); //POST to /list to add users to the list
     // console.log("I'm firing");
   };
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log("CDUpdate");
+    console.log("this.props.listParams", this.props.listParams);
+    console.log("this.props.newListResponseUpdated", this.props.newListResponseUpdated);
+    console.log("this.state.newListResponseUpdated", this.state.newListResponseUpdated);
+    console.log("this.props.newListResponse", this.props.newListResponse);
+
+    if (this.props.newListResponseUpdated !== prevProps.newListResponseUpdated) {
+      console.log("CDU IF 1");
+      this.setState({ newListResponseUpdated: this.props.newListResponseUpdated })
+    }
+    // console.log("this.props.newListResponse.id_str", this.props.newListResponse.id_str);
+
+    
+    if (this.state.newListResponseUpdated !== prevState.newListResponseUpdated) {
+      console.log("CDU IF 2");
+
+      let completeList = {
+        "user_id": localStorage.getItem("twitter_user_id"),
+        "name": this.props.newListResponse.name,
+        "original_user": this.props.newListResponse.user.screen_name,
+        "mode": this.props.newListResponse.mode,
+        "description": this.props.newListResponse.description,
+        "id": this.props.newListResponse.id_str,
+        "search_users": [ this.state.user1, this.state.user2, this.state.user3, this.state.user4, this.state.user5 ]
+      }
+      console.log("~~~~~~~~~~~~~~~~~completeList", completeList);
+      this.props.addList(completeList);
+    }
+  }
+
+  // if (this.props.userID !== prevProps.userID) {
+  //   this.fetchData(this.props.userID);
+  // }
+
 
   render() {
     const { classes } = this.props;
@@ -245,7 +290,9 @@ CreateListForm.propTypes = {
 // export default withStyles(styles)(CreateListForm);
 
 const mapStateToProps = state => ({
-  listMembers: state.listsReducer.listMembers
+  listMembers: state.listsReducer.listMembers,
+  newListResponse: state.listsReducer.newListResponse,
+  newListResponseUpdated: state.listsReducer.newListResponseUpdated
 });
 
 

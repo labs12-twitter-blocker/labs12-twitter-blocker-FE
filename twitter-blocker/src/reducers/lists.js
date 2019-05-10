@@ -119,6 +119,7 @@ const initialState = {
   updatingListMembers: false,
   deletingList: false,
   searchingLists: false,
+  newListResponse: null,
   error: null
 };
 
@@ -470,18 +471,22 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         creatingList: true,
+        newListResponseUpdated: false,
         error: null
       };
     case CREATE_LIST_SUCCESS:
       return {
         ...state,
         creatingList: false,
+        newListResponse: action.payload.response,
+        newListResponseUpdated: true,
         lists: [...state.lists, action.payload]
       };
     case CREATE_LIST_FAILURE:
       return {
         ...state,
         creatingList: false,
+        newListResponseUpdated: false,
         error: action.payload
       };
     case EDIT_LIST:
