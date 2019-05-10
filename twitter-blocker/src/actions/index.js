@@ -37,16 +37,16 @@ export const getLogin = (response) => dispatch => {
   console.log("*************token: ", token)
 
   response.json()
-  .then(user => {
-    console.log("DISPATCH USER: ", user)
-    if (token) {
-      localStorage.setItem("twitter_user_id", user.id)
-      localStorage.setItem("token", token)
-console.log("USER++++++++++++++++++++++++++++++++",user)
-      dispatch({ type: GET_LOGIN_SUCCESS, payload: user });
-      // this.setState({isAuthenticated: true, user: user, token: token});
-    }
-  });
+    .then(user => {
+      console.log("DISPATCH USER: ", user)
+      if (token) {
+        localStorage.setItem("twitter_user_id", user.id)
+        localStorage.setItem("token", token)
+        localStorage.setItem("username", user.username)
+        dispatch({ type: GET_LOGIN_SUCCESS, payload: user })
+        // this.setState({isAuthenticated: true, user: user, token: token});
+      }
+    });
 };
 // export const getLogin = () => dispatch => {
 //   dispatch({ type: GET_LOGIN });
@@ -197,7 +197,7 @@ export const EDIT_USER_FAILURE = "EDIT_USER_FAILURE";
 export const editUser = profile => dispatch => {
   dispatch({ type: EDIT_USER });
   axios
-    .put(`${url}/users/${profile.user_id}`, profile )
+    .put(`${url}/users/${profile.user_id}`, profile)
     .then(res => {
       dispatch({ type: EDIT_USER_SUCCESS, payload: res.data });
     })
@@ -601,7 +601,7 @@ export const EDIT_LIST_FAILURE = "EDIT_LIST_FAILURE";
 export const editList = list => dispatch => {
   dispatch({ type: EDIT_LIST });
   axios
-    .put(`${url}/lists/${list.list_id}`, list )
+    .put(`${url}/lists/${list.list_id}`, list)
     .then(res => {
       dispatch({ type: EDIT_LIST_SUCCESS, payload: res.data });
     })
@@ -618,7 +618,7 @@ export const UPDATE_LIST_MEMBERS_FAILURE = "UPDATE_LIST_MEMBERS_FAILURE";
 export const updateListMembers = listMembers => dispatch => {
   dispatch({ type: UPDATE_LIST_MEMBERS });
   axios
-    .put(`${url}/lists/${listMembers.list_members_id}`, listMembers )
+    .put(`${url}/lists/${listMembers.list_members_id}`, listMembers)
     .then(res => {
       dispatch({ type: UPDATE_LIST_MEMBERS_SUCCESS, payload: res.data });
     })
@@ -771,23 +771,23 @@ export const SEARCH_LISTS = "SEARCH_LISTS";
 export const SEARCH_LISTS_SUCCESS = "SEARCH_LISTS_SUCCESS";
 export const SEARCH_LISTS_FAILURE = "SEARCH_LISTS_FAILURE";
 
-export function searchLists (searchTerm) {
-    return (dispatch) => {
-        dispatch({type: SEARCH_LISTS});
-        axios.get(`https://twitter-block.herokuapp.com/lists`)
-        .then(({data}) => {
-            console.log(data);
-            let filtered = data.filter(list => {
-                return list.list_name.toLowerCase().includes(searchTerm.toLowerCase()) || list.description.toLowerCase().includes(searchTerm.toLowerCase())
-            })
-            console.log(filtered);
-            dispatch({type: SEARCH_LISTS_SUCCESS, payload: filtered})
+export function searchLists(searchTerm) {
+  return (dispatch) => {
+    dispatch({ type: SEARCH_LISTS });
+    axios.get(`https://twitter-block.herokuapp.com/lists`)
+      .then(({ data }) => {
+        console.log(data);
+        let filtered = data.filter(list => {
+          return list.list_name.toLowerCase().includes(searchTerm.toLowerCase()) || list.description.toLowerCase().includes(searchTerm.toLowerCase())
         })
-        .catch(err => {
-            console.log(err);
-            dispatch({type: SEARCH_LISTS_FAILURE})
-        })
-    }
+        console.log(filtered);
+        dispatch({ type: SEARCH_LISTS_SUCCESS, payload: filtered })
+      })
+      .catch(err => {
+        console.log(err);
+        dispatch({ type: SEARCH_LISTS_FAILURE })
+      })
+  }
 }
 
 
