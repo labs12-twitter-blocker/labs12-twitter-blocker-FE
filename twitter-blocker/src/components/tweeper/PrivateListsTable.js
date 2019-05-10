@@ -8,7 +8,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { getPrivateLists } from '../../actions/index'
+import Button from '@material-ui/core/Button';
+import { getUserPrivateList } from '../../actions/index';
+import CreateList from './CreateList';
 
 const styles = theme => ({
   root: {
@@ -30,79 +32,82 @@ function createData(list_name, description, member_count, subscriber_count, list
 
 
 class PrivateListsTable extends Component {
-    state={
-        rows: [],
-        listRan: false,
+  state = {
+    rows: [],
+    listRan: false,
+  }
+
+
+  componentDidMount() {
+    this.props.getUserPrivateList(localStorage.getItem("twitter_user_id"))
+
+  };
+
+  componentDidUpdate() {
+    if (this.props.privateLists.length > 0 && this.state.listRan === false) {
+      this.getListRowBuilder(this.props.privateLists);
     }
+  }
 
-    
-    componentDidMount() {
-        this.props.getPrivateLists()
-        
-    };
+  getListRowBuilder = (list) => {
+    let newRow = [];
+    console.log('here')
+    list.map(list => {
+      console.log("list", list);
+      newRow.push(createData(list.list_name, list.description,
+        list.member_count, list.subscriber_count,
+        list.list_upvotes, list.list_downvotes))
+    })
+    console.log(newRow);
+    this.setState({ listRan: true })
+    this.setState({ rows: newRow });
+  };
 
-    componentDidUpdate() {
-        if (this.props.privateLists.length > 0 && this.state.listRan === false) {
-            this.getListRowBuilder(this.props.privateLists);
-        }
+
+
+  render() {
+
+    if (this.props.privateLists === null || this.props.privateLists.length === 0) {
+      return (<div>
+        <h3>Create Your First List!</h3>
+        <CreateList />
+      </div>)
+    } else {
+      const { classes } = this.props;
+      return (
+        <Paper className={classes.root}>
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                <TableCell>List Name</TableCell>
+                <TableCell align="center">List Description</TableCell>
+                <TableCell align="center">List Members</TableCell>
+                <TableCell align="center">List Subscribers</TableCell>
+                <TableCell align="center">List Up Votes</TableCell>
+                <TableCell align="center">List Down Votes</TableCell>
+                {/* <TableCell align="center">Protein (g)</TableCell> */}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {console.log("this.state.rows", this.state.rows)}
+              {this.state.rows.map(row => (
+                <TableRow key={row.id}>
+                  <TableCell component="th" scope="row">
+                    {row.list_name}
+                  </TableCell>
+                  <TableCell align="center">{row.description}</TableCell>
+                  <TableCell align="center">{row.member_count}</TableCell>
+                  <TableCell align="center">{row.subscriber_count}</TableCell>
+                  <TableCell align="center">{row.list_upvotes}</TableCell>
+                  <TableCell align="center">{row.list_downvotes}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Paper>
+      );
     }
-
-    getListRowBuilder = (list) => {
-        let newRow = [];
-        console.log('here')
-        list.map(list => {
-            console.log("list", list);
-            newRow.push(createData(list.list_name, list.description, 
-                list.member_count, list.subscriber_count, 
-                list.list_upvotes, list.list_downvotes))
-        })
-        console.log(newRow);
-        this.setState({listRan: true})
-        this.setState({rows: newRow});
-    };
-
-
-
-    render() {
-        
-        if (this.props.privateLists === null || this.props.privateLists.length === 0) {
-            return (<div>Loading</div>)
-        } else {
-        const { classes } = this.props;
-  return (
-    <Paper className={classes.root}>
-      <Table className={classes.table}>
-        <TableHead>
-          <TableRow>
-            <TableCell>List Name</TableCell>
-            <TableCell align="center">List Description</TableCell>
-            <TableCell align="center">List Members</TableCell>
-            <TableCell align="center">List Subscribers</TableCell>
-            <TableCell align="center">List Up Votes</TableCell>
-            <TableCell align="center">List Down Votes</TableCell>
-            {/* <TableCell align="center">Protein (g)</TableCell> */}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-            {console.log("this.state.rows", this.state.rows)}
-          {this.state.rows.map(row => (
-            <TableRow key={row.id}>
-              <TableCell component="th" scope="row">
-                {row.list_name}
-              </TableCell>
-              <TableCell align="center">{row.description}</TableCell>
-              <TableCell align="center">{row.member_count}</TableCell>
-              <TableCell align="center">{row.subscriber_count}</TableCell>
-              <TableCell align="center">{row.list_upvotes}</TableCell>
-              <TableCell align="center">{row.list_downvotes}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </Paper>
-  );
- }
-}
+  }
 }
 
 PrivateListsTable.propTypes = {
@@ -112,13 +117,13 @@ PrivateListsTable.propTypes = {
 // export default withStyles(styles)(PrivateListsTable);
 
 const mapStateToProps = state => ({
-  privateLists: state.listsReducer.privateLists
-  });
-  
+  privateLists: state.listsReducer.userPrivateLists
+});
+
 
 const styledComponent = withStyles(styles)(PrivateListsTable);
 
 export default connect(
   mapStateToProps,
-  { getPrivateLists }
+  { getUserPrivateList }
 )(styledComponent);

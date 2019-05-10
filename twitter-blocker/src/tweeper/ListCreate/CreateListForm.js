@@ -3,20 +3,18 @@ import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import green from '@material-ui/core/colors/green';
 import Radio from '@material-ui/core/Radio';
-import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
-import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { addList, createList } from '../../actions';
+import { addList, createList, getUser } from '../../actions';
 import { connect } from "react-redux";
 
 
 const styles = theme => ({
   root: {
-    color: green[600],
+    color: green[ 600 ],
     '&$checked': {
-      color: green[500],
+      color: green[ 500 ],
     },
   },
   checked: {},
@@ -60,13 +58,22 @@ class CreateListForm extends Component {
       user2: '',
       user3: '',
       user4: '',
-      user5: ''
+      user5: '',
+
     }
   };
+  componentDidMount() {
+    this.props.getUser(localStorage.getItem("twitter_user_id"))
+    if (localStorage.getItem("twitter_user_id")) {
+      this.setState({ twitter_user_id: localStorage.getItem("twitter_user_id") })
+    }
+    localStorage.getItem("twitter_user_id")
+    console.log("++++++++++++++this.props.currentUser", this.props.currentUser)
+  }
 
   handleChange = event => {
     this.setState({
-      [event.target.name]: event.target.value,
+      [ event.target.name ]: event.target.value,
     });
   };
 
@@ -76,10 +83,30 @@ class CreateListForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.addList(this.state);
-    this.props.createList(this.state);
-    this.setState({ list: { ...this.state } });
-    console.log("I'm firing")
+    const token = localStorage.getItem("token");
+    const username = localStorage.getItem("username")
+    const id = localStorage.getItem("twitter_user_id")
+    console.log("ID____________________", id);
+    console.log("TOKEN", token);
+    const search_users = [ this.state.user1, this.state.user2, this.state.user3, this.state.user4, this.state.user5 ]
+    console.log("THIS.STATE", this.state);
+    const params = {
+      "name": this.state.title,
+      "user_id": id,
+      "original_user": username,
+      "TWITTER_ACCESS_TOKEN": token,
+      "search_users": search_users
+    }
+    const listParams = {
+      "user_id": id,
+      "name": this.state.title,
+      "mode": this.state.mode,
+      "description": this.state.description
+    }
+    this.setState({ ...this.state });
+    this.props.createList(listParams);
+    this.props.addList(params);
+    // console.log("I'm firing");
   };
 
   render() {
@@ -119,7 +146,7 @@ class CreateListForm extends Component {
         {/* /////-----Is The List Private-------/////////  */}
 
         <h2>Do you want your list to be private?</h2>
-        <p>Public</p>
+        <h4>Public</h4>
         <Radio
           checked={this.state.mode === 'public'}
           onChange={this.handlePrivateChange}
@@ -127,7 +154,7 @@ class CreateListForm extends Component {
           name="radio-button-demo"
           aria-label="A"
         />
-        <p>Private</p>
+        <h4>Private</h4>
         <Radio
           checked={this.state.mode === 'private'}
           onChange={this.handlePrivateChange}
@@ -210,6 +237,7 @@ class CreateListForm extends Component {
   }
 }
 
+
 CreateListForm.propTypes = {
   classes: PropTypes.object.isRequired,
 };
@@ -225,5 +253,5 @@ const styledComponent = withStyles(styles)(CreateListForm);
 
 export default connect(
   mapStateToProps,
-  { addList, createList }
+  { addList, createList, getUser }
 )(styledComponent);
