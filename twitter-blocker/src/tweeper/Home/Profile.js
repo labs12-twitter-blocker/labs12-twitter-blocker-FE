@@ -21,6 +21,9 @@ import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
 require('dotenv').config();
 
+const url = process.env.REACT_APP_BACKEND_BASE_URL
+
+
 const { Avatar, Icon, Typography, Button } = atoms;
 // const { Tabs, Tab } = molecules;
 
@@ -38,21 +41,26 @@ const Cover = styled('div')({
   height: 200,
   backgroundColor: '#ccd6dd',
 });
-const url = process.env.REACT_APP_BACKEND_BASE_URL
+
 class Profile extends Component {
 
   componentDidMount() {
     // this.props.getLogin()
     console.log("this.props.user", this.props.user)
     console.log("this.props.loggedIn", this.props.loggedIn)
-    const token = localStorage.getItem("token")
     this.props.getUser(localStorage.getItem("twitter_user_id"))
-    // axios.get(`${url}/auth/me` , {
-    //   headers:{
-    //     'authorization': token
-    //   })
-  //   .then(res=> {
-  //   console.log(res)})
+
+    const token = localStorage.getItem("token")
+    axios.get(`${url}/auth/me`, {
+      headers: {
+          "x-auth-token": token
+      }
+    })
+    .then(res => {
+      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~res", res.data);
+    })
+
+
   }
 
 //   axios.get(url, {

@@ -9,7 +9,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import { getLists } from '../../actions/index'
+import { getUserList } from '../../actions/index'
 
 const styles = theme => ({
   root: {
@@ -36,10 +36,10 @@ class AllListsTable extends Component {
         listRan: false,
     }
 
-    
+
     componentDidMount() {
-        this.props.getLists()
-        
+        // this.props.getLists()
+        this.props.getUserList(localStorage.getItem("twitter_user_id"))
     };
 
     componentDidUpdate() {
@@ -53,8 +53,8 @@ class AllListsTable extends Component {
         // console.log('here')
         list.map(list => {
             // console.log("list", list);
-            newRow.push(createData(list.list_name, list.description, 
-                list.member_count, list.subscriber_count, 
+            newRow.push(createData(list.list_name, list.description,
+                list.member_count, list.subscriber_count,
                 list.list_upvotes, list.list_downvotes))
         })
         // console.log(newRow);
@@ -65,7 +65,7 @@ class AllListsTable extends Component {
 
 
     render() {
-        
+
         if (this.props.lists === null || this.props.lists.length === 0) {
             return (<div>
               <h3>Create Your First List!</h3>
@@ -118,13 +118,13 @@ AllListsTable.propTypes = {
 // export default withStyles(styles)(AllListsTable);
 
 const mapStateToProps = state => ({
-    lists: state.listsReducer.lists
+    lists: state.listsReducer.userLists
   });
-  
+
 
 const styledComponent = withStyles(styles)(AllListsTable);
 
 export default connect(
   mapStateToProps,
-  { getLists }
+  { getUserList }
 )(styledComponent);
