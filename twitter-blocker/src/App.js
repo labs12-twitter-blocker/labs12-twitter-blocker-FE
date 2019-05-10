@@ -16,7 +16,7 @@ import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 function App() {
   return (
       <div className="App">
-        <Route exact path="/" component={OAuth} />
+        <Route exact path="/" component={Profile} />
         <Route path="/profile" component={Profile} />
         <Route path="/profile/:user_id" component={PublicProfile} />
         <Route path="/create" component={ListCreate} />
