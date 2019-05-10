@@ -59,17 +59,7 @@ class Profile extends Component {
       this.setState({twitter_user_id: localStorage.getItem("twitter_user_id")})
     }
     localStorage.getItem("twitter_user_id")
-    // console.log("++++++++++++++this.props.currentUser", this.props.currentUser)
-
-    // const token = localStorage.getItem("token")
-    // axios.get(`${url}/auth/me`, {
-    //   headers: {
-    //       "x-auth-token": token
-    //   }
-    // })
-    // .then(res => {
-    //   console.log("~~~~~~~~~~~~~~~~~~~~~~~~~res", res.data);
-    // })
+    console.log("++++++++++++++this.props.currentUser", this.props.currentUser)
 
   }
 
@@ -89,8 +79,7 @@ class Profile extends Component {
   };
 
   render() {
-<<<<<<< HEAD
-    let content = ((!!this.props.loggedIn || this.state.twitter_user_id) && this.props.currentUser.users)?
+    let content = ( ( this.props.loggedIn === true || this.state.twitter_user_id !== null ) && this.props.gotCurrentUser == true )?
       (
         <React.Fragment>
         <CssBaseline />
@@ -120,8 +109,10 @@ class Profile extends Component {
                   </Box>
                   {/* <Typography primary>Austen Allred</Typography> */}
                   <Typography light gutterBottom>
+                  {console.log("++++this.props.loggedIn", this.props.loggedIn)}
+                  {console.log("++++this.state.twitter_user_id", this.state.twitter_user_id)}
+                  {console.log("++++this.props.currentUser", this.props.currentUser)}
                     {this.props.currentUser.users.screen_name}
-                    {console.log("++++this.props.currentUser", this.props.currentUser)}
                   </Typography>
                   {/* <Typography bold inline>
                       10.8K
@@ -155,68 +146,6 @@ class Profile extends Component {
       </React.Fragment>
     );
 }
-=======
-
-    if (this.props.currentUser === null || this.props.currentUser.length === 0) {
-      return (<h3>Loading</h3>)
-    } else {
-      return (
-        <React.Fragment>
-          <CssBaseline />
-          <HeaderTest />
-          <Content>
-                <Feed>
-                  <Cover />
-                  <Box p={2} mb={1}>
-                    <Box
-                      css={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        textAlign: 'right',
-                      }}
-                    >
-                      {/* <Avatar
-                        style={{ marginTop: '-18%', marginBottom: 14 }}
-                        ultraLarge
-                        bordered
-                        src={
-                          './assets/austen.png'
-                        }
-                      /> */}
-                      {/* <Button large color="primary" variant="outlined">
-                        Edit Profile
-                      </Button> */}
-                    </Box>
-                    {/* <Typography primary>Austen Allred</Typography> */}
-                    <Typography light gutterBottom>
-                      {this.props.currentUser.users.screen_name}
-                      {console.log("++++this.props.currentUser", this.props.currentUser)}
-                    </Typography>
-                    {/* <Typography bold inline>
-                        10.8K
-                    </Typography>
-                    <Typography light inline indented>
-                      Following
-                    </Typography>
-                    <Typography bold inline indentedLarge>
-                      100K
-                    </Typography>
-                    <Typography light inline indented>
-                      Followers
-                    </Typography> */}
-                  </Box>
-                  <ListTab variant="fullWidth"/>
-                  <Divider />
-                </Feed>
-            <TweetFloat />
-          </Content>
-        </React.Fragment>
-      );
-    }
-    }
-
-  
->>>>>>> origin
 }
 
 
@@ -224,6 +153,7 @@ class Profile extends Component {
 
 const mapStateToProps = state => ({
   currentUser: state.usersReducer.currentUser,
+  gotCurrentUser: state.usersReducer.gotCurrentUser,
   user: state.loginReducer.user,
   loggedIn: state.loginReducer.loggedIn
 
