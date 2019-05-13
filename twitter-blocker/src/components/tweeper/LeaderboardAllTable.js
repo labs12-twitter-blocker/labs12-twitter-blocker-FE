@@ -61,19 +61,29 @@ class LeaderboardAllTable extends Component {
       }; 
 
       up = e => {
+        const rowPointer = e.target.getAttribute("rowid") - 1;
         let upvote = {
           "twitter_list_id": e.target.id, 
-          "twitter_user_id": this.state.twitter_user_id,
+          "twitter_user_id": localStorage.getItem("twitter_user_id"),
           "vote": 1
         }
+        let getRows = this.state.rows;
+        getRows[rowPointer].list_points = getRows[rowPointer].list_points + 1;
+
+        this.setState({...this.state, rows: getRows});
         this.props.addUserVote(upvote)
       }
       down = e => {
+        const rowPointer = e.target.getAttribute("rowid") - 1;
         let downvote = {
           "twitter_list_id": e.target.id, 
-          "twitter_user_id": this.state.twitter_user_id,
+          "twitter_user_id": localStorage.getItem("twitter_user_id"),
           "vote": -1
         }
+        let getRows = this.state.rows;
+        getRows[rowPointer].list_points = getRows[rowPointer].list_points - 1;
+
+        this.setState({...this.state, rows: getRows});
         this.props.addUserVote(downvote)
       }
 
@@ -105,8 +115,9 @@ class LeaderboardAllTable extends Component {
 
             <TableRow key={row.id}>
               <TableCell align="center">
-                <button id={row.twitter_list_id} onClick={this.up } >↑</button>
-                <button id={row.twitter_list_id} onClick={this.down}>↓</button> 
+                {console.log("row.twitter_list_id: ", row.twitter_list_id)}
+                <button rowid={row.id} id={row.twitter_list_id} onClick={this.up } >↑</button>
+                <button rowid={row.id} id={row.twitter_list_id} onClick={this.down}>↓</button> 
               </TableCell>
               <TableCell align="center">{row.list_points}</TableCell>
               <TableCell component="th" scope="row">{row.list_name}<br></br>{row.description}</TableCell>
