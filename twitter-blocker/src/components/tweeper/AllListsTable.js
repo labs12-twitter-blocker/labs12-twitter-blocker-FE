@@ -68,11 +68,13 @@ class AllListsTable extends Component {
   render() {
 
     if (this.props.lists === null || this.props.lists.length === 0) {
-      return (<div>
-        <Button medium color="primary" variant="contained" href="/create">
-          Create New List
+      return (
+        <div>
+          <h3>Create Your First List!</h3>
+          <Button medium color="primary" variant="contained" href="/create">
+            Create New List
                   </Button>
-      </div>)
+        </div>)
     } else {
       const { classes } = this.props;
       return (
