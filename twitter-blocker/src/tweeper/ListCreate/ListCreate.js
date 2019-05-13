@@ -1,16 +1,19 @@
 import React from 'react';
 import CreateListForm from './CreateListForm';
 import GeneratedList from './GeneratedList';
+import HeaderTest from '../../tests/HeaderTest';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
+import styled from '@material-ui/styles/styled';
+import theme from '../../theme/tweeper/theme';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -45,6 +48,12 @@ const styles = theme => ({
   },
 });
 
+const Content = styled('div')({
+  maxWidth: 1000,
+  padding: theme.spacing.unit * 4,
+  margin: 'auto',
+});
+
 class ListCreate extends React.Component {
   state = {
     open: false,
@@ -74,10 +83,12 @@ class ListCreate extends React.Component {
 
     return (
       <React.Fragment>
+        <CssBaseline />
+        <HeaderTest />
+        <Content>
         <h1>Create Your List</h1>
         <CreateListForm />
-        <Divider />
-        <GeneratedList />
+        </Content>
       </React.Fragment>
     );
   }
