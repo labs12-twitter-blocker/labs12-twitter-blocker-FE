@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import withTheme from '../withTheme';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -20,6 +21,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
 import Divider from '@material-ui/core/Divider/Divider';
+import TweetFloat from '../../components/tweeper/TweetFloat.js'
 
 
 const styles = theme => ({
@@ -54,6 +56,11 @@ const Content = styled('div')({
   margin: 'auto',
 });
 
+const Feed = styled('div')({
+  backgroundColor: '#fff',
+});
+
+
 class ListCreate extends React.Component {
   state = {
     open: false,
@@ -86,8 +93,11 @@ class ListCreate extends React.Component {
         <CssBaseline />
         <HeaderTest />
         <Content>
-        <h1>Create Your List</h1>
-        <CreateListForm />
+          <Feed>
+            <h1>Create Your List</h1>
+            <CreateListForm />
+          </Feed>
+          <TweetFloat />
         </Content>
       </React.Fragment>
     );
@@ -98,4 +108,6 @@ ListCreate.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ListCreate);
+const styledComponent = withTheme(theme)(ListCreate);
+
+export default withStyles(styles)(styledComponent);
