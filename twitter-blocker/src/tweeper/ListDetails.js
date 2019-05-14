@@ -63,9 +63,16 @@ const TopLine = styled('div')({
 
 });
 
-const ProfileName = styled('div') ({
+const ProfileNameImg = styled('div') ({
   display: 'flex',
-  width: '50%'
+  width: '50%',
+  alignItems: 'center',
+})
+
+const ProfileName = styled(Typography)({
+  fontWeight: 'bold',
+  fontFamily: 'Helvetica Neue',
+
 })
 
     
@@ -126,10 +133,10 @@ render() {
                       <ListItem>
                       <CardContent style={{width:'100%'}}>
                         <TopLine>
-                          <ProfileName>
+                          <ProfileNameImg>
                             <Avatar src={i.profile_img} style={{marginRight: '5px'}}/>
-                            <Link to={`/profile/${this.props.listMembers.twitter_user_id}`} style={{textDecoration:'none'}}><Typography >{i.name}</Typography></Link>
-                            </ProfileName>
+                            <Link to={`/profile/${this.props.listMembers.twitter_user_id}`} style={{textDecoration:'none'}}><ProfileName >{i.name}</ProfileName></Link>
+                            </ProfileNameImg>
                         <Typography>@{i.screen_name}</Typography>
                         </TopLine>
                         <Typography>{i.description}</Typography>
