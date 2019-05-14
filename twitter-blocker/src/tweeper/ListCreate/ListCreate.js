@@ -1,22 +1,27 @@
 import React from 'react';
 import CreateListForm from './CreateListForm';
 import GeneratedList from './GeneratedList';
+import HeaderTest from '../../tests/HeaderTest';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import withTheme from '../withTheme';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
+import styled from '@material-ui/styles/styled';
+import theme from '../../theme/tweeper/theme';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
 import Divider from '@material-ui/core/Divider/Divider';
+import TweetFloat from '../../components/tweeper/TweetFloat.js'
 
 
 const styles = theme => ({
@@ -44,6 +49,17 @@ const styles = theme => ({
     width: 200,
   },
 });
+
+const Content = styled('div')({
+  maxWidth: 1000,
+  padding: theme.spacing.unit * 4,
+  margin: 'auto',
+});
+
+const Feed = styled('div')({
+  backgroundColor: '#fff',
+});
+
 
 class ListCreate extends React.Component {
   state = {
@@ -74,10 +90,15 @@ class ListCreate extends React.Component {
 
     return (
       <React.Fragment>
-        <h1>Create Your List</h1>
-        <CreateListForm />
-        <Divider />
-        <GeneratedList />
+        <CssBaseline />
+        <HeaderTest />
+        <Content>
+          <Feed>
+            <h1>Create Your List</h1>
+            <CreateListForm />
+          </Feed>
+          <TweetFloat />
+        </Content>
       </React.Fragment>
     );
   }
@@ -87,4 +108,6 @@ ListCreate.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ListCreate);
+const styledComponent = withTheme(theme)(ListCreate);
+
+export default withStyles(styles)(styledComponent);

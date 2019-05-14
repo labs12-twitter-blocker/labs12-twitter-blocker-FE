@@ -32,9 +32,9 @@ class Header extends React.Component {
     }
   }
 
-handleChange = (event) => {
-  this.setState({searchTerm: event.target.value});
-}
+  handleChange = (event) => {
+    this.setState({ searchTerm: event.target.value });
+  }
   searchLists = (event) => {
     this.props.searchLists(event.target.value);
     // this.setState({searchTerm: ""})
@@ -43,79 +43,79 @@ handleChange = (event) => {
   render() {
     return (
       <AppBar position="sticky" elevation={1}>
-    <Toolbar>
-      <Grid container alignItems="center" spacing={16}>
-        <Grid item xs={6} sm={4}>
-          <Tabs value={0} variant="fullWidth">
-            <Tab
-              onlyIcon
-              icon={
-                <Badge dotted badgeContent="">
-                <Link to="/profile">
-                  <FontAwesomeIcon icon={faHome} size="2x" color='#38A1F3'/>
-                  </Link>
-                </Badge>
-              }
-            />
-            <Tab onlyIcon icon={<FontAwesomeIcon icon={faPlus} size="2x" color='#38A1F3'/>} />
-            
-            <Tab
-              onlyIcon
-              icon={
-                <Badge >
-                <Link to="/explorer">
-                  <FontAwesomeIcon icon={faList} size="2x" color='#38A1F3'/>
-                  </Link>
-                </Badge>
-              }
-            />
-            
-            
-            <Tab onlyIcon icon={
-              <Link to="/settings">
-                <FontAwesomeIcon icon={faCog} size="2x" color='#38A1F3' />
-              </Link>}/>
-            
-            
-            {/* <Tab onlyIcon icon={<FontAwesomeIcon icon={faEnvelope} size="2x" color='#38A1F3'/>} /> */}
-          </Tabs>
-        </Grid>
-        <Hidden smDown>
-          <Grid item sm>
-            <TextField 
-              fullWidth
-              placeholder="Find Lists"
-              InputProps={{
-                disableUnderline: true,
-                startAdornment: (
-                  <InputAdornment position="start" style={searchIcon}>
-                    <FontAwesomeIcon icon={faSearch} color='#38A1F3'/>
-                  </InputAdornment>
-                ),
-              }}
-              onChange={this.searchLists}
-              
-            />
-          </Grid>
-        </Hidden>
-        <Grid item xs={6} sm="auto">
-          <ListItem>
-            <Avatar src="./assets/austen.png" style={avatarStyle} />
-            {/* <ListItemText primary="austen" /> */}
-            <React.Fragment>
-              {/* <Button medium color="primary" variant="contained">
+        <Toolbar>
+          <Grid container alignItems="center" spacing={16}>
+            <Grid item xs={6} sm={4}>
+              <Tabs value={0} variant="fullWidth">
+                <Tab
+                  onlyIcon
+                  icon={
+                    <Badge dotted badgeContent="">
+                      <Link to="/profile">
+                        <FontAwesomeIcon icon={faHome} size="2x" color='#38A1F3' />
+                      </Link>
+                    </Badge>
+                  }
+                />
+                <Tab onlyIcon icon={<FontAwesomeIcon icon={faPlus} size="2x" color='#38A1F3' />} />
+
+                <Tab
+                  onlyIcon
+                  icon={
+                    <Badge >
+                      <Link to="/explorer">
+                        <FontAwesomeIcon icon={faList} size="2x" color='#38A1F3' />
+                      </Link>
+                    </Badge>
+                  }
+                />
+
+
+                <Tab onlyIcon icon={
+                  <Link to="/settings">
+                    <FontAwesomeIcon icon={faCog} size="2x" color='#38A1F3' />
+                  </Link>} />
+
+
+                {/* <Tab onlyIcon icon={<FontAwesomeIcon icon={faEnvelope} size="2x" color='#38A1F3'/>} /> */}
+              </Tabs>
+            </Grid>
+            <Hidden smDown>
+              <Grid item sm>
+                <TextField
+                  fullWidth
+                  placeholder="Find Lists"
+                  InputProps={{
+                    disableUnderline: true,
+                    startAdornment: (
+                      <InputAdornment position="start" style={searchIcon}>
+                        <FontAwesomeIcon icon={faSearch} color='#38A1F3' />
+                      </InputAdornment>
+                    ),
+                  }}
+                  onChange={this.searchLists}
+
+                />
+              </Grid>
+            </Hidden>
+            <Grid item xs={6} sm="auto">
+              <ListItem>
+                <Avatar src="./assets/austen.png" style={avatarStyle} />
+                {/* <ListItemText primary="austen" /> */}
+                <React.Fragment>
+                  <Button medium color="primary" variant="contained" href="/create">
                     Create New List
-                  </Button> */}
-              <CreateList />
-            </React.Fragment>
-          </ListItem>
-        </Grid>
-      </Grid>
-    </Toolbar>
-  </AppBar>
+                  </Button>
+                  {/* <CreateList /> */}
+                </React.Fragment>
+              </ListItem>
+            </Grid>
+          </Grid>
+        </Toolbar>
+      </AppBar>
     )
   }
-  
+
 }
 
 const mapStateToProps = state => {

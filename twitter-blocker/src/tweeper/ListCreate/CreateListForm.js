@@ -12,9 +12,9 @@ import { connect } from "react-redux";
 
 const styles = theme => ({
   root: {
-    color: green[ 600 ],
+    color: green[600],
     '&$checked': {
-      color: green[ 500 ],
+      color: green[500],
     },
   },
   checked: {},
@@ -75,7 +75,7 @@ class CreateListForm extends Component {
 
   handleChange = event => {
     this.setState({
-      [ event.target.name ]: event.target.value,
+      [event.target.name]: event.target.value,
     });
   };
 
@@ -131,7 +131,7 @@ class CreateListForm extends Component {
     }
     // console.log("this.props.newListResponse.id_str", this.props.newListResponse.id_str);
 
-    
+
     if (this.state.newListResponseUpdated !== prevState.newListResponseUpdated) {
       console.log("CDU IF 2");
 
@@ -142,7 +142,7 @@ class CreateListForm extends Component {
         "mode": this.props.newListResponse.mode,
         "description": this.props.newListResponse.description,
         "id": this.props.newListResponse.id_str,
-        "search_users": [ this.state.user1, this.state.user2, this.state.user3, this.state.user4, this.state.user5 ]
+        "search_users": [this.state.user1, this.state.user2, this.state.user3, this.state.user4, this.state.user5]
       }
       console.log("~~~~~~~~~~~~~~~~~completeList", completeList);
       this.props.addList(completeList);
@@ -222,6 +222,7 @@ class CreateListForm extends Component {
               }}
             >
               <TextField
+                required
                 name="user1"
                 id="outlined-name"
                 label="Username"
@@ -232,6 +233,7 @@ class CreateListForm extends Component {
                 variant="outlined"
               />
               <TextField
+                required
                 name="user2"
                 id="outlined-name"
                 label="Username"
@@ -242,6 +244,7 @@ class CreateListForm extends Component {
                 variant="outlined"
               />
               <TextField
+                required
                 name="user3"
                 id="outlined-name"
                 label="Username"
@@ -252,6 +255,7 @@ class CreateListForm extends Component {
                 variant="outlined"
               />
               <TextField
+                required
                 name="user4"
                 id="outlined-name"
                 label="Username"
@@ -262,6 +266,7 @@ class CreateListForm extends Component {
                 variant="outlined"
               />
               <TextField
+                required
                 name="user5"
                 id="outlined-name"
                 label="Username"

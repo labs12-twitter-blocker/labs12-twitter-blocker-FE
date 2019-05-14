@@ -68,10 +68,13 @@ class BlockListsTable extends Component {
   render() {
 
     if (this.props.blockLists === null || this.props.blockLists.length === 0) {
-      return (<div>
-        <h3>You don't have any Block Lists Yet!</h3>
-        <CreateList />
-      </div>)
+      return (
+        <div>
+          <h3>You don't have any Block Lists Yet!</h3>
+          <Button medium color="primary" variant="contained" href="/create">
+            Create New List
+                  </Button>
+        </div>)
     } else {
       const { classes } = this.props;
       return (
