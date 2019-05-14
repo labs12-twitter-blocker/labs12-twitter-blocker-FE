@@ -13,7 +13,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import atoms from '../atoms';
-import { addPost } from '../../actions';
+import { addPost, getUser } from '../../actions';
 import { connect } from 'react-redux';
 
 
@@ -29,10 +29,23 @@ const tweetBox = {
 }
 
 class TweetFloat extends React.Component {
-  state = {
-    open: false,
-    tweet: ""
+  constructor() {
+    super();
+    this.state = {
+      open: false,
+      tweet: "",
+      tweetParams: null,
+    }
   };
+
+  componentDidMount() {
+    this.props.getUser(localStorage.getItem("twitter_user_id"))
+    if (localStorage.getItem("twitter_user_id")) {
+      this.setState({ twitter_user_id: localStorage.getItem("twitter_user_id") })
+    }
+    localStorage.getItem("twitter_user_id")
+    console.log("++++++++++++++this.props.currentUser", this.props.currentUser)
+  }
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -46,8 +59,22 @@ class TweetFloat extends React.Component {
     this.setState({ tweet: event.target.value })
   }
 
-  sendTweet = () => {
-    this.props.addPost(this.state.tweet);
+  sendTweet = (event) => {
+    event.preventDefault();
+    const token = localStorage.getItem("token");
+    const id = localStorage.getItem("twitter_user_id")
+    console.log("ID____________________", id);
+    console.log("TOKEN", token);
+    console.log("THIS.STATE", this.state);
+
+    const tweetParams = {
+      "status": this.state.tweet,
+      "twitter_user_id": id
+    }
+
+    this.setState({ ...this.state });
+
+    this.props.addPost(tweetParams);
     this.handleClose();
   }
 
@@ -73,7 +100,7 @@ class TweetFloat extends React.Component {
               id="tweet"
               label="Tweet"
               variant="outlined"
-              //   value={this.state.name}
+              value={this.state.tweet}
               inputProps={{ maxLength: 280 }}
               fullWidth
               onChange={this.handleChange}
@@ -93,13 +120,13 @@ class TweetFloat extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-  }
-}
+const mapStateToProps = state => ({
+  listMembers: state.listsReducer.listMembers,
+  posts: state.tweetsReducer.posts
+});
 
 const mapActionsToProps = {
-  addPost
+  addPost, getUser
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(TweetFloat);
