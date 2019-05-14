@@ -72,8 +72,7 @@ class TweetFloat extends React.Component {
       "twitter_user_id": id
     }
 
-    this.setState({ ...this.state });
-
+    this.setState({ tweet: "" });
     this.props.addPost(tweetParams);
     this.handleClose();
   }
