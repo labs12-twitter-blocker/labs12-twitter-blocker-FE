@@ -12,19 +12,21 @@ import Settings from './tweeper/Settings/Settings.js';
 import ListExplorer from './tweeper/ListExplorer/ListExplorer';
 
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import TweetFloat from './components/tweeper/TweetFloat';
 
 function App() {
   return (
-      <div className="App">
-        <Route exact path="/" component={Profile} />
-        <Route path="/profile" component={Profile} />
-        <Route path="/profile/:user_id" component={PublicProfile} />
-        <Route path="/create" component={ListCreate} />
-        <Route path="/details/:twitter_list_id" component={ListDetails} />
-        <Route path="/leaderboard" component={Leaderboard} />
-        <Route path="/settings" component={Settings} />
-        <Route path="/explorer" component={ListExplorer} />
-      </div>
+    <div className="App">
+      <Route exact path="/" component={Profile} />
+      <Route path="/profile" component={Profile} />
+      <Route path="/profile/:user_id" component={PublicProfile} />
+      <Route path="/create" component={ListCreate} />
+      <Route path="/details/:twitter_list_id" component={ListDetails} />
+      <Route path="/leaderboard" component={Leaderboard} />
+      <Route path="/settings" component={Settings} />
+      <Route path="/explorer" component={ListExplorer} />
+      <Route path="/tweet" component={TweetFloat} />
+    </div>
   );
 }
 

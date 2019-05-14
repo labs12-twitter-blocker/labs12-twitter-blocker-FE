@@ -29,13 +29,11 @@ const tweetBox = {
 }
 
 class TweetFloat extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      open: false,
-      tweet: ""
-    };
-  }
+  state = {
+    open: false,
+    tweet: ""
+  };
+
   handleClickOpen = () => {
     this.setState({ open: true });
   };
@@ -45,7 +43,7 @@ class TweetFloat extends React.Component {
   };
 
   handleChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value })
+    this.setState({ tweet: event.target.value })
   }
 
   sendTweet = () => {
@@ -72,11 +70,10 @@ class TweetFloat extends React.Component {
             <TextField style={tweetBox}
               autoFocus
               margin="normal"
-              name="tweet"
               id="tweet"
               label="Tweet"
               variant="outlined"
-              value={this.state.name}
+              //   value={this.state.name}
               inputProps={{ maxLength: 280 }}
               fullWidth
               onChange={this.handleChange}
