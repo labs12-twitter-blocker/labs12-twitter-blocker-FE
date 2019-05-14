@@ -538,10 +538,11 @@ export const GET_LIST_TIMELINE = "GET_LIST_TIMELINE";
 export const GET_LIST_TIMELINE_SUCCESS = "GET_LIST_TIMELINE_SUCCESS";
 export const GET_LIST_TIMELINE_FAILURE = "GET_LIST_TIMELINE_FAILURE";
 
-export const getListTimeline = list_id => dispatch => {
+export const getListTimeline = (list_id, user_id) => dispatch => {
   dispatch({ type: GET_LIST_TIMELINE });
+  let params = {user_id: user_id}
   axios
-    .get(`${url}/lists/timeline/${list_id}`)
+    .get(`${url}/lists/timeline/${list_id}`, params)
     .then(res => {
       console.log(res);
       dispatch({ type: GET_LIST_TIMELINE_SUCCESS, payload: res.data });

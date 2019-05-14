@@ -80,8 +80,10 @@ class ListDetails extends React.Component {
   }
 
   componentDidMount(){
+    const userId = this.props.getUser(localStorage.getItem("twitter_user_id"))
     this.props.getListMembers(this.props.match.params.twitter_list_id);
-    this.props.getListTimeline(this.props.match.params.twitter_list_id);
+    this.props.getListTimeline(this.props.match.params.twitter_list_id, userId);
+
 }
   
 render() {
