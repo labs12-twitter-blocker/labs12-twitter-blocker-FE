@@ -21,7 +21,8 @@ import { List,
       Tabs, Tab,
       Card, 
       CardActions,
-      CardContent } from '@material-ui/core';
+      CardContent,
+      } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { getList, 
         getListMembers, 
@@ -56,6 +57,19 @@ const Cover = styled('div')({
   backgroundColor: '#ccd6dd',
 });
 
+const TopLine = styled('div')({
+  display: 'flex',
+  justifyContent: 'space-between',
+
+});
+
+const ProfileName = styled('div') ({
+  display: 'flex',
+  width: '50%'
+})
+
+    
+
 
 class ListDetails extends React.Component {
   constructor(props){
@@ -80,9 +94,9 @@ class ListDetails extends React.Component {
   }
 
   componentDidMount(){
-    const userId = this.props.getUser(localStorage.getItem("twitter_user_id"))
+    // const userId = this.props.getUser(localStorage.getItem("twitter_user_id"))
     this.props.getListMembers(this.props.match.params.twitter_list_id);
-    this.props.getListTimeline(this.props.match.params.twitter_list_id, userId);
+    // this.props.getListTimeline(this.props.match.params.twitter_list_id, userId);
 
 }
   
@@ -94,48 +108,64 @@ render() {
       <HeaderTest />
       <Content>
             <Feed>
-              <Tabs onChange={this.handleChange}>
-                <Tab label='Members'/>
+              <Tabs onChange={this.handleChange} variant='fullWidth'>
+                <Tab label='Members' />
                 <Tab label='Timeline'/>
                 </Tabs>
                 {/* if current user is not already subscribed, add subscribe button */}
-                <Button >Subscribe to List</Button>
+                <Button medium color="primary" variant="contained" style={{margin:"5%"}}>Subscribe to List</Button>
                 {value === 0 &&
               <TabContainer>
-              <List>
+                
+              <Grid container spacing={1} direction="column" alignItems="center" justify="center" >
                 {this.props.listMembers.map(i => {
                   return (
-                  <ListItem>
-                    <Card>
-                      <CardContent>
-                        <Avatar src={i.profile_img}/>
-                        <Link to={`/profile/${this.props.listMembers.twitter_user_id}`}><Typography>{i.name}</Typography></Link>
-                        <Typography>{i.screen_name}</Typography>
+                    <Grid item xs={10} sm={8} md={6} style={{width:"100%"}}>
+                    <List>
+                    <Card >
+                      <ListItem>
+                      <CardContent style={{width:'100%'}}>
+                        <TopLine>
+                          <ProfileName>
+                            <Avatar src={i.profile_img} style={{marginRight: '5px'}}/>
+                            <Link to={`/profile/${this.props.listMembers.twitter_user_id}`} style={{textDecoration:'none'}}><Typography >{i.name}</Typography></Link>
+                            </ProfileName>
+                        <Typography>@{i.screen_name}</Typography>
+                        </TopLine>
                         <Typography>{i.description}</Typography>
                         {localStorage.getItem("twitter_user_id") === this.props.list.twitter_id ? <FontAwesomeIcon icon="times" onClick={this.removeFromList(i)}/> : null}
                         </CardContent>
+                        </ListItem>
                     </Card>
-                  </ListItem>)
+                    </List>
+                  </Grid>)
                 })}
-              </List>
+                </Grid>
+
+              
               </TabContainer>
               }
               {value === 1 &&
               <TabContainer>
+                <Grid container spacing={1} direction="column" alignItems="center" justify="center" >
                 <List>
                   {this.props.timeline.map(i => {
                     return (
+                      <Grid item xs={10} sm={8} md={6} style={{width:"100%"}}>
                       <Card>
                         <CardContent>
                           <Avatar src={i.user.profile_image_url} />
-                          <Typography>{i.user.name}</Typography>
+                          <Typography >{i.user.name}</Typography>
                           <Typography>{i.text}</Typography>
                           <Typography>{i.entities.hashtags.text}</Typography>
                         </CardContent>
                       </Card>
+                      </Grid>
                     )
                   })}
                   </List>
+                  </Grid>
+                  
                 </TabContainer>
               }
               <Divider />
