@@ -3,7 +3,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 // import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider/Divider';
 // import { unstable_Box as Box } from '@material-ui/core/Box';
-import { List, ListItem } from '@material-ui/core';
+import { List, ListItem, Tabs, Tab } from '@material-ui/core';
 import styled from '@material-ui/styles/styled';
 import Header from '../../components/tweeper/Header';
 import TweetFloat from '../../components/tweeper/TweetFloat.js'
@@ -11,6 +11,7 @@ import HeaderTest from '../../tests/HeaderTest.js'
 import theme from '../../theme/tweeper/theme';
 import withTheme from '../withTheme';
 import ListExplorerTable from '../../components/tweeper/ListExplorerTable.js'
+import LeaderboardTab from '../../components/tweeper/LeaderboardTab.js'
 import { getLists, subscribeToList } from '../../actions'
 import atoms from '../../components/atoms';
 import molecules from '../../components/molecules';
@@ -33,6 +34,11 @@ const Feed = styled('div')({
   backgroundColor: '#fff',
 });
 
+const TabContainer = styled('div') ({
+  padding: theme.spacing.unit * 4,
+  margin: 'auto'
+})
+
 // const Cover = styled('div')({
 //   height: 200,
 //   backgroundColor: '#ccd6dd',
@@ -42,22 +48,39 @@ class ListExplorer extends React.Component {
     constructor() {
         super();
         this.state = {
-
+          value: 0
         }
     }
+
+    handleChange = (event, value) => {
+      this.setState({ value });
+    };
 
     componentDidMount() {
         this.props.getLists();
     }
     render() {
+      const { value } = this.state;
   return (
     <React.Fragment>
       <CssBaseline />
       <HeaderTest />
       <Content>
             <Feed>
-              <ListExplorerTable variant="fullWidth"/>
-              {/* Search Box */}
+            <Tabs onChange={this.handleChange} variant='fullWidth'>
+                <Tab label='List Explorer'/>
+                <Tab label='Leaderboard'/>
+              </Tabs>
+              {value === 0 &&
+              <TabContainer>
+                <ListExplorerTable variant="fullWidth"/>
+              </TabContainer>
+              }
+              {value === 1 &&
+              <TabContainer>
+                <LeaderboardTab variant="fullWidth"/>
+              </TabContainer>
+              }
               <Divider />
             </Feed>
         <TweetFloat />
