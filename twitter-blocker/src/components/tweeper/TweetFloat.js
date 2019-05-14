@@ -18,22 +18,24 @@ import { connect } from 'react-redux';
 
 
 const fabDesign = {
-    // margin: theme.spacing.unit,
-    position: 'fixed',
-    bottom: '1rem',
-    right: '1rem',
+  // margin: theme.spacing.unit,
+  position: 'fixed',
+  bottom: '1rem',
+  right: '1rem',
 }
 
 const tweetBox = {
-    height: '100px',
+  height: '100px',
 }
 
 class TweetFloat extends React.Component {
-  state = {
-    open: false,
-    tweet: ""
-  };
-
+  constructor() {
+    super();
+    this.state = {
+      open: false,
+      tweet: ""
+    };
+  }
   handleClickOpen = () => {
     this.setState({ open: true });
   };
@@ -43,7 +45,7 @@ class TweetFloat extends React.Component {
   };
 
   handleChange = (event) => {
-    this.setState({tweet: event.target.value})
+    this.setState({ [event.target.name]: event.target.value })
   }
 
   sendTweet = () => {
@@ -55,7 +57,7 @@ class TweetFloat extends React.Component {
     return (
       <div>
         <Fab variant="outlined" color="primary" style={fabDesign} onClick={this.handleClickOpen}>
-            <FontAwesomeIcon  icon={faPlus} size="2x" color='white' />
+          <FontAwesomeIcon icon={faPlus} size="2x" color='white' />
         </Fab>
         <Dialog
           open={this.state.open}
@@ -70,10 +72,11 @@ class TweetFloat extends React.Component {
             <TextField style={tweetBox}
               autoFocus
               margin="normal"
+              name="tweet"
               id="tweet"
               label="Tweet"
               variant="outlined"
-            //   value={this.state.name}
+              value={this.state.name}
               inputProps={{ maxLength: 280 }}
               fullWidth
               onChange={this.handleChange}
@@ -102,4 +105,4 @@ const mapActionsToProps = {
   addPost
 }
 
-export default connect( mapStateToProps, mapActionsToProps)(TweetFloat);
+export default connect(mapStateToProps, mapActionsToProps)(TweetFloat);
