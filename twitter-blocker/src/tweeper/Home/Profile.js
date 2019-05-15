@@ -7,7 +7,7 @@ import { unstable_Box as Box } from '@material-ui/core/Box';
 import styled from '@material-ui/styles/styled';
 import { withStyles } from '@material-ui/core/styles';
 import Header from '../../components/tweeper/Header';
-import TweetFloat from '../../components/tweeper/TweetFloat.js'
+// import TweetFloat from '../../components/tweeper/TweetFloat.js'
 import HeaderTest from '../../tests/HeaderTest.js'
 import theme from '../../theme/tweeper/theme';
 import withTheme from '../withTheme';
@@ -98,14 +98,14 @@ class Profile extends Component {
                       textAlign: 'right',
                     }}
                   >
-                    {/* <Avatar
+                    <Avatar
                       style={{ marginTop: '-18%', marginBottom: 14 }}
                       ultraLarge
                       bordered
                       src={
-                        './assets/austen.png'
+                        this.props.currentUser.users.profile_img
                       }
-                    /> */}
+                    />
                     {/* <Button large color="primary" variant="outlined">
                       Edit Profile
                     </Button> */}
@@ -133,7 +133,7 @@ class Profile extends Component {
                 <ListTab variant="fullWidth"/>
                 <Divider />
               </Feed>
-          <TweetFloat />
+          {/* <TweetFloat /> */}
         </Content>
       </React.Fragment>
       ) :
