@@ -11,6 +11,7 @@ const styles = theme => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
+    flexDirection: 'column'
   },
   textField: {
     marginLeft: theme.spacing.unit,
@@ -73,6 +74,7 @@ class UserSettingsTextField extends React.Component {
     let content = ( ( this.props.loggedIn === true || this.state.twitter_user_id !== null ) && this.props.gotCurrentUser == true )?
     (
     <form className={classes.container} noValidate autoComplete="off">
+    <h4>User Info</h4>
     <TextField
       id="outlined-name"
       label="Twitter Username"
@@ -82,8 +84,8 @@ class UserSettingsTextField extends React.Component {
       margin="normal"
       variant="outlined"
     />
-
   </form>
+
 ) :
 (
   <h3>This User Info Cannot Be Found</h3>
