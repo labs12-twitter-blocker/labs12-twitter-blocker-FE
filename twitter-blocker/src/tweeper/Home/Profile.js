@@ -7,7 +7,7 @@ import { unstable_Box as Box } from '@material-ui/core/Box';
 import styled from '@material-ui/styles/styled';
 import { withStyles } from '@material-ui/core/styles';
 import Header from '../../components/tweeper/Header';
-import TweetFloat from '../../components/tweeper/TweetFloat.js'
+// import TweetFloat from '../../components/tweeper/TweetFloat.js'
 import HeaderTest from '../../tests/HeaderTest.js'
 import theme from '../../theme/tweeper/theme';
 import withTheme from '../withTheme';
@@ -48,57 +48,63 @@ class Profile extends Component {
     super();
 
     this.state = {
-      loggedIn: false,
+      // loggedIn: false,
       user: null,
       token: '',
-      twitter_user_id: null
+      twitter_user_id: null,
+      loggedInRan: false
     };
   }
 
   componentDidMount() {
-    this.props.getUser(localStorage.getItem("twitter_user_id"))
     if (localStorage.getItem("twitter_user_id")) {
-      this.setState({twitter_user_id: localStorage.getItem("twitter_user_id")})
+      this.props.getUser(localStorage.getItem("twitter_user_id"))
+      this.setState({ twitter_user_id: localStorage.getItem("twitter_user_id") })
     }
     localStorage.getItem("twitter_user_id")
-    console.log("++++++++++++++this.props.currentUser", this.props.currentUser)
-
-
+    // console.log("++++++++++++++this.props.currentUser", this.props.currentUser)
   }
 
-    componentDidUpdate(prevProps) {
-      console.log("CDUpdate");
-      console.log("this.state.loggedIn", this.state.loggedIn);
-      console.log("this.props.currentUser", this.props.currentUser);
-      console.log("this.props.user", this.props.user);
-      if (this.props.user.id !== prevProps.user.id) {
-        this.props.getUser(this.props.user.id)
-      }
-      console.log("twitter_user_id", this.state.twitter_user_id);
+  componentDidUpdate(prevProps) {
+    console.log("CDUpdate");
+    console.log("this.props.loggedIn", this.props.loggedIn);
+    console.log("this.props.currentUser", this.props.currentUser);
+    console.log("this.props.gotCurrentUser", this.props.gotCurrentUser);
+
+    console.log("this.props.user", this.props.user);
+    if (
+      this.props.loggedIn === true &&
+      this.state.loggedInRan === false
+    ) {
+      this.setState({ loggedInRan: true })
+      this.setState({ twitter_user_id: localStorage.getItem("twitter_user_id") })
+      this.props.getUser(this.props.user.id)
     }
+    // console.log("twitter_user_id", this.state.twitter_user_id);
+  }
 
   onFailed = (error) => {
     alert(error);
   };
 
   render() {
-    let content = ( ( this.props.loggedIn === true || this.state.twitter_user_id !== null ) && this.props.gotCurrentUser == true )?
+    let content = ((this.props.loggedIn === true || this.state.twitter_user_id !== null) && this.props.gotCurrentUser === true) ?
       (
         <React.Fragment>
-        <CssBaseline />
-        <HeaderTest />
-        <Content>
-              <Feed>
-                <Cover />
-                <Box p={2} mb={1}>
-                  <Box
-                    css={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      textAlign: 'right',
-                    }}
-                  >
-                    {/* <Avatar
+          <CssBaseline />
+          <HeaderTest />
+          <Content>
+            <Feed>
+              <Cover />
+              <Box p={2} mb={1}>
+                <Box
+                  css={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    textAlign: 'right',
+                  }}
+                >
+                  {/* <Avatar
                       style={{ marginTop: '-18%', marginBottom: 14 }}
                       ultraLarge
                       bordered
@@ -106,18 +112,18 @@ class Profile extends Component {
                         './assets/austen.png'
                       }
                     /> */}
-                    {/* <Button large color="primary" variant="outlined">
+                  {/* <Button large color="primary" variant="outlined">
                       Edit Profile
                     </Button> */}
-                  </Box>
-                  {/* <Typography primary>Austen Allred</Typography> */}
-                  <Typography light gutterBottom>
+                </Box>
+                {/* <Typography primary>Austen Allred</Typography> */}
+                <Typography light gutterBottom>
                   {console.log("++++this.props.loggedIn", this.props.loggedIn)}
                   {console.log("++++this.state.twitter_user_id", this.state.twitter_user_id)}
                   {console.log("++++this.props.currentUser", this.props.currentUser)}
-                    {this.props.currentUser.users.screen_name}
-                  </Typography>
-                  {/* <Typography bold inline>
+                  {this.props.currentUser.users.screen_name}
+                </Typography>
+                {/* <Typography bold inline>
                       10.8K
                   </Typography>
                   <Typography light inline indented>
@@ -129,18 +135,18 @@ class Profile extends Component {
                   <Typography light inline indented>
                     Followers
                   </Typography> */}
-                </Box>
-                <ListTab variant="fullWidth"/>
-                <Divider />
-              </Feed>
-          <TweetFloat />
-        </Content>
-      </React.Fragment>
+              </Box>
+              <ListTab variant="fullWidth" />
+              <Divider />
+            </Feed>
+            {/* <TweetFloat /> */}
+          </Content>
+        </React.Fragment>
       ) :
       (
         <TwitterLogin loginUrl={`${url}/auth/twitter/`}
-                      onFailure={this.onFailed} onSuccess={this.props.getLogin}
-                      requestTokenUrl={`${url}/auth/twitter/reverse`}/>
+          onFailure={this.onFailed} onSuccess={this.props.getLogin}
+          requestTokenUrl={`${url}/auth/twitter/reverse`} />
       );
 
     return (
@@ -148,7 +154,7 @@ class Profile extends Component {
         {content}
       </React.Fragment>
     );
-}
+  }
 }
 
 
@@ -160,7 +166,7 @@ const mapStateToProps = state => ({
   user: state.loginReducer.user,
   loggedIn: state.loginReducer.loggedIn
 
-  });
+});
 
 
 const styledComponent = withTheme(theme)(Profile);
