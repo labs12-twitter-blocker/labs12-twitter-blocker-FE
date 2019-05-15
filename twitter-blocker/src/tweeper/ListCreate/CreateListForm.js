@@ -172,6 +172,7 @@ class CreateListForm extends Component {
           onChange={this.handleChange}
           margin="normal"
           variant="outlined"
+          inputProps={{ maxLength: 16 }}
         />
 
         {/* /////-----Enter description-------/////////    */}
