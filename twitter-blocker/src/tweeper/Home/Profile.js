@@ -158,9 +158,7 @@ class Profile extends Component {
 
     return (
       <React.Fragment>
-        <Wall>
         {content}
-        </Wall>
       </React.Fragment>
     );
   }
