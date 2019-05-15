@@ -52,7 +52,8 @@ class Profile extends Component {
       user: null,
       token: '',
       twitter_user_id: null,
-      loggedInRan: false
+      loggedInRan: false,
+      profilePic: '',
     };
   }
 
@@ -63,6 +64,7 @@ class Profile extends Component {
     }
     localStorage.getItem("twitter_user_id")
     // console.log("++++++++++++++this.props.currentUser", this.props.currentUser)
+    
   }
 
   componentDidUpdate(prevProps) {
@@ -79,6 +81,7 @@ class Profile extends Component {
       this.setState({ loggedInRan: true })
       this.setState({ twitter_user_id: localStorage.getItem("twitter_user_id") })
       this.props.getUser(this.props.user.id)
+      this.setState({profilePic: localStorage.getItem("profile_img")})
     }
     // console.log("twitter_user_id", this.state.twitter_user_id);
   }
@@ -108,9 +111,7 @@ class Profile extends Component {
                       style={{ marginTop: '-18%', marginBottom: 14 }}
                       ultraLarge
                       bordered
-                      src={
-                        this.props.currentUser.users.profile_img
-                      }
+                      src={this.state.profilePic}
                     />
                     {/* <Button large color="primary" variant="outlined">
                       Edit Profile
@@ -118,11 +119,16 @@ class Profile extends Component {
                 </Box>
                 {/* <Typography primary>Austen Allred</Typography> */}
                 <Typography light gutterBottom>
+                  {console.log("----------------------PROFILE PIC-----------", this.state.profilePic)}
                   {console.log("++++this.props.loggedIn", this.props.loggedIn)}
                   {console.log("++++this.state.twitter_user_id", this.state.twitter_user_id)}
                   {console.log("++++this.props.currentUser", this.props.currentUser)}
+                  {console.log("++++this.props.user", this.props.user)}
                   {this.props.currentUser.users.screen_name}
                 </Typography>
+                {/* <Typography light gutterBottom>
+                  {this.props.user.displayName}
+                </Typography> */}
                 {/* <Typography bold inline>
                       10.8K
                   </Typography>
