@@ -775,7 +775,7 @@ export const SEARCH_LISTS_FAILURE = "SEARCH_LISTS_FAILURE";
 export function searchLists(searchTerm) {
   return (dispatch) => {
     dispatch({ type: SEARCH_LISTS });
-    axios.get(`https://twitter-block.herokuapp.com/lists`)
+    axios.get(`${url}/lists`)
       .then(({ data }) => {
         console.log(data);
         let filtered = data.filter(list => {
