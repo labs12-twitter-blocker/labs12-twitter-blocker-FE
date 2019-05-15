@@ -9,6 +9,7 @@ const styles = theme => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
+    flexDirection: 'column',
   },
   textField: {
     marginLeft: theme.spacing.unit,
@@ -45,6 +46,7 @@ class UserSettingsPaymentTextField extends React.Component {
 
     return (
       <form className={classes.container} noValidate autoComplete="off">
+      <h4>Billing Info</h4>
         <TextField
           id="outlined-name"
           label="Credit Card Number"

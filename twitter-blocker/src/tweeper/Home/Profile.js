@@ -100,28 +100,28 @@ class Profile extends Component {
     let content = ((this.props.loggedIn === true || this.state.twitter_user_id !== null) && this.props.gotCurrentUser === true) ?
       (
         <React.Fragment>
-          <CssBaseline />
-          <HeaderTest />
-          <Content>
-            <Feed>
-              <Cover />
-              <Box p={2} mb={1}>
-                <Box
-                  css={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    textAlign: 'right',
-                  }}
-                >
-                  {/* <Avatar
+        <CssBaseline />
+        <HeaderTest />
+        <Content>
+              <Feed>
+                <Cover />
+                <Box p={2} mb={1}>
+                  <Box
+                    css={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      textAlign: 'right',
+                    }}
+                  >
+                    <Avatar
                       style={{ marginTop: '-18%', marginBottom: 14 }}
                       ultraLarge
                       bordered
                       src={
-                        './assets/austen.png'
+                        this.props.currentUser.users.profile_img
                       }
-                    /> */}
-                  {/* <Button large color="primary" variant="outlined">
+                    />
+                    {/* <Button large color="primary" variant="outlined">
                       Edit Profile
                     </Button> */}
                 </Box>
@@ -144,13 +144,13 @@ class Profile extends Component {
                   <Typography light inline indented>
                     Followers
                   </Typography> */}
-              </Box>
-              <ListTab variant="fullWidth" />
-              <Divider />
-            </Feed>
-            {/* <TweetFloat /> */}
-          </Content>
-        </React.Fragment>
+                </Box>
+                <ListTab variant="fullWidth"/>
+                <Divider />
+              </Feed>
+          {/* <TweetFloat /> */}
+        </Content>
+      </React.Fragment>
       ) :
       (
         <Landing />
