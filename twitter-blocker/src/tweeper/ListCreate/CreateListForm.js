@@ -178,9 +178,10 @@ class CreateListForm extends Component {
 
         <h2>Enter a description of your list (optional)</h2>
         <TextField
+          required
           name="description"
           id="outlined-name"
-          label="Description"
+          label="Required"
           className={classes.textField}
           value={this.state.description}
           onChange={this.handleChange}
