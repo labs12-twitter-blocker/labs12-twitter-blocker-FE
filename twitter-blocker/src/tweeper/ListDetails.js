@@ -72,7 +72,17 @@ const ProfileNameImg = styled('div') ({
 const ProfileName = styled(Typography)({
   fontWeight: 'bold',
   fontFamily: 'Helvetica Neue',
+})
 
+const SubscribeButton = styled(Button) ({
+  margin:"5%", 
+  color:"#1DA1F2", 
+  border:"1px solid #1DA1F2"
+})
+
+const DetailsHeader = styled('div')({
+  // position: "fixed",
+  padding:"5%"
 })
 
     
@@ -115,12 +125,24 @@ render() {
       <HeaderTest />
       <Content>
             <Feed>
+              <DetailsHeader>
+              <Grid container justify="space-between" spacing={2}>
+                <Grid item>
+                  <Typography variant="title">{this.props.list.list_name}</Typography>
+                  <Typography>{this.props.list.member_count} Members</Typography>
+                  <Typography>{this.props.list.subscriber_count} Subscribers</Typography>
+                </Grid>
+                <Grid item>
+                  <SubscribeButton medium color="inherit" variant="outlined" >Subscribe</SubscribeButton>
+                </Grid>
+                </Grid>
+                
+
               <Tabs onChange={this.handleChange} variant='fullWidth'>
                 <Tab label='Members' />
                 <Tab label='Timeline'/>
                 </Tabs>
-                {/* if current user is not already subscribed, add subscribe button */}
-                <Button medium color="primary" variant="contained" style={{margin:"5%"}}>Subscribe to List</Button>
+                </DetailsHeader>
                 {value === 0 &&
               <TabContainer>
                 
