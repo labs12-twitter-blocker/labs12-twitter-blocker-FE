@@ -538,8 +538,9 @@ export const GET_LIST_TIMELINE = "GET_LIST_TIMELINE";
 export const GET_LIST_TIMELINE_SUCCESS = "GET_LIST_TIMELINE_SUCCESS";
 export const GET_LIST_TIMELINE_FAILURE = "GET_LIST_TIMELINE_FAILURE";
 
-export const getListTimeline = list_id => dispatch => {
+export const getListTimeline = (list_id, user_id) => dispatch => {
   dispatch({ type: GET_LIST_TIMELINE });
+  // let params = {user_id: user_id}
   axios
     .get(`${url}/lists/timeline/${list_id}`)
     .then(res => {
@@ -778,7 +779,7 @@ export function searchLists(searchTerm) {
       .then(({ data }) => {
         console.log(data);
         let filtered = data.filter(list => {
-          return list.list_name.toLowerCase().includes(searchTerm.toLowerCase()) || list.description.toLowerCase().includes(searchTerm.toLowerCase())
+          return list.list_name.toLowerCase().includes(searchTerm.toLowerCase()) ;
         })
         console.log(filtered);
         dispatch({ type: SEARCH_LISTS_SUCCESS, payload: filtered })
