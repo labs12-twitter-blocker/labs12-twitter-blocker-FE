@@ -16,6 +16,7 @@ import atoms from '../../components/atoms';
 import molecules from '../../components/molecules';
 import { getUser, getLogin } from '../../actions/index.js';
 import TwitterLogin from 'react-twitter-auth';
+import Landing from './Landing';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
@@ -41,6 +42,14 @@ const Feed = styled('div')({
 const Cover = styled('div')({
   height: 200,
   backgroundColor: '#ccd6dd',
+});
+
+const Wall = styled('div')({
+  backgroundImage: `url('/images/mobile_on_wood.jpg')`,
+  backgroundSize: 'cover',
+  backgroundColor: '#000000',
+  height: '100vh',
+  width: '100vw',
 });
 
 class Profile extends Component {
@@ -144,14 +153,14 @@ class Profile extends Component {
       </React.Fragment>
       ) :
       (
-        <TwitterLogin loginUrl={`${url}/auth/twitter/`}
-          onFailure={this.onFailed} onSuccess={this.props.getLogin}
-          requestTokenUrl={`${url}/auth/twitter/reverse`} />
+        <Landing />
       );
 
     return (
       <React.Fragment>
+        <Wall>
         {content}
+        </Wall>
       </React.Fragment>
     );
   }
