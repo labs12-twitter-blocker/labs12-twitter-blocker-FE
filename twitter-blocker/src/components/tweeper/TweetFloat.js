@@ -20,7 +20,7 @@ import { connect } from 'react-redux';
 const fabDesign = {
   // margin: theme.spacing.unit,
   position: 'fixed',
-  bottom: '1rem',
+  top: '4rem',
   right: '1rem',
 }
 

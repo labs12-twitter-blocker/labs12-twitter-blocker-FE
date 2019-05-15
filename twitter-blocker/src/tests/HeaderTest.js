@@ -124,10 +124,10 @@ class HeaderTest extends React.Component {
                       </Badge>
                     }
                   />
-                  <Tab onlyIcon icon={
+                  {/* <Tab onlyIcon icon={
                     <Link to="/settings">
                       <FontAwesomeIcon icon={faCog} size="2x" color='#38A1F3' />
-                    </Link>} />
+                    </Link>} /> */}
                   {/* <Tab onlyIcon icon={<FontAwesomeIcon icon={faEnvelope} size="2x" color='#38A1F3'/>} /> */}
                 </Tabs>
               </Grid>
