@@ -16,7 +16,6 @@ import atoms from '../../components/atoms';
 import molecules from '../../components/molecules';
 import { getUser, getLogin } from '../../actions/index.js';
 import TwitterLogin from 'react-twitter-auth';
-import Landing from './Landing';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
@@ -51,6 +50,20 @@ const Wall = styled('div')({
   height: '100vh',
   width: '100vw',
 });
+
+const Slogan = styled('div')({
+  margin: "40px",
+})
+
+const Logo = styled('div')({
+  margin: '20px'
+})
+
+const LoginContainer = styled('div')({
+  marginTop:"300px"
+})
+
+
 
 class Profile extends Component {
   constructor() {
@@ -91,69 +104,58 @@ class Profile extends Component {
   };
 
   render() {
-    let content = ( ( this.props.loggedIn === true || this.state.twitter_user_id !== null ) && this.props.gotCurrentUser == true )?
-      (
-        <React.Fragment>
-        <CssBaseline />
-        <HeaderTest />
-        <Content>
-              <Feed>
-                <Cover />
-                <Box p={2} mb={1}>
-                  <Box
-                    css={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      textAlign: 'right',
-                    }}
-                  >
-                    {/* <Avatar
-                      style={{ marginTop: '-18%', marginBottom: 14 }}
-                      ultraLarge
-                      bordered
-                      src={
-                        './assets/austen.png'
-                      }
-                    /> */}
-                    {/* <Button large color="primary" variant="outlined">
-                      Edit Profile
-                    </Button> */}
-                  </Box>
-                  {/* <Typography primary>Austen Allred</Typography> */}
-                  <Typography light gutterBottom>
-                  {console.log("++++this.props.loggedIn", this.props.loggedIn)}
-                  {console.log("++++this.state.twitter_user_id", this.state.twitter_user_id)}
-                  {console.log("++++this.props.currentUser", this.props.currentUser)}
-                    {this.props.currentUser.users.screen_name}
-                  </Typography>
-                  {/* <Typography bold inline>
-                      10.8K
-                  </Typography>
-                  <Typography light inline indented>
-                    Following
-                  </Typography>
-                  <Typography bold inline indentedLarge>
-                    100K
-                  </Typography>
-                  <Typography light inline indented>
-                    Followers
-                  </Typography> */}
-                </Box>
-                <ListTab variant="fullWidth"/>
-                <Divider />
-              </Feed>
-          <TweetFloat />
-        </Content>
-      </React.Fragment>
-      ) :
-      (
-        <Landing />
-      );
-
     return (
-      <React.Fragment>
+        <React.Fragment>
         <Wall>
-        {content}
+          <Grid container direction="column" justify="center"  >
+          <Grid item >
+            <Grid container justify="space-between" >
+              <Logo>
+                <Grid item sm > 
+                  <Grid container  alignItems="center">
+                    <Grid item>
+                      <img src="/images/feather-logo.png" style={{width:"80px"}} />
+                    </Grid>
+                    <Grid item  >
+                      <Typography variant="headline" color="primary">AppName</Typography>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Logo>
+             
+             <Grid item xl={3} >
+              <Slogan>
+                <Typography style={{color:'#FFFFFF', fontSize:'86px'}}>Your <span style={{color:'#1da1f2'}}>Twitter</span>.</Typography>
+                <Typography style={{color:'#FFFFFF', fontSize:'160px', lineHeight:'0.5'}}>Better.</Typography>
+              </Slogan>
+            </Grid>
+          </Grid>
+          </Grid>
+          <Grid item style={{marginTop:"130px"}}>
+          <Grid container justify="space-between" alignItems="center"  >
+              <Grid item sm={6} >
+                <Grid container direction="column" justify="space-between" alignItems="center" >
+                  <Grid item style={{margin:"120px"}}>
+                  <TwitterLogin loginUrl={`${url}/auth/twitter/`}
+                      onFailure={this.onFailed} onSuccess={this.props.getLogin}
+                      requestTokenUrl={`${url}/auth/twitter/reverse`}/>
+                  </Grid>
+                  <Grid item >
+                    <Typography variant="caption" style={{color:'#FFFFFF', marginTop:"30px"}}>TWITTER, TWEET, RETWEET and the Twitter logo <br/>are trademarks of Twitter, Inc. or its affiliates.</Typography>
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item sm={6} >
+                  <Grid container direction="column" justify="space-between"  alignItems="flex-end" spacing={40}>
+                    <Grid item style={{marginRight:"40px"}}><Typography  variant="title">Generate lists that are meaningful for you</Typography></Grid>
+                    <Grid item style={{marginRight:"40px"}}><Typography variant="title">Block toxic members and keep your timeline clean</Typography></Grid>
+                    <Grid item style={{marginRight:"40px"}}><Typography variant="title">Add your newly created list to Twitter</Typography></Grid>
+                    <Grid item style={{marginRight:"40px"}}><Typography variant="title">Create and Send Tweets with a cancellation option</Typography></Grid>
+                  </Grid>
+              </Grid>
+            </Grid>
+            </Grid>
+          </Grid>
         </Wall>
       </React.Fragment>
     );
