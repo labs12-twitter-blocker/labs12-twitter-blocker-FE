@@ -3,9 +3,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 // import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider/Divider';
 // import { unstable_Box as Box } from '@material-ui/core/Box';
-import { List, ListItem, Tabs, Tab } from '@material-ui/core';
+import { Tabs, Tab } from '@material-ui/core';
 import styled from '@material-ui/styles/styled';
-import Header from '../../components/tweeper/Header';
+// import Header from '../../components/tweeper/Header';
 import TweetFloat from '../../components/tweeper/TweetFloat.js'
 import HeaderTest from '../../tests/HeaderTest.js'
 import theme from '../../theme/tweeper/theme';
@@ -13,14 +13,14 @@ import withTheme from '../withTheme';
 import ListExplorerTable from '../../components/tweeper/ListExplorerTable.js'
 import LeaderboardTab from '../../components/tweeper/LeaderboardTab.js'
 import { getLists, subscribeToList } from '../../actions'
-import atoms from '../../components/atoms';
-import molecules from '../../components/molecules';
+// import atoms from '../../components/atoms';
+// import molecules from '../../components/molecules';
 import { connect } from 'react-redux';
 
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 
-const { Avatar, Icon, Typography, Button } = atoms;
+// const { Avatar, Icon, Typography, Button } = atoms;
 // const { Tabs, Tab } = molecules;
 
 const Content = styled('div')({
@@ -67,7 +67,10 @@ class ListExplorer extends React.Component {
       <HeaderTest />
       <Content>
             <Feed>
-            <Tabs onChange={this.handleChange} variant='fullWidth'>
+            <Tabs 
+              value={this.state.value}
+              onChange={this.handleChange} 
+              variant='fullWidth'>
                 <Tab label='List Explorer'/>
                 <Tab label='Leaderboard'/>
               </Tabs>

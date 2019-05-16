@@ -10,7 +10,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { getUserBlockList } from '../../actions/index';
-import CreateList from './CreateList';
+// import CreateList from './CreateList';
 
 const styles = theme => ({
   root: {
