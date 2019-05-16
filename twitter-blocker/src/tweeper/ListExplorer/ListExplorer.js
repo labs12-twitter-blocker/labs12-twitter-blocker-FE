@@ -86,7 +86,7 @@ class ListExplorer extends React.Component {
               }
               <Divider />
             </Feed>
-        <TweetFloat />
+        {/* <TweetFloat /> */}
       </Content>
     </React.Fragment>
   );
