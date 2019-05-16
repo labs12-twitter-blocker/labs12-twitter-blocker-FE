@@ -645,7 +645,7 @@ export const deleteList = list_id => dispatch => {
     })
     .catch(err => {
       console.log(err);
-      dispatch({ type: DELETE_LIST_FAILURE, payload: err.message });
+      dispatch({ type: DELETE_LIST_FAILURE, payl err.message });
     });
 };
 

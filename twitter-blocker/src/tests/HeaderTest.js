@@ -150,6 +150,10 @@ class HeaderTest extends React.Component {
 
               <Grid item xs={6} sm="auto" >
                 <ListItem>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8820a47824c4d274bba3b0c90f092a612863e6b3
                   <Avatar src={localStorage.getItem("profile_img")} style={avatarStyle} alt="Your Profile Image" />
                   {/* <ListItemText primary="austen" /> */}
                   <React.Fragment>
