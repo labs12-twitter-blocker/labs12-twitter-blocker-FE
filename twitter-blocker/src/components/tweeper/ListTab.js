@@ -6,7 +6,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-import ListView from './ListViews';
+// import ListView from './ListViews';
 import PublicListsTable from './PublicListsTable';
 import PrivateListsTable from './PrivateListsTable';
 import BlockListsTable from './BlockListsTable';
@@ -60,7 +60,7 @@ class FullWidthTabs extends React.Component {
             textColor="primary"
             variant="fullWidth"
           >
-            <Tab label="Lists" />
+            <Tab label="All Lists" />
             <Tab label="Public Lists" />
             <Tab label="Private Lists" />
             <Tab label="Block Lists" />

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -10,7 +12,10 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import { getUserList } from '../../actions/index';
-import CreateList from './CreateList';
+// import CreateList from './CreateList';
+import atoms from '../../components/atoms';
+
+const { Typography } = atoms;
 
 const styles = theme => ({
   root: {
@@ -24,10 +29,10 @@ const styles = theme => ({
 });
 
 let id = 0;
-function createData(list_name, description, member_count, subscriber_count, list_upvotes, list_downvotes) {
+function createData(list_name, description, member_count, subscriber_count, list_points, twitter_list_id) {
   id += 1;
   // console.log("createData", id)
-  return { id, list_name, description, member_count, subscriber_count, list_upvotes, list_downvotes };
+  return { id, list_name, description, member_count, subscriber_count, list_points, twitter_list_id };
 }
 
 
@@ -35,30 +40,30 @@ class AllListsTable extends Component {
   state = {
     rows: [],
     listRan: false,
+    twitter_user_id: ""
   }
 
 
   componentDidMount() {
-    // this.props.getLists()
     this.props.getUserList(localStorage.getItem("twitter_user_id"))
+    this.setState({"twitter_user_id": localStorage.getItem("twitter_user_id") })
   };
 
   componentDidUpdate() {
-    if (this.props.lists.length > 0 && this.state.listRan === false) {
-      this.getListRowBuilder(this.props.lists);
+    if (this.props.allLists.length > 0 && this.state.listRan === false ) {
+      this.getListRowBuilder(this.props.allLists);
     }
   }
 
   getListRowBuilder = (list) => {
     let newRow = [];
-    // console.log('here')
     list.map(list => {
-      // console.log("list", list);
-      newRow.push(createData(list.list_name, list.description,
-        list.member_count, list.subscriber_count,
-        list.list_upvotes, list.list_downvotes))
+      newRow.push(createData(list.list_name, list.description, 
+        list.member_count, list.subscriber_count, 
+        list.list_points, list.twitter_list_id))
+        return newRow;
     })
-    // console.log(newRow);
+    // console.log("newRow", newRow);
     this.setState({ listRan: true })
     this.setState({ rows: newRow });
   };
@@ -67,7 +72,7 @@ class AllListsTable extends Component {
 
   render() {
 
-    if (this.props.lists === null || this.props.lists.length === 0) {
+    if (this.props.allLists === null || this.props.allLists.length === 0 ) {
       return (
         <div>
           <h3>Create Your First List!</h3>
@@ -81,28 +86,37 @@ class AllListsTable extends Component {
         <Paper className={classes.root}>
           <Table className={classes.table}>
             <TableHead>
-              <TableRow>
-                <TableCell>List Name</TableCell>
-                <TableCell align="center">List Description</TableCell>
-                <TableCell align="center">List Members</TableCell>
-                <TableCell align="center">List Subsribers</TableCell>
-                <TableCell align="center">List Up Votes</TableCell>
-                <TableCell align="center">List Down Votes</TableCell>
-                {/* <TableCell align="center">Protein (g)</TableCell> */}
+              <TableRow >
+                <TableCell align="center" padding="checkbox">Points</TableCell>
+                <TableCell align="left" padding="none">Name</TableCell>
+                <TableCell align="right">Members</TableCell>
+                <TableCell align="right">Subscribers</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {/* {console.log("this.state.rows", this.state.rows)} */}
               {this.state.rows.map(row => (
-                <TableRow key={row.id}>
-                  <TableCell component="th" scope="row">
-                    {row.list_name}
+
+                <TableRow key={row.id} hover >
+                  <TableCell align="center" padding="checkbox">
+                    {/* <IconButton rowid={row.id} id={row.twitter_list_id} onClick={this.up } >
+                      <FontAwesomeIcon icon={faArrowUp} color='default' style={{fontSize: '12px'}}/>
+                    </IconButton> */}
+
+                    <Typography color="textPrimary" inline="true" variant="body1">{row.list_points}</Typography>
+                  
+                    {/* <IconButton rowid={row.id} id={row.twitter_list_id} onClick={this.down } >
+                      <FontAwesomeIcon icon={faArrowDown} color='primary' style={{fontSize: '12px'}}/>
+                    </IconButton> */}
                   </TableCell>
-                  <TableCell align="center">{row.description}</TableCell>
-                  <TableCell align="center">{row.member_count}</TableCell>
-                  <TableCell align="center">{row.subscriber_count}</TableCell>
-                  <TableCell align="center">{row.list_upvotes}</TableCell>
-                  <TableCell align="center">{row.list_downvotes}</TableCell>
+                  <TableCell align="left" padding="none">
+                    <Typography color="primary"variant="body1">
+                      <Link component={RouterLink} to={`/details/${row.twitter_list_id}`} >{row.list_name}</Link>
+                    </Typography>
+                    <Typography color="textSecondary" variant="body2">{row.description}</Typography>
+                  </TableCell>
+                  <TableCell align="right" >{row.member_count}</TableCell>
+                  <TableCell align="right" >{row.subscriber_count}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -120,7 +134,7 @@ AllListsTable.propTypes = {
 // export default withStyles(styles)(AllListsTable);
 
 const mapStateToProps = state => ({
-  lists: state.listsReducer.userLists
+  allLists: state.listsReducer.userLists
 });
 
 
