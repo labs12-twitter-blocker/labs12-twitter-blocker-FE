@@ -35,7 +35,7 @@ const initialState = {
     fetchingUsers: false,
     fetchingUsersPoints: false,
     fetchingPremiumUsers: false,
-    currentUser: null,
+    currentUser: [],
     gotCurrentUser: false,
     fetchingUser: false,
     editingUser: false,
