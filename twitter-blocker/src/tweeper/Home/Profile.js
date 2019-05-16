@@ -41,9 +41,10 @@ const Feed = styled('div')({
 
 const Cover = styled('div')({
   height: 200,
-  backgroundColor: '#ccd6dd',
+  backgroundImage: `url(${localStorage.getItem("banner_img")})`,
+  backgroundSize: "cover",
+  backgroundColor: "#1da1f2",
 });
-
 
 class Profile extends Component {
   constructor() {
@@ -66,7 +67,7 @@ class Profile extends Component {
     }
     localStorage.getItem("twitter_user_id")
     // console.log("++++++++++++++this.props.currentUser", this.props.currentUser)
-    
+
   }
 
   componentDidUpdate(prevProps) {
@@ -83,7 +84,7 @@ class Profile extends Component {
       this.setState({ loggedInRan: true })
       this.setState({ twitter_user_id: localStorage.getItem("twitter_user_id") })
       this.props.getUser(this.props.user.id)
-      this.setState({profilePic: localStorage.getItem("profile_img")})
+      this.setState({ profilePic: localStorage.getItem("profile_img") })
     }
     // console.log("twitter_user_id", this.state.twitter_user_id);
   }
@@ -96,29 +97,30 @@ class Profile extends Component {
     let content = ((this.props.loggedIn === true || this.state.twitter_user_id !== null) && this.props.gotCurrentUser === true) ?
       (
         <React.Fragment>
-        <CssBaseline />
-        <HeaderTest />
-        <Content>
-              <Feed>
-                <Cover />
-                <Box p={2} mb={1}>
-                  <Box
-                    css={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      textAlign: 'right',
-                    }}
-                  >
-                    <Avatar
-                      style={{ marginTop: '-18%', marginBottom: 14 }}
-                      ultraLarge
-                      bordered
-                      src={this.state.profilePic}
-                    />
-                    {/* <Button large color="primary" variant="outlined">
+          <CssBaseline />
+          <HeaderTest />
+          <Content>
+            <Feed>
+              <Cover />
+              <Box
+                p={2} mb={1}>
+                <Box
+                  css={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    textAlign: 'right',
+                  }}
+                >
+                  <Avatar
+                    style={{ marginTop: '-18%', marginBottom: 14 }}
+                    ultraLarge
+                    bordered
+                    src={this.state.profilePic}
+                  />
+                  {/* <Button large color="primary" variant="outlined">
                       Edit Profile
                     </Button> */}
-                </Box>
+                </Box >
                 {/* <Typography primary>Austen Allred</Typography> */}
                 <Typography light gutterBottom>
                   {console.log("----------------------PROFILE PIC-----------", this.state.profilePic)}
@@ -143,13 +145,13 @@ class Profile extends Component {
                   <Typography light inline indented>
                     Followers
                   </Typography> */}
-                </Box>
-                <ListTab variant="fullWidth"/>
-                <Divider />
-              </Feed>
-          {/* <TweetFloat /> */}
-        </Content>
-      </React.Fragment>
+              </Box>
+              <ListTab variant="fullWidth" />
+              <Divider />
+            </Feed>
+            {/* <TweetFloat /> */}
+          </Content>
+        </React.Fragment >
       ) :
       (
         <Landing />
