@@ -201,7 +201,7 @@ render() {
                         <Typography>@{i.screen_name}</Typography>
                         </TopLine>
                         <Typography>{i.description}</Typography>
-                        {localStorage.getItem("twitter_user_id") === this.props.list.twitter_id ? <FontAwesomeIcon icon="times" onClick={this.removeFromList(i)}/> : null}
+                        {/* {localStorage.getItem("twitter_user_id") === this.props.list.twitter_id ? <FontAwesomeIcon icon="times" onClick={this.removeFromList(i)}/> : null} */}
                         </CardContent>
                         </ListItem>
                     </Card>
