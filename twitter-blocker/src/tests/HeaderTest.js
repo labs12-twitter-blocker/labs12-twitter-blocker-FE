@@ -150,7 +150,7 @@ class HeaderTest extends React.Component {
 
               <Grid item xs={6} sm="auto" >
                 <ListItem>
-                  <Avatar src="./assets/austen.png" style={avatarStyle} />
+                  <Avatar src={localStorage.getItem("profile_img")} style={avatarStyle} alt="Your Profile Image" />
                   {/* <ListItemText primary="austen" /> */}
                   <React.Fragment>
                     <Button medium color="primary" variant="contained" href="/create">

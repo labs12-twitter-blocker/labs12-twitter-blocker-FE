@@ -38,11 +38,13 @@ export const getLogin = (response) => dispatch => {
 
   response.json()
     .then(user => {
-      console.log("DISPATCH USER: ", user)
+      console.log("DISPATCH USER: _________________________________________________________________________________________________", user)
+      console.log(user._json.profile_image_url)
       if (token) {
         localStorage.setItem("twitter_user_id", user.id)
         localStorage.setItem("token", token)
         localStorage.setItem("username", user.username)
+        localStorage.setItem("profile_img", user._json.profile_image_url)
         dispatch({ type: GET_LOGIN_SUCCESS, payload: user })
         // this.setState({isAuthenticated: true, user: user, token: token});
       }
@@ -779,7 +781,7 @@ export function searchLists(searchTerm) {
       .then(({ data }) => {
         console.log(data);
         let filtered = data.filter(list => {
-          return list.list_name.toLowerCase().includes(searchTerm.toLowerCase()) ;
+          return list.list_name.toLowerCase().includes(searchTerm.toLowerCase());
         })
         console.log(filtered);
         dispatch({ type: SEARCH_LISTS_SUCCESS, payload: filtered })
