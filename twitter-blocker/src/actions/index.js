@@ -44,6 +44,7 @@ export const getLogin = (response) => dispatch => {
         localStorage.setItem("twitter_user_id", user.id)
         localStorage.setItem("token", token)
         localStorage.setItem("username", user.username)
+        localStorage.setItem("displayName", user.displayName)
         localStorage.setItem("profile_img", user._json.profile_image_url_https)
         localStorage.setItem("banner_img", user._json.profile_banner_url)
 

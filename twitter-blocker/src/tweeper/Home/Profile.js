@@ -97,38 +97,40 @@ class Profile extends Component {
     let content = ((this.props.loggedIn === true || this.state.twitter_user_id !== null) && this.props.gotCurrentUser === true) ?
       (
         <React.Fragment>
-          <CssBaseline />
-          <HeaderTest />
-          <Content>
-            <Feed>
-              <Cover />
-              <Box
-                p={2} mb={1}>
-                <Box
-                  css={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    textAlign: 'right',
-                  }}
-                >
-                  <Avatar
-                    style={{ marginTop: '-18%', marginBottom: 14 }}
-                    ultraLarge
-                    bordered
-                    src={this.state.profilePic}
-                  />
-                  {/* <Button large color="primary" variant="outlined">
+        <CssBaseline />
+        <HeaderTest />
+        <Content>
+              <Feed>
+                <Cover />
+                <Box p={2} mb={1}>
+                  <Box
+                    css={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      textAlign: 'right',
+                    }}
+                  >
+                    <Avatar
+                      style={{ marginTop: '-18%', marginBottom: 14 }}
+                      ultraLarge
+                      bordered
+                      src={localStorage.getItem("profile_img")}
+                      
+                    />
+                    {/* <Button large color="primary" variant="outlined">
                       Edit Profile
                     </Button> */}
-                </Box >
-                {/* <Typography primary>Austen Allred</Typography> */}
+                </Box>
+                {/* <Typography primary>{this.props.user.displayName}</Typography> */}
+                <Typography primary>{localStorage.getItem("displayName")}</Typography>
                 <Typography light gutterBottom>
                   {console.log("----------------------PROFILE PIC-----------", this.state.profilePic)}
                   {console.log("++++this.props.loggedIn", this.props.loggedIn)}
                   {console.log("++++this.state.twitter_user_id", this.state.twitter_user_id)}
                   {console.log("++++this.props.currentUser", this.props.currentUser)}
                   {console.log("++++this.props.user", this.props.user)}
-                  {this.props.currentUser.users.screen_name}
+                  {/* {this.props.currentUser.users.screen_name} */}
+                  {localStorage.getItem("username")}
                 </Typography>
                 {/* <Typography light gutterBottom>
                   {this.props.user.displayName}
