@@ -79,6 +79,7 @@ class HeaderTest extends React.Component {
     localStorage.removeItem("username");
     localStorage.removeItem("profile_img");
     localStorage.removeItem("displayName");
+    localStorage.removeItem("banner_img");
     // this.props.checkSignIn();
     // this.props.history.push("/");
   };

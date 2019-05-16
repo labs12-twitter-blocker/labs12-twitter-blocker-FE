@@ -28,15 +28,14 @@ const url = process.env.REACT_APP_BACKEND_BASE_URL
 const { Avatar, Icon, Typography, Button } = atoms;
 // const { Tabs, Tab } = molecules;
 
+
 const Content = styled('div')({
   maxWidth: 1000,
   padding: theme.spacing.unit * 4,
   margin: 'auto',
+  height: '100%',
 });
 
-const Feed = styled('div')({
-  backgroundColor: '#fff',
-});
 
 const Cover = styled('div')({
   height: 200,
@@ -46,26 +45,41 @@ const Cover = styled('div')({
 const Wall = styled('div')({
   backgroundImage: `url('/images/mobile_on_wood.jpg')`,
   backgroundSize: 'cover',
-  backgroundColor: '#000000',
   height: '100vh',
   width: '100vw',
+  position: "fixed",
+  zIndex:"-5",
+  [theme.breakpoints.down('xs')]: {
+    backgroundImage: `url('/images/mobile_on_wood_mobile.jpg')`,
+    height: "100vh",
+    width: "100vw",
+  },
 });
 
 const Slogan = styled('div')({
   margin: "40px",
+  [theme.breakpoints.down('sm')]: {
+    padding: "40px",
+  },
 })
+
 
 const Logo = styled('div')({
   margin: '20px'
 })
 
 const LoginContainer = styled('div')({
-  marginTop:"300px"
+  marginTop:"10rem",
+  [theme.breakpoints.down('sm')]: {
+    marginTop: "0",
+  },
 })
 
 
 
-class Profile extends Component {
+
+
+class Landing extends Component {
   constructor() {
     super();
 
@@ -106,8 +120,8 @@ class Profile extends Component {
   render() {
     return (
         <React.Fragment>
-        <Wall>
-          <Grid container direction="column" justify="center"  >
+        <Wall/>
+          <Grid container direction="column" justify="center" spacing={40}>
           <Grid item >
             <Grid container justify="space-between" >
               <Logo>
@@ -125,38 +139,42 @@ class Profile extends Component {
              
              <Grid item xl={3} >
               <Slogan>
-                <Typography style={{color:'#FFFFFF', fontSize:'86px'}}>Your <span style={{color:'#1da1f2'}}>Twitter</span>.</Typography>
-                <Typography style={{color:'#FFFFFF', fontSize:'160px', lineHeight:'0.5'}}>Better.</Typography>
+                <Typography style={{fontSize: "4.1rem", color: "#FFFFFF"}}>Your <span style={{color:'#1da1f2'}}>Twitter</span>.</Typography>
+                <Typography style={{fontSize: "8rem", color: "#FFFFFF", lineHeight: "0.5",}}>Better.</Typography>
               </Slogan>
             </Grid>
           </Grid>
           </Grid>
-          <Grid item style={{marginTop:"130px"}}>
-          <Grid container justify="space-between" alignItems="center"  >
-              <Grid item sm={6} >
+          <Grid item style={{marginTop:"8rem"}}>
+          <Grid container justify="space-between" alignItems="center" xs={{direction:"column-reverse"}}>
+              <Grid item xs={12} md={6} >
                 <Grid container direction="column" justify="space-between" alignItems="center" >
                   <Grid item style={{margin:"120px"}}>
                   <TwitterLogin loginUrl={`${url}/auth/twitter/`}
                       onFailure={this.onFailed} onSuccess={this.props.getLogin}
-                      requestTokenUrl={`${url}/auth/twitter/reverse`}/>
+                      requestTokenUrl={`${url}/auth/twitter/reverse`}
+                      />
                   </Grid>
-                  <Grid item >
-                    <Typography variant="caption" style={{color:'#FFFFFF', marginTop:"30px"}}>TWITTER, TWEET, RETWEET and the Twitter logo <br/>are trademarks of Twitter, Inc. or its affiliates.</Typography>
-                  </Grid>
+                  
                 </Grid>
               </Grid>
-              <Grid item sm={6} >
+              <Grid item xs={12} md={6}>
                   <Grid container direction="column" justify="space-between"  alignItems="flex-end" spacing={40}>
-                    <Grid item style={{marginRight:"40px"}}><Typography  variant="title">Generate lists that are meaningful for you</Typography></Grid>
-                    <Grid item style={{marginRight:"40px"}}><Typography variant="title">Block toxic members and keep your timeline clean</Typography></Grid>
-                    <Grid item style={{marginRight:"40px"}}><Typography variant="title">Add your newly created list to Twitter</Typography></Grid>
-                    <Grid item style={{marginRight:"40px"}}><Typography variant="title">Create and Send Tweets with a cancellation option</Typography></Grid>
+                    <Grid item style={{marginRight:"5%"}}><Typography  variant="title" style={{color:"#FFFFFF"}}>Generate lists that are meaningful for you</Typography></Grid>
+                    <Grid item style={{marginRight:"5%"}}><Typography variant="title" style={{color:"#FFFFFF"}}>Block toxic members and keep your timeline clean</Typography></Grid>
+                    <Grid item style={{marginRight:"5%"}}><Typography variant="title" style={{color:"#FFFFFF"}}>Add your newly created list to Twitter</Typography></Grid>
+                    <Grid item style={{marginRight:"5%"}}><Typography variant="title" style={{color:"#FFFFFF"}}>Create and Send Tweets with a cancellation option</Typography></Grid>
                   </Grid>
               </Grid>
+              
             </Grid>
+            <Grid item style={{marginTop:"7rem"}}>
+                    <Typography variant="caption" style={{color:'#FFFFFF', marginTop:"30px"}}>TWITTER, TWEET, RETWEET and the Twitter logo are trademarks of Twitter, Inc. or its affiliates.</Typography>
+                  
+              </Grid>
             </Grid>
           </Grid>
-        </Wall>
+ 
       </React.Fragment>
     );
 }
@@ -174,7 +192,7 @@ const mapStateToProps = state => ({
   });
 
 
-const styledComponent = withTheme(theme)(Profile);
+const styledComponent = withTheme(theme)(Landing);
 
 export default connect(
   mapStateToProps,

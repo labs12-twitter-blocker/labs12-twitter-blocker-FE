@@ -41,9 +41,10 @@ const Feed = styled('div')({
 
 const Cover = styled('div')({
   height: 200,
-  backgroundColor: '#ccd6dd',
+  backgroundImage: `url(${localStorage.getItem("banner_img")})`,
+  backgroundSize: "cover",
+  backgroundColor: "#1da1f2",
 });
-
 
 class Profile extends Component {
   constructor() {
@@ -66,7 +67,7 @@ class Profile extends Component {
     }
     localStorage.getItem("twitter_user_id")
     // console.log("++++++++++++++this.props.currentUser", this.props.currentUser)
-    
+
   }
 
   componentDidUpdate(prevProps) {
@@ -83,7 +84,7 @@ class Profile extends Component {
       this.setState({ loggedInRan: true })
       this.setState({ twitter_user_id: localStorage.getItem("twitter_user_id") })
       this.props.getUser(this.props.user.id)
-      this.setState({profilePic: localStorage.getItem("profile_img")})
+      this.setState({ profilePic: localStorage.getItem("profile_img") })
     }
     // console.log("twitter_user_id", this.state.twitter_user_id);
   }
@@ -146,13 +147,13 @@ class Profile extends Component {
                   <Typography light inline indented>
                     Followers
                   </Typography> */}
-                </Box>
-                <ListTab variant="fullWidth"/>
-                <Divider />
-              </Feed>
-          {/* <TweetFloat /> */}
-        </Content>
-      </React.Fragment>
+              </Box>
+              <ListTab variant="fullWidth" />
+              <Divider />
+            </Feed>
+            {/* <TweetFloat /> */}
+          </Content>
+        </React.Fragment >
       ) :
       (
         <Landing />
