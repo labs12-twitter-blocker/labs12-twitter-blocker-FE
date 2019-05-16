@@ -212,7 +212,7 @@ render() {
               }
               <Divider />
             </Feed>
-        <TweetFloat />
+        {/* <TweetFloat /> */}
       </Content>
     </React.Fragment>
   );
