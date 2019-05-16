@@ -804,6 +804,8 @@ export function searchLists(searchTerm) {
       .then(({ data }) => {
         console.log(data);
         let filtered = data.filter(list => {
+          if(list.description){
+            return list.description.toLowerCase().includes(searchTerm.toLowerCase()) || list.list_name.toLowerCase().includes(searchTerm.toLowerCase())}
           return list.list_name.toLowerCase().includes(searchTerm.toLowerCase());
         })
         console.log(filtered);
