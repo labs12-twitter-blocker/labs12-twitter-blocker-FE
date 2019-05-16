@@ -14,6 +14,7 @@ import Button from '@material-ui/core/Button';
 import { getUserList } from '../../actions/index';
 // import CreateList from './CreateList';
 import atoms from '../../components/atoms';
+import Grid from "@material-ui/core/Grid/Grid";
 
 const { Typography } = atoms;
 
@@ -24,7 +25,7 @@ const styles = theme => ({
     overflowX: 'auto',
   },
   table: {
-    minWidth: 700,
+    // minWidth: 700,
   },
 });
 
@@ -83,6 +84,8 @@ class AllListsTable extends Component {
     } else {
       const { classes } = this.props;
       return (
+        <Grid container justify={"center"}>
+        <Grid item xs={12} md={10} style={{ padding: "8px" }}>
         <Paper className={classes.root}>
           <Table className={classes.table}>
             <TableHead>
@@ -122,6 +125,8 @@ class AllListsTable extends Component {
             </TableBody>
           </Table>
         </Paper>
+        </Grid>
+        </Grid>
       );
     }
   }

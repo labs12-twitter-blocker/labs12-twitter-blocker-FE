@@ -36,7 +36,11 @@ const Feed = styled('div')({
 
 const TabContainer = styled('div') ({
   padding: theme.spacing.unit * 4,
-  margin: 'auto'
+  margin: 'auto',
+  [theme.breakpoints.down("sm")]: {
+    // width: '100%',
+    padding: theme.spacing.unit,
+  }
 })
 
 // const Cover = styled('div')({

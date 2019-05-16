@@ -1,3 +1,15 @@
 {
-  "eslint.enable": false
+  "eslint.enable": false,
+  "cSpell.words": [
+    "downvote",
+    "leaderboard",
+    "rowid",
+    "swipeable",
+    "tweeper",
+    "upvote"
+  ],
+  "cSpell.ignoreWords": [
+    "labelledby",
+    "neue"
+  ]
 }
