@@ -52,6 +52,7 @@ const styles = theme => ({
 
 const Content = styled('div')({
   maxWidth: 1000,
+  paddingTop: 0,
   padding: theme.spacing.unit * 4,
   margin: 'auto',
 });
