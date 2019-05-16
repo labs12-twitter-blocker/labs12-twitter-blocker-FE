@@ -50,30 +50,39 @@ class SettingsTabs extends React.Component {
     const { classes, theme } = this.props;
 
     return (
-      <div className={classes.root}>
+      <React.Fragment>
         <AppBar position="static" color="default">
-          <Tabs
-            value={this.state.value}
-            onChange={this.handleChange}
-            indicatorColor="primary"
-            textColor="primary"
-            variant="fullWidth"
-          >
-            <Tab label="User Settings" />
-            <Tab label="Payment Settings" />
-            <Tab label="Delete Account" />
-          </Tabs>
+        <h3>Account Settings</h3>
         </AppBar>
-        <SwipeableViews
-          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-          index={this.state.value}
-          onChangeIndex={this.handleChangeIndex}
-        >
-          <TabContainer dir={theme.direction}><UserSettingsTextField /> </TabContainer>
-          <TabContainer dir={theme.direction}><UserSettingsPaymentField /></TabContainer>
-          <TabContainer dir={theme.direction}><UserSettingsDelete /></TabContainer>
-        </SwipeableViews>
-      </div>
+        <UserSettingsTextField />
+        <UserSettingsPaymentField />
+        <UserSettingsDelete />
+      </React.Fragment>
+      
+      // // <div className={classes.root}>
+      //   {/* <AppBar position="static" color="default">
+      //     <Tabs
+      //       value={this.state.value}
+      //       onChange={this.handleChange}
+      //       indicatorColor="primary"
+      //       textColor="primary"
+      //       variant="fullWidth"
+      //     >
+      //       <Tab label="User Settings" />
+      //       <Tab label="Payment Settings" />
+      //       <Tab label="Delete Account" />
+      //     </Tabs>
+      //   </AppBar>
+      //   <SwipeableViews
+      //     axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+      //     index={this.state.value}
+      //     onChangeIndex={this.handleChangeIndex}
+      //   >
+      //     <TabContainer dir={theme.direction}><UserSettingsTextField /> </TabContainer>
+      //     <TabContainer dir={theme.direction}><UserSettingsPaymentField /></TabContainer>
+      //     <TabContainer dir={theme.direction}><UserSettingsDelete /></TabContainer>
+      //   </SwipeableViews> */}
+      // </div>
     );
   }
 }

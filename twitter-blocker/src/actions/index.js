@@ -44,8 +44,7 @@ export const getLogin = (response) => dispatch => {
         localStorage.setItem("twitter_user_id", user.id)
         localStorage.setItem("token", token)
         localStorage.setItem("username", user.username)
-        localStorage.setItem("profile_img", user._json.profile_image_url)
-
+        localStorage.setItem("profile_img", user._json.profile_image_url
         dispatch({ type: GET_LOGIN_SUCCESS, payload: user })
         // this.setState({isAuthenticated: true, user: user, token: token});
       }
@@ -646,7 +645,7 @@ export const deleteList = list_id => dispatch => {
     })
     .catch(err => {
       console.log(err);
-      dispatch({ type: DELETE_LIST_FAILURE, payload: err.message });
+      dispatch({ type: DELETE_LIST_FAILURE, payl err.message });
     });
 };
 

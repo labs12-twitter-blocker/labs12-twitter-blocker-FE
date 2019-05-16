@@ -60,7 +60,6 @@ const Cover = styled('div')({
 const TopLine = styled('div')({
   display: 'flex',
   justifyContent: 'space-between',
-
 });
 
 const ProfileNameImg = styled('div') ({
@@ -72,7 +71,17 @@ const ProfileNameImg = styled('div') ({
 const ProfileName = styled(Typography)({
   fontWeight: 'bold',
   fontFamily: 'Helvetica Neue',
+})
 
+const SubscribeButton = styled(Button) ({
+  margin:"5%", 
+  color:"#1DA1F2", 
+  border:"1px solid #1DA1F2"
+})
+
+const DetailsHeader = styled('div')({
+  // position: "fixed",
+  padding:"5%"
 })
 
     
@@ -82,7 +91,8 @@ class ListDetails extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      value: 0
+      value: 0,
+      isSubscribed: false
     }
   }
 
@@ -90,20 +100,28 @@ class ListDetails extends React.Component {
     this.setState({ value });
   };
 
-  removeFromList = (member) => {
-    let listMembers = this.props.listmembers;
-    for(let i = 0; i < listMembers.length; i++) {
-      if(listMembers[i].twitter_user_id === member.twitter_user_id){
-        listMembers.splice(i, 1);
-      }
+  subscribe = () => {
+    if(!this.state.isSubscribed) {
+      this.props.subscribeToList(this.props.list.twitter_list_id, this.props.getUser(localStorage.getItem("twitter_user_id")));
+      this.setState({isSubscribed: true})
     }
-    this.props.updateListMembers(listMembers)
   }
+  // removeFromList = (member) => {
+  //   let listMembers = this.props.listmembers;
+  //   for(let i = 0; i < listMembers.length; i++) {
+  //     if(listMembers[i].twitter_user_id === member.twitter_user_id){
+  //       listMembers.splice(i, 1);
+  //     }
+  //   }
+  //   this.props.updateListMembers(listMembers)
+  // }
+
+
 
   componentDidMount(){
-    // const userId = this.props.getUser(localStorage.getItem("twitter_user_id"))
+    const userId = this.props.getUser(localStorage.getItem("twitter_user_id"))
     this.props.getListMembers(this.props.match.params.twitter_list_id);
-    // this.props.getListTimeline(this.props.match.params.twitter_list_id, userId);
+    this.props.getListTimeline(this.props.match.params.twitter_list_id, userId);
 
 }
   
@@ -115,12 +133,24 @@ render() {
       <HeaderTest />
       <Content>
             <Feed>
+              <DetailsHeader>
+              <Grid container justify="space-between" spacing={2}>
+                <Grid item>
+                  <Typography variant="title">{this.props.list.list_name}</Typography>
+                  <Typography>{this.props.list.member_count} Members</Typography>
+                  <Typography>{this.props.list.subscriber_count} Subscribers</Typography>
+                </Grid>
+                <Grid item>
+                  <SubscribeButton medium color="inherit" variant="outlined" onClick={this.subscribe}>Subscribe</SubscribeButton>
+                </Grid>
+                </Grid>
+                
+
               <Tabs onChange={this.handleChange} variant='fullWidth'>
                 <Tab label='Members' />
                 <Tab label='Timeline'/>
                 </Tabs>
-                {/* if current user is not already subscribed, add subscribe button */}
-                <Button medium color="primary" variant="contained" style={{margin:"5%"}}>Subscribe to List</Button>
+                </DetailsHeader>
                 {value === 0 &&
               <TabContainer>
                 
