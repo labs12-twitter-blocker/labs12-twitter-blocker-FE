@@ -81,7 +81,10 @@ const SubscribeButton = styled(Button) ({
 
 const DetailsHeader = styled('div')({
   // position: "fixed",
-  padding:"5%"
+  // left: 0,
+  // width:"100%",
+  padding:"5%",
+  backgroundColor: '#fff',
 })
 
     
@@ -121,6 +124,7 @@ class ListDetails extends React.Component {
   componentDidMount(){
     const userId = this.props.getUser(localStorage.getItem("twitter_user_id"))
     this.props.getListMembers(this.props.match.params.twitter_list_id);
+    this.props.getList(this.props.match.params.twitter_list_id);
     this.props.getListTimeline(this.props.match.params.twitter_list_id, userId);
 
 }
@@ -130,11 +134,11 @@ render() {
   return (
     <React.Fragment>
       <CssBaseline />
-      <HeaderTest />
-      <Content>
-            <Feed>
+      <HeaderTest/>
+        <Content>
+          <Feed> 
               <DetailsHeader>
-              <Grid container justify="space-between" spacing={2}>
+              <Grid container justify="space-between" spacing={24}>
                 <Grid item>
                   <Typography variant="title">{this.props.list.list_name}</Typography>
                   <Typography>{this.props.list.member_count} Members</Typography>
@@ -144,17 +148,18 @@ render() {
                   <SubscribeButton medium color="inherit" variant="outlined" onClick={this.subscribe}>Subscribe</SubscribeButton>
                 </Grid>
                 </Grid>
-                
+              </DetailsHeader>
 
               <Tabs onChange={this.handleChange} variant='fullWidth'>
                 <Tab label='Members' />
                 <Tab label='Timeline'/>
                 </Tabs>
-                </DetailsHeader>
+               
+                
                 {value === 0 &&
               <TabContainer>
                 
-              <Grid container spacing={1} direction="column" alignItems="center" justify="center" >
+              <Grid container spacing={8} direction="column" alignItems="center" justify="center" >
                 {this.props.listMembers.map(i => {
                   return (
                     <Grid item xs={10} sm={8} md={6} style={{width:"100%"}}>
