@@ -45,6 +45,7 @@ export const getLogin = (response) => dispatch => {
         localStorage.setItem("token", token)
         localStorage.setItem("username", user.username)
         localStorage.setItem("profile_img", user._json.profile_image_url)
+        localStorage.setItem("displayName", user.displayName)
         dispatch({ type: GET_LOGIN_SUCCESS, payload: user })
         // this.setState({isAuthenticated: true, user: user, token: token});
       }

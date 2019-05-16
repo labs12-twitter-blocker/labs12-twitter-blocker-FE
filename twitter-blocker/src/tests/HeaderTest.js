@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from "react-router-dom";
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
@@ -13,6 +14,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+// import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faHome, faSearch, faBell, faEnvelope, faList, faCog } from '@fortawesome/free-solid-svg-icons';
 import atoms from '../components/atoms';
@@ -41,7 +45,8 @@ const searchIcon = {
 class HeaderTest extends React.Component {
   state = {
     open: false,
-    searchTerm: ""
+    searchTerm: "",
+    anchorEl: null,
   };
 
   handleChange = (event) => {
@@ -60,7 +65,26 @@ class HeaderTest extends React.Component {
     this.setState({ open: false });
   };
 
+  handleAvatarClick = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleAvatarClose = () => {
+    this.setState({ anchorEl: null });
+  };
+
+  logOut = () => {
+    localStorage.removeItem("twitter_user_id");
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+    localStorage.removeItem("profile_img");
+    localStorage.removeItem("displayName");
+    // this.props.checkSignIn();
+    // this.props.history.push("/");
+  };
+
   render() {
+    const { anchorEl } = this.state;
     return (
       <div>
         <AppBar position="sticky" elevation={1}>
@@ -150,7 +174,22 @@ class HeaderTest extends React.Component {
 
               <Grid item xs={6} sm="auto" >
                 <ListItem>
-                  <Avatar src={localStorage.getItem("profile_img")} style={avatarStyle} alt="Your Profile Image" />
+                  <Avatar 
+                    src={localStorage.getItem("profile_img")} 
+                    style={avatarStyle} alt="Your Profile Image" 
+                    aria-owns={anchorEl ? 'simple-menu' : undefined}
+                    aria-haspopup="true"
+                    onClick={this.handleAvatarClick}
+                    />
+                    <Menu
+                        id="simple-menu"
+                        anchorEl={anchorEl}
+                        open={Boolean(anchorEl)}
+                        onClose={this.handleAvatarClose}
+                      >
+                        <Link to="/settings" style={{ textDecoration: 'none' }} ><MenuItem>Settings</MenuItem></Link>
+                        <a href="/" style={{ textDecoration: 'none' }} ><MenuItem onClick={this.logOut}>Logout</MenuItem></a>
+                      </Menu>
                   {/* <ListItemText primary="austen" /> */}
                   <React.Fragment>
                     <Button medium color="primary" variant="contained" href="/create">
@@ -174,5 +213,7 @@ const mapStateToProps = state => {
 const mapActionsToProps = {
   searchLists
 }
+
+// const FormDialogRouter = withRouter(FormDialog);
 
 export default connect(mapStateToProps, mapActionsToProps)(HeaderTest);
