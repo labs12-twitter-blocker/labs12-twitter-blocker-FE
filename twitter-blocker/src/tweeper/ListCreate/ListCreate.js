@@ -97,7 +97,7 @@ class ListCreate extends React.Component {
             <h1>Create Your List</h1>
             <CreateListForm />
           </Feed>
-          <TweetFloat />
+          {/* <TweetFloat /> */}
         </Content>
       </React.Fragment>
     );
