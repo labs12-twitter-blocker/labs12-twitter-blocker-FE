@@ -76,15 +76,17 @@ const ProfileName = styled(Typography)({
 })
 
 const SubscribeButton = styled(Button) ({
-  margin:"5%", 
+  margin:"2rem", 
 })
 
 const DetailsHeader = styled('div')({
   position: "fixed",
-  // left: 0,
-  width:"77.2%",
+  left: 0,
+  top: 60,
+  width:"100%",
   padding:"5%",
   backgroundColor: '#fff',
+  zIndex: "4"
 })
 
 const Spacer = styled('div')({
@@ -236,7 +238,7 @@ render() {
               }
               <Divider />
             </Feed>
-        <TweetFloat />
+        <TweetFloat/>
       </Content>
     </React.Fragment>
   );
