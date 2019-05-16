@@ -113,7 +113,7 @@ class Profile extends Component {
                       style={{ marginTop: '-18%', marginBottom: 14 }}
                       ultraLarge
                       bordered
-                      src={this.state.profilePic}
+                      src={localStorage.getItem("profile_img")}
                     />
                     {/* <Button large color="primary" variant="outlined">
                       Edit Profile
