@@ -196,12 +196,12 @@ render() {
                         <TopLine>
                           <ProfileNameImg>
                             <Avatar src={i.profile_img} style={{marginRight: '5px'}}/>
-                            <Link to={`/profile/${this.props.listMembers.twitter_user_id}`} style={{textDecoration:'none'}}><ProfileName >{i.name}</ProfileName></Link>
+                            <Link to={`/profile/${i.twitter_user_id}`} style={{textDecoration:'none'}}><ProfileName >{i.name}</ProfileName></Link>
                             </ProfileNameImg>
                         <Typography>@{i.screen_name}</Typography>
                         </TopLine>
                         <Typography>{i.description}</Typography>
-                        {localStorage.getItem("twitter_user_id") === this.props.list.twitter_id ? <FontAwesomeIcon icon="times" onClick={this.removeFromList(i)}/> : null}
+                        {/* {localStorage.getItem("twitter_user_id") === this.props.list.twitter_id ? <FontAwesomeIcon icon="times" onClick={this.removeFromList(i)}/> : null} */}
                         </CardContent>
                         </ListItem>
                     </Card>

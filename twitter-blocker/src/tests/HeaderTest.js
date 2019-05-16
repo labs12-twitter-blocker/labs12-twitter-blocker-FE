@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import CreateList from '../components/tweeper/CreateList';
 import { withStyles } from '@material-ui/core/styles';
-import Fab from '@material-ui/core/Fab';
+import { Fab, Tooltip } from '@material-ui/core';
 import classNames from 'classnames';
 import TextField from '@material-ui/core/TextField';
 // import Button from '@material-ui/core/Button';
@@ -98,7 +98,9 @@ class HeaderTest extends React.Component {
                     icon={
                       <Badge dotted badgeContent="">
                         <Link to="/profile">
+                        <Tooltip title="Profile">
                           <FontAwesomeIcon icon={faHome} size="2x" color='#38A1F3' />
+                          </Tooltip>
                         </Link>
                       </Badge>
                     }
@@ -106,7 +108,9 @@ class HeaderTest extends React.Component {
                   <Tab onClick={this.handleClickOpen}
                     onlyIcon
                     icon={
+                      <Tooltip title="New Tweet">
                       <FontAwesomeIcon icon={faPlus} size="2x" color='#38A1F3' />
+                      </Tooltip>
                     }
                   />
                   <Dialog
@@ -144,7 +148,9 @@ class HeaderTest extends React.Component {
                     icon={
                       <Badge >
                         <Link to="/explorer">
+                        <Tooltip title="List Explorer">
                           <FontAwesomeIcon icon={faList} size="2x" color='#38A1F3' />
+                          </Tooltip>
                         </Link>
                       </Badge>
                     }
