@@ -40,7 +40,7 @@ const styles = theme => ({
     marginRight: theme.spacing.unit,
   },
   dense: {
-    marginTop: 16,
+    marginTop: 10,
   },
   menu: {
     width: 200,
@@ -51,17 +51,32 @@ class CreateListForm extends Component {
   constructor() {
     super();
     this.state = {
-      title: '',
+      title: "",
       mode: 'public',
-      description: '',
+      description: "",
       user1: "",
       user2: "",
       user3: "",
       user4: "",
       user5: "",
+      titleHelperText: "",
+      descrHelperText: "",
+      user1HelperText: "",
+      user2HelperText: "",
+      user3HelperText: "",
+      user4HelperText: "",
+      user5HelperText: "",
       search_users: null,
       listParams: null,
       newListResponseUpdated: false,
+      titleError: false,
+      descrError: false,
+      user1Error: false,
+      user2Error: false,
+      user3Error: false,
+      user4Error: false,
+      user5Error: false,
+      buttonDisabled: false
     }
   };
   componentDidMount() {
@@ -73,15 +88,70 @@ class CreateListForm extends Component {
     console.log("++++++++++++++this.props.currentUser", this.props.currentUser)
   }
 
-  handleChange = event => {
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
+  handleTitleChange = event => {
+    if (event.target.value.length > 0) {
+      this.setState({ title: event.target.value, titleHelperText: "", titleError: false });
+    } else {
+      this.setState({ titleHelperText: 'Please enter a title for your list', titleError: true });
+    }
+  };
+
+  handleDescriptionChange = event => {
+    if (event.currentTarget.value.length > 0) {
+      this.setState({ description: event.target.value, descrHelperText: "", descrError: false });
+    } else {
+      this.setState({ descrHelperText: 'Please enter a description of your list', descrError: true });
+    }
+  };
+
+  handleUser1Change = event => {
+    if (event.target.value.length > 0) {
+      this.setState({ user1: event.target.value, user1HelperText: "", user1Error: false });
+    } else {
+      this.setState({ user1HelperText: 'Please enter a Twitter user', user1Error: true });
+    }
+  };
+
+  handleUser2Change = event => {
+    if (event.currentTarget.value.length > 0) {
+      this.setState({ user2: event.target.value, user2HelperText: "", user2Error: false });
+    } else {
+      this.setState({ user2HelperText: 'Please enter a Twitter user', user2Error: true });
+    }
+  };
+
+  handleUser3Change = event => {
+    if (event.currentTarget.value.length > 0) {
+      this.setState({ user3: event.target.value, user3HelperText: "", user3Error: false });
+    } else {
+      this.setState({ user3HelperText: 'Please enter a Twitter user', user3Error: true });
+    }
+  };
+
+  handleUser4Change = event => {
+    if (event.currentTarget.value.length > 0) {
+      this.setState({ user4: event.target.value, user4HelperText: "", user4Error: false });
+    } else {
+      this.setState({ user4HelperText: 'Please enter a Twitter user', user4Error: true });
+    }
+  };
+
+  handleUser5Change = event => {
+    if (event.currentTarget.value.length > 0) {
+      this.setState({ user5: event.target.value, user5HelperText: "", user5Error: false });
+    } else {
+      this.setState({ user5HelperText: 'Please enter a Twitter user', user5Error: true });
+    }
   };
 
   handlePrivateChange = event => {
     this.setState({ mode: event.target.value });
   };
+
+  canBeSubmitted() {
+    const { title, description, user1, user2, user3, user4, user5 } = this.state;
+    return title.length > 0 && description.length > 0 && user1.length > 0 && user2.length > 0 && user3.length > 0 && user4.length > 0 && user5.length > 0
+  }
 
   handleSubmit = e => {
     e.preventDefault();
@@ -156,6 +226,8 @@ class CreateListForm extends Component {
 
   render() {
     const { classes } = this.props;
+    const isEnabled = this.canBeSubmitted();
+
 
     return (
       <>
@@ -167,12 +239,15 @@ class CreateListForm extends Component {
           name="title"
           id="outlined-required"
           label="Required"
+          placeholder="Title"
           className={classes.textField}
-          value={this.state.name}
-          onChange={this.handleChange}
+          value={this.state.title}
+          onChange={this.handleTitleChange}
           margin="normal"
           variant="outlined"
           inputProps={{ maxLength: 16 }}
+          helperText={this.state.titleHelperText}
+          error={this.state.titleError}
         />
 
         {/* /////-----Enter description-------/////////    */}
@@ -185,9 +260,11 @@ class CreateListForm extends Component {
           label="Required"
           className={classes.textField}
           value={this.state.description}
-          onChange={this.handleChange}
+          onChange={this.handleDescriptionChange}
           margin="normal"
           variant="outlined"
+          helperText={this.state.descrHelperText}
+          error={this.state.descrError}
         />
 
         {/* /////-----Is The List Private-------/////////  */}
@@ -230,9 +307,11 @@ class CreateListForm extends Component {
                 label="Username"
                 className={classes.textField}
                 value={this.state.user1}
-                onChange={this.handleChange}
+                onChange={this.handleUser1Change}
                 margin="normal"
                 variant="outlined"
+                helperText={this.state.user1HelperText}
+                error={this.state.user1Error}
               />
               <TextField
                 required
@@ -241,9 +320,11 @@ class CreateListForm extends Component {
                 label="Username"
                 className={classes.textField}
                 value={this.state.user2}
-                onChange={this.handleChange}
+                onChange={this.handleUser2Change}
                 margin="normal"
                 variant="outlined"
+                helperText={this.state.user2HelperText}
+                error={this.state.user2Error}
               />
               <TextField
                 required
@@ -252,9 +333,11 @@ class CreateListForm extends Component {
                 label="Username"
                 className={classes.textField}
                 value={this.state.user3}
-                onChange={this.handleChange}
+                onChange={this.handleUser3Change}
                 margin="normal"
                 variant="outlined"
+                helperText={this.state.user3HelperText}
+                error={this.state.user3Error}
               />
               <TextField
                 required
@@ -263,9 +346,11 @@ class CreateListForm extends Component {
                 label="Username"
                 className={classes.textField}
                 value={this.state.user4}
-                onChange={this.handleChange}
+                onChange={this.handleUser4Change}
                 margin="normal"
                 variant="outlined"
+                helperText={this.state.user4HelperText}
+                error={this.state.user4Error}
               />
               <TextField
                 required
@@ -274,14 +359,22 @@ class CreateListForm extends Component {
                 label="Username"
                 className={classes.textField}
                 value={this.state.user5}
-                onChange={this.handleChange}
+                onChange={this.handleUser5Change}
                 margin="normal"
                 variant="outlined"
+                helperText={this.state.user5HelperText}
+                error={this.state.user5Error}
               />
             </form>
           </FormControl>
         </form>
-        <Button medium color="primary" variant="contained" onClick={this.handleSubmit}>
+        <Button
+          medium
+          color="primary"
+          variant="contained"
+          onClick={this.handleSubmit}
+          disabled={!isEnabled}
+        >
           Generate New List
                </Button>
       </>
