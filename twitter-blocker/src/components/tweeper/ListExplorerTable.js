@@ -69,10 +69,13 @@ class LeaderboardAllTable extends Component {
       this.setState({rows: newRow});
   }; 
 
-  up = e => {
-    const rowPointer = e.target.getAttribute("rowid") - 1;
+  up = (e) => {
+    console.log("e.currentTarget.getAttribute(rowid)", e.currentTarget.getAttribute("rowid"))
+    console.log("e.currentTarget.id", e.currentTarget.id)
+
+    const rowPointer = e.currentTarget.getAttribute("rowid") - 1;
     let upvote = {
-      "twitter_list_id": e.target.id, 
+      "twitter_list_id": e.currentTarget.id, 
       "twitter_user_id": localStorage.getItem("twitter_user_id"),
       "vote": 1
     }
@@ -81,12 +84,12 @@ class LeaderboardAllTable extends Component {
 
     this.setState({...this.state, rows: getRows});
     this.props.addUserVote(upvote)
-  }
+  };
 
   down = e => {
-    const rowPointer = e.target.getAttribute("rowid") - 1;
+    const rowPointer = e.currentTarget.getAttribute("rowid") - 1;
     let downvote = {
-      "twitter_list_id": e.target.id, 
+      "twitter_list_id": e.currentTarget.id, 
       "twitter_user_id": localStorage.getItem("twitter_user_id"),
       "vote": -1
     }
@@ -95,7 +98,7 @@ class LeaderboardAllTable extends Component {
 
     this.setState({...this.state, rows: getRows});
     this.props.addUserVote(downvote)
-  }
+  };
 
   render() {
       
@@ -119,14 +122,17 @@ class LeaderboardAllTable extends Component {
 
                   <TableRow key={row.id} hover >
                     <TableCell align="center" padding="checkbox">
-                      <IconButton rowid={row.id} id={row.twitter_list_id} onClick={this.up } >
+                      
+                      <IconButton rowid={row.id} id={row.twitter_list_id} 
+                      onClick={(e)=>{e.currentTarget.style = " color:#33FF33 !important; "; this.up(e) }} >
                         <FontAwesomeIcon icon={faArrowUp} color='default' style={{fontSize: '12px'}}/>
                       </IconButton>
 
                       <Typography color="textPrimary" inline="true" variant="body1">{row.list_points}</Typography>
-
-                      <IconButton rowid={row.id} id={row.twitter_list_id} onClick={this.down } >
-                        <FontAwesomeIcon icon={faArrowDown} color='primary' style={{fontSize: '12px'}}/>
+                    
+                      <IconButton rowid={row.id} id={row.twitter_list_id}
+                      onClick={(e)=>{e.currentTarget.style = " color:#FF3333 !important; "; this.down(e) }} >
+                        <FontAwesomeIcon icon={faArrowDown} color='default' style={{fontSize: '12px'}}/>
                       </IconButton>
                     </TableCell>
                     <TableCell align="left" padding="none">

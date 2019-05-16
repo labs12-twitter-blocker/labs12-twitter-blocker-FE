@@ -22,6 +22,7 @@ const fabDesign = {
   position: 'fixed',
   top: '4rem',
   right: '1rem',
+  zIndex: '5',
 }
 
 const tweetBox = {

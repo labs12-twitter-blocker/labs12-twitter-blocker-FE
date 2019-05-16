@@ -29,7 +29,9 @@ import { getList,
         getUser, 
         getListTimeline, 
         updateListMembers,
-        subscribeToList } from '../actions';
+        subscribeToList,
+        unSubscribeToList,
+        getListSubscribers } from '../actions';
 import { Link } from 'react-router-dom';
 
 library.add(faTimes)
@@ -74,17 +76,22 @@ const ProfileName = styled(Typography)({
 })
 
 const SubscribeButton = styled(Button) ({
-  margin:"5%", 
-  color:"#1DA1F2", 
-  border:"1px solid #1DA1F2"
+  margin:"2rem", 
 })
 
 const DetailsHeader = styled('div')({
-  // position: "fixed",
-  // left: 0,
-  // width:"100%",
+  position: "fixed",
+  left: 0,
+  top: 60,
+  width:"100%",
   padding:"5%",
   backgroundColor: '#fff',
+  zIndex: "4"
+})
+
+const Spacer = styled('div')({
+  width: "100%",
+  height: "200px"
 })
 
     
@@ -104,11 +111,16 @@ class ListDetails extends React.Component {
   };
 
   subscribe = () => {
-    if(!this.state.isSubscribed) {
       this.props.subscribeToList(this.props.list.twitter_list_id, this.props.getUser(localStorage.getItem("twitter_user_id")));
       this.setState({isSubscribed: true})
-    }
   }
+
+  unsubscribe = () => {
+    this.props.unSubscribeToList(this.props.list.twitter_list_id, this.props.getUser(localStorage.getItem("twitter_user_id")));
+    this.setState({isSubscribed: false})
+  }
+
+
   // removeFromList = (member) => {
   //   let listMembers = this.props.listmembers;
   //   for(let i = 0; i < listMembers.length; i++) {
@@ -123,20 +135,28 @@ class ListDetails extends React.Component {
 
   componentDidMount(){
     const userId = this.props.getUser(localStorage.getItem("twitter_user_id"))
+    console.log(userId)
     this.props.getListMembers(this.props.match.params.twitter_list_id);
     this.props.getList(this.props.match.params.twitter_list_id);
     this.props.getListTimeline(this.props.match.params.twitter_list_id, userId);
+    this.props.getListSubscribers(this.props.match.params.twitter_list_id);
+    this.props.listSubscribers.filter(user => {
+      if(user === userId) {
+        this.setState({isSubscribed: true})
+      }
+    })
 
 }
   
 render() {
   const { value } = this.state;
+  const { isSubscribed } = this.state;
   return (
     <React.Fragment>
       <CssBaseline />
       <HeaderTest/>
         <Content>
-          <Feed> 
+          
               <DetailsHeader>
               <Grid container justify="space-between" spacing={24}>
                 <Grid item>
@@ -145,11 +165,17 @@ render() {
                   <Typography>{this.props.list.subscriber_count} Subscribers</Typography>
                 </Grid>
                 <Grid item>
-                  <SubscribeButton medium color="inherit" variant="outlined" onClick={this.subscribe}>Subscribe</SubscribeButton>
-                </Grid>
+                  {isSubscribed === false && 
+                    <SubscribeButton medium color="primary" variant="outlinedPrimary" style={{color:"#1da1f2", border:"2px solid #1da1f2"}} onClick={this.subscribe}>Subscribe</SubscribeButton>
+                  }
+                  {isSubscribed === true &&
+                    <SubscribeButton medium color="primary" variant="contained" onClick={this.unsubscribe}>Unsubscribe</SubscribeButton>
+                  }
+                  </Grid>
                 </Grid>
               </DetailsHeader>
-
+              <Spacer />
+              <Feed> 
               <Tabs onChange={this.handleChange} variant='fullWidth'>
                 <Tab label='Members' />
                 <Tab label='Timeline'/>
@@ -170,12 +196,12 @@ render() {
                         <TopLine>
                           <ProfileNameImg>
                             <Avatar src={i.profile_img} style={{marginRight: '5px'}}/>
-                            <Link to={`/profile/${this.props.listMembers.twitter_user_id}`} style={{textDecoration:'none'}}><ProfileName >{i.name}</ProfileName></Link>
+                            <Link to={`/profile/${i.twitter_user_id}`} style={{textDecoration:'none'}}><ProfileName >{i.name}</ProfileName></Link>
                             </ProfileNameImg>
                         <Typography>@{i.screen_name}</Typography>
                         </TopLine>
                         <Typography>{i.description}</Typography>
-                        {localStorage.getItem("twitter_user_id") === this.props.list.twitter_id ? <FontAwesomeIcon icon="times" onClick={this.removeFromList(i)}/> : null}
+                        {/* {localStorage.getItem("twitter_user_id") === this.props.list.twitter_id ? <FontAwesomeIcon icon="times" onClick={this.removeFromList(i)}/> : null} */}
                         </CardContent>
                         </ListItem>
                     </Card>
@@ -212,7 +238,11 @@ render() {
               }
               <Divider />
             </Feed>
+<<<<<<< HEAD
         {/* <TweetFloat /> */}
+=======
+        <TweetFloat/>
+>>>>>>> 0def361227b57a9d05d7bb0d591e7b399ca217b5
       </Content>
     </React.Fragment>
   );
@@ -224,17 +254,20 @@ const mapStateToProps = state => {
     listMembers: state.listsReducer.listMembers,
     timeline: state.listsReducer.listTimeline,
     user: state.usersReducer.currentUser,
-    list: state.listsReducer.list
+    list: state.listsReducer.list,
+    listSubscribers: state.listsReducer.listSubscribers
   }
 }
 
 const mapActionsToProps = {
-  getList: getList,
-  getListMembers: getListMembers,
-  getListTimeline, getListTimeline,
-  getUser: getUser,
-  updateListMembers: updateListMembers,
-  subscribeToList: subscribeToList
+  getList,
+  getListMembers,
+  getListTimeline,
+  getUser,
+  updateListMembers,
+  subscribeToList,
+  unSubscribeToList,
+  getListSubscribers
 }
 
 export default connect( mapStateToProps, mapActionsToProps)(withTheme(theme)(ListDetails));
