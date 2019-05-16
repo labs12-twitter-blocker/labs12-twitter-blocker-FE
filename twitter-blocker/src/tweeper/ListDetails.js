@@ -238,11 +238,7 @@ render() {
               }
               <Divider />
             </Feed>
-<<<<<<< HEAD
         {/* <TweetFloat /> */}
-=======
-        <TweetFloat/>
->>>>>>> 0def361227b57a9d05d7bb0d591e7b399ca217b5
       </Content>
     </React.Fragment>
   );
