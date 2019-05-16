@@ -44,13 +44,6 @@ const Cover = styled('div')({
   backgroundColor: '#ccd6dd',
 });
 
-const Wall = styled('div')({
-  backgroundImage: `url('/images/mobile_on_wood.jpg')`,
-  backgroundSize: 'cover',
-  backgroundColor: '#000000',
-  height: '100vh',
-  width: '100vw',
-});
 
 class Profile extends Component {
   constructor() {
@@ -158,9 +151,7 @@ class Profile extends Component {
 
     return (
       <React.Fragment>
-        <Wall>
         {content}
-        </Wall>
       </React.Fragment>
     );
   }
