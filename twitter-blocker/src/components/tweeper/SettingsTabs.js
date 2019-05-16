@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import UserSettingsTextField from './UserSettingsTextField';
 import UserSettingsPaymentField from './UserSettingsPaymentTextField'
 import UserSettingsDelete from './UserSettingsDelete';
+import UserSettingsCard from './UserSettingsCard';
 
 function TabContainer({ children, dir }) {
   return (
@@ -54,9 +55,10 @@ class SettingsTabs extends React.Component {
         <AppBar position="static" color="default">
         <h3>Account Settings</h3>
         </AppBar>
-        <UserSettingsTextField />
-        <UserSettingsPaymentField />
-        <UserSettingsDelete />
+        <UserSettingsCard />
+        {/* <UserSettingsTextField /> */}
+        {/* <UserSettingsPaymentField /> */}
+        {/* <UserSettingsDelete /> */}
       </React.Fragment>
       
       // // <div className={classes.root}>

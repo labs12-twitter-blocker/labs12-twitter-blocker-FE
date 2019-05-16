@@ -53,6 +53,9 @@ import {
   SUBSCRIBE_LIST,
   SUBSCRIBE_LIST_SUCCESS,
   SUBSCRIBE_LIST_FAILURE,
+  UNSUBSCRIBE_LIST,
+  UNSUBSCRIBE_LIST_SUCCESS,
+  UNSUBSCRIBE_LIST_FAILURE,
   ADD_LIST,
   ADD_LIST_SUCCESS,
   ADD_LIST_FAILURE,
@@ -114,6 +117,7 @@ const initialState = {
   fetchingListTimeline: false,
   addingList: false,
   subscribingList: false,
+  unsubscribingList: false,
   creatingList: false,
   updatingList: false,
   updatingListMembers: false,
@@ -444,6 +448,24 @@ const reducer = (state = initialState, action) => {
           lists: [...state.lists, action.payload]
         };
       case SUBSCRIBE_LIST_FAILURE:
+        return {
+          ...state,
+          unsubscribingList: false,
+          error: action.payload
+        };
+        case UNSUBSCRIBE_LIST:
+        return {
+          ...state,
+          unsubscribingList: true,
+          error: null
+        };
+      case UNSUBSCRIBE_LIST_SUCCESS:
+        return {
+          ...state,
+          unsubscribingList: false,
+          lists: [...state.lists, action.payload]
+        };
+      case UNSUBSCRIBE_LIST_FAILURE:
         return {
           ...state,
           subscribingList: false,
