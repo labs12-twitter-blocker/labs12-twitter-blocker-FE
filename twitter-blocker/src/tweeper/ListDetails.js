@@ -196,7 +196,7 @@ render() {
                         <TopLine>
                           <ProfileNameImg>
                             <Avatar src={i.profile_img} style={{marginRight: '5px'}}/>
-                            <Link to={`/profile/${this.props.listMembers.twitter_user_id}`} style={{textDecoration:'none'}}><ProfileName >{i.name}</ProfileName></Link>
+                            <Link to={`/profile/${i.twitter_user_id}`} style={{textDecoration:'none'}}><ProfileName >{i.name}</ProfileName></Link>
                             </ProfileNameImg>
                         <Typography>@{i.screen_name}</Typography>
                         </TopLine>
