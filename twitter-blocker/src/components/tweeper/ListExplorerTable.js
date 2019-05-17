@@ -36,27 +36,23 @@ const styles = theme => ({
 		marginTop: 10,
     [theme.breakpoints.down("sm")]: {
       height: 48,
-      border: 0,
+      // border: 0,
     }
   },
   tableBodyData: {
 		padding: 12,
 		fontSize: 14,
-		border: 0,
 
-		// Adding each data table head from here
 		"&:before": {
 			content: "attr(datatitle)",
 			float: "left",
 			fontWeight: 600,
-			// color: "#00000"
 		},
 
         [theme.breakpoints.down("sm")]: {
         	display: 'table-cell',
         	padding: '0px 4px',
         	fontSize: 14,
-        	borderBottom: "1px solid #ccc",
 
         	"&:before": {
         		content: "",

@@ -66,13 +66,11 @@ const styles = theme => ({
 		marginTop: 10,
     [theme.breakpoints.down("sm")]: {
       height: 48,
-      border: 0,
     }
   },
   tableBodyData: {
 		padding: 12,
 		fontSize: 14,
-		border: 0,
 
 		"&:before": {
 			content: "attr(datatitle)",
@@ -84,7 +82,6 @@ const styles = theme => ({
         	display: 'table-cell',
         	padding: '0px 4px',
         	fontSize: 14,
-        	borderBottom: "1px solid #ccc",
 
         	"&:before": {
         		content: "",

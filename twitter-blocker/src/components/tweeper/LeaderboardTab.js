@@ -5,31 +5,13 @@ import SwipeableViews from 'react-swipeable-views';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-// import ListView from './ListViews';
-// import PublicListView from './PublicListView';
-// import PrivateListView from './PrivateListView';
-// import BlockListView from './BlockListView';
+// import Typography from '@material-ui/core/Typography';
 import LeaderboardAllTable from './LeaderboardAllTable'
 import LeaderboardFollowTable from './LeaderboardFollowTable'
 import LeaderboardBlockTable from './LeaderboardBlockTable'
 import styled from '@material-ui/styles/styled';
 import theme from '../../theme/tweeper/theme';
 
-// function TabContainer({ children, dir }) {
-//   return (
-//     <Typography component="div" dir={dir} 
-//     // style={{ padding: 8 * 3 }}>
-//     style={{ padding: 1}}>
-//       {children}
-//     </Typography>
-//   );
-// }
-
-// TabContainer.propTypes = {
-//   children: PropTypes.node.isRequired,
-//   dir: PropTypes.string.isRequired,
-// };
 const TabContainer = styled('div') ({
   // padding: theme.spacing.unit * 4,
   padding: theme.spacing.unit,
