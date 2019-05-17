@@ -13,28 +13,40 @@ import Typography from '@material-ui/core/Typography';
 import LeaderboardAllTable from './LeaderboardAllTable'
 import LeaderboardFollowTable from './LeaderboardFollowTable'
 import LeaderboardBlockTable from './LeaderboardBlockTable'
+import styled from '@material-ui/styles/styled';
+import theme from '../../theme/tweeper/theme';
 
-function TabContainer({ children, dir }) {
-  return (
-    <Typography component="div" dir={dir} 
-    // style={{ padding: 8 * 3 }}>
-    style={{ padding: 1}}>
-      {children}
-    </Typography>
-  );
-}
+// function TabContainer({ children, dir }) {
+//   return (
+//     <Typography component="div" dir={dir} 
+//     // style={{ padding: 8 * 3 }}>
+//     style={{ padding: 1}}>
+//       {children}
+//     </Typography>
+//   );
+// }
 
-TabContainer.propTypes = {
-  children: PropTypes.node.isRequired,
-  dir: PropTypes.string.isRequired,
-};
+// TabContainer.propTypes = {
+//   children: PropTypes.node.isRequired,
+//   dir: PropTypes.string.isRequired,
+// };
+const TabContainer = styled('div') ({
+  // padding: theme.spacing.unit * 4,
+  padding: theme.spacing.unit,
+
+  margin: 'auto',
+  [theme.breakpoints.down("sm")]: {
+    // width: '100%',
+    padding: theme.spacing.unit,
+  }
+})
 
 const styles = theme => ({
   root: {
     backgroundColor: theme.palette.background.paper,
     maxWidth: 850,
     // padding: theme.spacing.unit * 4,
-    padding: theme.spacing.unit,
+    // padding: theme.spacing.unit,
     margin: 'auto',
   },
 });
