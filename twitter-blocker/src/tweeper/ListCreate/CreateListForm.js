@@ -1,14 +1,22 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import styled from '@material-ui/styles/styled';
 import PropTypes from 'prop-types';
 import green from '@material-ui/core/colors/green';
-import Radio from '@material-ui/core/Radio';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import InputLabel from '@material-ui/core/InputLabel';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import { addList, createList, getUser } from '../../actions';
 import { connect } from "react-redux";
-
 
 const styles = theme => ({
   root: {
@@ -21,6 +29,7 @@ const styles = theme => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
+    flexDirection: 'column'
   },
   form: {
     display: 'flex',
@@ -29,8 +38,8 @@ const styles = theme => ({
     width: 'fit-content',
   },
   formControl: {
-    marginTop: theme.spacing.unit * 2,
-    minWidth: 120,
+    marginTop: theme.spacing.unit,
+    minWidth: 200,
   },
   formControlLabel: {
     marginTop: theme.spacing.unit,
@@ -38,6 +47,7 @@ const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
+    minWidth: 350
   },
   dense: {
     marginTop: 10,
@@ -45,7 +55,18 @@ const styles = theme => ({
   menu: {
     width: 200,
   },
+  listForm: {
+    padding: 15
+  },
+  listFormButton: {
+    padding: 15,
+    fontSize: 70
+  }
 });
+
+const ButtonText = styled('div')({
+  fontSize: 18
+})
 
 class CreateListForm extends Component {
   constructor() {
@@ -76,7 +97,8 @@ class CreateListForm extends Component {
       user3Error: false,
       user4Error: false,
       user5Error: false,
-      buttonDisabled: false
+      buttonDisabled: false,
+      open: false
     }
   };
   componentDidMount() {
@@ -86,13 +108,14 @@ class CreateListForm extends Component {
     }
     localStorage.getItem("twitter_user_id")
     console.log("++++++++++++++this.props.currentUser", this.props.currentUser)
+    console.log("++++++++open+++++++++++this.state.open", this.state.open)
   }
 
   handleTitleChange = event => {
-    if (event.target.value.length > 0) {
-      this.setState({ title: event.target.value, titleHelperText: "", titleError: false });
+    if (event.target.value.length === 0) {
+      this.setState({ title: event.target.value, titleHelperText: 'Please enter a title for your list', titleError: true });
     } else {
-      this.setState({ titleHelperText: 'Please enter a title for your list', titleError: true });
+      this.setState({ title: event.target.value, titleHelperText: "", titleError: false });
     }
   };
 
@@ -100,7 +123,7 @@ class CreateListForm extends Component {
     if (event.currentTarget.value.length > 0) {
       this.setState({ description: event.target.value, descrHelperText: "", descrError: false });
     } else {
-      this.setState({ descrHelperText: 'Please enter a description of your list', descrError: true });
+      this.setState({ description: event.target.value, descrHelperText: 'Please enter a description of your list', descrError: true });
     }
   };
 
@@ -108,7 +131,7 @@ class CreateListForm extends Component {
     if (event.target.value.length > 0) {
       this.setState({ user1: event.target.value, user1HelperText: "", user1Error: false });
     } else {
-      this.setState({ user1HelperText: 'Please enter a Twitter user', user1Error: true });
+      this.setState({ user1: event.target.value, user1HelperText: 'Please enter a Twitter user', user1Error: true });
     }
   };
 
@@ -116,7 +139,7 @@ class CreateListForm extends Component {
     if (event.currentTarget.value.length > 0) {
       this.setState({ user2: event.target.value, user2HelperText: "", user2Error: false });
     } else {
-      this.setState({ user2HelperText: 'Please enter a Twitter user', user2Error: true });
+      this.setState({ user2: event.target.value, user2HelperText: 'Please enter a Twitter user', user2Error: true });
     }
   };
 
@@ -124,7 +147,7 @@ class CreateListForm extends Component {
     if (event.currentTarget.value.length > 0) {
       this.setState({ user3: event.target.value, user3HelperText: "", user3Error: false });
     } else {
-      this.setState({ user3HelperText: 'Please enter a Twitter user', user3Error: true });
+      this.setState({ user3: event.target.value, user3HelperText: 'Please enter a Twitter user', user3Error: true });
     }
   };
 
@@ -132,7 +155,7 @@ class CreateListForm extends Component {
     if (event.currentTarget.value.length > 0) {
       this.setState({ user4: event.target.value, user4HelperText: "", user4Error: false });
     } else {
-      this.setState({ user4HelperText: 'Please enter a Twitter user', user4Error: true });
+      this.setState({ user4: event.target.value, user4HelperText: 'Please enter a Twitter user', user4Error: true });
     }
   };
 
@@ -140,7 +163,7 @@ class CreateListForm extends Component {
     if (event.currentTarget.value.length > 0) {
       this.setState({ user5: event.target.value, user5HelperText: "", user5Error: false });
     } else {
-      this.setState({ user5HelperText: 'Please enter a Twitter user', user5Error: true });
+      this.setState({ user5: event.target.value, user5HelperText: 'Please enter a Twitter user', user5Error: true });
     }
   };
 
@@ -148,13 +171,26 @@ class CreateListForm extends Component {
     this.setState({ mode: event.target.value });
   };
 
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
   canBeSubmitted() {
     const { title, description, user1, user2, user3, user4, user5 } = this.state;
     return title.length > 0 && description.length > 0 && user1.length > 0 && user2.length > 0 && user3.length > 0 && user4.length > 0 && user5.length > 0
   }
+  handleClickOpen = () => {
+    this.setState({ open: true });
+  };
 
   handleSubmit = e => {
+    console.log("++++++++open+++++++++++this.state.open", this.state.open)
     e.preventDefault();
+
+
+    console.log("++++++++open+++++++++++this.state.open", this.state.open)
+
+
     const token = localStorage.getItem("token");
     const username = localStorage.getItem("username")
     const id = localStorage.getItem("twitter_user_id")
@@ -186,7 +222,13 @@ class CreateListForm extends Component {
     this.props.createList(listParams); //POST to /list/create to make a new list
     // this.props.addList(params); //POST to /list to add users to the list
     // console.log("I'm firing");
+    this.handleClickOpen()
+
   };
+
+  handlePopoverClose = () => {
+    this.setState({ open: null })
+  }
 
   componentDidUpdate(prevProps, prevState) {
     console.log("CDUpdate");
@@ -217,6 +259,7 @@ class CreateListForm extends Component {
       console.log("~~~~~~~~~~~~~~~~~completeList", completeList);
       this.props.addList(completeList);
     }
+    console.log("++++++++open+++++++++++this.state.open", this.state.open)
   }
 
   // if (this.props.userID !== prevProps.userID) {
@@ -227,13 +270,15 @@ class CreateListForm extends Component {
   render() {
     const { classes } = this.props;
     const isEnabled = this.canBeSubmitted();
-
+    const { open } = this.state;
+    console.log(this.state)
 
     return (
-      <>
+      <div>
         {/* //////-----Enter Title Name-------///////// */}
-
-        <h2>Please enter the title of your list</h2>
+        <div className={classes.createListHeader}>
+          <h2>Please enter the title of your list</h2>
+        </div>
         <TextField
           required
           name="title"
@@ -252,12 +297,15 @@ class CreateListForm extends Component {
 
         {/* /////-----Enter description-------/////////    */}
 
-        <h2>Enter a description of your list (optional)</h2>
+        <h2>Enter a description of your list</h2>
         <TextField
           required
           name="description"
-          id="outlined-name"
+          id="outlined-multiline-static"
           label="Required"
+          placeholder="What is this list for? What kind of people are in this list? Is there an overall theme?"
+          multiline
+          rows="4"
           className={classes.textField}
           value={this.state.description}
           onChange={this.handleDescriptionChange}
@@ -269,23 +317,25 @@ class CreateListForm extends Component {
 
         {/* /////-----Is The List Private-------/////////  */}
 
-        <h2>Do you want your list to be private?</h2>
-        <h4>Public</h4>
-        <Radio
-          checked={this.state.mode === 'public'}
-          onChange={this.handlePrivateChange}
-          value="public"
-          name="radio-button-demo"
-          aria-label="A"
-        />
-        <h4>Private</h4>
-        <Radio
-          checked={this.state.mode === 'private'}
-          onChange={this.handlePrivateChange}
-          value="private"
-          name="radio-button-demo"
-          aria-label="A"
-        />
+        <h2>Is this list public or private?</h2>
+        <FormControl
+          className={classes.formControl}
+          variant="outlined">
+          <Select
+            value={this.state.mode}
+            onChange={this.handlePrivateChange}
+            input={
+              <OutlinedInput
+                labelWidth={this.state.labelWidth}
+                name="age"
+                id="outlined-age-simple"
+              />
+            }
+          >
+            <MenuItem value={"public"}>Public</MenuItem>
+            <MenuItem value={"private"}>Private</MenuItem>
+          </Select>
+        </FormControl>
 
         {/* /////-----Enter 5 Usernames-------///////// */}
         <h3>Please enter 5 Twitter users to influence your list</h3>
@@ -304,7 +354,8 @@ class CreateListForm extends Component {
                 required
                 name="user1"
                 id="outlined-name"
-                label="Username"
+                label="Required"
+                placeholder="@TwitterHandle"
                 className={classes.textField}
                 value={this.state.user1}
                 onChange={this.handleUser1Change}
@@ -317,7 +368,8 @@ class CreateListForm extends Component {
                 required
                 name="user2"
                 id="outlined-name"
-                label="Username"
+                label="Required"
+                placeholder="@TwitterHandle"
                 className={classes.textField}
                 value={this.state.user2}
                 onChange={this.handleUser2Change}
@@ -330,7 +382,8 @@ class CreateListForm extends Component {
                 required
                 name="user3"
                 id="outlined-name"
-                label="Username"
+                label="Required"
+                placeholder="@TwitterHandle"
                 className={classes.textField}
                 value={this.state.user3}
                 onChange={this.handleUser3Change}
@@ -343,7 +396,8 @@ class CreateListForm extends Component {
                 required
                 name="user4"
                 id="outlined-name"
-                label="Username"
+                label="Required"
+                placeholder="@TwitterHandle"
                 className={classes.textField}
                 value={this.state.user4}
                 onChange={this.handleUser4Change}
@@ -356,7 +410,8 @@ class CreateListForm extends Component {
                 required
                 name="user5"
                 id="outlined-name"
-                label="Username"
+                label="Required"
+                placeholder="@TwitterHandle"
                 className={classes.textField}
                 value={this.state.user5}
                 onChange={this.handleUser5Change}
@@ -368,16 +423,41 @@ class CreateListForm extends Component {
             </form>
           </FormControl>
         </form>
-        <Button
-          medium
-          color="primary"
-          variant="contained"
-          onClick={this.handleSubmit}
-          disabled={!isEnabled}
+        <div className={classes.listForm}>
+          <Button
+            medium
+            color="primary"
+            variant="contained"
+            size="large"
+            className={classes.listFormButton}
+            onClick={this.handleClickOpen}
+            disabled={!isEnabled}
+          >
+            <ButtonText>
+              Generate New List
+            </ButtonText>
+          </Button>
+        </div>
+        <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="form-dialog-title"
         >
-          Generate New List
-               </Button>
-      </>
+          <DialogTitle id="form-dialog-title">List Submitted for Creation.</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Please be paitent. It can take up to a minute for created lists to populate on twitter.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              Continue
+            </Button>
+
+          </DialogActions>
+        </Dialog>
+
+      </div>
     );
   }
 }
