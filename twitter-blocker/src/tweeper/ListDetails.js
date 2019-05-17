@@ -111,12 +111,12 @@ class ListDetails extends React.Component {
   };
 
   subscribe = () => {
-      this.props.subscribeToList(this.props.list.twitter_list_id, this.props.getUser(localStorage.getItem("twitter_user_id")));
+      this.props.subscribeToList(this.props.list.twitter_list_id, localStorage.getItem("twitter_user_id"));
       this.setState({isSubscribed: true})
   }
 
   unsubscribe = () => {
-    this.props.unSubscribeToList(this.props.list.twitter_list_id, this.props.getUser(localStorage.getItem("twitter_user_id")));
+    this.props.unSubscribeToList(this.props.list.twitter_list_id, localStorage.getItem("twitter_user_id"));
     this.setState({isSubscribed: false})
   }
 

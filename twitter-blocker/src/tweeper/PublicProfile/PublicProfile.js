@@ -47,7 +47,6 @@ function PublicProfile() {
           <PublicProfileTab variant="fullWidth" />
           <Divider />
         </Feed>
-        <TweetFloat />
       </Content>
     </React.Fragment>
   );

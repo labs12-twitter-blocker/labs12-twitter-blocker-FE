@@ -17,7 +17,7 @@ function App() {
   return (
       <div className="App">
         <Route exact path="/" component={Profile} />
-        <Route path="/profile" component={Profile} />
+        <Route exact path="/profile" component={Profile} />
         <Route path="/profile/:user_id" component={PublicProfile} />
         <Route path="/create" component={ListCreate} />
         <Route path="/details/:twitter_list_id" component={ListDetails} />
