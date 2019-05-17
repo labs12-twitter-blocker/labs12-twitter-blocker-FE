@@ -430,7 +430,7 @@ class CreateListForm extends Component {
             variant="contained"
             size="large"
             className={classes.listFormButton}
-            onClick={this.handleClickOpen}
+            onClick={this.handleSubmit}
             disabled={!isEnabled}
           >
             <ButtonText>
