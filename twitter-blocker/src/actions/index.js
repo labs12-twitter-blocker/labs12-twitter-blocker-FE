@@ -39,12 +39,15 @@ export const getLogin = (response) => dispatch => {
   response.json()
     .then(user => {
       console.log("DISPATCH USER: _________________________________________________________________________________________________", user)
-      console.log(user._json.profile_image_url)
+      console.log(user._json.profile_image_url_https)
       if (token) {
         localStorage.setItem("twitter_user_id", user.id)
         localStorage.setItem("token", token)
         localStorage.setItem("username", user.username)
-        localStorage.setItem("profile_img", user._json.profile_image_url)
+        localStorage.setItem("displayName", user.displayName)
+        localStorage.setItem("profile_img", user._json.profile_image_url_https)
+        localStorage.setItem("banner_img", user._json.profile_banner_url)
+
         dispatch({ type: GET_LOGIN_SUCCESS, payload: user })
         // this.setState({isAuthenticated: true, user: user, token: token});
       }
@@ -451,7 +454,7 @@ export const getListSubscribers = list_id => dispatch => {
     .get(`${url}/lists/subscribers/${list_id}`)
     .then(res => {
       console.log(res);
-      dispatch({ type: GET_LIST_SUBSCRIBERS_SUCCESS, payload: res.data });
+      dispatch({ type: GET_LIST_SUBSCRIBERS_SUCCESS, payload: res.data[0].list_followers });
     })
     .catch(err => {
       console.log(err);
@@ -477,6 +480,7 @@ export const getListMembers = list_id => dispatch => {
       dispatch({ type: GET_LIST_MEMBERS_FAILURE, payload: err.message });
     });
 };
+
 
 // Requests All Top Lists by Points
 export const GET_ALL_LIST_POINTS = "GET_ALL_LIST_POINTS";
@@ -685,6 +689,26 @@ export const subscribeToList = (listId, userId) => dispatch => {
     .catch(err => {
       console.log(err);
       dispatch({ type: SUBSCRIBE_LIST_FAILURE, payload: err.message });
+    });
+}
+
+// Unsubscribe to a List
+
+export const UNSUBSCRIBE_LIST = "SUBSCRIBE_LIST";
+export const UNSUBSCRIBE_LIST_SUCCESS = "SUBSCRIBE_LIST_SUCCESS";
+export const UNSUBSCRIBE_LIST_FAILURE = "SUBSCRIBE_LIST_FAILURE";
+
+export const unSubscribeToList = (listId, userId) => dispatch => {
+  dispatch({ type: UNSUBSCRIBE_LIST });
+  axios
+    .post(`${url}/lists//${listId}/unfollow/${userId}`)
+    .then(res => {
+      console.log(res);
+      dispatch({ type: UNSUBSCRIBE_LIST_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: UNSUBSCRIBE_LIST_FAILURE, payload: err.message });
     });
 }
 
