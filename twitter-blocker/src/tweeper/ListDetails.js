@@ -80,24 +80,7 @@ const SubscribeButton = styled(Button) ({
 })
 
 const DetailsHeader = styled('div')({
-  position: "fixed",
-  left: 0,
-  top: 55,
-  width:"100%",
   padding:"5%",
-  backgroundColor: '#fff',
-  zIndex: "4",
-  [theme.breakpoints.down('xs')]: {
-    top: 160,
-  },
-})
-
-const Spacer = styled('div')({
-  width: "100%",
-  height: 200,
-  [theme.breakpoints.down('xs')]: {
-    height: 120,
-  },
 })
 
 
@@ -159,6 +142,7 @@ render() {
     <React.Fragment>
       <CssBaseline />
         <Content>
+          <Feed> 
               <DetailsHeader>
               <Grid container justify="space-between" spacing={24}>
                 <Grid item>
@@ -176,8 +160,7 @@ render() {
                   </Grid>
                 </Grid>
               </DetailsHeader>
-              <Spacer />
-              <Feed> 
+              
               <Tabs onChange={this.handleChange} variant='fullWidth'>
                 <Tab label='Members' />
                 <Tab label='Timeline'/>
