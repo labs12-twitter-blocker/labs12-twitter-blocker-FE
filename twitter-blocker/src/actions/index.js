@@ -681,7 +681,7 @@ export const SUBSCRIBE_LIST_FAILURE = "SUBSCRIBE_LIST_FAILURE";
 export const subscribeToList = (listId, userId) => dispatch => {
   dispatch({ type: SUBSCRIBE_LIST });
   axios
-    .post(`${url}/lists//${listId}/follow/${userId}`)
+    .post(`${url}/lists/${listId}/follow/${userId}`)
     .then(res => {
       console.log(res);
       dispatch({ type: SUBSCRIBE_LIST_SUCCESS, payload: res.data });
@@ -701,7 +701,7 @@ export const UNSUBSCRIBE_LIST_FAILURE = "SUBSCRIBE_LIST_FAILURE";
 export const unSubscribeToList = (listId, userId) => dispatch => {
   dispatch({ type: UNSUBSCRIBE_LIST });
   axios
-    .post(`${url}/lists//${listId}/unfollow/${userId}`)
+    .post(`${url}/lists/${listId}/unfollow/${userId}`)
     .then(res => {
       console.log(res);
       dispatch({ type: UNSUBSCRIBE_LIST_SUCCESS, payload: res.data });
