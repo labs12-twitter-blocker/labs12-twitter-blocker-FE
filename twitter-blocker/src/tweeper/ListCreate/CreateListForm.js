@@ -131,7 +131,7 @@ class CreateListForm extends Component {
     if (event.target.value.length > 0) {
       this.setState({ user1: event.target.value, user1HelperText: "", user1Error: false });
     } else {
-      this.setState({ user1: event.target.value, user1HelperText: 'Please enter a Twitter user', user1Error: true });
+      this.setState({ user1: event.target.value, user1HelperText: 'Please enter atleast one Twitter user', user1Error: true });
     }
   };
 
@@ -177,7 +177,7 @@ class CreateListForm extends Component {
 
   canBeSubmitted() {
     const { title, description, user1, user2, user3, user4, user5 } = this.state;
-    return title.length > 0 && description.length > 0 && user1.length > 0 && user2.length > 0 && user3.length > 0 && user4.length > 0 && user5.length > 0
+    return title.length > 0 && description.length > 0 && user1.length > 0
   }
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -355,7 +355,7 @@ class CreateListForm extends Component {
                 name="user1"
                 id="outlined-name"
                 label="Required"
-                placeholder="TwitterHandle"
+                placeholder="Twitter Handle"
                 className={classes.textField}
                 value={this.state.user1}
                 onChange={this.handleUser1Change}
@@ -367,8 +367,8 @@ class CreateListForm extends Component {
               <TextField
                 name="user2"
                 id="outlined-name"
-                label="Required"
-                placeholder="TwitterHandle"
+                label="Twitter Handle"
+                placeholder="Twitter Handle"
                 className={classes.textField}
                 value={this.state.user2}
                 onChange={this.handleUser2Change}
@@ -380,8 +380,8 @@ class CreateListForm extends Component {
               <TextField
                 name="user3"
                 id="outlined-name"
-                label="Required"
-                placeholder="TwitterHandle"
+                label="Twitter Handle"
+                placeholder="Twitter Handle"
                 className={classes.textField}
                 value={this.state.user3}
                 onChange={this.handleUser3Change}
@@ -393,8 +393,8 @@ class CreateListForm extends Component {
               <TextField
                 name="user4"
                 id="outlined-name"
-                label="Required"
-                placeholder="TwitterHandle"
+                label="Twitter Handle"
+                placeholder="Twitter Handle"
                 className={classes.textField}
                 value={this.state.user4}
                 onChange={this.handleUser4Change}
@@ -406,8 +406,8 @@ class CreateListForm extends Component {
               <TextField
                 name="user5"
                 id="outlined-name"
-                label="Required"
-                placeholder="TwitterHandle"
+                label="Twitter Handle"
+                placeholder="Twitter Handle"
                 className={classes.textField}
                 value={this.state.user5}
                 onChange={this.handleUser5Change}
