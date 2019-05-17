@@ -131,41 +131,46 @@ class CreateListForm extends Component {
     if (event.target.value.length > 0) {
       this.setState({ user1: event.target.value, user1HelperText: "", user1Error: false });
     } else {
-      this.setState({ user1: event.target.value, user1HelperText: 'Please enter a Twitter user', user1Error: true });
+      this.setState({ user1: event.target.value, user1HelperText: 'Please enter atleast one Twitter user', user1Error: true });
     }
   };
 
-  handleUser2Change = event => {
-    if (event.currentTarget.value.length > 0) {
-      this.setState({ user2: event.target.value, user2HelperText: "", user2Error: false });
-    } else {
-      this.setState({ user2: event.target.value, user2HelperText: 'Please enter a Twitter user', user2Error: true });
-    }
+  handleOtherUserChange = event => {
+
+    this.setState({ [event.target.name]: event.target.value })
   };
 
-  handleUser3Change = event => {
-    if (event.currentTarget.value.length > 0) {
-      this.setState({ user3: event.target.value, user3HelperText: "", user3Error: false });
-    } else {
-      this.setState({ user3: event.target.value, user3HelperText: 'Please enter a Twitter user', user3Error: true });
-    }
-  };
+  // handleUser2Change = event => {
+  //   if (event.currentTarget.value.length > 0) {
+  //     this.setState({ user2: event.target.value, user2HelperText: "", user2Error: false });
+  //   } else {
+  //     this.setState({ user2: event.target.value, user2HelperText: 'Please enter a Twitter user', user2Error: true });
+  //   }
+  // };
 
-  handleUser4Change = event => {
-    if (event.currentTarget.value.length > 0) {
-      this.setState({ user4: event.target.value, user4HelperText: "", user4Error: false });
-    } else {
-      this.setState({ user4: event.target.value, user4HelperText: 'Please enter a Twitter user', user4Error: true });
-    }
-  };
+  // handleUser3Change = event => {
+  //   if (event.currentTarget.value.length > 0) {
+  //     this.setState({ user3: event.target.value, user3HelperText: "", user3Error: false });
+  //   } else {
+  //     this.setState({ user3: event.target.value, user3HelperText: 'Please enter a Twitter user', user3Error: true });
+  //   }
+  // };
 
-  handleUser5Change = event => {
-    if (event.currentTarget.value.length > 0) {
-      this.setState({ user5: event.target.value, user5HelperText: "", user5Error: false });
-    } else {
-      this.setState({ user5: event.target.value, user5HelperText: 'Please enter a Twitter user', user5Error: true });
-    }
-  };
+  // handleUser4Change = event => {
+  //   if (event.currentTarget.value.length > 0) {
+  //     this.setState({ user4: event.target.value, user4HelperText: "", user4Error: false });
+  //   } else {
+  //     this.setState({ user4: event.target.value, user4HelperText: 'Please enter a Twitter user', user4Error: true });
+  //   }
+  // };
+
+  // handleUser5Change = event => {
+  //   if (event.currentTarget.value.length > 0) {
+  //     this.setState({ user5: event.target.value, user5HelperText: "", user5Error: false });
+  //   } else {
+  //     this.setState({ user5: event.target.value, user5HelperText: 'Please enter a Twitter user', user5Error: true });
+  //   }
+  // };
 
   handlePrivateChange = event => {
     this.setState({ mode: event.target.value });
@@ -177,7 +182,7 @@ class CreateListForm extends Component {
 
   canBeSubmitted() {
     const { title, description, user1, user2, user3, user4, user5 } = this.state;
-    return title.length > 0 && description.length > 0 && user1.length > 0 && user2.length > 0 && user3.length > 0 && user4.length > 0 && user5.length > 0
+    return title.length > 0 && description.length > 0 && user1.length > 0
   }
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -355,7 +360,7 @@ class CreateListForm extends Component {
                 name="user1"
                 id="outlined-name"
                 label="Required"
-                placeholder="@TwitterHandle"
+                placeholder="Twitter Handle"
                 className={classes.textField}
                 value={this.state.user1}
                 onChange={this.handleUser1Change}
@@ -365,56 +370,52 @@ class CreateListForm extends Component {
                 error={this.state.user1Error}
               />
               <TextField
-                required
                 name="user2"
                 id="outlined-name"
-                label="Required"
-                placeholder="@TwitterHandle"
+                label="Twitter Handle"
+                placeholder="Twitter Handle"
                 className={classes.textField}
                 value={this.state.user2}
-                onChange={this.handleUser2Change}
+                onChange={this.handleOtherUserChange}
                 margin="normal"
                 variant="outlined"
                 helperText={this.state.user2HelperText}
                 error={this.state.user2Error}
               />
               <TextField
-                required
                 name="user3"
                 id="outlined-name"
-                label="Required"
-                placeholder="@TwitterHandle"
+                label="Twitter Handle"
+                placeholder="Twitter Handle"
                 className={classes.textField}
                 value={this.state.user3}
-                onChange={this.handleUser3Change}
+                onChange={this.handleOtherUserChange}
                 margin="normal"
                 variant="outlined"
                 helperText={this.state.user3HelperText}
                 error={this.state.user3Error}
               />
               <TextField
-                required
                 name="user4"
                 id="outlined-name"
-                label="Required"
-                placeholder="@TwitterHandle"
+                label="Twitter Handle"
+                placeholder="Twitter Handle"
                 className={classes.textField}
                 value={this.state.user4}
-                onChange={this.handleUser4Change}
+                onChange={this.handleOtherUserChange}
                 margin="normal"
                 variant="outlined"
                 helperText={this.state.user4HelperText}
                 error={this.state.user4Error}
               />
               <TextField
-                required
                 name="user5"
                 id="outlined-name"
-                label="Required"
-                placeholder="@TwitterHandle"
+                label="Twitter Handle"
+                placeholder="Twitter Handle"
                 className={classes.textField}
                 value={this.state.user5}
-                onChange={this.handleUser5Change}
+                onChange={this.handleOtherUserChange}
                 margin="normal"
                 variant="outlined"
                 helperText={this.state.user5HelperText}
@@ -430,7 +431,7 @@ class CreateListForm extends Component {
             variant="contained"
             size="large"
             className={classes.listFormButton}
-            onClick={this.handleClickOpen}
+            onClick={this.handleSubmit}
             disabled={!isEnabled}
           >
             <ButtonText>

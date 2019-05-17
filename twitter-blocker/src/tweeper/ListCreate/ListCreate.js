@@ -95,7 +95,6 @@ class ListCreate extends React.Component {
     return (
       <React.Fragment>
         <CssBaseline />
-        <HeaderTest />
         <Content>
           <Feed>
             <div className={classes.createPageHeader}>
