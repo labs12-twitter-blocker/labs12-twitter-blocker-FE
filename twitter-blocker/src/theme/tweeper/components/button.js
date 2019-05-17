@@ -49,6 +49,9 @@ export default ({ theme, red, white, attach, nest, BUTTON, ICON }) => ({
         [`${attach(BUTTON.danger)}:hover`]: {
           background: red.dark,
         },
+        [theme.breakpoints.down('xs')]: {
+          minWidth: 150,
+        },
       },
       containedPrimary: {
         color: theme.palette.common.white,
