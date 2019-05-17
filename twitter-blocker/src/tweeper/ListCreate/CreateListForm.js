@@ -135,6 +135,11 @@ class CreateListForm extends Component {
     }
   };
 
+  handleOtherUserChange = event => {
+
+    this.setState({ [event.target.name]: event.target.value })
+  };
+
   // handleUser2Change = event => {
   //   if (event.currentTarget.value.length > 0) {
   //     this.setState({ user2: event.target.value, user2HelperText: "", user2Error: false });
@@ -371,7 +376,7 @@ class CreateListForm extends Component {
                 placeholder="Twitter Handle"
                 className={classes.textField}
                 value={this.state.user2}
-                onChange={this.handleUser2Change}
+                onChange={this.handleOtherUserChange}
                 margin="normal"
                 variant="outlined"
                 helperText={this.state.user2HelperText}
@@ -384,7 +389,7 @@ class CreateListForm extends Component {
                 placeholder="Twitter Handle"
                 className={classes.textField}
                 value={this.state.user3}
-                onChange={this.handleUser3Change}
+                onChange={this.handleOtherUserChange}
                 margin="normal"
                 variant="outlined"
                 helperText={this.state.user3HelperText}
@@ -397,7 +402,7 @@ class CreateListForm extends Component {
                 placeholder="Twitter Handle"
                 className={classes.textField}
                 value={this.state.user4}
-                onChange={this.handleUser4Change}
+                onChange={this.handleOtherUserChange}
                 margin="normal"
                 variant="outlined"
                 helperText={this.state.user4HelperText}
@@ -410,7 +415,7 @@ class CreateListForm extends Component {
                 placeholder="Twitter Handle"
                 className={classes.textField}
                 value={this.state.user5}
-                onChange={this.handleUser5Change}
+                onChange={this.handleOtherUserChange}
                 margin="normal"
                 variant="outlined"
                 helperText={this.state.user5HelperText}
