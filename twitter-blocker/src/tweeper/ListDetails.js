@@ -82,16 +82,22 @@ const SubscribeButton = styled(Button) ({
 const DetailsHeader = styled('div')({
   position: "fixed",
   left: 0,
-  top: 60,
+  top: 55,
   width:"100%",
   padding:"5%",
   backgroundColor: '#fff',
-  zIndex: "4"
+  zIndex: "4",
+  [theme.breakpoints.down('xs')]: {
+    top: 160,
+  },
 })
 
 const Spacer = styled('div')({
   width: "100%",
-  height: "200px"
+  height: 200,
+  [theme.breakpoints.down('xs')]: {
+    height: 120,
+  },
 })
 
     
@@ -111,12 +117,12 @@ class ListDetails extends React.Component {
   };
 
   subscribe = () => {
-      this.props.subscribeToList(this.props.list.twitter_list_id, this.props.getUser(localStorage.getItem("twitter_user_id")));
+      this.props.subscribeToList(this.props.list.twitter_list_id, localStorage.getItem("twitter_user_id"));
       this.setState({isSubscribed: true})
   }
 
   unsubscribe = () => {
-    this.props.unSubscribeToList(this.props.list.twitter_list_id, this.props.getUser(localStorage.getItem("twitter_user_id")));
+    this.props.unSubscribeToList(this.props.list.twitter_list_id, localStorage.getItem("twitter_user_id"));
     this.setState({isSubscribed: false})
   }
 
@@ -154,9 +160,7 @@ render() {
   return (
     <React.Fragment>
       <CssBaseline />
-      <HeaderTest/>
         <Content>
-          
               <DetailsHeader>
               <Grid container justify="space-between" spacing={24}>
                 <Grid item>

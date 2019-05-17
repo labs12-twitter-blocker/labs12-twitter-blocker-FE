@@ -23,7 +23,9 @@ import atoms from '../components/atoms';
 import molecules from '../components/molecules';
 import { searchLists } from '../actions';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import styled from '@material-ui/styles/styled';
+import theme from '../theme/tweeper/theme';
 
 const { AppBar, Avatar, Badge, Icon, Toolbar, Button } = atoms;
 const { Tabs, Tab, ListItem, InputAdornment } = molecules;
@@ -42,6 +44,16 @@ const searchIcon = {
   marginLeft: '8px'
 }
 
+const Spacer = styled('div')({
+  width: "100%",
+  minHeight: 53,
+  display: "hidden",
+  [theme.breakpoints.down('xs')]: {
+    minHeight: 170,
+  },
+})
+
+
 class HeaderTest extends React.Component {
   state = {
     open: false,
@@ -55,6 +67,7 @@ class HeaderTest extends React.Component {
   searchLists = (event) => {
     this.props.searchLists(event.target.value);
     // this.setState({searchTerm: ""})
+    return <Redirect to="/explorer"/>
   }
 
   handleClickOpen = () => {
@@ -87,8 +100,8 @@ class HeaderTest extends React.Component {
   render() {
     const { anchorEl } = this.state;
     return (
-      <div>
-        <AppBar position="sticky" elevation={1}>
+      <Spacer>
+        <AppBar position="fixed" elevation={1}>
           <Toolbar>
             <Grid container alignItems="center" spacing={16}>
               <Grid item xs={12} sm={4}>
@@ -176,6 +189,7 @@ class HeaderTest extends React.Component {
                     ),
                   }}
                   onChange={this.searchLists}
+                  
                 />
               </Grid>
 
@@ -208,7 +222,7 @@ class HeaderTest extends React.Component {
             </Grid>
           </Toolbar>
         </AppBar>
-      </div>
+      </Spacer>
     );
   }
 }

@@ -98,7 +98,6 @@ class Profile extends Component {
       (
         <React.Fragment>
         <CssBaseline />
-        <HeaderTest />
         <Content>
               <Feed>
                 <Cover />

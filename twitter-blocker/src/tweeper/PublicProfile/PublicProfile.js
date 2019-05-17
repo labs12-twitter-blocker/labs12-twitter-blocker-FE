@@ -41,13 +41,11 @@ function PublicProfile() {
   return (
     <React.Fragment>
       <CssBaseline />
-      <HeaderTest />
       <Content>
         <Feed>
           <PublicProfileTab variant="fullWidth" />
           <Divider />
         </Feed>
-        <TweetFloat />
       </Content>
     </React.Fragment>
   );

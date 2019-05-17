@@ -39,7 +39,6 @@ function Settings() {
   return (
     <React.Fragment>
       <CssBaseline />
-      <HeaderTest />
       {/* <Content> */}
         <SettingsTabs />
       {/* </Content> */}
