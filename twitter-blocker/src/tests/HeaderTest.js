@@ -98,8 +98,8 @@ class HeaderTest extends React.Component {
                     icon={
                       <Badge dotted badgeContent="">
                         <Link to="/profile">
-                        <Tooltip title="Profile">
-                          <FontAwesomeIcon icon={faHome} size="2x" color='#38A1F3' />
+                          <Tooltip title="Profile">
+                            <FontAwesomeIcon icon={faHome} size="2x" color='#38A1F3' />
                           </Tooltip>
                         </Link>
                       </Badge>
@@ -109,7 +109,7 @@ class HeaderTest extends React.Component {
                     onlyIcon
                     icon={
                       <Tooltip title="New Tweet">
-                      <FontAwesomeIcon icon={faPlus} size="2x" color='#38A1F3' />
+                        <FontAwesomeIcon icon={faPlus} size="2x" color='#38A1F3' />
                       </Tooltip>
                     }
                   />
@@ -129,6 +129,8 @@ class HeaderTest extends React.Component {
                         id="tweet"
                         label="Tweet"
                         variant="outlined"
+                        multiline
+                        rows="3"
                         //   value={this.state.name}
                         inputProps={{ maxLength: 280 }}
                         fullWidth
@@ -148,8 +150,8 @@ class HeaderTest extends React.Component {
                     icon={
                       <Badge >
                         <Link to="/explorer">
-                        <Tooltip title="List Explorer">
-                          <FontAwesomeIcon icon={faList} size="2x" color='#38A1F3' />
+                          <Tooltip title="List Explorer">
+                            <FontAwesomeIcon icon={faList} size="2x" color='#38A1F3' />
                           </Tooltip>
                         </Link>
                       </Badge>
@@ -181,22 +183,22 @@ class HeaderTest extends React.Component {
 
               <Grid item xs={6} sm="auto" >
                 <ListItem>
-                  <Avatar 
-                    src={localStorage.getItem("profile_img")} 
-                    style={avatarStyle} alt="Your Profile Image" 
+                  <Avatar
+                    src={localStorage.getItem("profile_img")}
+                    style={avatarStyle} alt="Your Profile Image"
                     aria-owns={anchorEl ? 'simple-menu' : undefined}
                     aria-haspopup="true"
                     onClick={this.handleAvatarClick}
-                    />
-                    <Menu
-                        id="simple-menu"
-                        anchorEl={anchorEl}
-                        open={Boolean(anchorEl)}
-                        onClose={this.handleAvatarClose}
-                      >
-                        <Link to="/settings" style={{ textDecoration: 'none' }} ><MenuItem>Settings</MenuItem></Link>
-                        <a href="/" style={{ textDecoration: 'none' }} ><MenuItem onClick={this.logOut}>Logout</MenuItem></a>
-                      </Menu>
+                  />
+                  <Menu
+                    id="simple-menu"
+                    anchorEl={anchorEl}
+                    open={Boolean(anchorEl)}
+                    onClose={this.handleAvatarClose}
+                  >
+                    <Link to="/settings" style={{ textDecoration: 'none' }} ><MenuItem>Settings</MenuItem></Link>
+                    <a href="/" style={{ textDecoration: 'none' }} ><MenuItem onClick={this.logOut}>Logout</MenuItem></a>
+                  </Menu>
                   {/* <ListItemText primary="austen" /> */}
                   <React.Fragment>
                     <Button medium color="primary" variant="contained" href="/create">

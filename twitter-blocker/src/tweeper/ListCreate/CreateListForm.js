@@ -355,7 +355,7 @@ class CreateListForm extends Component {
                 name="user1"
                 id="outlined-name"
                 label="Required"
-                placeholder="@TwitterHandle"
+                placeholder="TwitterHandle"
                 className={classes.textField}
                 value={this.state.user1}
                 onChange={this.handleUser1Change}
@@ -365,11 +365,10 @@ class CreateListForm extends Component {
                 error={this.state.user1Error}
               />
               <TextField
-                required
                 name="user2"
                 id="outlined-name"
                 label="Required"
-                placeholder="@TwitterHandle"
+                placeholder="TwitterHandle"
                 className={classes.textField}
                 value={this.state.user2}
                 onChange={this.handleUser2Change}
@@ -379,11 +378,10 @@ class CreateListForm extends Component {
                 error={this.state.user2Error}
               />
               <TextField
-                required
                 name="user3"
                 id="outlined-name"
                 label="Required"
-                placeholder="@TwitterHandle"
+                placeholder="TwitterHandle"
                 className={classes.textField}
                 value={this.state.user3}
                 onChange={this.handleUser3Change}
@@ -393,11 +391,10 @@ class CreateListForm extends Component {
                 error={this.state.user3Error}
               />
               <TextField
-                required
                 name="user4"
                 id="outlined-name"
                 label="Required"
-                placeholder="@TwitterHandle"
+                placeholder="TwitterHandle"
                 className={classes.textField}
                 value={this.state.user4}
                 onChange={this.handleUser4Change}
@@ -407,11 +404,10 @@ class CreateListForm extends Component {
                 error={this.state.user4Error}
               />
               <TextField
-                required
                 name="user5"
                 id="outlined-name"
                 label="Required"
-                placeholder="@TwitterHandle"
+                placeholder="TwitterHandle"
                 className={classes.textField}
                 value={this.state.user5}
                 onChange={this.handleUser5Change}
