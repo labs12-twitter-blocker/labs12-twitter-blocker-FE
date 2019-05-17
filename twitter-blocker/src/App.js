@@ -2,16 +2,16 @@ import React from 'react';
 import './App.css';
 import Profile from '../src/tweeper/Home/Profile';
 import PublicProfile from '../src/tweeper/PublicProfile/PublicProfile'
-import OAuth from '../src/tweeper/OAuth';
+// import OAuth from '../src/tweeper/OAuth';
 import ListCreate from '../src/tweeper/ListCreate/ListCreate';
 import CreateList from '../src/tweeper/CreateList';
 import ListDetails from '../src/tweeper/ListDetails';
 import Leaderboard from './tweeper/Leaderboard/Leaderboard';
-import AccordingWhom from './components/tweeper/AccordingWhom';
+// import AccordingWhom from './components/tweeper/AccordingWhom';
 import Settings from './tweeper/Settings/Settings.js';
 import ListExplorer from './tweeper/ListExplorer/ListExplorer';
 
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 function App() {
   return (

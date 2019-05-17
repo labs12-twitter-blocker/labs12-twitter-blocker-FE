@@ -22,10 +22,53 @@ const styles = theme => ({
     width: '100%',
     marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
+    [theme.breakpoints.down("sm")]: {
+      // width: '100%',
+      padding: '0px 4px',
+    }
   },
   table: {
-    minWidth: 700,
+    [theme.breakpoints.down("sm")]: {
+      padding: '0px 4px',
+    }
   },
+  tableBodyRow: {
+		height: "auto",
+		marginTop: 10,
+    [theme.breakpoints.down("sm")]: {
+      height: 48,
+    }
+  },
+  tableBodyData: {
+		padding: 12,
+		fontSize: 14,
+
+		"&:before": {
+			content: "attr(datatitle)",
+			float: "left",
+			fontWeight: 600,
+		},
+
+    [theme.breakpoints.down("sm")]: {
+      display: 'table-cell',
+      padding: '0px 4px',
+      fontSize: 14,
+
+      "&:before": {
+        content: "",
+        display: "none"
+      }
+    }
+	},
+  pointsColumn: {
+    width: '125px',
+    padding: '0px 4px',
+    [theme.breakpoints.down("sm")]: {
+      width: '40px',
+      height: '45px',
+      padding: '0px 0 0 0px',
+    }
+  }
 });
 
 let id = 0;
@@ -35,15 +78,11 @@ function createData(list_name, description, member_count, subscriber_count, list
   return { id, list_name, description, member_count, subscriber_count, list_points, twitter_list_id };
 }
 
-
-
-
 class PublicListsTable extends Component {
   state = {
     rows: [],
     listRan: false,
   }
-
 
   componentDidMount() {
     this.props.getUserPublicList(localStorage.getItem("twitter_user_id"))
@@ -64,12 +103,10 @@ class PublicListsTable extends Component {
         list.list_points, list.twitter_list_id))
         return newRow;
     })
-    // console.log(newRow);
+
     this.setState({ listRan: true })
     this.setState({ rows: newRow });
   };
-
-
 
   render() {
 
@@ -86,38 +123,29 @@ class PublicListsTable extends Component {
       return (
         <Paper className={classes.root}>
           <Table className={classes.table}>
-          <TableHead>
-              <TableRow >
-                <TableCell align="center" padding="checkbox">Points</TableCell>
-                <TableCell align="left" padding="none">Name</TableCell>
-                <TableCell align="right">Members</TableCell>
-                <TableCell align="right">Subscribers</TableCell>
+            <TableHead>
+              <TableRow classes={{ root: classes.tableBodyRow }} >
+                <TableCell classes={{ root: classes.tableBodyData, root: classes.pointsColumn }} align="center" padding="checkbox">Points</TableCell>
+                <TableCell classes={{ root: classes.tableBodyData }} align="left" padding="none">Name</TableCell>
+                <TableCell classes={{ root: classes.tableBodyData }} align="right">Members</TableCell>
+                <TableCell classes={{ root: classes.tableBodyData }} align="right">Subscribers</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
-              {/* {console.log("this.state.rows", this.state.rows)} */}
+            <TableBody classes={{ root: classes.tableBodyRow, root: classes.pointsColumn }}>
               {this.state.rows.map(row => (
 
-                <TableRow key={row.id} hover >
-                  <TableCell align="center" padding="checkbox">
-                    {/* <IconButton rowid={row.id} id={row.twitter_list_id} onClick={this.up } >
-                      <FontAwesomeIcon icon={faArrowUp} color='default' style={{fontSize: '12px'}}/>
-                    </IconButton> */}
-
+                <TableRow classes={{ root: classes.tableBodyRow }} key={row.id} hover >
+                  <TableCell classes={{ root: classes.tableBodyData }} align="center" padding="checkbox">
                     <Typography color="textPrimary" inline="true" variant="body1">{row.list_points}</Typography>
-
-                    {/* <IconButton rowid={row.id} id={row.twitter_list_id} onClick={this.down } >
-                      <FontAwesomeIcon icon={faArrowDown} color='primary' style={{fontSize: '12px'}}/>
-                    </IconButton> */}
                   </TableCell>
-                  <TableCell align="left" padding="none">
+                  <TableCell classes={{ root: classes.tableBodyData }} align="left" padding="none">
                     <Typography color="primary"variant="body1">
                       <Link component={RouterLink} to={`/details/${row.twitter_list_id}`} >{row.list_name}</Link>
                     </Typography>
                     <Typography color="textSecondary" variant="body2">{row.description}</Typography>
                   </TableCell>
-                  <TableCell align="right" >{row.member_count}</TableCell>
-                  <TableCell align="right" >{row.subscriber_count}</TableCell>
+                  <TableCell classes={{ root: classes.tableBodyData }} align="right" >{row.member_count}</TableCell>
+                  <TableCell classes={{ root: classes.tableBodyData }} align="right" >{row.subscriber_count}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

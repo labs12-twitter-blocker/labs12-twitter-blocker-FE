@@ -20,20 +20,6 @@ import atoms from '../../components/atoms';
 
 const { IconButton, Typography } = atoms;
 
-const styles = theme => ({
-  root: {
-    width: '100%',
-    marginTop: theme.spacing.unit * 3,
-    overflowX: 'auto',
-  },
-  table: {
-    minWidth: 700,
-  },
-  tableWrapper: {
-    overflowX: 'auto',
-  },
-});
-
 let id = 0;
 function createData(list_name, description, member_count, subscriber_count, list_points, twitter_list_id) {
   id += 1;
@@ -64,60 +50,70 @@ function getSorting(order, orderBy) {
   return order === 'desc' ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy);
 }
 
-const rows = [
-  { id: 'list_points', numeric: true, disablePadding: false, label: 'Points' },
-  { id: 'list_name', numeric: false, disablePadding: true, label: 'Name' },
-  { id: 'member_count', numeric: true, disablePadding: false, label: 'Members' },
-  { id: 'subscriber_count', numeric: true, disablePadding: false, label: 'Subscribers' },
-];
+const styles = theme => ({
+  root: {
+    width: '100%',
+    marginTop: theme.spacing.unit * 3,
+    overflowX: 'auto',
+  },
+  table: {
+    [theme.breakpoints.down("sm")]: {
+      padding: '0px 4px',
+    }
+  },
+  tableBodyRow: {
+		height: "auto",
+		marginTop: 10,
+    [theme.breakpoints.down("sm")]: {
+      height: 48,
+    }
+  },
+  tableBodyData: {
+		padding: 12,
+		fontSize: 14,
 
-class EnhancedTableHead extends React.Component {
-  createSortHandler = property => event => {
-    this.props.onRequestSort(event, property);
-  };
+		"&:before": {
+			content: "attr(datatitle)",
+			float: "left",
+			fontWeight: 600,
+		},
 
-  render() {
-    const { order, orderBy } = this.props;
+        [theme.breakpoints.down("sm")]: {
+        	display: 'table-cell',
+        	padding: '0px 4px',
+        	fontSize: 14,
 
-    return (
-      <TableHead>
-        <TableRow>
-          {rows.map(
-            row => (
-              <TableCell
-                key={row.id}
-                align={row.numeric ? 'right' : 'left'}
-                padding={row.disablePadding ? 'none' : 'default'}
-                sortDirection={orderBy === row.id ? order : false}
-              >
-                <Tooltip
-                  title="Sort"
-                  placement={row.numeric ? 'bottom-end' : 'bottom-start'}
-                  enterDelay={300}
-                >
-                  <TableSortLabel
-                    active={orderBy === row.id}
-                    direction={order}
-                    onClick={this.createSortHandler(row.id)}
-                  >
-                    {row.label}
-                  </TableSortLabel>
-                </Tooltip>
-              </TableCell>
-            ),
-            this,
-          )}
-        </TableRow>
-      </TableHead>
-    );
+        	"&:before": {
+        		content: "",
+        		display: "none"
+        	}
+        }
+	},
+  pointsColumn: {
+    width: '125px',
+    padding: '0px 4px',
+    [theme.breakpoints.down("sm")]: {
+      width: '40px',
+      height: '45px',
+      padding: '0px 13px 0px 13px',
+    }
+  },
+  pointsHead: {
+    width: '125px',
+    padding: '0px 4px',
+    [theme.breakpoints.down("sm")]: {
+      width: '40px',
+      height: '45px',
+      padding: '0px 0px',
+    }
+  },
+  mobileCenter: {
+    [theme.breakpoints.down("sm")]: {
+      textAlign: 'center',
+      padding: '0px 0px',
+    }
   }
-}
-
-EnhancedTableHead.propTypes = {
-  onRequestSort: PropTypes.func.isRequired,
-  order: PropTypes.string.isRequired,
-  orderBy: PropTypes.string.isRequired,
-};
+});
 
 class LeaderboardFollowTable extends React.Component {
   state = {
@@ -208,26 +204,47 @@ class LeaderboardFollowTable extends React.Component {
     this.setState({ rowsPerPage: event.target.value });
   };
 
+  createSortHandler = property => event => {
+    this.handleRequestSort(event, property);
+  };
 
   render() {
     if (this.props.followLists === null || this.props.followLists.length === 0 || this.state.twitter_user_id === "" ) {
       return (<div>Loading</div>)
     } else {
     const { classes } = this.props;
+    
     const { data, order, orderBy, rowsPerPage, page } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
     return (
       <Paper className={classes.root}>
-        <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
-            <EnhancedTableHead
-              order={order}
-              orderBy={orderBy}
-              onRequestSort={this.handleRequestSort}
-              rowCount={data.length}
-            />
-            <TableBody>
+            <TableHead>
+              <TableRow classes={{ root: classes.tableBodyRow }}>
+                <TableCell classes={{ root: classes.tableBodyData, root: classes.pointsHead }} key={'list_points'} align="center" padding="none" sortDirection={orderBy === 'list_points' ? order : false} >
+                  <Tooltip title="Sort" placement={true ? 'bottom-end' : 'bottom-start'} enterDelay={300} >
+                    <TableSortLabel active={orderBy === 'list_points'} direction={order} onClick={this.createSortHandler('list_points')} >Points</TableSortLabel>
+                  </Tooltip>
+                </TableCell>
+                <TableCell classes={{ root: classes.tableBodyData }} key={'list_name'} align="left" padding="none" sortDirection={orderBy === 'list_name' ? order : true} >
+                  <Tooltip title="Sort by Points" placement={false ? 'bottom-end' : 'bottom-start'} enterDelay={300} >
+                    <TableSortLabel active={orderBy === 'list_name'} direction={order} onClick={this.createSortHandler('list_name')} >Name</TableSortLabel>
+                  </Tooltip>
+                </TableCell>
+                <TableCell classes={{ root: classes.tableBodyData, root: classes.mobileCenter }} key={'member_count'} align="right" sortDirection={orderBy === 'member_count' ? order : false} >
+                  <Tooltip title="Sort by Members" placement={true ? 'bottom-end' : 'bottom-start'} enterDelay={300} >
+                    <TableSortLabel active={orderBy === 'member_count'} direction={order} onClick={this.createSortHandler('member_count')} >Members</TableSortLabel>
+                  </Tooltip>
+                </TableCell>
+                <TableCell classes={{ root: classes.tableBodyData, root: classes.mobileCenter }} key={'subscriber_count'} align="right" sortDirection={orderBy === 'subscriber_count' ? order : false} >
+                  <Tooltip title="Sort by Subcribers" placement={true ? 'bottom-end' : 'bottom-start'} enterDelay={300} >
+                    <TableSortLabel active={orderBy === 'subscriber_count'} direction={order} onClick={this.createSortHandler('subscriber_count')} >Subscribers</TableSortLabel>
+                  </Tooltip>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody classes={{ root: classes.tableBodyRow }}>
               {stableSort(data, getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(n => {
@@ -236,8 +253,9 @@ class LeaderboardFollowTable extends React.Component {
                       hover
                       tabIndex={-1}
                       key={n.id}
+                      classes={{ root: classes.tableBodyRow }} 
                     >
-                      <TableCell align="center" padding="checkbox">
+                      <TableCell classes={{ root: classes.tableBodyData, root: classes.pointsColumn }} align="center" padding="checkbox">
                       
                         <IconButton rowid={n.id} id={n.twitter_list_id} 
                         onClick={(e)=>{e.currentTarget.style = " color:#33FF33 !important; "; this.up(e) }} >
@@ -251,25 +269,25 @@ class LeaderboardFollowTable extends React.Component {
                           <FontAwesomeIcon icon={faArrowDown} color='default' style={{fontSize: '12px'}}/>
                         </IconButton>
                       </TableCell>
-                      <TableCell align="left" padding="none">
+                      <TableCell classes={{ root: classes.tableBodyData }} align="left" padding="none">
                         <Typography color="primary"variant="body1">
                           <Link component={RouterLink} to={`/details/${n.twitter_list_id}`} >{n.list_name}</Link>
                         </Typography>
                         <Typography color="textSecondary" variant="body2">{n.description}</Typography>
                       </TableCell>
-                      <TableCell align="right" >{n.member_count}</TableCell>
-                      <TableCell align="right" >{n.subscriber_count}</TableCell>
+                      <TableCell classes={{ root: classes.tableBodyData, root: classes.mobileCenter }} align="right" >{n.member_count}</TableCell>
+                      <TableCell classes={{ root: classes.tableBodyData, root: classes.mobileCenter }} align="right" >{n.subscriber_count}</TableCell>
                     </TableRow>
                   );
                 })}
               {emptyRows > 0 && (
-                <TableRow style={{ height: 49 * emptyRows }}>
-                  <TableCell colSpan={6} />
+                <TableRow style={{ height: 49 * emptyRows }} classes={{ root: classes.tableBodyRow }} >
+                  <TableCell colSpan={6} classes={{ root: classes.tableBodyData }}/>
                 </TableRow>
               )}
             </TableBody>
           </Table>
-        </div>
+        {/* </div> */}
         <TablePagination
           rowsPerPageOptions={[10, 25, 50, 100]}
           component="div"
@@ -292,6 +310,7 @@ class LeaderboardFollowTable extends React.Component {
 
 LeaderboardFollowTable.propTypes = {
   classes: PropTypes.object.isRequired,
+  onRequestSort: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({

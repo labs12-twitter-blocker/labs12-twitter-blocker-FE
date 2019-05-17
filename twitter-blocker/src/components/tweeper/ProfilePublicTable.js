@@ -37,7 +37,7 @@ class ProfilePublicTable extends Component {
 
   componentDidMount() {
     // this.props.getLists()
-    this.props.getUserPublicList("802197601592508416")
+    this.props.getUserPublicList("802197601592508416") //TODO get the user ID
   };
 
   componentDidUpdate() {
@@ -51,10 +51,9 @@ class ProfilePublicTable extends Component {
     console.log('here')
     list.map(list => {
       console.log("list", list);
-      let points = (list.list_upvotes - list.list_downvotes)
       newRow.push(createData(list.list_name, list.description,
         list.member_count, list.subscriber_count,
-        points))
+        list.list_points))
       return newRow;
     })
     console.log(newRow);
