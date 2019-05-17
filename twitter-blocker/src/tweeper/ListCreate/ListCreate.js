@@ -48,11 +48,14 @@ const styles = theme => ({
   menu: {
     width: 200,
   },
+  createPageHeader: {
+    paddingTop: 1
+  }
 });
 
 const Content = styled('div')({
   maxWidth: 1000,
-  paddingTop: 0,
+  paddingTop: theme.spacing.unit,
   padding: theme.spacing.unit * 4,
   margin: 'auto',
 });
@@ -95,7 +98,9 @@ class ListCreate extends React.Component {
         <HeaderTest />
         <Content>
           <Feed>
-            <h1>Create Your List</h1>
+            <div className={classes.createPageHeader}>
+              <h1>Create Your List</h1>
+            </div>
             <CreateListForm />
           </Feed>
           {/* <TweetFloat /> */}

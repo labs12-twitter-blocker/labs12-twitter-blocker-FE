@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import styled from '@material-ui/styles/styled';
 import PropTypes from 'prop-types';
 import green from '@material-ui/core/colors/green';
 import FormControl from '@material-ui/core/FormControl';
@@ -17,7 +18,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { addList, createList, getUser } from '../../actions';
 import { connect } from "react-redux";
 
-
 const styles = theme => ({
   root: {
     color: green[600],
@@ -29,6 +29,7 @@ const styles = theme => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
+    flexDirection: 'column'
   },
   form: {
     display: 'flex',
@@ -46,6 +47,7 @@ const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
+    minWidth: 350
   },
   dense: {
     marginTop: 10,
@@ -53,7 +55,18 @@ const styles = theme => ({
   menu: {
     width: 200,
   },
+  listForm: {
+    padding: 15
+  },
+  listFormButton: {
+    padding: 15,
+    fontSize: 70
+  }
 });
+
+const ButtonText = styled('div')({
+  fontSize: 18
+})
 
 class CreateListForm extends Component {
   constructor() {
@@ -261,10 +274,11 @@ class CreateListForm extends Component {
     console.log(this.state)
 
     return (
-      <>
+      <div>
         {/* //////-----Enter Title Name-------///////// */}
-
-        <h2>Please enter the title of your list</h2>
+        <div className={classes.createListHeader}>
+          <h2>Please enter the title of your list</h2>
+        </div>
         <TextField
           required
           name="title"
@@ -289,6 +303,7 @@ class CreateListForm extends Component {
           name="description"
           id="outlined-multiline-static"
           label="Required"
+          placeholder="What is this list for? What kind of people are in this list? Is there an overall theme?"
           multiline
           rows="4"
           className={classes.textField}
@@ -408,18 +423,21 @@ class CreateListForm extends Component {
             </form>
           </FormControl>
         </form>
-        <Button
-          medium
-          color="primary"
-          variant="contained"
-          // aria-owns={open ? 'simple-popper' : undefined}
-          // aria-haspopup="true"
-          onClick={this.handleClickOpen}
-          disabled={!isEnabled}
-        >
-          Generate New List
-        </Button>
-
+        <div className={classes.listForm}>
+          <Button
+            medium
+            color="primary"
+            variant="contained"
+            size="large"
+            className={classes.listFormButton}
+            onClick={this.handleClickOpen}
+            disabled={!isEnabled}
+          >
+            <ButtonText>
+              Generate New List
+            </ButtonText>
+          </Button>
+        </div>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
@@ -439,7 +457,7 @@ class CreateListForm extends Component {
           </DialogActions>
         </Dialog>
 
-      </>
+      </div>
     );
   }
 }
