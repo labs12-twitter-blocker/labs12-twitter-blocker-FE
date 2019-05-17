@@ -100,8 +100,6 @@ const Spacer = styled('div')({
   },
 })
 
-    
-
 
 class ListDetails extends React.Component {
   constructor(props){
