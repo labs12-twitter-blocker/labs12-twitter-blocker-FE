@@ -154,9 +154,7 @@ render() {
   return (
     <React.Fragment>
       <CssBaseline />
-      <HeaderTest/>
         <Content>
-          
               <DetailsHeader>
               <Grid container justify="space-between" spacing={24}>
                 <Grid item>

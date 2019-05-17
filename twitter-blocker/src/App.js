@@ -10,12 +10,16 @@ import Leaderboard from './tweeper/Leaderboard/Leaderboard';
 // import AccordingWhom from './components/tweeper/AccordingWhom';
 import Settings from './tweeper/Settings/Settings.js';
 import ListExplorer from './tweeper/ListExplorer/ListExplorer';
+import HeaderTest from './tests/HeaderTest';
+import theme from './theme/tweeper/theme';
+import withTheme from './tweeper/withTheme';
 
 import { Route } from 'react-router-dom';
 
 function App() {
   return (
       <div className="App">
+        <HeaderTest />
         <Route exact path="/" component={Profile} />
         <Route exact path="/profile" component={Profile} />
         <Route path="/profile/:user_id" component={PublicProfile} />
@@ -28,4 +32,4 @@ function App() {
   );
 }
 
-export default App;
+export default withTheme(theme)(App);

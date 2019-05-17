@@ -68,7 +68,6 @@ class ListExplorer extends React.Component {
   return (
     <React.Fragment>
       <CssBaseline />
-      <HeaderTest />
       <Content>
             <Feed>
             <Tabs 
