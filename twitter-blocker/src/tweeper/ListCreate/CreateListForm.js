@@ -135,37 +135,37 @@ class CreateListForm extends Component {
     }
   };
 
-  handleUser2Change = event => {
-    if (event.currentTarget.value.length > 0) {
-      this.setState({ user2: event.target.value, user2HelperText: "", user2Error: false });
-    } else {
-      this.setState({ user2: event.target.value, user2HelperText: 'Please enter a Twitter user', user2Error: true });
-    }
-  };
+  // handleUser2Change = event => {
+  //   if (event.currentTarget.value.length > 0) {
+  //     this.setState({ user2: event.target.value, user2HelperText: "", user2Error: false });
+  //   } else {
+  //     this.setState({ user2: event.target.value, user2HelperText: 'Please enter a Twitter user', user2Error: true });
+  //   }
+  // };
 
-  handleUser3Change = event => {
-    if (event.currentTarget.value.length > 0) {
-      this.setState({ user3: event.target.value, user3HelperText: "", user3Error: false });
-    } else {
-      this.setState({ user3: event.target.value, user3HelperText: 'Please enter a Twitter user', user3Error: true });
-    }
-  };
+  // handleUser3Change = event => {
+  //   if (event.currentTarget.value.length > 0) {
+  //     this.setState({ user3: event.target.value, user3HelperText: "", user3Error: false });
+  //   } else {
+  //     this.setState({ user3: event.target.value, user3HelperText: 'Please enter a Twitter user', user3Error: true });
+  //   }
+  // };
 
-  handleUser4Change = event => {
-    if (event.currentTarget.value.length > 0) {
-      this.setState({ user4: event.target.value, user4HelperText: "", user4Error: false });
-    } else {
-      this.setState({ user4: event.target.value, user4HelperText: 'Please enter a Twitter user', user4Error: true });
-    }
-  };
+  // handleUser4Change = event => {
+  //   if (event.currentTarget.value.length > 0) {
+  //     this.setState({ user4: event.target.value, user4HelperText: "", user4Error: false });
+  //   } else {
+  //     this.setState({ user4: event.target.value, user4HelperText: 'Please enter a Twitter user', user4Error: true });
+  //   }
+  // };
 
-  handleUser5Change = event => {
-    if (event.currentTarget.value.length > 0) {
-      this.setState({ user5: event.target.value, user5HelperText: "", user5Error: false });
-    } else {
-      this.setState({ user5: event.target.value, user5HelperText: 'Please enter a Twitter user', user5Error: true });
-    }
-  };
+  // handleUser5Change = event => {
+  //   if (event.currentTarget.value.length > 0) {
+  //     this.setState({ user5: event.target.value, user5HelperText: "", user5Error: false });
+  //   } else {
+  //     this.setState({ user5: event.target.value, user5HelperText: 'Please enter a Twitter user', user5Error: true });
+  //   }
+  // };
 
   handlePrivateChange = event => {
     this.setState({ mode: event.target.value });
