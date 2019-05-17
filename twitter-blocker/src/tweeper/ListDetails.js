@@ -82,16 +82,22 @@ const SubscribeButton = styled(Button) ({
 const DetailsHeader = styled('div')({
   position: "fixed",
   left: 0,
-  top: 60,
+  top: 55,
   width:"100%",
   padding:"5%",
   backgroundColor: '#fff',
-  zIndex: "4"
+  zIndex: "4",
+  [theme.breakpoints.down('xs')]: {
+    top: 160,
+  },
 })
 
 const Spacer = styled('div')({
   width: "100%",
-  height: "200px"
+  height: 200,
+  [theme.breakpoints.down('xs')]: {
+    height: 120,
+  },
 })
 
     
