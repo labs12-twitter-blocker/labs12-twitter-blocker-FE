@@ -798,7 +798,7 @@ export const SEARCH_LISTS = "SEARCH_LISTS";
 export const SEARCH_LISTS_SUCCESS = "SEARCH_LISTS_SUCCESS";
 export const SEARCH_LISTS_FAILURE = "SEARCH_LISTS_FAILURE";
 
-export function searchLists(searchTerm) {
+export function searchLists(searchTerm, history) {
   return (dispatch) => {
     dispatch({ type: SEARCH_LISTS });
     axios.get(`${url}/lists`)
@@ -811,6 +811,7 @@ export function searchLists(searchTerm) {
         })
         console.log(filtered);
         dispatch({ type: SEARCH_LISTS_SUCCESS, payload: filtered })
+        history.push("/explorer")
       })
       .catch(err => {
         console.log(err);

@@ -23,7 +23,7 @@ import atoms from '../components/atoms';
 import molecules from '../components/molecules';
 import { searchLists } from '../actions';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect} from 'react-router-dom';
 import styled from '@material-ui/styles/styled';
 import theme from '../theme/tweeper/theme';
 
@@ -56,9 +56,9 @@ const Spacer = styled('div')({
 
 class HeaderTest extends React.Component {
   state = {
-    open: false,
-    searchTerm: "",
-    anchorEl: null,
+      open: false,
+      searchTerm: "",
+      anchorEl: null,
   };
 
   handleChange = (event) => {
@@ -67,7 +67,8 @@ class HeaderTest extends React.Component {
   searchLists = (event) => {
     this.props.searchLists(event.target.value);
     // this.setState({searchTerm: ""})
-    return <Redirect to="/explorer"/>
+    // return <Redirect to="/explorer" />
+    this.props.history.push("/explorer")
   }
 
   handleClickOpen = () => {
@@ -94,7 +95,7 @@ class HeaderTest extends React.Component {
     localStorage.removeItem("displayName");
     localStorage.removeItem("banner_img");
     // this.props.checkSignIn();
-    // this.props.history.push("/");
+    this.props.history.push("/");
   };
 
   render() {
@@ -239,4 +240,4 @@ const mapActionsToProps = {
 
 // const FormDialogRouter = withRouter(FormDialog);
 
-export default connect(mapStateToProps, mapActionsToProps)(HeaderTest);
+export default withRouter(connect(mapStateToProps, mapActionsToProps)(HeaderTest));
