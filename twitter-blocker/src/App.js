@@ -13,6 +13,7 @@ import ListExplorer from './tweeper/ListExplorer/ListExplorer';
 import HeaderTest from './tests/HeaderTest';
 import theme from './theme/tweeper/theme';
 import withTheme from './tweeper/withTheme';
+import ListStepper from './tweeper/ListCreate/ListStepper'
 
 import { Route } from 'react-router-dom';
 
@@ -28,6 +29,7 @@ function App() {
         <Route path="/leaderboard" component={Leaderboard} />
         <Route path="/settings" component={Settings} />
         <Route path="/explorer" component={ListExplorer} />
+        <Route path="/stepper" component={ListStepper} />
       </div>
   );
 }

@@ -17,6 +17,7 @@ import atoms from '../../components/atoms';
 import { getUser, getLogin } from '../../actions/index.js';
 import TwitterLogin from 'react-twitter-auth';
 import Landing from './Landing';
+import jwt from 'jsonwebtoken';
 
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
@@ -41,7 +42,6 @@ const Feed = styled('div')({
 
 const Cover = styled('div')({
   height: 200,
-  backgroundImage: `url(${localStorage.getItem("banner_img")})`,
   backgroundSize: "cover",
   backgroundColor: "#1da1f2",
 });
@@ -61,13 +61,21 @@ class Profile extends Component {
   }
 
   componentDidMount() {
-    if (localStorage.getItem("twitter_user_id")) {
-      this.props.getUser(localStorage.getItem("twitter_user_id"))
-      this.setState({ twitter_user_id: localStorage.getItem("twitter_user_id") })
-    }
-    localStorage.getItem("twitter_user_id")
-    // console.log("++++++++++++++this.props.currentUser", this.props.currentUser)
+    // if (localStorage.getItem("twitter_user_id")) {
+    //   this.props.getUser(localStorage.getItem("twitter_user_id"))
+    //   this.setState({ twitter_user_id: localStorage.getItem("twitter_user_id") })
+    // }
+    // localStorage.getItem("twitter_user_id")
 
+    if (localStorage.getItem("token")) {
+      let decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
+      this.props.getUser(decoded.id)
+      this.setState({ twitter_user_id: decoded.id })
+      this.setState({ displayName: decoded.displayName })
+      this.setState({ profilePic: decoded.profile_img })
+      this.setState({ username: decoded.username })
+      this.setState({ banner_img: decoded.banner_img })
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -79,12 +87,17 @@ class Profile extends Component {
     console.log("this.props.user", this.props.user);
     if (
       this.props.loggedIn === true &&
-      this.state.loggedInRan === false
+      this.state.loggedInRan === false && 
+      localStorage.getItem("token")
     ) {
       this.setState({ loggedInRan: true })
-      this.setState({ twitter_user_id: localStorage.getItem("twitter_user_id") })
+      let decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
       this.props.getUser(this.props.user.id)
-      this.setState({ profilePic: localStorage.getItem("profile_img") })
+      this.setState({ twitter_user_id: decoded.id })
+      this.setState({ displayName: decoded.displayName })
+      this.setState({ profilePic: decoded.profile_img })
+      this.setState({ username: decoded.username })
+      this.setState({ banner_img: decoded.banner_img })
     }
     // console.log("twitter_user_id", this.state.twitter_user_id);
   }
@@ -100,7 +113,7 @@ class Profile extends Component {
         <CssBaseline />
         <Content>
               <Feed>
-                <Cover />
+                <Cover backgroundImage={`url(${this.state.banner_img})`}/>
                 <Box p={2} mb={1}>
                   <Box
                     css={{
@@ -113,15 +126,17 @@ class Profile extends Component {
                       style={{ marginTop: '-18%', marginBottom: 14 }}
                       ultraLarge
                       bordered
-                      src={localStorage.getItem("profile_img")}
-                      
+                      // src={localStorage.getItem("profile_img")}
+                      src={this.state.profilePic}
                     />
                     {/* <Button large color="primary" variant="outlined">
                       Edit Profile
                     </Button> */}
                 </Box>
                 {/* <Typography primary>{this.props.user.displayName}</Typography> */}
-                <Typography primary>{localStorage.getItem("displayName")}</Typography>
+                {/* <Typography primary>{localStorage.getItem("displayName")}</Typography> */}
+                <Typography primary>{this.state.displayName}</Typography>
+
                 <Typography light gutterBottom>
                   {console.log("----------------------PROFILE PIC-----------", this.state.profilePic)}
                   {console.log("++++this.props.loggedIn", this.props.loggedIn)}
@@ -129,7 +144,8 @@ class Profile extends Component {
                   {console.log("++++this.props.currentUser", this.props.currentUser)}
                   {console.log("++++this.props.user", this.props.user)}
                   {/* {this.props.currentUser.users.screen_name} */}
-                  {localStorage.getItem("username")}
+                  {/* {localStorage.getItem("username")} */}
+                  {this.state.username}
                 </Typography>
                 {/* <Typography light gutterBottom>
                   {this.props.user.displayName}
