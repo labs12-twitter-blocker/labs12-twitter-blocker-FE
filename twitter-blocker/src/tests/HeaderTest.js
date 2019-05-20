@@ -21,7 +21,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faHome, faSearch, faBell, faEnvelope, faList, faCog } from '@fortawesome/free-solid-svg-icons';
 import atoms from '../components/atoms';
 import molecules from '../components/molecules';
-import { searchLists } from '../actions';
+import { searchLists, addPost } from '../actions';
 import { connect } from 'react-redux';
 import { Link, Redirect} from 'react-router-dom';
 import styled from '@material-ui/styles/styled';
@@ -100,7 +100,8 @@ class HeaderTest extends React.Component {
 
   render() {
     const { anchorEl } = this.state;
-    return (
+    console.log("**********************" + this.props.loggedIn);
+    let content = (this.props.loggedIn === true) ?
       <Spacer>
         <AppBar position="fixed" elevation={1}>
           <Toolbar>
@@ -226,16 +227,24 @@ class HeaderTest extends React.Component {
           </Toolbar>
         </AppBar>
       </Spacer>
-    );
+    :
+    null;
+    return (
+      <div>
+        {content}
+      </div>
+    )
   }
 }
 const mapStateToProps = state => {
   return {
+    loggedIn: state.loginReducer.loggedIn
   }
 }
 
 const mapActionsToProps = {
-  searchLists
+  searchLists,
+  addPost
 }
 
 // const FormDialogRouter = withRouter(FormDialog);
