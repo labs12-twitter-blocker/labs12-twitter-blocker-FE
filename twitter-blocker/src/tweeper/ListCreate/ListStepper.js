@@ -27,6 +27,8 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { addList, createList, getUser } from '../../actions';
 import { connect } from "react-redux";
+import jwt from 'jsonwebtoken';
+require('dotenv').config();
 
 const styles = theme => ({
   root: {
@@ -121,13 +123,11 @@ class ListStepper extends React.Component {
   isStepFailed = step => step === 0;
 
   componentDidMount() {
-    this.props.getUser(localStorage.getItem("twitter_user_id"))
-    if (localStorage.getItem("twitter_user_id")) {
-      this.setState({ twitter_user_id: localStorage.getItem("twitter_user_id") })
+    if (localStorage.getItem("token")) {
+      let decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
+      this.setState({ twitter_user_id: decoded.id })
+      this.props.getUser(decoded.id)
     }
-    localStorage.getItem("twitter_user_id")
-    console.log("++++++++++++++this.props.currentUser", this.props.currentUser)
-    console.log("++++++++open+++++++++++this.state.open", this.state.open)
   }
 
   handleTitleChange = event => {
@@ -184,9 +184,9 @@ class ListStepper extends React.Component {
 
 
     const token = localStorage.getItem("token");
-    const username = localStorage.getItem("username")
-    const id = localStorage.getItem("twitter_user_id")
-    console.log("ID____________________", id);
+    // const username = localStorage.getItem("username")
+    // const id = localStorage.getItem("twitter_user_id")
+    // console.log("ID____________________", id);
     console.log("TOKEN", token);
     // let search_users = [ this.state.user1, this.state.user2, this.state.user3, this.state.user4, this.state.user5 ]
     console.log("THIS.STATE", this.state);
@@ -202,7 +202,7 @@ class ListStepper extends React.Component {
     // }
 
     const listParams = {
-      "user_id": id,
+      "user_id": this.state.twitter_user_id,
       "name": this.state.title,
       "mode": this.state.mode,
       "description": this.state.description

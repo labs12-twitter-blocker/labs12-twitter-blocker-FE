@@ -10,6 +10,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import atoms from '../../components/atoms';
 import molecules from '../../components/molecules';
+import jwt from 'jsonwebtoken';
+require('dotenv').config();
 
 const { Avatar } = atoms;
 
@@ -27,22 +29,27 @@ const styles = {
     height: 140,
   },
 };
+let decoded = null
+if (localStorage.getItem("token")) {
+  decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
+}
 
 function UserSettingsCard(props) {
   const { classes } = props;
+
   return (
     <Card className={classes.card} style={{ margin:"auto", marginTop: "2rem"}}>
       <CardActionArea>
         <Avatar 
-            src={localStorage.getItem("profile_img")} 
+            src={decoded.profile_img} 
             style={avatarStyle} alt="Your Profile Image" 
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-          {localStorage.getItem("displayName")} 
+            {decoded.displayName}
           </Typography>
           <Typography component="p">
-          {localStorage.getItem("username")} 
+            {decoded.username}
           </Typography>
         </CardContent>
       </CardActionArea>

@@ -33,6 +33,8 @@ import { getList,
         unSubscribeToList,
         getListSubscribers } from '../actions';
 import { Link } from 'react-router-dom';
+import jwt from 'jsonwebtoken';
+require('dotenv').config();
 
 library.add(faTimes)
 
@@ -115,12 +117,12 @@ class ListDetails extends React.Component {
   };
 
   subscribe = () => {
-      this.props.subscribeToList(this.props.list.twitter_list_id, localStorage.getItem("twitter_user_id"));
+      this.props.subscribeToList(this.props.list.twitter_list_id, this.state.twitter_user_id);
       this.setState({isSubscribed: true})
   }
 
   unsubscribe = () => {
-    this.props.unSubscribeToList(this.props.list.twitter_list_id, localStorage.getItem("twitter_user_id"));
+    this.props.unSubscribeToList(this.props.list.twitter_list_id, this.state.twitter_user_id);
     this.setState({isSubscribed: false})
   }
 
@@ -138,7 +140,10 @@ class ListDetails extends React.Component {
 
 
   componentDidMount(){
-    const userId = this.props.getUser(localStorage.getItem("twitter_user_id"))
+    let decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
+    this.setState({ twitter_user_id: decoded.id })
+
+    const userId = this.props.getUser(decoded.id)
     console.log(userId)
     this.props.getListMembers(this.props.match.params.twitter_list_id);
     this.props.getList(this.props.match.params.twitter_list_id);

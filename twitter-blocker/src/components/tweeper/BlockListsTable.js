@@ -14,6 +14,9 @@ import Paper from '@material-ui/core/Paper';
 import { getUserBlockList } from '../../actions/index';
 // import CreateList from './CreateList';
 import atoms from '../../components/atoms';
+import jwt from 'jsonwebtoken';
+require('dotenv').config();
+
 
 const { Typography } = atoms;
 
@@ -86,7 +89,11 @@ class BlockListsTable extends Component {
   }
 
   componentDidMount() {
-    this.props.getUserBlockList(localStorage.getItem("twitter_user_id"))
+    if (localStorage.getItem("token")) {
+      let decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
+      this.setState({ twitter_user_id: decoded.id })
+      this.props.getUserBlockList(decoded.id)
+    }
 
   };
 

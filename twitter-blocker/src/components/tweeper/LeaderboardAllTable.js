@@ -17,6 +17,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { getAllListPoints, addUserVote } from '../../actions/index'
 import atoms from '../../components/atoms';
+import jwt from 'jsonwebtoken';
+require('dotenv').config();
+
 
 const { IconButton, Typography } = atoms;
 
@@ -132,7 +135,10 @@ class LeaderboardAllTable extends React.Component {
     } else {
       this.getListRowBuilder(this.props.allLists);
     }
-    this.setState({"twitter_user_id": localStorage.getItem("twitter_user_id") })
+    if (localStorage.getItem("token")) {
+      let decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
+      this.setState({ twitter_user_id: decoded.id })
+    }
   };
     
   componentDidUpdate() {
@@ -158,7 +164,7 @@ class LeaderboardAllTable extends React.Component {
     const rowPointer = e.currentTarget.getAttribute("rowid") - 1;
     let upvote = {
       "twitter_list_id": e.currentTarget.id, 
-      "twitter_user_id": localStorage.getItem("twitter_user_id"),
+      "twitter_user_id": this.state.twitter_user_id,
       "vote": 1
     }
     let getRows = this.state.data;
@@ -172,7 +178,7 @@ class LeaderboardAllTable extends React.Component {
     const rowPointer = e.currentTarget.getAttribute("rowid") - 1;
     let downvote = {
       "twitter_list_id": e.currentTarget.id, 
-      "twitter_user_id": localStorage.getItem("twitter_user_id"),
+      "twitter_user_id": this.state.twitter_user_id,
       "vote": -1
     }
     let getRows = this.state.data;

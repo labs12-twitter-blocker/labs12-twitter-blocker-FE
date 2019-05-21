@@ -6,6 +6,8 @@ import { withStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import { getUser, getLogin } from '../../actions/index.js';
+import jwt from 'jsonwebtoken';
+require('dotenv').config();
 
 const styles = theme => ({
   container: {
@@ -41,15 +43,12 @@ class UserSettingsTextField extends React.Component {
   };
 
   componentDidMount() {
-    this.props.getUser(localStorage.getItem("twitter_user_id"))
-    if (localStorage.getItem("twitter_user_id")) {
-      this.setState({twitter_user_id: localStorage.getItem("twitter_user_id")})
+    if (localStorage.getItem("token")) {
+      let decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
+      this.setState({ twitter_user_id: decoded.id })
+      this.props.getUser(decoded.id)
     }
-    localStorage.getItem("twitter_user_id")
-    console.log("++++++++++++++this.props.currentUser", this.props.currentUser)
     this.setState({currentUser: this.props.currentUser})
-    console.log(this.state.currentUser)
-
   }
 
     componentDidUpdate(prevProps) {

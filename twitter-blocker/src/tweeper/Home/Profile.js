@@ -61,12 +61,6 @@ class Profile extends Component {
   }
 
   componentDidMount() {
-    // if (localStorage.getItem("twitter_user_id")) {
-    //   this.props.getUser(localStorage.getItem("twitter_user_id"))
-    //   this.setState({ twitter_user_id: localStorage.getItem("twitter_user_id") })
-    // }
-    // localStorage.getItem("twitter_user_id")
-
     if (localStorage.getItem("token")) {
       let decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
       this.props.getUser(decoded.id)
@@ -126,7 +120,6 @@ class Profile extends Component {
                       style={{ marginTop: '-18%', marginBottom: 14 }}
                       ultraLarge
                       bordered
-                      // src={localStorage.getItem("profile_img")}
                       src={this.state.profilePic}
                     />
                     {/* <Button large color="primary" variant="outlined">
@@ -134,7 +127,6 @@ class Profile extends Component {
                     </Button> */}
                 </Box>
                 {/* <Typography primary>{this.props.user.displayName}</Typography> */}
-                {/* <Typography primary>{localStorage.getItem("displayName")}</Typography> */}
                 <Typography primary>{this.state.displayName}</Typography>
 
                 <Typography light gutterBottom>
@@ -144,7 +136,6 @@ class Profile extends Component {
                   {console.log("++++this.props.currentUser", this.props.currentUser)}
                   {console.log("++++this.props.user", this.props.user)}
                   {/* {this.props.currentUser.users.screen_name} */}
-                  {/* {localStorage.getItem("username")} */}
                   {this.state.username}
                 </Typography>
                 {/* <Typography light gutterBottom>
