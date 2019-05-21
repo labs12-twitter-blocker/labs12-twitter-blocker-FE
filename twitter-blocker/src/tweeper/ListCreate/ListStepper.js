@@ -29,6 +29,13 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { dsList, createList, getUser } from '../../actions';
 import { connect } from "react-redux";
 import Grid from '@material-ui/core/Grid';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Divider from '@material-ui/core/Divider';
+import Checkbox from '@material-ui/core/Checkbox';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Modal from '@material-ui/core/Modal';
+// import Select from 'material-ui/Select';
 
 import { List, 
   ListItem, 
@@ -83,6 +90,9 @@ const styles = theme => ({
   listForm: {
     padding: 15
   },
+  membersList: {
+    padding: 0
+  },
   // listFormButton: {
   //   padding: 15,
   //   fontSize: 70
@@ -110,62 +120,122 @@ const ProfileName = styled(Typography)({
 })
 
 
+class MemberModal extends React.Component {
+  state = {
+    checked: [],
+  };
 
+  handleToggle = value => () => {
+    const { checked } = this.state;
+    const currentIndex = checked.indexOf(value);
+    const newChecked = [...checked];
 
+    if (currentIndex === -1) {
+      newChecked.push(value);
+    } else {
+      newChecked.splice(currentIndex, 1);
+    }
 
+    this.setState({
+      checked: newChecked,
+    });
+  };
 
-let MemberModal = props => {
-  const { dsLists } = props;
-  console.log("dsLists", dsLists)
+  selectAll = () => {
+    if(this.state.checkedAll)
+      this.setState({checked:[]});
+    else
+      this.setState({checked:this.props.dsLists});
+      this.setState({checkedAll:!this.state.checkedAll});
+  }
+
+  handleCreateList = () => {
+    let decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
+    // console.log("this.state.checked", this.state.checked)
+    let screen_name = []
+    this.state.checked.map(e => {
+      screen_name.push(e.screen_name)
+    })
+
+    // console.log("screen_name", screen_name)
+    const listParams = {
+      "user_id": decoded.id,
+      "name": this.props.title,
+      "mode": this.props.mode,
+      "description": this.props.description,
+      "screen_name": screen_name.toString()
+    }
+    console.log("listParams", listParams)
+
+    this.props.createList(listParams)
+  }
+
+  render(){
+  const { dsLists, classes, createList } = this.props;
+  const {checkedAll,checked } = this.state;
   return (
     <> 
-      <DialogTitle id="form-dialog-title">List Submitted for Creation.</DialogTitle>
+      <DialogTitle id="form-dialog-title">Select Members to Add to List
+        <Typography color="textPrimary" variant='body2'> 
+          {checkedAll?"Select None":"Select all"}
+          <Checkbox
+            checked={this.state.open}
+            value="Select all"
+            onClick={this.selectAll}
+            color="primary"
+          />
+        </Typography>
+      </DialogTitle>
+      {console.log("checked", checked)}
       <DialogContent>
-        <DialogContentText>
-          Please be patient. It can take up to a minute for created lists to populate on twitter.
-        </DialogContentText>
-
-        {/* <Grid container spacing={8} direction="column" alignItems="center" justify="center" > */}
         {dsLists.map((e, index) => {
           return (
-            // <Grid item xs={10} sm={8} md={6} style={{width:"100%"}}>
-            <List key={e.id_str}>
-            {console.log("e card", e)}
-            <Card >
-              <ListItem>
-                <CardContent style={{width:'100%'}}>
-                  <TopLine>
-                    <ProfileNameImg>
-                    {console.log("i card", e)}
-                      {console.log("card", e.id_str, e.profile_image_url_https, e.name, e.screen_name, e.description)}
-                      <Avatar src={e.profile_image_url_https} style={{marginRight: '5px'}}/>
-                      <Link to={`/profile/${e.id_str}`} style={{textDecoration:'none'}}><ProfileName >{e.name}</ProfileName></Link>
-                      </ProfileNameImg>
-                  <Typography>@{e.screen_name}</Typography>
-                  </TopLine>
-                  <Typography>{e.description}</Typography>
-                </CardContent>
+            <List key={e.id_str} dense>
+              <ListItem 
+              alignItems="flex-start" 
+              dense={true} 
+              button onClick={this.handleToggle(e)} 
+              classes={{ root: classes.membersList }}
+              >
+                    <ListItemAvatar>
+                      <Avatar src={e.profile_image_url_https} />
+                    </ListItemAvatar>
+                    <ListItemText
+                      disableTypography={true}
+                      primary={
+                      <Typography color="textPrimary" variant='body2'>
+                        {e.name} @{e.screen_name}
+                      </Typography>}
+                      secondary={
+                        // <React.Fragment>
+                          <Typography component="span" className={classes.inline} color="textSecondary" variant='caption'>
+                            {e.description}
+                          </Typography>
+                        // </React.Fragment>
+                      }
+                    />
+                <Checkbox
+                  checked={this.state.checked.indexOf(e) !== -1}
+                  tabIndex={-1}
+                  color="primary"
+                  // disableRipple
+                />
               </ListItem>
-            </Card>
+              <Divider />
             </List>
-          // </Grid>
           )
         })}
-        {/* </Grid> */}
-
       </DialogContent>
 
-
       <DialogActions>
-        <Button 
-        // onClick={this.handleClose} color="primary"
-        >
-          Continue
-        </Button>
-
+        {console.log("can we get it", checked)}
+      {/* this.props.createList(listParams) */}
+          <Button onClick={this.handleCreateList} color="primary">
+            Continue
+          </Button>
       </DialogActions>
     </>
-  );
+  )};
 };
 
 MemberModal.propTypes = {
@@ -174,14 +244,6 @@ MemberModal.propTypes = {
 };
 
 MemberModal = withStyles(styles)(MemberModal);
-
-
-
-
-
-
-
-
 
 
 
@@ -306,9 +368,11 @@ class ListStepper extends React.Component {
 
     const listParams = {
       "user_id": this.state.twitter_user_id,
+      "original_user": this.state.twitter_user_id,
       "name": this.state.title,
       "mode": this.state.mode,
-      "description": this.state.description
+      "description": this.state.description,
+      "search_users": [this.state.user1, this.state.user2, this.state.user3, this.state.user4, this.state.user5]
     }
 
     this.setState({ listParams: listParams });
@@ -497,29 +561,21 @@ class ListStepper extends React.Component {
     console.log("this.state.newListResponseUpdated", this.state.newListResponseUpdated);
     console.log("this.props.newListResponse", this.props.newListResponse);
 
-    if (this.props.newListResponseUpdated !== prevProps.newListResponseUpdated) {
+    // The list has been created successfully, push to that page
+    if (this.props.newListResponseUpdated) {
       console.log("CDU IF 1");
-      this.setState({ newListResponseUpdated: this.props.newListResponseUpdated })
+      console.log("this.props.newListResponse", this.props.newListResponse);
+      // this.setState({ newListResponseUpdated: this.props.newListResponseUpdated })
+      this.props.history.push(`/details/${this.props.newListResponse.id_str}`)
     }
     // console.log("this.props.newListResponse.id_str", this.props.newListResponse.id_str);
 
-
-    if (this.state.newListResponseUpdated !== prevState.newListResponseUpdated) {
-      console.log("CDU IF 2");
-
-      let completeList = {
-        "user_id": this.state.twitter_user_id,
-        "name": this.props.newListResponse.name,
-        "original_user": this.props.newListResponse.user.screen_name,
-        "mode": this.props.newListResponse.mode,
-        "description": this.props.newListResponse.description,
-        "id": this.props.newListResponse.id_str,
-        "search_users": [this.state.user1, this.state.user2, this.state.user3, this.state.user4, this.state.user5]
-      }
-      console.log("~~~~~~~~~~~~~~~~~completeList", completeList);
-      this.props.dsList(completeList);
-    }
-    console.log("++++++++open+++++++++++this.state.open", this.state.open)
+    // if (this.state.newListResponseUpdated !== prevState.newListResponseUpdated) {
+    //   console.log("CDU IF 2");
+    //   console.log("this.props.newListResponse", this.props.newListResponse);
+    //   // this.props.history.push("/details/:twitter_list_id");
+    // }
+    // console.log("++++++++open+++++++++++this.state.open", this.state.open)
   }
 
   handleSkip = () => {
@@ -623,54 +679,55 @@ class ListStepper extends React.Component {
                   Reset
                 </Button>
                 <Button
-                  // medium
                   color="primary"
                   variant="contained"
-                  // size="medium"
-                  // className={classes.listFormButton}
                   className={classes.button}
                   onClick={this.handleSubmit}
                   disabled={!isEnabled}
                 >
-                  {/* <ButtonText> */}
-                    Generate List
-                  {/* </ButtonText> */}
+                  Generate List
                 </Button>
               </div>
 
-              <Dialog
+              <Modal
                 open={this.state.open}
                 onClose={this.handleClose}
+              >
+              <Dialog
+                open={this.state.open}
                 aria-labelledby="form-dialog-title"
               >
                 { this.props.addDSListResponseUpdated ? 
                 <> 
-                  <MemberModal dsLists={this.props.dsLists[0]}/> 
-                  <DialogActions>
+                  <MemberModal 
+                  dsLists={this.props.dsLists[0]} 
+                  createList={this.props.createList} 
+                  title={this.state.title}
+                  mode={this.state.mode}
+                  description={this.state.description}
+                  /> 
+                  {/* <DialogActions>
+                    {console.log("can we get it", checked)}
+                  {/* this.props.createList(listParams)
                       <Button onClick={this.handleClose} color="primary">
                         Continue
                       </Button>
-                  </DialogActions>
-                
-                
-
+                  </DialogActions> */}
                 </>
                 : <>
                     <DialogTitle id="form-dialog-title">List Submitted for Creation.</DialogTitle>
                     <DialogContent>
-                      <DialogContentText>
-                        Please be patient. It can take up to a minute for created lists to populate on twitter.
+                      <DialogContentText >
+                        Please be patient. It can take up to a minute for us to analyze and find members.
+                      </DialogContentText>
+                      <DialogContentText align='center'>        
+                        <CircularProgress color="primary" />
                       </DialogContentText>
                     </DialogContent>
-                    <DialogActions>
-                      <Button onClick={this.handleClose} color="primary">
-                        Continue
-                      </Button>
-                    </DialogActions>
-                    </>
+                  </>
                 }
               </Dialog>
-              
+              </Modal>
             </>
           )}
         </Paper>

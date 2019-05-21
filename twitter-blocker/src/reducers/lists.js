@@ -505,7 +505,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         creatingList: false,
-        newListResponse: action.payload.response,
+        newListResponse: action.payload,
         newListResponseUpdated: true,
         lists: [...state.lists, action.payload]
       };
