@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {  withRouter } from "react-router-dom";
 import { withStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -25,6 +26,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import BackButton from '../../components/tweeper/BackButton'
 import { addList, createList, getUser } from '../../actions';
 import { connect } from "react-redux";
 import jwt from 'jsonwebtoken';
@@ -479,6 +481,7 @@ class ListStepper extends React.Component {
     return (
       <div className={classes.root}>
         <Paper square elevation={0} className={classes.resetContainer}>
+          <BackButton />
           <Stepper activeStep={activeStep} orientation="vertical">
             {steps.map((label, index) => (
               <Step key={label}>
@@ -570,7 +573,9 @@ const mapStateToProps = state => ({
 
 const styledComponent = withStyles(styles)(ListStepper);
 
+const routedComponent = withRouter(styledComponent)
+
 export default connect(
   mapStateToProps,
   { addList, createList, getUser }
-)(styledComponent);
+)(routedComponent);

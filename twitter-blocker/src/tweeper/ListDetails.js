@@ -1,4 +1,5 @@
 import React from 'react';
+import {  withRouter } from "react-router-dom";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider/Divider';
@@ -10,6 +11,7 @@ import HeaderTest from '../tests/HeaderTest.js'
 import theme from '../theme/tweeper/theme';
 import withTheme from './withTheme';
 import ListTab from '../components/tweeper/ListTab.js'
+import BackButton from '../components/tweeper/BackButton'
 import atoms from '../components/atoms';
 import molecules from '../components/molecules';
 
@@ -146,6 +148,7 @@ render() {
   return (
     <React.Fragment>
       <CssBaseline />
+      <BackButton />
         <Content>
           <Feed> 
               <DetailsHeader>
@@ -256,5 +259,10 @@ const mapActionsToProps = {
   getListSubscribers
 }
 
-export default connect( mapStateToProps, mapActionsToProps)(withTheme(theme)(ListDetails));
+const styledComponent = withTheme(theme)(ListDetails);
+const routedComponent = withRouter(styledComponent)
+
+export default connect( 
+  mapStateToProps, mapActionsToProps)
+  (routedComponent);
 

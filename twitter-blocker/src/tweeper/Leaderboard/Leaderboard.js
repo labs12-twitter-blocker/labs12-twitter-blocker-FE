@@ -1,5 +1,6 @@
 import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import {  withRouter } from "react-router-dom";
 // import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider/Divider';
 // import { unstable_Box as Box } from '@material-ui/core/Box';
@@ -10,6 +11,7 @@ import HeaderTest from '../../tests/HeaderTest.js'
 import theme from '../../theme/tweeper/theme';
 import withTheme from '../withTheme';
 import LeaderboardTab from '../../components/tweeper/LeaderboardTab.js'
+import BackButton from '../../components/tweeper/BackButton'
 // import atoms from '../../components/atoms';
 // import molecules from '../../components/molecules';
 
@@ -39,16 +41,20 @@ function Profile() {
   return (
     <React.Fragment>
       <CssBaseline />
-      <HeaderTest />
+      {/* <HeaderTest /> */}
+      <BackButton />
       <Content>
             <Feed>
               <LeaderboardTab variant="fullWidth"/>
               <Divider />
             </Feed>
-        <TweetFloat />
+        {/* <TweetFloat /> */}
       </Content>
     </React.Fragment>
   );
 }
 
-export default withTheme(theme)(Profile);
+const styledComponent = withTheme(theme)(Profile);
+export default withRouter(styledComponent);
+
+// export default withTheme(theme)(Profile);
