@@ -561,22 +561,23 @@ export const getListTimeline = (list_id, user_id) => dispatch => {
 
 
 // Add a new List to the database
+// POST to the DS endpoint, and get back a list of members
 
-export const ADD_LIST = "ADD_LIST";
-export const ADD_LIST_SUCCESS = "ADD_LIST_SUCCESS";
-export const ADD_LIST_FAILURE = "ADD_LIST_FAILURE";
+export const DS_LIST = "DS_LIST";
+export const DS_LIST_SUCCESS = "DS_LIST_SUCCESS";
+export const DS_LIST_FAILURE = "DS_LIST_FAILURE";
 
-export const addList = post => dispatch => {
-  dispatch({ type: ADD_LIST });
+export const dsList = post => dispatch => {
+  dispatch({ type: DS_LIST });
   axios
     .post(`${url}/lists/`, post)
     .then(res => {
       console.log(res);
-      dispatch({ type: ADD_LIST_SUCCESS, payload: res.data });
+      dispatch({ type: DS_LIST_SUCCESS, payload: res.data });
     })
     .catch(err => {
       console.log(err);
-      dispatch({ type: ADD_LIST_FAILURE, payload: err.message });
+      dispatch({ type: DS_LIST_FAILURE, payload: err.message });
     });
 };
 

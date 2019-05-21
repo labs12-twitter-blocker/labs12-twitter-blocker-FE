@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 // import React, { Component } from 'react';
 // import { withStyles } from '@material-ui/core/styles';
 import styled from '@material-ui/styles/styled';
@@ -25,9 +26,21 @@ import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import { addList, createList, getUser } from '../../actions';
+import { dsList, createList, getUser } from '../../actions';
 import { connect } from "react-redux";
+import Grid from '@material-ui/core/Grid';
+
+import { List, 
+  ListItem, 
+  Tabs, Tab,
+  Card, 
+  CardActions,
+  CardContent,
+  } from '@material-ui/core';
+import atoms from '../../components/atoms';
+  
 import jwt from 'jsonwebtoken';
+const { Avatar, Icon, Typography, Button } = atoms;
 require('dotenv').config();
 
 const styles = theme => ({
@@ -79,6 +92,96 @@ const styles = theme => ({
 const ButtonText = styled('div')({
   fontSize: 18
 })
+
+const TopLine = styled('div')({
+  display: 'flex',
+  justifyContent: 'space-between',
+});
+
+const ProfileNameImg = styled('div') ({
+  display: 'flex',
+  width: '50%',
+  alignItems: 'center',
+})
+
+const ProfileName = styled(Typography)({
+  fontWeight: 'bold',
+  fontFamily: 'Helvetica Neue',
+})
+
+
+
+
+
+
+let MemberModal = props => {
+  const { dsLists } = props;
+  console.log("dsLists", dsLists)
+  return (
+    <> 
+      <DialogTitle id="form-dialog-title">List Submitted for Creation.</DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          Please be patient. It can take up to a minute for created lists to populate on twitter.
+        </DialogContentText>
+
+        {/* <Grid container spacing={8} direction="column" alignItems="center" justify="center" > */}
+        {dsLists.map((e, index) => {
+          return (
+            // <Grid item xs={10} sm={8} md={6} style={{width:"100%"}}>
+            <List key={e.id_str}>
+            {console.log("e card", e)}
+            <Card >
+              <ListItem>
+                <CardContent style={{width:'100%'}}>
+                  <TopLine>
+                    <ProfileNameImg>
+                    {console.log("i card", e)}
+                      {console.log("card", e.id_str, e.profile_image_url_https, e.name, e.screen_name, e.description)}
+                      <Avatar src={e.profile_image_url_https} style={{marginRight: '5px'}}/>
+                      <Link to={`/profile/${e.id_str}`} style={{textDecoration:'none'}}><ProfileName >{e.name}</ProfileName></Link>
+                      </ProfileNameImg>
+                  <Typography>@{e.screen_name}</Typography>
+                  </TopLine>
+                  <Typography>{e.description}</Typography>
+                </CardContent>
+              </ListItem>
+            </Card>
+            </List>
+          // </Grid>
+          )
+        })}
+        {/* </Grid> */}
+
+      </DialogContent>
+
+
+      <DialogActions>
+        <Button 
+        // onClick={this.handleClose} color="primary"
+        >
+          Continue
+        </Button>
+
+      </DialogActions>
+    </>
+  );
+};
+
+MemberModal.propTypes = {
+  // classes: PropTypes.object.isRequired,
+  // numSelected: PropTypes.number.isRequired,
+};
+
+MemberModal = withStyles(styles)(MemberModal);
+
+
+
+
+
+
+
+
 
 
 
@@ -150,7 +253,7 @@ class ListStepper extends React.Component {
     if (event.target.value.length > 0) {
       this.setState({ user1: event.target.value, user1HelperText: "", user1Error: false });
     } else {
-      this.setState({ user1: event.target.value, user1HelperText: 'Please enter atleast one Twitter user', user1Error: true });
+      this.setState({ user1: event.target.value, user1HelperText: 'Please enter at least one Twitter user', user1Error: true });
     }
   };
 
@@ -211,8 +314,8 @@ class ListStepper extends React.Component {
     this.setState({ listParams: listParams });
 
     this.setState({ ...this.state });
-    this.props.createList(listParams); //POST to /list/create to make a new list
-    // this.props.addList(params); //POST to /list to add users to the list
+    // this.props.createList(listParams); //POST to /list/create to make a new list
+    this.props.dsList(listParams); //POST to /list to add users to the list
     // console.log("I'm firing");
     this.handleClickOpen()
 
@@ -405,7 +508,7 @@ class ListStepper extends React.Component {
       console.log("CDU IF 2");
 
       let completeList = {
-        "user_id": localStorage.getItem("twitter_user_id"),
+        "user_id": this.state.twitter_user_id,
         "name": this.props.newListResponse.name,
         "original_user": this.props.newListResponse.user.screen_name,
         "mode": this.props.newListResponse.mode,
@@ -414,7 +517,7 @@ class ListStepper extends React.Component {
         "search_users": [this.state.user1, this.state.user2, this.state.user3, this.state.user4, this.state.user5]
       }
       console.log("~~~~~~~~~~~~~~~~~completeList", completeList);
-      this.props.addList(completeList);
+      this.props.dsList(completeList);
     }
     console.log("++++++++open+++++++++++this.state.open", this.state.open)
   }
@@ -534,25 +637,40 @@ class ListStepper extends React.Component {
                   {/* </ButtonText> */}
                 </Button>
               </div>
-            
+
               <Dialog
                 open={this.state.open}
                 onClose={this.handleClose}
                 aria-labelledby="form-dialog-title"
               >
-                <DialogTitle id="form-dialog-title">List Submitted for Creation.</DialogTitle>
-                <DialogContent>
-                  <DialogContentText>
-                    Please be patient. It can take up to a minute for created lists to populate on twitter.
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={this.handleClose} color="primary">
-                    Continue
-                  </Button>
+                { this.props.addDSListResponseUpdated ? 
+                <> 
+                  <MemberModal dsLists={this.props.dsLists[0]}/> 
+                  <DialogActions>
+                      <Button onClick={this.handleClose} color="primary">
+                        Continue
+                      </Button>
+                  </DialogActions>
+                
+                
 
-                </DialogActions>
+                </>
+                : <>
+                    <DialogTitle id="form-dialog-title">List Submitted for Creation.</DialogTitle>
+                    <DialogContent>
+                      <DialogContentText>
+                        Please be patient. It can take up to a minute for created lists to populate on twitter.
+                      </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={this.handleClose} color="primary">
+                        Continue
+                      </Button>
+                    </DialogActions>
+                    </>
+                }
               </Dialog>
+              
             </>
           )}
         </Paper>
@@ -564,7 +682,10 @@ class ListStepper extends React.Component {
 const mapStateToProps = state => ({
   listMembers: state.listsReducer.listMembers,
   newListResponse: state.listsReducer.newListResponse,
-  newListResponseUpdated: state.listsReducer.newListResponseUpdated
+  newListResponseUpdated: state.listsReducer.newListResponseUpdated,
+  dsLists: state.listsReducer.dsLists, // members back from DS
+  addDSListResponseUpdated: state.listsReducer.addDSListResponseUpdated, // members back from DS
+
 });
 
 
@@ -572,5 +693,5 @@ const styledComponent = withStyles(styles)(ListStepper);
 
 export default connect(
   mapStateToProps,
-  { addList, createList, getUser }
+  { dsList, createList, getUser }
 )(styledComponent);
