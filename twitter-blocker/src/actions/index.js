@@ -236,9 +236,13 @@ export const DELETE_USER_FAILURE = "DELETE_USER_FAILURE";
 
 export const deleteUser = user_id => dispatch => {
   dispatch({ type: DELETE_USER });
+  // console.log("here in deleteUser()");
+  // console.log(user_id)
   let token = localStorage.getItem("token")
+  // console.log(token);
+
   axios
-    .delete(`${url}/users/${user_id}`, {
+    .delete(`${url}/users/delete/${user_id}`, user_id, {
       headers: { Authorization: token }
     })
     .then(res => {
