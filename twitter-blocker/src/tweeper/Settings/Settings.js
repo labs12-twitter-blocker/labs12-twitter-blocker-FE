@@ -50,7 +50,6 @@ function Settings() {
 }
 
 const styledComponent = withTheme(theme)(Settings);
+export default withRouter(styledComponent);
 
 // export default withTheme(theme)(Settings);
-
-export default withRouter(styledComponent);
