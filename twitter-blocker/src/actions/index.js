@@ -41,12 +41,12 @@ export const getLogin = (response) => dispatch => {
       console.log("DISPATCH USER: _________________________________________________________________________________________________", user)
       console.log(user._json.profile_image_url_https)
       if (token) {
-        localStorage.setItem("twitter_user_id", user.id)
+        // localStorage.setItem("twitter_user_id", user.id)
         localStorage.setItem("token", token)
-        localStorage.setItem("username", user.username)
-        localStorage.setItem("displayName", user.displayName)
-        localStorage.setItem("profile_img", user._json.profile_image_url_https)
-        localStorage.setItem("banner_img", user._json.profile_banner_url)
+        // localStorage.setItem("username", user.username)
+        // localStorage.setItem("displayName", user.displayName)
+        // localStorage.setItem("profile_img", user._json.profile_image_url_https)
+        // localStorage.setItem("banner_img", user._json.profile_banner_url)
 
         dispatch({ type: GET_LOGIN_SUCCESS, payload: user })
         // this.setState({isAuthenticated: true, user: user, token: token});
@@ -615,12 +615,12 @@ export const GET_LIST_TIMELINE_FAILURE = "GET_LIST_TIMELINE_FAILURE";
 
 export const getListTimeline = (list_id, user_id) => dispatch => {
   dispatch({ type: GET_LIST_TIMELINE });
-  // let params = {user_id: user_id}
   let token = localStorage.getItem("token")
+  let params = { twitter_user_id: user_id }
   axios
     .get(`${url}/lists/timeline/${list_id}`, {
       headers: { Authorization: token }
-    })
+    }, params)
     .then(res => {
       console.log(res);
       dispatch({ type: GET_LIST_TIMELINE_SUCCESS, payload: res.data });

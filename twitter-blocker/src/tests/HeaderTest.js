@@ -21,11 +21,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faHome, faSearch, faBell, faEnvelope, faList, faCog } from '@fortawesome/free-solid-svg-icons';
 import atoms from '../components/atoms';
 import molecules from '../components/molecules';
-import { searchLists } from '../actions';
+import { searchLists, addPost } from '../actions';
 import { connect } from 'react-redux';
 import { Link, Redirect} from 'react-router-dom';
 import styled from '@material-ui/styles/styled';
 import theme from '../theme/tweeper/theme';
+import jwt from 'jsonwebtoken';
+require('dotenv').config();
 
 const { AppBar, Avatar, Badge, Icon, Toolbar, Button } = atoms;
 const { Tabs, Tab, ListItem, InputAdornment } = molecules;
@@ -53,12 +55,18 @@ const Spacer = styled('div')({
   },
 })
 
-
 class HeaderTest extends React.Component {
   state = {
       open: false,
       searchTerm: "",
       anchorEl: null,
+  };
+
+  componentDidMount() {
+    if (localStorage.getItem("token")) {
+      let decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
+      this.setState({ profile_img: decoded.profile_img })
+    }
   };
 
   handleChange = (event) => {
@@ -88,19 +96,20 @@ class HeaderTest extends React.Component {
   };
 
   logOut = () => {
-    localStorage.removeItem("twitter_user_id");
+    // localStorage.removeItem("twitter_user_id");
     localStorage.removeItem("token");
-    localStorage.removeItem("username");
-    localStorage.removeItem("profile_img");
-    localStorage.removeItem("displayName");
-    localStorage.removeItem("banner_img");
+    // localStorage.removeItem("username");
+    // localStorage.removeItem("profile_img");
+    // localStorage.removeItem("displayName");
+    // localStorage.removeItem("banner_img");
     // this.props.checkSignIn();
     this.props.history.push("/");
   };
 
   render() {
     const { anchorEl } = this.state;
-    return (
+    console.log("**********************" + this.props.loggedIn);
+    let content = (this.props.loggedIn === true) ?
       <Spacer>
         <AppBar position="fixed" elevation={1}>
           <Toolbar>
@@ -199,7 +208,7 @@ class HeaderTest extends React.Component {
               <Grid item xs={6} sm="auto" >
                 <ListItem>
                   <Avatar
-                    src={localStorage.getItem("profile_img")}
+                    src={this.state.profile_img}
                     style={avatarStyle} alt="Your Profile Image"
                     aria-owns={anchorEl ? 'simple-menu' : undefined}
                     aria-haspopup="true"
@@ -226,16 +235,24 @@ class HeaderTest extends React.Component {
           </Toolbar>
         </AppBar>
       </Spacer>
-    );
+    :
+    null;
+    return (
+      <div>
+        {content}
+      </div>
+    )
   }
 }
 const mapStateToProps = state => {
   return {
+    loggedIn: state.loginReducer.loggedIn
   }
 }
 
 const mapActionsToProps = {
-  searchLists
+  searchLists,
+  addPost
 }
 
 // const FormDialogRouter = withRouter(FormDialog);

@@ -20,6 +20,7 @@ import TwitterLogin from 'react-twitter-auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
+import jwt from 'jsonwebtoken';
 require('dotenv').config();
 
 const url = process.env.REACT_APP_BACKEND_BASE_URL
@@ -92,14 +93,11 @@ class Landing extends Component {
   }
 
   componentDidMount() {
-    this.props.getUser(localStorage.getItem("twitter_user_id"))
-    if (localStorage.getItem("twitter_user_id")) {
-      this.setState({twitter_user_id: localStorage.getItem("twitter_user_id")})
+    if (localStorage.getItem("token")) {
+      let decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
+      this.setState({ twitter_user_id: decoded.id })
+      this.props.getUser(decoded.id)
     }
-    localStorage.getItem("twitter_user_id")
-    console.log("++++++++++++++this.props.currentUser", this.props.currentUser)
-
-
   }
 
     componentDidUpdate(prevProps) {
