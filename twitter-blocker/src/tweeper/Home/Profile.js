@@ -18,6 +18,7 @@ import { getUser, getLogin } from '../../actions/index.js';
 import TwitterLogin from 'react-twitter-auth';
 import Landing from './Landing';
 import jwt from 'jsonwebtoken';
+import BackButton from '../../components/tweeper/BackButton.js'
 
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
@@ -157,7 +158,7 @@ class Profile extends Component {
               <ListTab variant="fullWidth" />
               <Divider />
             </Feed>
-            {/* <TweetFloat /> */}
+            <BackButton />
           </Content>
         </React.Fragment >
       ) :
