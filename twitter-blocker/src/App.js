@@ -3,7 +3,7 @@ import './App.css';
 import Profile from '../src/tweeper/Home/Profile';
 import PublicProfile from '../src/tweeper/PublicProfile/PublicProfile'
 // import OAuth from '../src/tweeper/OAuth';
-import ListCreate from '../src/tweeper/ListCreate/ListCreate';
+// import ListCreate from '../src/tweeper/ListCreate/ListCreate';
 import CreateList from '../src/tweeper/CreateList';
 import ListDetails from '../src/tweeper/ListDetails';
 import Leaderboard from './tweeper/Leaderboard/Leaderboard';
@@ -13,6 +13,7 @@ import ListExplorer from './tweeper/ListExplorer/ListExplorer';
 import HeaderTest from './tests/HeaderTest';
 import theme from './theme/tweeper/theme';
 import withTheme from './tweeper/withTheme';
+import ListStepper from './tweeper/ListCreate/ListStepper'
 
 import { Route } from 'react-router-dom';
 
@@ -23,11 +24,12 @@ function App() {
         <Route exact path="/" component={Profile} />
         <Route exact path="/profile" component={Profile} />
         <Route path="/profile/:user_id" component={PublicProfile} />
-        <Route path="/create" component={ListCreate} />
+        <Route path="/create" component={ListStepper} />
         <Route path="/details/:twitter_list_id" component={ListDetails} />
         <Route path="/leaderboard" component={Leaderboard} />
         <Route path="/settings" component={Settings} />
         <Route path="/explorer" component={ListExplorer} />
+        {/* <Route path="/stepper" component={ListStepper} /> */}
       </div>
   );
 }

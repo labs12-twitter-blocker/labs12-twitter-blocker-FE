@@ -184,6 +184,7 @@ class CreateListForm extends Component {
     const { title, description, user1, user2, user3, user4, user5 } = this.state;
     return title.length > 0 && description.length > 0 && user1.length > 0
   }
+  
   handleClickOpen = () => {
     this.setState({ open: true });
   };
