@@ -16,6 +16,7 @@ import withTheme from './tweeper/withTheme';
 import ListStepper from './tweeper/ListCreate/ListStepper'
 
 import { Route, Redirect } from 'react-router-dom';
+import { getUser, getLogin } from '../../actions/index.js';
 
 const AuthService = {
   isLoggedIn: false,
@@ -29,7 +30,7 @@ const AuthService = {
   }
 }
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
+const ProtectedRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => (
     AuthService.isLoggedIn === true
       ? <Component {...props} />
@@ -43,16 +44,26 @@ function App() {
     <div className="App">
       <HeaderTest />
       <Route exact path="/" component={Profile} />
-      <PrivateRoute exact path="/profile" component={Profile} />
-      <PrivateRoute path="/profile/:user_id" component={PublicProfile} />
-      <PrivateRoute path="/create" component={ListStepper} />
-      <PrivateRoute path="/details/:twitter_list_id" component={ListDetails} />
-      <PrivateRoute path="/leaderboard" component={Leaderboard} />
-      <PrivateRoute path="/settings" component={Settings} />
-      <PrivateRoute path="/explorer" component={ListExplorer} />
+      <ProtectedRoute exact path="/profile" component={Profile} />
+      <ProtectedRoute path="/profile/:user_id" component={PublicProfile} />
+      <ProtectedRoute path="/create" component={ListStepper} />
+      <ProtectedRoute path="/details/:twitter_list_id" component={ListDetails} />
+      <ProtectedRoute path="/leaderboard" component={Leaderboard} />
+      <ProtectedRoute path="/settings" component={Settings} />
+      <ProtectedRoute path="/explorer" component={ListExplorer} />
       {/* <Route path="/stepper" component={ListStepper} /> */}
     </div>
   );
 }
 
-export default withTheme(theme)(App);
+const mapStateToProps = state => ({
+  loggedIn: state.loginReducer.loggedIn
+});
+
+
+const styledComponent = withTheme(theme)(App);
+
+export default connect(
+  mapStateToProps,
+  { getLogin }
+)(styledComponent);
