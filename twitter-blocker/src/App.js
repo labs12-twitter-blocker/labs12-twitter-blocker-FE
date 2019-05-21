@@ -15,22 +15,43 @@ import theme from './theme/tweeper/theme';
 import withTheme from './tweeper/withTheme';
 import ListStepper from './tweeper/ListCreate/ListStepper'
 
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
+
+const AuthService = {
+  isLoggedIn: false,
+  authenticate(cb) {
+    this.isLoggedIn = true
+    setTimeout(cb, 100)
+  },
+  logout(cb) {
+    this.isLoggedIn = false
+    setTimeout(cb, 100)
+  }
+}
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={(props) => (
+    AuthService.isLoggedIn === true
+      ? <Component {...props} />
+      : <Redirect to='/' />
+  )} />
+);
+
 
 function App() {
   return (
-      <div className="App">
-        <HeaderTest />
-        <Route exact path="/" component={Profile} />
-        <Route exact path="/profile" component={Profile} />
-        <Route path="/profile/:user_id" component={PublicProfile} />
-        <Route path="/create" component={ListStepper} />
-        <Route path="/details/:twitter_list_id" component={ListDetails} />
-        <Route path="/leaderboard" component={Leaderboard} />
-        <Route path="/settings" component={Settings} />
-        <Route path="/explorer" component={ListExplorer} />
-        {/* <Route path="/stepper" component={ListStepper} /> */}
-      </div>
+    <div className="App">
+      <HeaderTest />
+      <Route exact path="/" component={Profile} />
+      <PrivateRoute exact path="/profile" component={Profile} />
+      <PrivateRoute path="/profile/:user_id" component={PublicProfile} />
+      <PrivateRoute path="/create" component={ListStepper} />
+      <PrivateRoute path="/details/:twitter_list_id" component={ListDetails} />
+      <PrivateRoute path="/leaderboard" component={Leaderboard} />
+      <PrivateRoute path="/settings" component={Settings} />
+      <PrivateRoute path="/explorer" component={ListExplorer} />
+      {/* <Route path="/stepper" component={ListStepper} /> */}
+    </div>
   );
 }
 
