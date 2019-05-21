@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import {  withRouter } from "react-router-dom";
 import CssBaseline from '@material-ui/core/CssBaseline';
 // import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider/Divider';
@@ -187,8 +188,9 @@ const mapStateToProps = state => ({
 
 
 const styledComponent = withTheme(theme)(Profile);
+const routedComponent = withRouter(styledComponent)
 
 export default connect(
   mapStateToProps,
   { getUser, getLogin }
-)(styledComponent);
+)(routedComponent);

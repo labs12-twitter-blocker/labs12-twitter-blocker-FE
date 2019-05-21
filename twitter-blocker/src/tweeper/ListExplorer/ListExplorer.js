@@ -16,6 +16,8 @@ import { getLists, subscribeToList } from '../../actions'
 // import atoms from '../../components/atoms';
 // import molecules from '../../components/molecules';
 import { connect } from 'react-redux';
+import {  withRouter } from "react-router-dom";
+import BackButton from '../../components/tweeper/BackButton'
 
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
@@ -68,6 +70,7 @@ class ListExplorer extends React.Component {
   return (
     <React.Fragment>
       <CssBaseline />
+      <BackButton />
       <Content>
             <Feed>
             <Tabs 
@@ -110,4 +113,9 @@ const mapActionsToProps = {
   subscribeToList: subscribeToList
 }
 
-export default connect( mapStateToProps, mapActionsToProps)(withTheme(theme)(ListExplorer));
+const styledComponent = withTheme(theme)(ListExplorer);
+const routedComponent = withRouter(styledComponent)
+
+export default connect( 
+  mapStateToProps, mapActionsToProps)
+  (routedComponent);

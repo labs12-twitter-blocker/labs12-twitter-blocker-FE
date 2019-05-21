@@ -15,7 +15,7 @@ import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import atoms from '../atoms';
 import { addPost, getUser } from '../../actions';
 import { connect } from 'react-redux';
-import {  Router } from "react-router-dom";
+import {  Router, withRouter } from "react-router-dom";
 
 
 const fabDesign = {
@@ -29,29 +29,11 @@ const fabDesign = {
 
 
 class BackButton extends React.Component {
- 
-    // static contextTypes = {
-    //     router: () => true, // replace with PropTypes.object if you use them
-    //   }
-
-//   componentDidMount() {
-//     // this.props.getUser(localStorage.getItem("twitter_user_id"))
-//     // if (localStorage.getItem("twitter_user_id")) {
-//     //   this.setState({ twitter_user_id: localStorage.getItem("twitter_user_id") })
-//     // }
-//     // localStorage.getItem("twitter_user_id")
-//     // console.log("++++++++++++++this.props.currentUser", this.props.currentUser)
-//   }
-
-//   handleBack = () => {
-//     this.setState({ open: true });
-//   };
-
 
   render() {
     return (
       <div>
-        <Fab variant="outlined" color="primary" style={fabDesign} onClick={this.props.history.push.goBack}>
+        <Fab variant="outlined" color="primary" style={fabDesign} onClick={this.props.history.goBack}>
           <FontAwesomeIcon icon={faArrowCircleLeft} size="2x" color='white' />
         </Fab>
       </div>
@@ -59,10 +41,6 @@ class BackButton extends React.Component {
   }
 }
 
-// const mapStateToProps = state => ({
-//   listMembers: state.listsReducer.listMembers,
-//   posts: state.tweetsReducer.posts
-// });
 
 // const mapActionsToProps = {
   
@@ -70,4 +48,4 @@ class BackButton extends React.Component {
 
 // export default connect(mapStateToProps)(BackButton);
 
-export default BackButton;
+export default withRouter(BackButton);
