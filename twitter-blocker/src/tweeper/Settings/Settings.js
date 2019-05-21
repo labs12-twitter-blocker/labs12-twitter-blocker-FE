@@ -1,5 +1,6 @@
 import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import {  withRouter } from "react-router-dom";
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider/Divider';
 import { unstable_Box as Box } from '@material-ui/core/Box';
@@ -10,6 +11,7 @@ import HeaderTest from '../../tests/HeaderTest'
 import theme from '../../theme/tweeper/theme';
 import withTheme from '../../tweeper/withTheme';
 import SettingsTabs from '../../components/tweeper/SettingsTabs'
+import BackButton from '../../components/tweeper/BackButton'
 
 import atoms from '../../components/atoms';
 import molecules from '../../components/molecules';
@@ -40,10 +42,14 @@ function Settings() {
     <React.Fragment>
       <CssBaseline />
       {/* <Content> */}
-        <SettingsTabs />
+      <BackButton />
+      <SettingsTabs />
       {/* </Content> */}
     </React.Fragment>
   );
 }
 
-export default withTheme(theme)(Settings);
+const styledComponent = withTheme(theme)(Settings);
+export default withRouter(styledComponent);
+
+// export default withTheme(theme)(Settings);
