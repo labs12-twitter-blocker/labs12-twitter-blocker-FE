@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from "react-redux";
 import './App.css';
 import Profile from '../src/tweeper/Home/Profile';
 import PublicProfile from '../src/tweeper/PublicProfile/PublicProfile'
@@ -16,7 +17,7 @@ import withTheme from './tweeper/withTheme';
 import ListStepper from './tweeper/ListCreate/ListStepper'
 
 import { Route, Redirect } from 'react-router-dom';
-import { getUser, getLogin } from '../../actions/index.js';
+import { getUser, getLogin } from './actions/index.js';
 
 const AuthService = {
   isLoggedIn: false,
