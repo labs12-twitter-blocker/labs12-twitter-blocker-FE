@@ -172,7 +172,7 @@ render() {
               </DetailsHeader>
               
               <Tabs 
-                value={this.state.value}
+                value={value}
                 onChange={this.handleChange} 
                 variant='fullWidth' >
                 <Tab label='Members' />
