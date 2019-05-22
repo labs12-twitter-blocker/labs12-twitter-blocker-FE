@@ -256,20 +256,15 @@ class ListStepper extends React.Component {
       description: "",
       username: "",
       twitterHandles: [],
-      user1: "",
-      user2: "",
-      user3: "",
-      user4: "",
-      user5: "",
       titleHelperText: "",
       descrHelperText: "",
-      user1HelperText: "",
+      usernameHelperText: "",
       search_users: null,
       listParams: null,
       newListResponseUpdated: false,
       titleError: false,
       descrError: false,
-      user1Error: false,
+      usernameError: false,
       buttonDisabled: false,
       open: false,
       skipped: new Set(),
@@ -340,8 +335,8 @@ class ListStepper extends React.Component {
   };
 
   canBeSubmitted() {
-    const { title, description, user1, user2, user3, user4, user5 } = this.state;
-    return title.length > 0 && description.length > 0 && user1.length > 0
+    const { title, description, twitterHandles } = this.state;
+    return title.length > 0 && description.length > 0 && twitterHandles.length > 0
   };
 
   handleClickOpen = () => {
@@ -504,8 +499,8 @@ class ListStepper extends React.Component {
                   onKeyPress={this.handleKeypress}
                   margin="normal"
                   variant="outlined"
-                  helperText={this.state.user1HelperText}
-                  error={this.state.user1Error}
+                  helperText={this.state.usernameHelperText}
+                  error={this.state.usernameError}
                 />
 
                 <div>
@@ -603,7 +598,7 @@ class ListStepper extends React.Component {
       return true
     } else if (activeStep === 1 && this.state.description.length === 0) {
       return true
-    } else if (activeStep === 3 && this.state.user1.length === 0) {
+    } else if (activeStep === 3 && this.state.twitterHandles.length === 0) {
       return true
     } else { return false }
   };
