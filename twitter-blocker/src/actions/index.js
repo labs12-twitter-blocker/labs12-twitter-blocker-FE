@@ -924,7 +924,7 @@ export function searchLists(searchTerm, history) {
         })
         console.log(filtered);
         dispatch({ type: SEARCH_LISTS_SUCCESS, payload: filtered })
-        history.push("/explorer")
+        // history.push("/explorer")
       })
       .catch(err => {
         console.log(err);
