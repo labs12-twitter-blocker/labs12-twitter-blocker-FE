@@ -773,7 +773,8 @@ export const subscribeToList = (listId, userId) => dispatch => {
   dispatch({ type: SUBSCRIBE_LIST });
   let token = localStorage.getItem("token")
   axios
-    .post(`${url}/lists/${listId}/follow/${userId}`, {
+    .post(`${url}/lists/subscribe/${listId}/follow/${userId}`, {
+      // .post(`${url}/lists/subscribe`, {
       headers: { Authorization: token }
     })
     .then(res => {
