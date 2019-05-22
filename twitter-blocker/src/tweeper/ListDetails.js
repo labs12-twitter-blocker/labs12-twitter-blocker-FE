@@ -128,14 +128,14 @@ class ListDetails extends React.Component {
     let decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
     this.setState({ twitter_user_id: decoded.id })
 
-    const userId = this.props.getUser(decoded.id)
-    // console.log(decoded.id)
+    // const userId = this.props.getUser(decoded.id)
+
     this.props.getListMembers(this.props.match.params.twitter_list_id);
     this.props.getList(this.props.match.params.twitter_list_id);
-    this.props.getListTimeline(this.props.match.params.twitter_list_id, userId);
+    this.props.getListTimeline(this.props.match.params.twitter_list_id, decoded.id);
     this.props.getListSubscribers(this.props.match.params.twitter_list_id);
-    this.props.listSubscribers.filter(user => {
-      if(user === userId) {
+    this.props.listSubscribers.map(user => {
+      if(user.twitter_user_id === decoded.id) {
         this.setState({isSubscribed: true})
       }
     })
