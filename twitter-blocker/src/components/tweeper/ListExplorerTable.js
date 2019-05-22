@@ -153,7 +153,7 @@ class ListExplorerTable extends Component {
   render() {
       
       if (this.props.allLists === null || this.props.allLists.length === 0) {
-          return (<div>Loading</div>)
+          return (<div>No Results Found. Please Search Again.</div>)
       } else {
         const { classes } = this.props;
         return (

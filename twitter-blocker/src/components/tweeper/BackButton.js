@@ -21,7 +21,7 @@ import {  Router, withRouter } from "react-router-dom";
 const fabDesign = {
   // margin: theme.spacing.unit,
   position: 'fixed',
-  top: '4rem',
+  bottom: '4rem',
   left: '1rem',
   zIndex: '5',
 }
@@ -33,7 +33,7 @@ class BackButton extends React.Component {
   render() {
     return (
       <div>
-        <Fab variant="outlined" color="primary" style={fabDesign} onClick={this.props.history.goBack}>
+        <Fab variant="round" color="primary" style={fabDesign} onClick={this.props.history.goBack}>
           <FontAwesomeIcon icon={faArrowCircleLeft} size="2x" color='white' />
         </Fab>
       </div>

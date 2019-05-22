@@ -121,7 +121,7 @@ class PrivateListsTable extends Component {
       return (
         <div>
           <h3>Create Your First List!</h3>
-          <Button medium color="primary" variant="contained" href="/create">
+          <Button color="primary" variant="contained" href="/create">
             Create New List
                   </Button>
         </div>)

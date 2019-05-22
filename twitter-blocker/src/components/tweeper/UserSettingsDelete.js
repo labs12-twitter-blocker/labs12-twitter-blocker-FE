@@ -17,7 +17,7 @@ function DeleteButton(props) {
   return (
     <div>
       <h4>Deactivate Your Flock Profile</h4>
-      <Button medium color="primary" variant="contained" className={classes.button}>
+      <Button color="primary" variant="contained" className={classes.button}>
         Delete Your Flock Account
       </Button>
     </div>

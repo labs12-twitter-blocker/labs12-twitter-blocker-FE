@@ -225,8 +225,8 @@ class HeaderTest extends React.Component {
                   </Menu>
                   {/* <ListItemText primary="austen" /> */}
                   <React.Fragment>
-                    <Button medium color="primary" variant="contained" href="/create">
-                      Create New List
+                    <Button color="primary" variant="contained" href="/create">
+                      List Creator
                   </Button>
                   </React.Fragment>
                 </ListItem>
