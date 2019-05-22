@@ -109,7 +109,7 @@ class HeaderTest extends React.Component {
   render() {
     const { anchorEl } = this.state;
     console.log("**********************" + this.props.loggedIn);
-    let content = (this.props.loggedIn === true) ?
+    let content = (localStorage.getItem("token")) ?
       <Spacer>
         <AppBar position="fixed" elevation={1}>
           <Toolbar>
