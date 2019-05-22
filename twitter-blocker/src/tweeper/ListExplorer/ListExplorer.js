@@ -51,55 +51,6 @@ const TabContainer = styled('div') ({
 // });
 
 class ListExplorer extends React.Component {
-<<<<<<< HEAD
-  constructor() {
-      super();
-      this.state = {
-        value: 0
-      }
-  }
-
-  handleChange = (event, value) => {
-    this.setState({ value });
-  };
-
-  componentDidMount() {
-      this.props.getLists();
-  }
-
-  render() {
-    const { value } = this.state;
-
-    return (
-      <React.Fragment>
-        <CssBaseline />
-        <BackButton />
-        <Content>
-              <Feed>
-              <Tabs 
-                value={this.state.value}
-                onChange={this.handleChange} 
-                variant='fullWidth'>
-                  <Tab label='List Explorer'/>
-                  <Tab label='Leaderboard'/>
-                </Tabs>
-                {value === 0 &&
-                <TabContainer>
-                  <ListExplorerTable variant="fullWidth"/>
-                </TabContainer>
-                }
-                {value === 1 &&
-                <TabContainer>
-                  <LeaderboardTab variant="fullWidth"/>
-                </TabContainer>
-                }
-                <Divider />
-              </Feed>
-          {/* <TweetFloat /> */}
-        </Content>
-      </React.Fragment>
-    );
-=======
     constructor() {
         super();
         this.state = {
@@ -145,7 +96,6 @@ class ListExplorer extends React.Component {
       </Content>
     </React.Fragment>
   );
->>>>>>> origin
   }
 }
 
