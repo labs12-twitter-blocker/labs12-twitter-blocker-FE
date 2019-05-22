@@ -85,6 +85,15 @@ const styles = theme => ({
   membersList: {
     padding: 0
   },
+  usernameGroup: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+  },
+  usernameButton: {
+    margin: 13,
+    marginTop: 22
+  }
 });
 
 const ButtonText = styled('div')({
@@ -193,27 +202,27 @@ class MemberModal extends React.Component {
                       <Typography color="textPrimary" variant='body2'>
                         {e.name} @{e.screen_name}
                       </Typography>}
-                      secondary={
-                          <Typography component="span" className={classes.inline} color="textSecondary" variant='caption'>
-                            {e.description}
-                          </Typography>
-                      }
-                    />
-                <Checkbox
-                  checked={this.state.checked.indexOf(e) !== -1}
-                  tabIndex={-1}
-                  color="primary"
+                    secondary={
+                      <Typography component="span" className={classes.inline} color="textSecondary" variant='caption'>
+                        {e.description}
+                      </Typography>
+                    }
+                  />
+                  <Checkbox
+                    checked={this.state.checked.indexOf(e) !== -1}
+                    tabIndex={-1}
+                    color="primary"
                   // disableRipple
-                />
-              </ListItem>
-              <Divider />
-            </List>
-          )
-        })}
-      </DialogContent>
+                  />
+                </ListItem>
+                <Divider />
+              </List>
+            )
+          })}
+        </DialogContent>
 
-      <DialogActions>
-        {console.log("can we get it", checked)}
+        <DialogActions>
+          {console.log("can we get it", checked)}
           <Button onClick={this.handleCreateList} color="primary">
             Continue
           </Button>
@@ -237,6 +246,7 @@ class ListStepper extends React.Component {
     super();
     this.handleKeypress = this.handleKeypress.bind(this);
     this.handleChipAdd = this.handleChipAdd.bind(this);
+    this.handleNextKeypress = this.handleNextKeypress.bind(this);
 
     this.state = {
       activeStep: 0,
@@ -316,19 +326,19 @@ class ListStepper extends React.Component {
   }
 
   handleChipAdd(event) {
-      event.preventDefault();
-      const newArray = this.state.twitterHandles;
-      const currentcontent = this.state.username.trim();
-      if (!currentcontent) {
-        return;
-      }
-      newArray.push({
-        username: currentcontent
-      });
-      this.setState({
-        twitterHandles: newArray,
-        username: "",
-      });
+    event.preventDefault();
+    const newArray = this.state.twitterHandles;
+    const currentcontent = this.state.username.trim();
+    if (!currentcontent) {
+      return;
+    }
+    newArray.push({
+      username: currentcontent
+    });
+    this.setState({
+      twitterHandles: newArray,
+      username: "",
+    });
   }
 
   handlePrivateChange = event => {
@@ -413,6 +423,7 @@ class ListStepper extends React.Component {
               className={this.props.classes.textField}
               value={this.state.title}
               onChange={this.handleTitleChange}
+              onKeyPress={this.handleNextKeypress}
               margin="normal"
               variant="outlined"
               inputProps={{ maxLength: 25 }}
@@ -436,6 +447,7 @@ class ListStepper extends React.Component {
               className={this.props.classes.textField}
               value={this.state.description}
               onChange={this.handleDescriptionChange}
+              onKeyPress={this.handleNextKeypress}
               inputProps={{ maxLength: 100 }}
               margin="normal"
               variant="outlined"
@@ -471,40 +483,41 @@ class ListStepper extends React.Component {
         );
       case 3:
         return (
-        <>
-          <Typography variant='h6' color='primary'>Please a Twitter Handle to create your list. We recommend at least 5.</Typography>
+          <>
+            <Typography variant='h6' color='primary'>Please a Twitter Handle to create your list. We recommend at least 5.</Typography>
             <FormControl className={this.props.classes.formControl} >
               <form
                 value={this.state.maxWidth}
                 onChange={this.handleMaxWidthChange}
               >
-                <TextField
-                  required
-                  name="user1"
-                  id="outlined-name"
-                  label="Required"
-                  placeholder="Once you type in a username, hit enter"
-                  className={this.props.classes.textField}
-                  value={this.state.username}
-                  onChange={this.handleUsernameChange}
-                  onKeyPress={this.handleKeypress}
-                  margin="normal"
-                  variant="outlined"
-                  helperText={this.state.usernameHelperText}
-                  error={this.state.usernameError}
-                />
+                <div className={this.props.classes.usernameGroup}>
+                  <TextField
+                    required
+                    name="user1"
+                    id="outlined-name"
+                    label="Required"
+                    placeholder="Once you type in a username, hit enter"
+                    className={this.props.classes.textField}
+                    value={this.state.username}
+                    onChange={this.handleUsernameChange}
+                    onKeyPress={this.handleKeypress}
+                    margin="normal"
+                    variant="outlined"
+                    helperText={this.state.usernameHelperText}
+                    error={this.state.usernameError}
+                  />
 
-                
-                <Button
-                  onClick={this.handleChipAdd}
-                  variant="contained"
-                  color="primary"
-                  size="medium"
-                  // className={classes.button}
-                >
-                  Add 
+
+                  <Button
+                    onClick={this.handleChipAdd}
+                    variant="contained"
+                    color="primary"
+                    size="medium"
+                    className={this.props.classes.usernameButton}
+                  >
+                    Add
                 </Button>
-
+                </div>
                 <div>
                   {this.state.twitterHandles.map(data => {
                     let icon = null;
@@ -517,18 +530,18 @@ class ListStepper extends React.Component {
                         onDelete={this.handleDelete(data)}
                         label={data.username}
                         icon={<FaceIcon />}
-                        // variant="outlined"
+                      // variant="outlined"
                       />
-                      );
-                    })}
-                  </div>
-                </form>
-              </FormControl>
-            </>);
-        default:
-          return 'Unknown step';
-      }
+                    );
+                  })}
+                </div>
+              </form>
+            </FormControl>
+          </>);
+      default:
+        return 'Unknown step';
     }
+  }
 
   componentDidUpdate(prevProps, prevState) {
     console.log("CDUpdate");
@@ -562,6 +575,11 @@ class ListStepper extends React.Component {
     });
   };
 
+  handleNextKeypress(event) {
+    if (event.key == "Enter") {
+      this.handleNext()
+    }
+  }
 
   handleNext = () => {
     this.setState(state => ({
@@ -590,7 +608,7 @@ class ListStepper extends React.Component {
       return true
     } else if (activeStep === 1 && this.state.description.length === 0) {
       return true
-    } else if ( activeStep === 3 && this.state.twitterHandles.length === 0) {
+    } else if (activeStep === 3 && this.state.twitterHandles.length === 0) {
       return true
     } else { return false }
   };
@@ -657,25 +675,25 @@ class ListStepper extends React.Component {
                 open={this.state.open}
                 onClose={this.handleClose}
               >
-              <Dialog
-                open={this.state.open}
-                aria-labelledby="form-dialog-title"
-              >
-                { this.props.addDSListResponseUpdated ? 
-                <> 
-                  <MemberModal 
-                  dsLists={this.props.dsLists[0]} 
-                  createList={this.props.createList} 
-                  title={this.state.title}
-                  mode={this.state.mode}
-                  description={this.state.description}
-                  /> 
-                </>
-                : <>
-                    <DialogTitle id="form-dialog-title">List Submitted for Creation.</DialogTitle>
-                    <DialogContent>
-                      <DialogContentText >
-                        Please be patient. It can take up to a minute for us to analyze and find members.
+                <Dialog
+                  open={this.state.open}
+                  aria-labelledby="form-dialog-title"
+                >
+                  {this.props.addDSListResponseUpdated ?
+                    <>
+                      <MemberModal
+                        dsLists={this.props.dsLists[0]}
+                        createList={this.props.createList}
+                        title={this.state.title}
+                        mode={this.state.mode}
+                        description={this.state.description}
+                      />
+                    </>
+                    : <>
+                      <DialogTitle id="form-dialog-title">List Submitted for Creation.</DialogTitle>
+                      <DialogContent>
+                        <DialogContentText >
+                          Please be patient. It can take up to a minute for us to analyze and find members.
                       </DialogContentText>
                         <DialogContentText align='center'>
                           <CircularProgress color="primary" />
