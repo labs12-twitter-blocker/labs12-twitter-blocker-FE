@@ -915,7 +915,7 @@ export function searchLists(searchTerm, history) {
   return (dispatch) => {
     dispatch({ type: SEARCH_LISTS });
     let token = localStorage.getItem("token")
-    axios.get(`${url}/lists`, {
+    axios.get(`${url}/lists/public`, {
       headers: { Authorization: token }
     })
       .then(({ data }) => {
