@@ -18,40 +18,38 @@ import ListStepper from './tweeper/ListCreate/ListStepper'
 
 import { Route, Redirect } from 'react-router-dom';
 import { getUser, getLogin } from './actions/index.js';
+import jwt from 'jsonwebtoken';
+require('dotenv').config();
 
-const AuthService = {
-  isLoggedIn: false,
-  authenticate(cb) {
-    this.isLoggedIn = true
-    setTimeout(cb, 100)
-  },
-  logout(cb) {
-    this.isLoggedIn = false
-    setTimeout(cb, 100)
+let decoded = false
+if (localStorage.getItem("token")) {
+  decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET)
+  if(decoded.id) {
+    decoded = true
   }
 }
 
-const ProtectedRoute = ({ component: Component, ...rest }) => (
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  
   <Route {...rest} render={(props) => (
-    AuthService.isLoggedIn === true
+    (decoded)
       ? <Component {...props} />
       : <Redirect to='/' />
   )} />
 );
-
 
 function App() {
   return (
     <div className="App">
       <HeaderTest />
       <Route exact path="/" component={Profile} />
-      <ProtectedRoute exact path="/profile" component={Profile} />
-      <ProtectedRoute path="/profile/:user_id" component={PublicProfile} />
-      <ProtectedRoute path="/create" component={ListStepper} />
-      <ProtectedRoute path="/details/:twitter_list_id" component={ListDetails} />
-      <ProtectedRoute path="/leaderboard" component={Leaderboard} />
-      <ProtectedRoute path="/settings" component={Settings} />
-      <ProtectedRoute path="/explorer" component={ListExplorer} />
+      <PrivateRoute exact path="/profile" component={Profile} />
+      <PrivateRoute path="/profile/:user_id" component={PublicProfile} />
+      <PrivateRoute path="/create" component={ListStepper} />
+      <PrivateRoute path="/details/:twitter_list_id" component={ListDetails} />
+      <PrivateRoute path="/leaderboard" component={Leaderboard} />
+      <PrivateRoute path="/settings" component={Settings} />
+      <PrivateRoute path="/explorer" component={ListExplorer} />
       {/* <Route path="/stepper" component={ListStepper} /> */}
     </div>
   );

@@ -56,9 +56,9 @@ import {
   UNSUBSCRIBE_LIST,
   UNSUBSCRIBE_LIST_SUCCESS,
   UNSUBSCRIBE_LIST_FAILURE,
-  ADD_LIST,
-  ADD_LIST_SUCCESS,
-  ADD_LIST_FAILURE,
+  DS_LIST,
+  DS_LIST_SUCCESS,
+  DS_LIST_FAILURE,
   CREATE_LIST,
   CREATE_LIST_SUCCESS,
   CREATE_LIST_FAILURE,
@@ -81,6 +81,7 @@ import {
 
 const initialState = {
   lists: [],
+  dsLists: [],
   profileLists: [],
   publicLists: [],
   privateLists: [],
@@ -115,7 +116,7 @@ const initialState = {
   fetchingFollowListPoints: false,
   fetchingBlockListPoints: false,
   fetchingListTimeline: false,
-  addingList: false,
+  addingDSList: false,
   subscribingList: false,
   unsubscribingList: false,
   creatingList: false,
@@ -124,7 +125,8 @@ const initialState = {
   deletingList: false,
   searchingLists: false,
   newListResponse: null,
-  error: null
+  error: null,
+  addDSListResponseUpdated: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -471,22 +473,25 @@ const reducer = (state = initialState, action) => {
           subscribingList: false,
           error: action.payload
         };
-    case ADD_LIST:
+    case DS_LIST:
       return {
         ...state,
-        addingList: true,
+        addingDSList: true,
+        addDSListResponseUpdated: false,
         error: null
       };
-    case ADD_LIST_SUCCESS:
+    case DS_LIST_SUCCESS:
       return {
         ...state,
-        addingList: false,
-        lists: [...state.lists, action.payload]
+        addingDSList: false,
+        addDSListResponseUpdated: true,
+        dsLists: [...state.lists, action.payload]
       };
-    case ADD_LIST_FAILURE:
+    case DS_LIST_FAILURE:
       return {
         ...state,
-        addingList: false,
+        addingDSList: false,
+        addDSListResponseUpdated: false,
         error: action.payload
       };
     case CREATE_LIST:
@@ -500,7 +505,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         creatingList: false,
-        newListResponse: action.payload.response,
+        newListResponse: action.payload,
         newListResponseUpdated: true,
         lists: [...state.lists, action.payload]
       };

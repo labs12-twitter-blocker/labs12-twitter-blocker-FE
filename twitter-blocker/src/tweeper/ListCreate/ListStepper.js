@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {  withRouter } from "react-router-dom";
 import { withStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 // import React, { Component } from 'react';
 // import { withStyles } from '@material-ui/core/styles';
 import styled from '@material-ui/styles/styled';
@@ -27,9 +28,28 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import BackButton from '../../components/tweeper/BackButton'
-import { addList, createList, getUser } from '../../actions';
+import { dsList, createList, getUser } from '../../actions';
 import { connect } from "react-redux";
+import Grid from '@material-ui/core/Grid';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Divider from '@material-ui/core/Divider';
+import Checkbox from '@material-ui/core/Checkbox';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Modal from '@material-ui/core/Modal';
+// import Select from 'material-ui/Select';
+
+import { List, 
+  ListItem, 
+  Tabs, Tab,
+  Card, 
+  CardActions,
+  CardContent,
+  } from '@material-ui/core';
+import atoms from '../../components/atoms';
+  
 import jwt from 'jsonwebtoken';
+const { Avatar, Icon, Typography, Button } = atoms;
 require('dotenv').config();
 
 const styles = theme => ({
@@ -72,6 +92,9 @@ const styles = theme => ({
   listForm: {
     padding: 15
   },
+  membersList: {
+    padding: 0
+  },
   // listFormButton: {
   //   padding: 15,
   //   fontSize: 70
@@ -81,6 +104,148 @@ const styles = theme => ({
 const ButtonText = styled('div')({
   fontSize: 18
 })
+
+const TopLine = styled('div')({
+  display: 'flex',
+  justifyContent: 'space-between',
+});
+
+const ProfileNameImg = styled('div') ({
+  display: 'flex',
+  width: '50%',
+  alignItems: 'center',
+})
+
+const ProfileName = styled(Typography)({
+  fontWeight: 'bold',
+  fontFamily: 'Helvetica Neue',
+})
+
+
+class MemberModal extends React.Component {
+  state = {
+    checked: [],
+  };
+
+  handleToggle = value => () => {
+    const { checked } = this.state;
+    const currentIndex = checked.indexOf(value);
+    const newChecked = [...checked];
+
+    if (currentIndex === -1) {
+      newChecked.push(value);
+    } else {
+      newChecked.splice(currentIndex, 1);
+    }
+
+    this.setState({
+      checked: newChecked,
+    });
+  };
+
+  selectAll = () => {
+    if(this.state.checkedAll)
+      this.setState({checked:[]});
+    else
+      this.setState({checked:this.props.dsLists});
+      this.setState({checkedAll:!this.state.checkedAll});
+  }
+
+  handleCreateList = () => {
+    let decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
+    // console.log("this.state.checked", this.state.checked)
+    let screen_name = []
+    this.state.checked.map(e => {
+      screen_name.push(e.screen_name)
+    })
+
+    // console.log("screen_name", screen_name)
+    const listParams = {
+      "user_id": decoded.id,
+      "name": this.props.title,
+      "mode": this.props.mode,
+      "description": this.props.description,
+      "screen_name": screen_name.toString()
+    }
+    console.log("listParams", listParams)
+
+    this.props.createList(listParams)
+  }
+
+  render(){
+  const { dsLists, classes, createList } = this.props;
+  const {checkedAll,checked } = this.state;
+  return (
+    <> 
+      <DialogTitle id="form-dialog-title">Select Members to Add to List
+        <Typography color="textPrimary" variant='body2'> 
+          {checkedAll?"Select None":"Select all"}
+          <Checkbox
+            checked={this.state.open}
+            value="Select all"
+            onClick={this.selectAll}
+            color="primary"
+          />
+        </Typography>
+      </DialogTitle>
+      {console.log("checked", checked)}
+      <DialogContent>
+        {dsLists.map((e, index) => {
+          return (
+            <List key={e.id_str} dense>
+              <ListItem 
+              alignItems="flex-start" 
+              dense={true} 
+              button onClick={this.handleToggle(e)} 
+              classes={{ root: classes.membersList }}
+              >
+                    <ListItemAvatar>
+                      <Avatar src={e.profile_image_url_https} />
+                    </ListItemAvatar>
+                    <ListItemText
+                      disableTypography={true}
+                      primary={
+                      <Typography color="textPrimary" variant='body2'>
+                        {e.name} @{e.screen_name}
+                      </Typography>}
+                      secondary={
+                        // <React.Fragment>
+                          <Typography component="span" className={classes.inline} color="textSecondary" variant='caption'>
+                            {e.description}
+                          </Typography>
+                        // </React.Fragment>
+                      }
+                    />
+                <Checkbox
+                  checked={this.state.checked.indexOf(e) !== -1}
+                  tabIndex={-1}
+                  color="primary"
+                  // disableRipple
+                />
+              </ListItem>
+              <Divider />
+            </List>
+          )
+        })}
+      </DialogContent>
+
+      <DialogActions>
+        {console.log("can we get it", checked)}
+      {/* this.props.createList(listParams) */}
+          <Button onClick={this.handleCreateList} color="primary">
+            Continue
+          </Button>
+      </DialogActions>
+    </>
+  )};
+};
+
+MemberModal.propTypes = {
+  // classes: PropTypes.object.isRequired,
+  // numSelected: PropTypes.number.isRequired,
+};
+
+MemberModal = withStyles(styles)(MemberModal);
 
 
 
@@ -152,7 +317,7 @@ class ListStepper extends React.Component {
     if (event.target.value.length > 0) {
       this.setState({ user1: event.target.value, user1HelperText: "", user1Error: false });
     } else {
-      this.setState({ user1: event.target.value, user1HelperText: 'Please enter atleast one Twitter user', user1Error: true });
+      this.setState({ user1: event.target.value, user1HelperText: 'Please enter at least one Twitter user', user1Error: true });
     }
   };
 
@@ -205,16 +370,18 @@ class ListStepper extends React.Component {
 
     const listParams = {
       "user_id": this.state.twitter_user_id,
+      "original_user": this.state.twitter_user_id,
       "name": this.state.title,
       "mode": this.state.mode,
-      "description": this.state.description
+      "description": this.state.description,
+      "search_users": [this.state.user1, this.state.user2, this.state.user3, this.state.user4, this.state.user5]
     }
 
     this.setState({ listParams: listParams });
 
     this.setState({ ...this.state });
-    this.props.createList(listParams); //POST to /list/create to make a new list
-    // this.props.addList(params); //POST to /list to add users to the list
+    // this.props.createList(listParams); //POST to /list/create to make a new list
+    this.props.dsList(listParams); //POST to /list to add users to the list
     // console.log("I'm firing");
     this.handleClickOpen()
 
@@ -396,29 +563,21 @@ class ListStepper extends React.Component {
     console.log("this.state.newListResponseUpdated", this.state.newListResponseUpdated);
     console.log("this.props.newListResponse", this.props.newListResponse);
 
-    if (this.props.newListResponseUpdated !== prevProps.newListResponseUpdated) {
+    // The list has been created successfully, push to that page
+    if (this.props.newListResponseUpdated) {
       console.log("CDU IF 1");
-      this.setState({ newListResponseUpdated: this.props.newListResponseUpdated })
+      console.log("this.props.newListResponse", this.props.newListResponse);
+      // this.setState({ newListResponseUpdated: this.props.newListResponseUpdated })
+      this.props.history.push(`/details/${this.props.newListResponse.id_str}`)
     }
     // console.log("this.props.newListResponse.id_str", this.props.newListResponse.id_str);
 
-
-    if (this.state.newListResponseUpdated !== prevState.newListResponseUpdated) {
-      console.log("CDU IF 2");
-
-      let completeList = {
-        "user_id": localStorage.getItem("twitter_user_id"),
-        "name": this.props.newListResponse.name,
-        "original_user": this.props.newListResponse.user.screen_name,
-        "mode": this.props.newListResponse.mode,
-        "description": this.props.newListResponse.description,
-        "id": this.props.newListResponse.id_str,
-        "search_users": [this.state.user1, this.state.user2, this.state.user3, this.state.user4, this.state.user5]
-      }
-      console.log("~~~~~~~~~~~~~~~~~completeList", completeList);
-      this.props.addList(completeList);
-    }
-    console.log("++++++++open+++++++++++this.state.open", this.state.open)
+    // if (this.state.newListResponseUpdated !== prevState.newListResponseUpdated) {
+    //   console.log("CDU IF 2");
+    //   console.log("this.props.newListResponse", this.props.newListResponse);
+    //   // this.props.history.push("/details/:twitter_list_id");
+    // }
+    // console.log("++++++++open+++++++++++this.state.open", this.state.open)
   }
 
   handleSkip = () => {
@@ -523,39 +682,55 @@ class ListStepper extends React.Component {
                   Reset
                 </Button>
                 <Button
-                  // medium
                   color="primary"
                   variant="contained"
-                  // size="medium"
-                  // className={classes.listFormButton}
                   className={classes.button}
                   onClick={this.handleSubmit}
                   disabled={!isEnabled}
                 >
-                  {/* <ButtonText> */}
-                    Generate List
-                  {/* </ButtonText> */}
+                  Generate List
                 </Button>
               </div>
-            
-              <Dialog
+
+              <Modal
                 open={this.state.open}
                 onClose={this.handleClose}
+              >
+              <Dialog
+                open={this.state.open}
                 aria-labelledby="form-dialog-title"
               >
-                <DialogTitle id="form-dialog-title">List Submitted for Creation.</DialogTitle>
-                <DialogContent>
-                  <DialogContentText>
-                    Please be patient. It can take up to a minute for created lists to populate on twitter.
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={this.handleClose} color="primary">
-                    Continue
-                  </Button>
-
-                </DialogActions>
+                { this.props.addDSListResponseUpdated ? 
+                <> 
+                  <MemberModal 
+                  dsLists={this.props.dsLists[0]} 
+                  createList={this.props.createList} 
+                  title={this.state.title}
+                  mode={this.state.mode}
+                  description={this.state.description}
+                  /> 
+                  {/* <DialogActions>
+                    {console.log("can we get it", checked)}
+                  {/* this.props.createList(listParams)
+                      <Button onClick={this.handleClose} color="primary">
+                        Continue
+                      </Button>
+                  </DialogActions> */}
+                </>
+                : <>
+                    <DialogTitle id="form-dialog-title">List Submitted for Creation.</DialogTitle>
+                    <DialogContent>
+                      <DialogContentText >
+                        Please be patient. It can take up to a minute for us to analyze and find members.
+                      </DialogContentText>
+                      <DialogContentText align='center'>        
+                        <CircularProgress color="primary" />
+                      </DialogContentText>
+                    </DialogContent>
+                  </>
+                }
               </Dialog>
+              </Modal>
             </>
           )}
         </Paper>
@@ -567,7 +742,10 @@ class ListStepper extends React.Component {
 const mapStateToProps = state => ({
   listMembers: state.listsReducer.listMembers,
   newListResponse: state.listsReducer.newListResponse,
-  newListResponseUpdated: state.listsReducer.newListResponseUpdated
+  newListResponseUpdated: state.listsReducer.newListResponseUpdated,
+  dsLists: state.listsReducer.dsLists, // members back from DS
+  addDSListResponseUpdated: state.listsReducer.addDSListResponseUpdated, // members back from DS
+
 });
 
 
@@ -577,5 +755,5 @@ const routedComponent = withRouter(styledComponent)
 
 export default connect(
   mapStateToProps,
-  { addList, createList, getUser }
+  { dsList, createList, getUser }
 )(routedComponent);
