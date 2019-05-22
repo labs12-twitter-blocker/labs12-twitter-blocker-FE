@@ -18,21 +18,13 @@ import ListStepper from './tweeper/ListCreate/ListStepper'
 
 import { Route, Redirect } from 'react-router-dom';
 import { getUser, getLogin } from './actions/index.js';
-import jwt from 'jsonwebtoken';
-require('dotenv').config();
+// import jwt from 'jsonwebtoken';
+// require('dotenv').config();
 
-let decoded = false
-if (localStorage.getItem("token")) {
-  decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET)
-  if(decoded.id) {
-    decoded = true
-  }
-}
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
-  
   <Route {...rest} render={(props) => (
-    (decoded)
+    (localStorage.getItem("token"))
       ? <Component {...props} />
       : <Redirect to='/' />
   )} />
