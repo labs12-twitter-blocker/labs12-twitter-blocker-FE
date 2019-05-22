@@ -14,6 +14,7 @@ import ListTab from '../components/tweeper/ListTab.js'
 import BackButton from '../components/tweeper/BackButton'
 import atoms from '../components/atoms';
 import molecules from '../components/molecules';
+import Tweet from '../components/tweeper/Tweet.js';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {library} from '@fortawesome/fontawesome-svg-core'
@@ -93,7 +94,7 @@ class ListDetails extends React.Component {
     super(props);
     this.state = {
       value: 0,
-      isSubscribed: false
+      isSubscribed: false,
     }
   }
 
@@ -104,6 +105,8 @@ class ListDetails extends React.Component {
   subscribe = () => {
       this.props.subscribeToList(this.props.list.twitter_list_id, this.state.twitter_user_id);
       this.setState({isSubscribed: true})
+      console.log("this.props.list.twitter_list_id", this.props.list.twitter_list_id)
+      console.log("this.state.twitter_user_id", this.state.twitter_user_id)
   }
 
   unsubscribe = () => {
@@ -128,14 +131,15 @@ class ListDetails extends React.Component {
     let decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
     this.setState({ twitter_user_id: decoded.id })
 
-    const userId = this.props.getUser(decoded.id)
-    // console.log(decoded.id)
+
+    // const userId = this.props.getUser(decoded.id)
+
     this.props.getListMembers(this.props.match.params.twitter_list_id);
     this.props.getList(this.props.match.params.twitter_list_id);
-    this.props.getListTimeline(this.props.match.params.twitter_list_id, userId);
+    this.props.getListTimeline(this.props.match.params.twitter_list_id, decoded.id);
     this.props.getListSubscribers(this.props.match.params.twitter_list_id);
-    this.props.listSubscribers.filter(user => {
-      if(user === userId) {
+    this.props.listSubscribers.map(user => {
+      if(user.twitter_user_id === decoded.id) {
         this.setState({isSubscribed: true})
       }
     })
@@ -171,7 +175,7 @@ render() {
               </DetailsHeader>
               
               <Tabs 
-                value={this.state.value}
+                value={value}
                 onChange={this.handleChange} 
                 variant='fullWidth' >
                 <Tab label='Members' />
@@ -212,23 +216,22 @@ render() {
               }
               {value === 1 &&
               <TabContainer>
-                <Grid container spacing={1} direction="column" alignItems="center" justify="center" >
-                <List>
+                <Grid container spacing={0} direction="column" alignItems="center" justify="center" >
+              
                   {this.props.timeline.map(i => {
                     return (
                       <Grid item xs={10} sm={8} md={6} style={{width:"100%"}}>
-                      <Card key={i.screen_name}>
-                        <CardContent>
-                          <Avatar src={i.user.profile_image_url} />
-                          <Typography >{i.user.name}</Typography>
-                          <Typography>{i.text}</Typography>
-                          <Typography>{i.entities.hashtags.text}</Typography>
-                        </CardContent>
-                      </Card>
-                      </Grid>
+                    <List>
+                      <Card>
+                      <CardContent style={{width:'100%'}}>
+                      <Tweet name={i.user.name} profileImg={i.user.profile_image_url} text={i.text} date={i.created_at}/>
+                    
+                    </CardContent>
+                    </Card>
+                    </List>
+                  </Grid>
                     )
                   })}
-                  </List>
                   </Grid>
                   
                 </TabContainer>
