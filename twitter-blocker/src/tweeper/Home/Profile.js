@@ -130,8 +130,8 @@ class Profile extends Component {
                     </Button> */}
                 </Box>
                 {/* <Typography primary>{this.props.user.displayName}</Typography> */}
-                {/* <Typography primary>{this.state.displayName}</Typography> */}
-                <Typography primary>{this.props.user.displayName}</Typography>
+                <Typography primary>{this.state.displayName}</Typography>
+                {/* <Typography primary>{this.props.user.displayName}</Typography> */}
 
                 <Typography light gutterBottom>
                   {console.log("----------------------PROFILE PIC-----------", this.state.profilePic)}
@@ -140,8 +140,8 @@ class Profile extends Component {
                   {console.log("++++this.props.currentUser", this.props.currentUser)}
                   {console.log("++++this.props.user", this.props.user)}
                   {/* {this.props.currentUser.users.screen_name} */}
-                  {/* {this.state.username} */}
-                  {this.props.user.username}
+                  {this.state.username}
+                  {/* {this.props.user.username} */}
                 </Typography>
                 {/* <Typography light gutterBottom>
                   {this.props.user.displayName}
