@@ -107,6 +107,7 @@ class HeaderTest extends React.Component {
   };
 
   render() {
+    const { value } = this.state;
     const { anchorEl } = this.state;
     console.log("**********************" + this.props.loggedIn);
     let content = (localStorage.getItem("token")) ?
@@ -115,7 +116,7 @@ class HeaderTest extends React.Component {
           <Toolbar>
             <Grid container alignItems="center" spacing={16}>
               <Grid item xs={12} sm={4}>
-                <Tabs value={0} variant="fullWidth">
+                <Tabs value={value} variant="fullWidth">
                   <Tab
                     onlyIcon
                     icon={
