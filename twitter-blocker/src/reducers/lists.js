@@ -466,7 +466,8 @@ const reducer = (state = initialState, action) => {
         return {
           ...state,
           unsubscribingList: false,
-          lists: [...state.lists, action.payload]
+          // lists: [...state.lists, action.payload]
+          lists: action.payload
         };
       case UNSUBSCRIBE_LIST_FAILURE:
         return {
