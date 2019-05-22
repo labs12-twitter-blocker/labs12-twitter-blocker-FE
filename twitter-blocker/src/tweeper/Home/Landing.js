@@ -129,7 +129,7 @@ class Landing extends Component {
                       <img src="/images/feather-logo.png" style={{width:"80px"}} />
                     </Grid>
                     <Grid item  >
-                      <Typography variant="headline" color="primary">AppName</Typography>
+                      <Typography variant="h5" color="primary">Larkist</Typography>
                     </Grid>
                   </Grid>
                 </Grid>
@@ -158,10 +158,10 @@ class Landing extends Component {
               </Grid>
               <Grid item xs={12} md={6}>
                   <Grid container direction="column" justify="space-between"  alignItems="flex-end" spacing={40}>
-                    <Grid item style={{marginRight:"5%"}}><Typography  variant="title" style={{color:"#FFFFFF"}}>Generate lists that are meaningful for you</Typography></Grid>
-                    <Grid item style={{marginRight:"5%"}}><Typography variant="title" style={{color:"#FFFFFF"}}>Block toxic members and keep your timeline clean</Typography></Grid>
-                    <Grid item style={{marginRight:"5%"}}><Typography variant="title" style={{color:"#FFFFFF"}}>Add your newly created list to Twitter</Typography></Grid>
-                    <Grid item style={{marginRight:"5%"}}><Typography variant="title" style={{color:"#FFFFFF"}}>Create and Send Tweets with a cancellation option</Typography></Grid>
+                    <Grid item style={{marginRight:"5%"}}><Typography  variant="h6" style={{color:"#FFFFFF"}}>Generate lists that are meaningful for you</Typography></Grid>
+                    <Grid item style={{marginRight:"5%"}}><Typography variant="h6" style={{color:"#FFFFFF"}}>Block toxic members and keep your timeline clean</Typography></Grid>
+                    <Grid item style={{marginRight:"5%"}}><Typography variant="h6" style={{color:"#FFFFFF"}}>Add your newly created list to Twitter</Typography></Grid>
+                    <Grid item style={{marginRight:"5%"}}><Typography variant="h6" style={{color:"#FFFFFF"}}>Create and Send Tweets with a cancellation option</Typography></Grid>
                   </Grid>
               </Grid>
               

@@ -33,7 +33,7 @@ class BackButton extends React.Component {
   render() {
     return (
       <div>
-        <Fab variant="outlined" color="primary" style={fabDesign} onClick={this.props.history.goBack}>
+        <Fab variant="round" color="primary" style={fabDesign} onClick={this.props.history.goBack}>
           <FontAwesomeIcon icon={faArrowCircleLeft} size="2x" color='white' />
         </Fab>
       </div>

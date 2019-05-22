@@ -37,15 +37,11 @@ import Divider from '@material-ui/core/Divider';
 import Checkbox from '@material-ui/core/Checkbox';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Modal from '@material-ui/core/Modal';
+import Chip from '@material-ui/core/Chip';
+import FaceIcon from '@material-ui/icons/Face';
 // import Select from 'material-ui/Select';
 
-import { List, 
-  ListItem, 
-  Tabs, Tab,
-  Card, 
-  CardActions,
-  CardContent,
-  } from '@material-ui/core';
+import { List, ListItem, Tabs, Tab, Card, CardActions, CardContent, } from '@material-ui/core';
 import atoms from '../../components/atoms';
   
 import jwt from 'jsonwebtoken';
@@ -95,10 +91,6 @@ const styles = theme => ({
   membersList: {
     padding: 0
   },
-  // listFormButton: {
-  //   padding: 15,
-  //   fontSize: 70
-  // }
 });
 
 const ButtonText = styled('div')({
@@ -153,7 +145,6 @@ class MemberModal extends React.Component {
 
   handleCreateList = () => {
     let decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
-    // console.log("this.state.checked", this.state.checked)
     let screen_name = []
     this.state.checked.map(e => {
       screen_name.push(e.screen_name)
@@ -209,11 +200,9 @@ class MemberModal extends React.Component {
                         {e.name} @{e.screen_name}
                       </Typography>}
                       secondary={
-                        // <React.Fragment>
                           <Typography component="span" className={classes.inline} color="textSecondary" variant='caption'>
                             {e.description}
                           </Typography>
-                        // </React.Fragment>
                       }
                     />
                 <Checkbox
@@ -231,7 +220,6 @@ class MemberModal extends React.Component {
 
       <DialogActions>
         {console.log("can we get it", checked)}
-      {/* this.props.createList(listParams) */}
           <Button onClick={this.handleCreateList} color="primary">
             Continue
           </Button>
@@ -252,33 +240,25 @@ MemberModal = withStyles(styles)(MemberModal);
 class ListStepper extends React.Component {
   constructor() {
     super();
+    this.handleKeypress = this.handleKeypress.bind(this);
+    this.handleChipAdd = this.handleChipAdd.bind(this);
+
     this.state = {
       activeStep: 0,
       title: "",
       mode: 'public',
       description: "",
-      user1: "",
-      user2: "",
-      user3: "",
-      user4: "",
-      user5: "",
+      username: "",
+      twitterHandles: [],
       titleHelperText: "",
       descrHelperText: "",
-      user1HelperText: "",
-      user2HelperText: "",
-      user3HelperText: "",
-      user4HelperText: "",
-      user5HelperText: "",
+      usernameHelperText: "",
       search_users: null,
       listParams: null,
       newListResponseUpdated: false,
       titleError: false,
       descrError: false,
-      user1Error: false,
-      user2Error: false,
-      user3Error: false,
-      user4Error: false,
-      user5Error: false,
+      usernameError: false,
       buttonDisabled: false,
       open: false,
       skipped: new Set(),
@@ -313,18 +293,47 @@ class ListStepper extends React.Component {
     }
   };
 
-  handleUser1Change = event => {
-    if (event.target.value.length > 0) {
-      this.setState({ user1: event.target.value, user1HelperText: "", user1Error: false });
-    } else {
-      this.setState({ user1: event.target.value, user1HelperText: 'Please enter at least one Twitter user', user1Error: true });
+  handleUsernameChange = event => {
+    this.setState({ username: event.target.value });
+  };
+
+  handleSetTwitterHandle = event => {
+    this.setState({ value: event.target.value });
+  };
+
+  handleKeypress(event) {
+    if (event.key == "Enter") {
+      event.preventDefault();
+      const newArray = this.state.twitterHandles;
+      const currentcontent = this.state.username.trim();
+      if (!currentcontent) {
+        return;
+      }
+      newArray.push({
+        username: currentcontent
+      });
+      this.setState({
+        twitterHandles: newArray,
+        username: "",
+      });
     }
-  };
+  }
 
-  handleOtherUserChange = event => {
-
-    this.setState({ [event.target.name]: event.target.value })
-  };
+  handleChipAdd(event) {
+      event.preventDefault();
+      const newArray = this.state.twitterHandles;
+      const currentcontent = this.state.username.trim();
+      if (!currentcontent) {
+        return;
+      }
+      newArray.push({
+        username: currentcontent
+      });
+      this.setState({
+        twitterHandles: newArray,
+        username: "",
+      });
+  }
 
   handlePrivateChange = event => {
     this.setState({ mode: event.target.value });
@@ -335,38 +344,38 @@ class ListStepper extends React.Component {
   };
 
   canBeSubmitted() {
-    const { title, description, user1, user2, user3, user4, user5 } = this.state;
-    return title.length > 0 && description.length > 0 && user1.length > 0
-  }
+    const { title, description, twitterHandles } = this.state;
+    return title.length > 0 && description.length > 0 && twitterHandles.length > 0
+  };
+
   handleClickOpen = () => {
     this.setState({ open: true });
   };
 
+  handleDelete = data => () => {
+    this.setState(state => {
+      const twitterHandles = [...state.twitterHandles];
+      const chipToDelete = twitterHandles.indexOf(data);
+      twitterHandles.splice(chipToDelete, 1);
+      return { twitterHandles };
+    });
+  };
+
   handleSubmit = e => {
-    console.log("++++++++open+++++++++++this.state.open", this.state.open)
     e.preventDefault();
 
+    let usernameArray = [];
+    this.state.twitterHandles.map(e => {
+      usernameArray.push(e.username)
+    })
+    console.log("+++++++++++++++++++tusernameArray", usernameArray)
 
     console.log("++++++++open+++++++++++this.state.open", this.state.open)
 
 
     const token = localStorage.getItem("token");
-    // const username = localStorage.getItem("username")
-    // const id = localStorage.getItem("twitter_user_id")
-    // console.log("ID____________________", id);
     console.log("TOKEN", token);
-    // let search_users = [ this.state.user1, this.state.user2, this.state.user3, this.state.user4, this.state.user5 ]
     console.log("THIS.STATE", this.state);
-    // console.log("search_users", search_users);
-    // this.setState({ search_users: search_users });
-
-    // const params = {
-    //   "name": this.state.title,
-    //   "user_id": id,
-    //   "original_user": username,
-    //   "TWITTER_ACCESS_TOKEN": token,
-    //   "search_users": search_users
-    // }
 
     const listParams = {
       "user_id": this.state.twitter_user_id,
@@ -374,15 +383,13 @@ class ListStepper extends React.Component {
       "name": this.state.title,
       "mode": this.state.mode,
       "description": this.state.description,
-      "search_users": [this.state.user1, this.state.user2, this.state.user3, this.state.user4, this.state.user5]
+      "search_users": usernameArray,
     }
 
     this.setState({ listParams: listParams });
 
     this.setState({ ...this.state });
-    // this.props.createList(listParams); //POST to /list/create to make a new list
     this.props.dsList(listParams); //POST to /list to add users to the list
-    // console.log("I'm firing");
     this.handleClickOpen()
 
   };
@@ -469,95 +476,67 @@ class ListStepper extends React.Component {
       case 3:
         return (
         <>
-          <Typography variant='h6' color='primary'>Please enter 5 Twitter users to influence your list</Typography>
-          {/* <form className={this.props.classes.form} noValidate > */}
+          <Typography variant='h6' color='primary'>Please a Twitter Handle to create your list. We recommend at least 5.</Typography>
             <FormControl className={this.props.classes.formControl} >
-              {/* <InputLabel htmlFor="max-width">maxWidth</InputLabel> */}
               <form
                 value={this.state.maxWidth}
                 onChange={this.handleMaxWidthChange}
-                // inputProps={{
-                //   name: 'max-width',
-                //   id: 'max-width',
-                // }}
               >
                 <TextField
                   required
                   name="user1"
                   id="outlined-name"
                   label="Required"
-                  placeholder="Twitter Handle"
+                  placeholder="Once you type in a username, hit enter"
                   className={this.props.classes.textField}
-                  value={this.state.user1}
-                  onChange={this.handleUser1Change}
+                  value={this.state.username}
+                  onChange={this.handleUsernameChange}
+                  onKeyPress={this.handleKeypress}
                   margin="normal"
                   variant="outlined"
-                  helperText={this.state.user1HelperText}
-                  error={this.state.user1Error}
+                  helperText={this.state.usernameHelperText}
+                  error={this.state.usernameError}
                 />
-                <TextField
-                  name="user2"
-                  id="outlined-name"
-                  label="Twitter Handle"
-                  placeholder="Twitter Handle"
-                  className={this.props.classes.textField}
-                  value={this.state.user2}
-                  onChange={this.handleOtherUserChange}
-                  margin="normal"
-                  variant="outlined"
-                  helperText={this.state.user2HelperText}
-                  error={this.state.user2Error}
-                />
-                <TextField
-                  name="user3"
-                  id="outlined-name"
-                  label="Twitter Handle"
-                  placeholder="Twitter Handle"
-                  className={this.props.classes.textField}
-                  value={this.state.user3}
-                  onChange={this.handleOtherUserChange}
-                  margin="normal"
-                  variant="outlined"
-                  helperText={this.state.user3HelperText}
-                  error={this.state.user3Error}
-                />
-                <TextField
-                  name="user4"
-                  id="outlined-name"
-                  label="Twitter Handle"
-                  placeholder="Twitter Handle"
-                  className={this.props.classes.textField}
-                  value={this.state.user4}
-                  onChange={this.handleOtherUserChange}
-                  margin="normal"
-                  variant="outlined"
-                  helperText={this.state.user4HelperText}
-                  error={this.state.user4Error}
-                />
-                <TextField
-                  name="user5"
-                  id="outlined-name"
-                  label="Twitter Handle"
-                  placeholder="Twitter Handle"
-                  className={this.props.classes.textField}
-                  value={this.state.user5}
-                  onChange={this.handleOtherUserChange}
-                  margin="normal"
-                  variant="outlined"
-                  helperText={this.state.user5HelperText}
-                  error={this.state.user5Error}
-                />
-              </form>
-            </FormControl>
-            {/* </form> */}
-        </>);
-      default:
-        return 'Unknown step';
+
+                
+                <Button
+                  onClick={this.handleChipAdd}
+                  variant="contained"
+                  color="primary"
+                  size="medium"
+                  // className={classes.button}
+                >
+                  Add 
+                </Button>
+
+                <div>
+                  {this.state.twitterHandles.map(data => {
+                    let icon = null;
+
+                    return (
+                      <Chip
+                        key={data.username}
+                        className={this.props.classes.chip}
+                        color="primary"
+                        onDelete={this.handleDelete(data)}
+                        label={data.username}
+                        icon={<FaceIcon />}
+                        // variant="outlined"
+                      />
+                      );
+                    })}
+                  </div>
+                </form>
+              </FormControl>
+            </>);
+        default:
+          return 'Unknown step';
+      }
     }
-  }
 
   componentDidUpdate(prevProps, prevState) {
     console.log("CDUpdate");
+    console.log("this.state.twitterHandles", this.state.twitterHandles);
     console.log("this.props.listParams", this.props.listParams);
     console.log("this.props.newListResponseUpdated", this.props.newListResponseUpdated);
     console.log("this.state.newListResponseUpdated", this.state.newListResponseUpdated);
@@ -567,24 +546,13 @@ class ListStepper extends React.Component {
     if (this.props.newListResponseUpdated) {
       console.log("CDU IF 1");
       console.log("this.props.newListResponse", this.props.newListResponse);
-      // this.setState({ newListResponseUpdated: this.props.newListResponseUpdated })
       this.props.history.push(`/details/${this.props.newListResponse.id_str}`)
     }
-    // console.log("this.props.newListResponse.id_str", this.props.newListResponse.id_str);
-
-    // if (this.state.newListResponseUpdated !== prevState.newListResponseUpdated) {
-    //   console.log("CDU IF 2");
-    //   console.log("this.props.newListResponse", this.props.newListResponse);
-    //   // this.props.history.push("/details/:twitter_list_id");
-    // }
-    // console.log("++++++++open+++++++++++this.state.open", this.state.open)
   }
 
   handleSkip = () => {
     const { activeStep } = this.state;
     if (!this.isStepOptional(activeStep)) {
-      // You probably want to guard against something like this,
-      // it should never occur unless someone's actively trying to break something.
       throw new Error("You can't skip a step that isn't optional.");
     }
 
@@ -626,7 +594,7 @@ class ListStepper extends React.Component {
       return true
     } else if ( activeStep === 1 && this.state.description.length === 0) {
       return true
-    }else if ( activeStep === 3 && this.state.user1.length === 0) {
+    } else if ( activeStep === 3 && this.state.twitterHandles.length === 0) {
       return true
     } else {return false}
   };
@@ -646,9 +614,7 @@ class ListStepper extends React.Component {
               <Step key={label}>
                 <StepLabel>{label}</StepLabel>
                 <StepContent>
-                  {/* <Typography> */}
                   {this.getStepContent(index)}
-                  {/* </Typography> */}
                   <div className={classes.actionsContainer}>
                       <Button
                         disabled={activeStep === 0}
@@ -676,7 +642,6 @@ class ListStepper extends React.Component {
           {activeStep === steps.length &&  (
             <>
               <Typography>All steps completed - Click below to generate the list!</Typography>
-              {/* <div className={classes.listForm}> */}
               <div className={classes.actionsContainer}>
                 <Button onClick={this.handleReset} className={classes.button}>
                   Reset
@@ -709,13 +674,6 @@ class ListStepper extends React.Component {
                   mode={this.state.mode}
                   description={this.state.description}
                   /> 
-                  {/* <DialogActions>
-                    {console.log("can we get it", checked)}
-                  {/* this.props.createList(listParams)
-                      <Button onClick={this.handleClose} color="primary">
-                        Continue
-                      </Button>
-                  </DialogActions> */}
                 </>
                 : <>
                     <DialogTitle id="form-dialog-title">List Submitted for Creation.</DialogTitle>

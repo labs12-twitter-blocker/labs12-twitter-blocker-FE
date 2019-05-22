@@ -647,9 +647,7 @@ export const dsList = post => dispatch => {
   dispatch({ type: DS_LIST });
   let token = localStorage.getItem("token")
   axios
-    .post(`${url}/lists/`, {
-      headers: { Authorization: token }
-    }, post)
+    .post(`${url}/lists/`, post)
     .then(res => {
       console.log(res);
       dispatch({ type: DS_LIST_SUCCESS, payload: res.data });
@@ -670,9 +668,7 @@ export const createList = post => dispatch => {
   dispatch({ type: CREATE_LIST });
   let token = localStorage.getItem("token")
   axios
-    .post(`${url}/lists/create`, {
-      headers: { Authorization: token }
-    }, post)
+    .post(`${url}/lists/create`, post)
     .then(res => {
       console.log(res);
       dispatch({ type: CREATE_LIST_SUCCESS, payload: res.data });

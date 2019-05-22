@@ -77,7 +77,7 @@ class CreateList extends React.Component {
 
     return (
       <React.Fragment>
-        <Button medium color="primary" variant="contained" onClick={this.handleClickOpen}>
+        <Button color="primary" variant="contained" onClick={this.handleClickOpen}>
           Create New List
         </Button>
         <Dialog

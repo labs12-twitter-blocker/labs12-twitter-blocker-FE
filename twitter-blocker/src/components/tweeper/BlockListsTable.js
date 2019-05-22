@@ -122,7 +122,7 @@ class BlockListsTable extends Component {
       return (
         <div>
           <h3>You don't have any Block Lists Yet!</h3>
-          <Button medium color="primary" variant="contained" href="/create">
+          <Button color="primary" variant="contained" href="/create">
             Create New List
                   </Button>
         </div>)
