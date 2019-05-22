@@ -145,6 +145,7 @@ class ListDetails extends React.Component {
 render() {
   const { value } = this.state;
   const { isSubscribed } = this.state;
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -154,22 +155,25 @@ render() {
               <DetailsHeader>
               <Grid container justify="space-between" spacing={24}>
                 <Grid item>
-                  <Typography variant="title">{this.props.list.list_name}</Typography>
+                  <Typography variant='h6'>{this.props.list.list_name}</Typography>
                   <Typography>{this.props.list.member_count} Members</Typography>
                   <Typography>{this.props.list.subscriber_count} Subscribers</Typography>
                 </Grid>
                 <Grid item>
                   {isSubscribed === false && 
-                    <SubscribeButton medium color="primary" variant="outlinedPrimary" style={{color:"#1da1f2", border:"2px solid #1da1f2"}} onClick={this.subscribe}>Subscribe</SubscribeButton>
+                    <SubscribeButton color="primary" variant="outlined" color="primary" style={{color:"#1da1f2", border:"2px solid #1da1f2"}} onClick={this.subscribe}>Subscribe</SubscribeButton>
                   }
                   {isSubscribed === true &&
-                    <SubscribeButton medium color="primary" variant="contained" onClick={this.unsubscribe}>Unsubscribe</SubscribeButton>
+                    <SubscribeButton color="primary" variant="contained" onClick={this.unsubscribe}>Unsubscribe</SubscribeButton>
                   }
                   </Grid>
                 </Grid>
               </DetailsHeader>
               
-              <Tabs onChange={this.handleChange} variant='fullWidth'>
+              <Tabs 
+                value={this.state.value}
+                onChange={this.handleChange} 
+                variant='fullWidth' >
                 <Tab label='Members' />
                 <Tab label='Timeline'/>
                 </Tabs>
@@ -179,10 +183,10 @@ render() {
               <TabContainer>
                 
               <Grid container spacing={8} direction="column" alignItems="center" justify="center" >
+                <Grid item xs={10} sm={8} md={6} style={{width:"100%"}}>
                 {this.props.listMembers.map(i => {
                   return (
-                    <Grid item xs={10} sm={8} md={6} style={{width:"100%"}}>
-                    <List>
+                    <List key={i.screen_name}>
                     <Card >
                       <ListItem>
                       <CardContent style={{width:'100%'}}>
@@ -199,9 +203,9 @@ render() {
                         </ListItem>
                     </Card>
                     </List>
-                  </Grid>)
-                })}
+                )})}
                 </Grid>
+              </Grid>
 
               
               </TabContainer>
@@ -213,7 +217,7 @@ render() {
                   {this.props.timeline.map(i => {
                     return (
                       <Grid item xs={10} sm={8} md={6} style={{width:"100%"}}>
-                      <Card>
+                      <Card key={i.screen_name}>
                         <CardContent>
                           <Avatar src={i.user.profile_image_url} />
                           <Typography >{i.user.name}</Typography>

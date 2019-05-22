@@ -33,14 +33,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Modal from '@material-ui/core/Modal';
 import Chip from '@material-ui/core/Chip';
 import FaceIcon from '@material-ui/icons/Face';
-import {
-  List,
-  ListItem,
-  Tabs, Tab,
-  Card,
-  CardActions,
-  CardContent,
-} from '@material-ui/core';
+// import Select from 'material-ui/Select';
+
+import { List, ListItem, Tabs, Tab, Card, CardActions, CardContent, } from '@material-ui/core';
 import atoms from '../../components/atoms';
 
 import jwt from 'jsonwebtoken';
@@ -90,9 +85,6 @@ const styles = theme => ({
   membersList: {
     padding: 0
   },
-  chip: {
-    margin: theme.spacing.unit,
-  }
 });
 
 const ButtonText = styled('div')({
@@ -147,7 +139,6 @@ class MemberModal extends React.Component {
 
   handleCreateList = () => {
     let decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
-    // console.log("this.state.checked", this.state.checked)
     let screen_name = []
     this.state.checked.map(e => {
       screen_name.push(e.screen_name)
@@ -202,30 +193,27 @@ class MemberModal extends React.Component {
                       <Typography color="textPrimary" variant='body2'>
                         {e.name} @{e.screen_name}
                       </Typography>}
-                    secondary={
-                      // <React.Fragment>
-                      <Typography component="span" className={classes.inline} color="textSecondary" variant='caption'>
-                        {e.description}
-                      </Typography>
-                      // </React.Fragment>
-                    }
-                  />
-                  <Checkbox
-                    checked={this.state.checked.indexOf(e) !== -1}
-                    tabIndex={-1}
-                    color="primary"
+                      secondary={
+                          <Typography component="span" className={classes.inline} color="textSecondary" variant='caption'>
+                            {e.description}
+                          </Typography>
+                      }
+                    />
+                <Checkbox
+                  checked={this.state.checked.indexOf(e) !== -1}
+                  tabIndex={-1}
+                  color="primary"
                   // disableRipple
-                  />
-                </ListItem>
-                <Divider />
-              </List>
-            )
-          })}
-        </DialogContent>
+                />
+              </ListItem>
+              <Divider />
+            </List>
+          )
+        })}
+      </DialogContent>
 
-        <DialogActions>
-          {console.log("can we get it", checked)}
-          {/* this.props.createList(listParams) */}
+      <DialogActions>
+        {console.log("can we get it", checked)}
           <Button onClick={this.handleCreateList} color="primary">
             Continue
           </Button>
@@ -248,6 +236,7 @@ class ListStepper extends React.Component {
   constructor() {
     super();
     this.handleKeypress = this.handleKeypress.bind(this);
+    this.handleChipAdd = this.handleChipAdd.bind(this);
 
     this.state = {
       activeStep: 0,
@@ -326,6 +315,22 @@ class ListStepper extends React.Component {
     }
   }
 
+  handleChipAdd(event) {
+      event.preventDefault();
+      const newArray = this.state.twitterHandles;
+      const currentcontent = this.state.username.trim();
+      if (!currentcontent) {
+        return;
+      }
+      newArray.push({
+        username: currentcontent
+      });
+      this.setState({
+        twitterHandles: newArray,
+        username: "",
+      });
+  }
+
   handlePrivateChange = event => {
     this.setState({ mode: event.target.value });
   };
@@ -353,30 +358,20 @@ class ListStepper extends React.Component {
   };
 
   handleSubmit = e => {
-    console.log("++++++++open+++++++++++this.state.open", this.state.open)
     e.preventDefault();
 
+    let usernameArray = [];
+    this.state.twitterHandles.map(e => {
+      usernameArray.push(e.username)
+    })
+    console.log("+++++++++++++++++++tusernameArray", usernameArray)
 
     console.log("++++++++open+++++++++++this.state.open", this.state.open)
 
 
     const token = localStorage.getItem("token");
-    // const username = localStorage.getItem("username")
-    // const id = localStorage.getItem("twitter_user_id")
-    // console.log("ID____________________", id);
     console.log("TOKEN", token);
-    // let search_users = [ this.state.user1, this.state.user2, this.state.user3, this.state.user4, this.state.user5 ]
     console.log("THIS.STATE", this.state);
-    // console.log("search_users", search_users);
-    // this.setState({ search_users: search_users });
-
-    // const params = {
-    //   "name": this.state.title,
-    //   "user_id": id,
-    //   "original_user": username,
-    //   "TWITTER_ACCESS_TOKEN": token,
-    //   "search_users": search_users
-    // }
 
     const listParams = {
       "user_id": this.state.twitter_user_id,
@@ -384,15 +379,13 @@ class ListStepper extends React.Component {
       "name": this.state.title,
       "mode": this.state.mode,
       "description": this.state.description,
-      "search_users": this.state.twitterHandles
+      "search_users": usernameArray,
     }
 
     this.setState({ listParams: listParams });
 
     this.setState({ ...this.state });
-    // this.props.createList(listParams); //POST to /list/create to make a new list
     this.props.dsList(listParams); //POST to /list to add users to the list
-    // console.log("I'm firing");
     this.handleClickOpen()
 
   };
@@ -478,11 +471,9 @@ class ListStepper extends React.Component {
         );
       case 3:
         return (
-          <>
-            <Typography variant='h6' color='primary'>Please enter atleast 1 Twitter user. The more usernames, the more accurate your list will be.</Typography>
-            {/* <form className={this.props.classes.form} noValidate > */}
+        <>
+          <Typography variant='h6' color='primary'>Please a Twitter Handle to create your list. We recommend at least 5.</Typography>
             <FormControl className={this.props.classes.formControl} >
-              {/* <InputLabel htmlFor="max-width">maxWidth</InputLabel> */}
               <form
                 value={this.state.maxWidth}
                 onChange={this.handleMaxWidthChange}
@@ -503,33 +494,45 @@ class ListStepper extends React.Component {
                   error={this.state.usernameError}
                 />
 
+                
+                <Button
+                  onClick={this.handleChipAdd}
+                  variant="contained"
+                  color="primary"
+                  size="medium"
+                  // className={classes.button}
+                >
+                  Add 
+                </Button>
+
                 <div>
                   {this.state.twitterHandles.map(data => {
                     let icon = null;
 
                     return (
                       <Chip
+                        key={data.username}
                         className={this.props.classes.chip}
                         color="primary"
                         onDelete={this.handleDelete(data)}
                         label={data.username}
                         icon={<FaceIcon />}
-                        variant="default"
+                        // variant="outlined"
                       />
-                    );
-                  })}
-                </div>
-              </form>
-            </FormControl>
-            {/* </form> */}
-          </>);
-      default:
-        return 'Unknown step';
+                      );
+                    })}
+                  </div>
+                </form>
+              </FormControl>
+            </>);
+        default:
+          return 'Unknown step';
+      }
     }
-  }
 
   componentDidUpdate(prevProps, prevState) {
     console.log("CDUpdate");
+    console.log("this.state.twitterHandles", this.state.twitterHandles);
     console.log("this.props.listParams", this.props.listParams);
     console.log("this.props.newListResponseUpdated", this.props.newListResponseUpdated);
     console.log("this.state.newListResponseUpdated", this.state.newListResponseUpdated);
@@ -539,24 +542,13 @@ class ListStepper extends React.Component {
     if (this.props.newListResponseUpdated) {
       console.log("CDU IF 1");
       console.log("this.props.newListResponse", this.props.newListResponse);
-      // this.setState({ newListResponseUpdated: this.props.newListResponseUpdated })
       this.props.history.push(`/details/${this.props.newListResponse.id_str}`)
     }
-    // console.log("this.props.newListResponse.id_str", this.props.newListResponse.id_str);
-
-    // if (this.state.newListResponseUpdated !== prevState.newListResponseUpdated) {
-    //   console.log("CDU IF 2");
-    //   console.log("this.props.newListResponse", this.props.newListResponse);
-    //   // this.props.history.push("/details/:twitter_list_id");
-    // }
-    // console.log("++++++++open+++++++++++this.state.open", this.state.open)
   }
 
   handleSkip = () => {
     const { activeStep } = this.state;
     if (!this.isStepOptional(activeStep)) {
-      // You probably want to guard against something like this,
-      // it should never occur unless someone's actively trying to break something.
       throw new Error("You can't skip a step that isn't optional.");
     }
 
@@ -598,7 +590,7 @@ class ListStepper extends React.Component {
       return true
     } else if (activeStep === 1 && this.state.description.length === 0) {
       return true
-    } else if (activeStep === 3 && this.state.twitterHandles.length === 0) {
+    } else if ( activeStep === 3 && this.state.twitterHandles.length === 0) {
       return true
     } else { return false }
   };
@@ -618,9 +610,7 @@ class ListStepper extends React.Component {
               <Step key={label}>
                 <StepLabel>{label}</StepLabel>
                 <StepContent>
-                  {/* <Typography> */}
                   {this.getStepContent(index)}
-                  {/* </Typography> */}
                   <div className={classes.actionsContainer}>
                     <Button
                       disabled={activeStep === 0}
@@ -648,7 +638,6 @@ class ListStepper extends React.Component {
           {activeStep === steps.length && (
             <>
               <Typography>All steps completed - Click below to generate the list!</Typography>
-              {/* <div className={classes.listForm}> */}
               <div className={classes.actionsContainer}>
                 <Button onClick={this.handleReset} className={classes.button}>
                   Reset
@@ -668,32 +657,25 @@ class ListStepper extends React.Component {
                 open={this.state.open}
                 onClose={this.handleClose}
               >
-                <Dialog
-                  open={this.state.open}
-                  aria-labelledby="form-dialog-title"
-                >
-                  {this.props.addDSListResponseUpdated ?
-                    <>
-                      <MemberModal
-                        dsLists={this.props.dsLists[0]}
-                        createList={this.props.createList}
-                        title={this.state.title}
-                        mode={this.state.mode}
-                        description={this.state.description}
-                      />
-                      {/* <DialogActions>
-                    {console.log("can we get it", checked)}
-                  {/* this.props.createList(listParams)
-                      <Button onClick={this.handleClose} color="primary">
-                        Continue
-                      </Button>
-                  </DialogActions> */}
-                    </>
-                    : <>
-                      <DialogTitle id="form-dialog-title">List Submitted for Creation.</DialogTitle>
-                      <DialogContent>
-                        <DialogContentText >
-                          Please be patient. It can take up to a minute for us to analyze and find members.
+              <Dialog
+                open={this.state.open}
+                aria-labelledby="form-dialog-title"
+              >
+                { this.props.addDSListResponseUpdated ? 
+                <> 
+                  <MemberModal 
+                  dsLists={this.props.dsLists[0]} 
+                  createList={this.props.createList} 
+                  title={this.state.title}
+                  mode={this.state.mode}
+                  description={this.state.description}
+                  /> 
+                </>
+                : <>
+                    <DialogTitle id="form-dialog-title">List Submitted for Creation.</DialogTitle>
+                    <DialogContent>
+                      <DialogContentText >
+                        Please be patient. It can take up to a minute for us to analyze and find members.
                       </DialogContentText>
                         <DialogContentText align='center'>
                           <CircularProgress color="primary" />
