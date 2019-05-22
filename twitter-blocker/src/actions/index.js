@@ -772,13 +772,13 @@ export const SUBSCRIBE_LIST = "SUBSCRIBE_LIST";
 export const SUBSCRIBE_LIST_SUCCESS = "SUBSCRIBE_LIST_SUCCESS";
 export const SUBSCRIBE_LIST_FAILURE = "SUBSCRIBE_LIST_FAILURE";
 
-export const subscribeToList = (listId, userId) => dispatch => {
+export const subscribeToList = (params) => dispatch => {
   dispatch({ type: SUBSCRIBE_LIST });
   let token = localStorage.getItem("token")
   axios
-    .post(`${url}/lists/${listId}/follow/${userId}`, {
+    .post(`${url}/lists/`, {
       headers: { Authorization: token }
-    })
+    }, params)
     .then(res => {
       console.log(res);
       dispatch({ type: SUBSCRIBE_LIST_SUCCESS, payload: res.data });
@@ -795,13 +795,13 @@ export const UNSUBSCRIBE_LIST = "SUBSCRIBE_LIST";
 export const UNSUBSCRIBE_LIST_SUCCESS = "SUBSCRIBE_LIST_SUCCESS";
 export const UNSUBSCRIBE_LIST_FAILURE = "SUBSCRIBE_LIST_FAILURE";
 
-export const unSubscribeToList = (listId, userId) => dispatch => {
+export const unSubscribeToList = params => dispatch => {
   dispatch({ type: UNSUBSCRIBE_LIST });
   let token = localStorage.getItem("token")
   axios
-    .post(`${url}/lists/${listId}/unfollow/${userId}`, {
+    .post(`${url}/lists/unsubscribe`, {
       headers: { Authorization: token }
-    })
+    }, params)
     .then(res => {
       console.log(res);
       dispatch({ type: UNSUBSCRIBE_LIST_SUCCESS, payload: res.data });
