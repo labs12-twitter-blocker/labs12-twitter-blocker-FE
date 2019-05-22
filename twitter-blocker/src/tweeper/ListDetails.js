@@ -93,7 +93,7 @@ class ListDetails extends React.Component {
     super(props);
     this.state = {
       value: 0,
-      isSubscribed: false
+      isSubscribed: false,
     }
   }
 
@@ -104,6 +104,8 @@ class ListDetails extends React.Component {
   subscribe = () => {
       this.props.subscribeToList(this.props.list.twitter_list_id, this.state.twitter_user_id);
       this.setState({isSubscribed: true})
+      console.log("this.props.list.twitter_list_id", this.props.list.twitter_list_id)
+      console.log("this.state.twitter_user_id", this.state.twitter_user_id)
   }
 
   unsubscribe = () => {
@@ -130,6 +132,8 @@ class ListDetails extends React.Component {
 
     const userId = this.props.getUser(decoded.id)
     // console.log(decoded.id)
+    console.log(userId)
+    console.log(decoded)
     this.props.getListMembers(this.props.match.params.twitter_list_id);
     this.props.getList(this.props.match.params.twitter_list_id);
     this.props.getListTimeline(this.props.match.params.twitter_list_id, userId);
