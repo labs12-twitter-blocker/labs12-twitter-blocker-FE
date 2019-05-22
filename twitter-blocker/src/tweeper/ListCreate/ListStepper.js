@@ -1,23 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {  withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
-// import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
-// import Typography from '@material-ui/core/Typography';
-// import React, { Component } from 'react';
-// import { withStyles } from '@material-ui/core/styles';
 import styled from '@material-ui/styles/styled';
-// import PropTypes from 'prop-types';
 import green from '@material-ui/core/colors/green';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
-// import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -43,7 +37,7 @@ import FaceIcon from '@material-ui/icons/Face';
 
 import { List, ListItem, Tabs, Tab, Card, CardActions, CardContent, } from '@material-ui/core';
 import atoms from '../../components/atoms';
-  
+
 import jwt from 'jsonwebtoken';
 const { Avatar, Icon, Typography, Button } = atoms;
 require('dotenv').config();
@@ -102,7 +96,7 @@ const TopLine = styled('div')({
   justifyContent: 'space-between',
 });
 
-const ProfileNameImg = styled('div') ({
+const ProfileNameImg = styled('div')({
   display: 'flex',
   width: '50%',
   alignItems: 'center',
@@ -136,11 +130,11 @@ class MemberModal extends React.Component {
   };
 
   selectAll = () => {
-    if(this.state.checkedAll)
-      this.setState({checked:[]});
+    if (this.state.checkedAll)
+      this.setState({ checked: [] });
     else
-      this.setState({checked:this.props.dsLists});
-      this.setState({checkedAll:!this.state.checkedAll});
+      this.setState({ checked: this.props.dsLists });
+    this.setState({ checkedAll: !this.state.checkedAll });
   }
 
   handleCreateList = () => {
@@ -163,39 +157,39 @@ class MemberModal extends React.Component {
     this.props.createList(listParams)
   }
 
-  render(){
-  const { dsLists, classes, createList } = this.props;
-  const {checkedAll,checked } = this.state;
-  return (
-    <> 
-      <DialogTitle id="form-dialog-title">Select Members to Add to List
-        <Typography color="textPrimary" variant='body2'> 
-          {checkedAll?"Select None":"Select all"}
-          <Checkbox
-            checked={this.state.open}
-            value="Select all"
-            onClick={this.selectAll}
-            color="primary"
-          />
-        </Typography>
-      </DialogTitle>
-      {console.log("checked", checked)}
-      <DialogContent>
-        {dsLists.map((e, index) => {
-          return (
-            <List key={e.id_str} dense>
-              <ListItem 
-              alignItems="flex-start" 
-              dense={true} 
-              button onClick={this.handleToggle(e)} 
-              classes={{ root: classes.membersList }}
-              >
-                    <ListItemAvatar>
-                      <Avatar src={e.profile_image_url_https} />
-                    </ListItemAvatar>
-                    <ListItemText
-                      disableTypography={true}
-                      primary={
+  render() {
+    const { dsLists, classes, createList } = this.props;
+    const { checkedAll, checked } = this.state;
+    return (
+      <>
+        <DialogTitle id="form-dialog-title">Select Members to Add to List
+        <Typography color="textPrimary" variant='body2'>
+            {checkedAll ? "Select None" : "Select all"}
+            <Checkbox
+              checked={this.state.open}
+              value="Select all"
+              onClick={this.selectAll}
+              color="primary"
+            />
+          </Typography>
+        </DialogTitle>
+        {console.log("checked", checked)}
+        <DialogContent>
+          {dsLists.map((e, index) => {
+            return (
+              <List key={e.id_str} dense>
+                <ListItem
+                  alignItems="flex-start"
+                  dense={true}
+                  button onClick={this.handleToggle(e)}
+                  classes={{ root: classes.membersList }}
+                >
+                  <ListItemAvatar>
+                    <Avatar src={e.profile_image_url_https} />
+                  </ListItemAvatar>
+                  <ListItemText
+                    disableTypography={true}
+                    primary={
                       <Typography color="textPrimary" variant='body2'>
                         {e.name} @{e.screen_name}
                       </Typography>}
@@ -223,9 +217,10 @@ class MemberModal extends React.Component {
           <Button onClick={this.handleCreateList} color="primary">
             Continue
           </Button>
-      </DialogActions>
-    </>
-  )};
+        </DialogActions>
+      </>
+    )
+  };
 };
 
 MemberModal.propTypes = {
@@ -262,7 +257,8 @@ class ListStepper extends React.Component {
       buttonDisabled: false,
       open: false,
       skipped: new Set(),
-    }
+    };
+    this.lastId = -1;
   };
 
   isStepOptional = step => step === 0;
@@ -401,33 +397,33 @@ class ListStepper extends React.Component {
   getSteps() {
     return ['Title', 'Description', 'Privacy', 'Users'];
   }
-  
+
   getStepContent(step) {
     switch (step) {
       case 0:
-        return ( 
-        <> 
-          <Typography variant='h6' color='primary'>Please enter the title of your list</Typography>
-          <TextField
-            required
-            name="title"
-            id="outlined-required"
-            label="Required"
-            placeholder="Title"
-            className={this.props.classes.textField}
-            value={this.state.title}
-            onChange={this.handleTitleChange}
-            margin="normal"
-            variant="outlined"
-            inputProps={{ maxLength: 25 }}
-            helperText={this.state.titleHelperText}
-            error={this.state.titleError}
-          />
-        </>
+        return (
+          <>
+            <Typography variant='h6' color='primary'>Please enter the title of your list</Typography>
+            <TextField
+              required
+              name="title"
+              id="outlined-required"
+              label="Required"
+              placeholder="Title"
+              className={this.props.classes.textField}
+              value={this.state.title}
+              onChange={this.handleTitleChange}
+              margin="normal"
+              variant="outlined"
+              inputProps={{ maxLength: 25 }}
+              helperText={this.state.titleHelperText}
+              error={this.state.titleError}
+            />
+          </>
         );
       case 1:
         return (
-          <> 
+          <>
             <Typography variant='h6' color='primary'>Please enter the list description</Typography>
             <TextField
               required
@@ -461,7 +457,7 @@ class ListStepper extends React.Component {
                 margin="dense"
                 input={
                   <OutlinedInput
-                  labelWidth={this.labelRef ? this.labelRef.offsetWidth : 0}
+                    labelWidth={this.labelRef ? this.labelRef.offsetWidth : 0}
                     name="age"
                     id="outlined-age-simple"
                   />
@@ -590,13 +586,13 @@ class ListStepper extends React.Component {
   }
 
   handleDisableNext = (activeStep) => {
-    if (activeStep === 0 && this.state.title.length === 0){
+    if (activeStep === 0 && this.state.title.length === 0) {
       return true
-    } else if ( activeStep === 1 && this.state.description.length === 0) {
+    } else if (activeStep === 1 && this.state.description.length === 0) {
       return true
     } else if ( activeStep === 3 && this.state.twitterHandles.length === 0) {
       return true
-    } else {return false}
+    } else { return false }
   };
 
   render() {
@@ -616,30 +612,30 @@ class ListStepper extends React.Component {
                 <StepContent>
                   {this.getStepContent(index)}
                   <div className={classes.actionsContainer}>
-                      <Button
-                        disabled={activeStep === 0}
-                        onClick={this.handleBack}
-                        className={classes.button}
-                      >
-                        Back
+                    <Button
+                      disabled={activeStep === 0}
+                      onClick={this.handleBack}
+                      className={classes.button}
+                    >
+                      Back
                       </Button>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={this.handleNext}
-                        className={classes.button}
-                        disabled={ this.handleDisableNext(activeStep)}
-                        
-                      >
-                        {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                      </Button>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={this.handleNext}
+                      className={classes.button}
+                      disabled={this.handleDisableNext(activeStep)}
+
+                    >
+                      {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                    </Button>
                   </div>
                 </StepContent>
               </Step>
             ))}
           </Stepper>
-          
-          {activeStep === steps.length &&  (
+
+          {activeStep === steps.length && (
             <>
               <Typography>All steps completed - Click below to generate the list!</Typography>
               <div className={classes.actionsContainer}>
@@ -681,13 +677,13 @@ class ListStepper extends React.Component {
                       <DialogContentText >
                         Please be patient. It can take up to a minute for us to analyze and find members.
                       </DialogContentText>
-                      <DialogContentText align='center'>        
-                        <CircularProgress color="primary" />
-                      </DialogContentText>
-                    </DialogContent>
-                  </>
-                }
-              </Dialog>
+                        <DialogContentText align='center'>
+                          <CircularProgress color="primary" />
+                        </DialogContentText>
+                      </DialogContent>
+                    </>
+                  }
+                </Dialog>
               </Modal>
             </>
           )}

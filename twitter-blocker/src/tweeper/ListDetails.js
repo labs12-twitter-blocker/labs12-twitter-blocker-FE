@@ -129,7 +129,7 @@ class ListDetails extends React.Component {
     this.setState({ twitter_user_id: decoded.id })
 
     const userId = this.props.getUser(decoded.id)
-    console.log(userId)
+    // console.log(decoded.id)
     this.props.getListMembers(this.props.match.params.twitter_list_id);
     this.props.getList(this.props.match.params.twitter_list_id);
     this.props.getListTimeline(this.props.match.params.twitter_list_id, userId);

@@ -12,7 +12,7 @@ import theme from '../../theme/tweeper/theme';
 import withTheme from '../withTheme';
 import ListExplorerTable from '../../components/tweeper/ListExplorerTable.js'
 import LeaderboardTab from '../../components/tweeper/LeaderboardTab.js'
-import { getLists, subscribeToList } from '../../actions'
+import { getPublicLists, subscribeToList } from '../../actions'
 // import atoms from '../../components/atoms';
 // import molecules from '../../components/molecules';
 import { connect } from 'react-redux';
@@ -51,6 +51,7 @@ const TabContainer = styled('div') ({
 // });
 
 class ListExplorer extends React.Component {
+<<<<<<< HEAD
   constructor() {
       super();
       this.state = {
@@ -98,6 +99,53 @@ class ListExplorer extends React.Component {
         </Content>
       </React.Fragment>
     );
+=======
+    constructor() {
+        super();
+        this.state = {
+          value: 0
+        }
+    }
+
+    handleChange = (event, value) => {
+      this.setState({ value });
+    };
+
+    componentDidMount() {
+        this.props.getPublicLists();
+    }
+    render() {
+      const { value } = this.state;
+  return (
+    <React.Fragment>
+      <CssBaseline />
+      <BackButton />
+      <Content>
+            <Feed>
+            <Tabs 
+              value={this.state.value}
+              onChange={this.handleChange} 
+              variant='fullWidth'>
+                <Tab label='List Explorer'/>
+                <Tab label='Leaderboard'/>
+              </Tabs>
+              {value === 0 &&
+              <TabContainer>
+                <ListExplorerTable variant="fullWidth"/>
+              </TabContainer>
+              }
+              {value === 1 &&
+              <TabContainer>
+                <LeaderboardTab variant="fullWidth"/>
+              </TabContainer>
+              }
+              <Divider />
+            </Feed>
+        {/* <TweetFloat /> */}
+      </Content>
+    </React.Fragment>
+  );
+>>>>>>> origin
   }
 }
 
@@ -111,8 +159,7 @@ const mapStateToProps = state => {
 }
 
 const mapActionsToProps = {
-  getLists: getLists,
-  subscribeToList: subscribeToList
+  getPublicLists, subscribeToList
 }
 
 const styledComponent = withTheme(theme)(ListExplorer);
