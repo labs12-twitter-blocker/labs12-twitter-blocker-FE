@@ -94,7 +94,7 @@ class ListDetails extends React.Component {
     super(props);
     this.state = {
       value: 0,
-      isSubscribed: false
+      isSubscribed: false,
     }
   }
 
@@ -105,6 +105,8 @@ class ListDetails extends React.Component {
   subscribe = () => {
       this.props.subscribeToList(this.props.list.twitter_list_id, this.state.twitter_user_id);
       this.setState({isSubscribed: true})
+      console.log("this.props.list.twitter_list_id", this.props.list.twitter_list_id)
+      console.log("this.state.twitter_user_id", this.state.twitter_user_id)
   }
 
   unsubscribe = () => {
@@ -128,6 +130,7 @@ class ListDetails extends React.Component {
   componentDidMount(){
     let decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
     this.setState({ twitter_user_id: decoded.id })
+
 
     // const userId = this.props.getUser(decoded.id)
 
