@@ -247,19 +247,15 @@ MemberModal = withStyles(styles)(MemberModal);
 class ListStepper extends React.Component {
   constructor() {
     super();
+    this.handleKeypress = this.handleKeypress.bind(this);
+
     this.state = {
       activeStep: 0,
       title: "",
       mode: 'public',
       description: "",
       username: "",
-      twitterHandles: [
-        { username: 'RickiTickiToddi' },
-        { username: 'RickiTickiToddi' },
-        { username: 'RickiTickiToddi' },
-        { username: 'RickiTickiToddi' },
-        { username: 'RickiTickiToddi' }
-      ],
+      twitterHandles: [],
       user1: "",
       user2: "",
       user3: "",
@@ -268,24 +264,17 @@ class ListStepper extends React.Component {
       titleHelperText: "",
       descrHelperText: "",
       user1HelperText: "",
-      user2HelperText: "",
-      user3HelperText: "",
-      user4HelperText: "",
-      user5HelperText: "",
       search_users: null,
       listParams: null,
       newListResponseUpdated: false,
       titleError: false,
       descrError: false,
       user1Error: false,
-      user2Error: false,
-      user3Error: false,
-      user4Error: false,
-      user5Error: false,
       buttonDisabled: false,
       open: false,
       skipped: new Set(),
-    }
+    };
+    this.lastId = -1;
   };
 
   isStepOptional = step => step === 0;
@@ -316,26 +305,31 @@ class ListStepper extends React.Component {
     }
   };
 
-  handleChange = event => {
-    this.setState({ value: event.target.value });
+  handleUsernameChange = event => {
+    this.setState({ username: event.target.value });
   };
 
   handleSetTwitterHandle = event => {
     this.setState({ value: event.target.value });
   };
 
-  handleUser1Change = event => {
-    if (event.target.value.length > 0) {
-      this.setState({ user1: event.target.value, user1HelperText: "", user1Error: false });
-    } else {
-      this.setState({ user1: event.target.value, user1HelperText: 'Please enter at least one Twitter user', user1Error: true });
+  handleKeypress(event) {
+    if (event.key == "Enter") {
+      event.preventDefault();
+      const newArray = this.state.twitterHandles;
+      const currentcontent = this.state.username.trim();
+      if (!currentcontent) {
+        return;
+      }
+      newArray.push({
+        username: currentcontent
+      });
+      this.setState({
+        twitterHandles: newArray,
+        username: "",
+      });
     }
-  };
-
-  handleOtherUserChange = event => {
-
-    this.setState({ [event.target.name]: event.target.value })
-  };
+  }
 
   handlePrivateChange = event => {
     this.setState({ mode: event.target.value });
@@ -395,7 +389,7 @@ class ListStepper extends React.Component {
       "name": this.state.title,
       "mode": this.state.mode,
       "description": this.state.description,
-      "search_users": [this.state.user1, this.state.user2, this.state.user3, this.state.user4, this.state.user5]
+      "search_users": this.state.twitterHandles
     }
 
     this.setState({ listParams: listParams });
@@ -490,7 +484,7 @@ class ListStepper extends React.Component {
       case 3:
         return (
           <>
-            <Typography variant='h6' color='primary'>Please enter 5 Twitter users to influence your list</Typography>
+            <Typography variant='h6' color='primary'>Please enter atleast 1 Twitter user. The more usernames, the more accurate your list will be.</Typography>
             {/* <form className={this.props.classes.form} noValidate > */}
             <FormControl className={this.props.classes.formControl} >
               {/* <InputLabel htmlFor="max-width">maxWidth</InputLabel> */}
@@ -503,10 +497,11 @@ class ListStepper extends React.Component {
                   name="user1"
                   id="outlined-name"
                   label="Required"
-                  placeholder="Twitter Handle"
+                  placeholder="Once you type in a username, hit enter"
                   className={this.props.classes.textField}
                   value={this.state.username}
-                  onChange={this.handleChange}
+                  onChange={this.handleUsernameChange}
+                  onKeyPress={this.handleKeypress}
                   margin="normal"
                   variant="outlined"
                   helperText={this.state.user1HelperText}
