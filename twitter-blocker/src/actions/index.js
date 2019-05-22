@@ -620,11 +620,11 @@ export const GET_LIST_TIMELINE_FAILURE = "GET_LIST_TIMELINE_FAILURE";
 export const getListTimeline = (list_id, user_id) => dispatch => {
   dispatch({ type: GET_LIST_TIMELINE });
   let token = localStorage.getItem("token")
-  let params = { twitter_user_id: user_id }
+  let data = { twitter_user_id: user_id }
   axios
-    .get(`${url}/lists/timeline/${list_id}`, {
+    .post(`${url}/lists/timeline/${list_id}`, data, {
       headers: { Authorization: token }
-    }, params)
+    })
     .then(res => {
       console.log(res);
       dispatch({ type: GET_LIST_TIMELINE_SUCCESS, payload: res.data });
