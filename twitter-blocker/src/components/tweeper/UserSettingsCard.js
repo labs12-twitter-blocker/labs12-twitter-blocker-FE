@@ -77,7 +77,7 @@ class UserSettingsCard extends React.Component {
           Share
         </Button> */}
           <Button size="small" color="primary" style={{ margin: "auto" }} onClick={() => this.deleteAccount()}>
-            Deactivate Your PEREGRINE Account
+            Deactivate Your Larkist Account
         </Button>
         </CardActions>
       </Card>
