@@ -12,7 +12,7 @@ import theme from '../../theme/tweeper/theme';
 import withTheme from '../withTheme';
 import ListExplorerTable from '../../components/tweeper/ListExplorerTable.js'
 import LeaderboardTab from '../../components/tweeper/LeaderboardTab.js'
-import { getLists, subscribeToList } from '../../actions'
+import { getPublicLists, subscribeToList } from '../../actions'
 // import atoms from '../../components/atoms';
 // import molecules from '../../components/molecules';
 import { connect } from 'react-redux';
@@ -63,7 +63,7 @@ class ListExplorer extends React.Component {
     };
 
     componentDidMount() {
-        this.props.getLists();
+        this.props.getPublicLists();
     }
     render() {
       const { value } = this.state;
@@ -109,8 +109,7 @@ const mapStateToProps = state => {
 }
 
 const mapActionsToProps = {
-  getLists: getLists,
-  subscribeToList: subscribeToList
+  getPublicLists, subscribeToList
 }
 
 const styledComponent = withTheme(theme)(ListExplorer);
