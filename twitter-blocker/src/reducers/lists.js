@@ -589,7 +589,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         searchingLists: false,
-        lists: action.payload
+        publicLists: action.payload
       };
     case SEARCH_LISTS_FAILURE:
       return {
