@@ -11,41 +11,25 @@ const useStyles = makeStyles({
   root: {
     padding: '1rem 10px',
     flexDirection: 'column',
-    alignItems: 'flex-start',
+    alignItems: 'center',
+    justify: 'center'
   },
 });
 
 const { Avatar, IconButton, Icon, Typography } = atoms;
 
-function Tweet() {
+function Tweet(props) {
   const classes = useStyles();
 
   return (
-    <ListItem button className={classes.root}>
-      <Box mb="5px">
-        <Grid container spacing={8}>
-          <Grid item>
-            <Box
-              display="flex"
-              height="100%"
-              justifyContent="flex-end"
-              alignItems="center"
-              minWidth={49}
-            >
-              <FontAwesomeIcon icon={faRetweet} color='#38A1F3'/>
-            </Box>
-          </Grid>
-          <Grid item>
-            <Typography light>You Retweeted</Typography>
-          </Grid>
-        </Grid>
-      </Box>
-      <Grid container spacing={8} wrap="nowrap">
+    <ListItem className={classes.root}>
+
+      <Grid container spacing={16} wrap="nowrap">
         <Grid item>
           <Avatar
             medium
             src={
-              './assets/dan.png'
+              props.profileImg
             }
           />
         </Grid>
@@ -53,22 +37,22 @@ function Tweet() {
           <Grid container spacing={16}>
             <Grid item xs={12}>
               <Typography bold inline>
-                Daniel
+                {props.name}
               </Typography>{' '}
               <Typography light inline>
-                @Dstar3248
+                {props.screen_name}
               </Typography>{' '}
-              <Typography light inline>
+              {/* <Typography light inline>
                 ·
-              </Typography>{' '}
+              </Typography>{' '} */}
               <Typography light inline>
-                April 19
+                {props.created_at}
               </Typography>
               <Typography>
-                This was my latest buildweeks project for @LambdaSchool. It is really fun to collaborate from different sections of Lambda School to build a project in 4 days.
-              </Typography>
+                {props.text}
+                </Typography>
             </Grid>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <Box ml="-12px" display="inline-flex" alignItems="center">
                 <IconButton>
                   <FontAwesomeIcon icon={faCommentAlt} color='#38A1F3'/>
@@ -98,7 +82,7 @@ function Tweet() {
                   <FontAwesomeIcon icon={faEnvelope} color='#38A1F3'/>
                 </IconButton>
               </Box>
-            </Grid>
+            </Grid> */}
           </Grid>
         </Grid>
       </Grid>
