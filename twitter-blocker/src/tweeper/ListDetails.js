@@ -209,16 +209,22 @@ render() {
               }
               {value === 1 &&
               <TabContainer>
-                <Grid container spacing={8} direction="column" alignItems="center" justify="center" >
-                <List>
+                <Grid container spacing={0} direction="column" alignItems="center" justify="center" >
+              
                   {this.props.timeline.map(i => {
                     return (
+                      <Grid item xs={10} sm={8} md={6} style={{width:"100%"}}>
+                    <List>
                       <Card>
+                      <CardContent style={{width:'100%'}}>
                       <Tweet name={i.user.name} profileImg={i.user.profile_image_url} text={i.text} date={i.created_at}/>
+                    
+                    </CardContent>
                     </Card>
+                    </List>
+                  </Grid>
                     )
                   })}
-                  </List>
                   </Grid>
                   
                 </TabContainer>

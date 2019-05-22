@@ -42,9 +42,9 @@ function Tweet(props) {
               <Typography light inline>
                 {props.screen_name}
               </Typography>{' '}
-              <Typography light inline>
+              {/* <Typography light inline>
                 ·
-              </Typography>{' '}
+              </Typography>{' '} */}
               <Typography light inline>
                 {props.created_at}
               </Typography>
