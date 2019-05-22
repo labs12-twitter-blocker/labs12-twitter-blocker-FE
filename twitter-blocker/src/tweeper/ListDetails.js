@@ -14,6 +14,7 @@ import ListTab from '../components/tweeper/ListTab.js'
 import BackButton from '../components/tweeper/BackButton'
 import atoms from '../components/atoms';
 import molecules from '../components/molecules';
+import Tweet from '../components/tweeper/Tweet.js';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {library} from '@fortawesome/fontawesome-svg-core'
@@ -208,20 +209,13 @@ render() {
               }
               {value === 1 &&
               <TabContainer>
-                <Grid container spacing={1} direction="column" alignItems="center" justify="center" >
+                <Grid container spacing={8} direction="column" alignItems="center" justify="center" >
                 <List>
                   {this.props.timeline.map(i => {
                     return (
-                      <Grid item xs={10} sm={8} md={6} style={{width:"100%"}}>
                       <Card>
-                        <CardContent>
-                          <Avatar src={i.user.profile_image_url} />
-                          <Typography >{i.user.name}</Typography>
-                          <Typography>{i.text}</Typography>
-                          <Typography>{i.entities.hashtags.text}</Typography>
-                        </CardContent>
-                      </Card>
-                      </Grid>
+                      <Tweet name={i.user.name} profileImg={i.user.profile_image_url} text={i.text} date={i.created_at}/>
+                    </Card>
                     )
                   })}
                   </List>
