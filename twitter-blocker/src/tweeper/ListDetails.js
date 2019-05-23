@@ -1,4 +1,5 @@
 import React from 'react';
+import {  withRouter } from "react-router-dom";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider/Divider';
@@ -10,8 +11,10 @@ import HeaderTest from '../tests/HeaderTest.js'
 import theme from '../theme/tweeper/theme';
 import withTheme from './withTheme';
 import ListTab from '../components/tweeper/ListTab.js'
+import BackButton from '../components/tweeper/BackButton'
 import atoms from '../components/atoms';
 import molecules from '../components/molecules';
+import Tweet from '../components/tweeper/Tweet.js';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -94,7 +97,7 @@ class ListDetails extends React.Component {
     super(props);
     this.state = {
       value: 0,
-      isSubscribed: false
+      isSubscribed: false,
     }
   }
 
@@ -103,13 +106,10 @@ class ListDetails extends React.Component {
   };
 
   subscribe = () => {
-    let params = {
-      twitter_id: this.state.twitter_user_id,
-      twitter_list_id: this.props.list.twitter_list_id
-    }
-    // console.log(params)
-    this.props.subscribeToList(params);
-    this.setState({ isSubscribed: true })
+      this.props.subscribeToList(this.props.list.twitter_list_id, this.state.twitter_user_id);
+      this.setState({isSubscribed: true})
+      console.log("this.props.list.twitter_list_id", this.props.list.twitter_list_id)
+      console.log("this.state.twitter_user_id", this.state.twitter_user_id)
   }
 
   unsubscribe = () => {
@@ -138,113 +138,117 @@ class ListDetails extends React.Component {
     let decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
     this.setState({ twitter_user_id: decoded.id })
 
-    const userId = this.props.getUser(decoded.id)
-    console.log(userId)
+
+    // const userId = this.props.getUser(decoded.id)
+
     this.props.getListMembers(this.props.match.params.twitter_list_id);
     this.props.getList(this.props.match.params.twitter_list_id);
-    this.props.getListTimeline(this.props.match.params.twitter_list_id, userId);
+    this.props.getListTimeline(this.props.match.params.twitter_list_id, decoded.id);
     this.props.getListSubscribers(this.props.match.params.twitter_list_id);
-    this.props.listSubscribers.filter(user => {
-      if (user === userId) {
-        this.setState({ isSubscribed: true })
+    this.props.listSubscribers.map(user => {
+      if(user.twitter_user_id === decoded.id) {
+        this.setState({isSubscribed: true})
       }
     })
 
-  }
+}
 
-  render() {
-    const { value } = this.state;
-    const { isSubscribed } = this.state;
-    return (
-      <React.Fragment>
-        <CssBaseline />
+render() {
+  const { value } = this.state;
+  const { isSubscribed } = this.state;
+
+  return (
+    <React.Fragment>
+      <CssBaseline />
+      <BackButton />
         <Content>
           <Feed>
             <DetailsHeader>
               <Grid container justify="space-between" spacing={24}>
                 <Grid item>
-                  <Typography variant="title">{this.props.list.list_name}</Typography>
+                  <Typography variant='h6'>{this.props.list.list_name}</Typography>
                   <Typography>{this.props.list.member_count} Members</Typography>
                   <Typography>{this.props.list.subscriber_count} Subscribers</Typography>
                 </Grid>
                 <Grid item>
                   {isSubscribed === false &&
-                    <SubscribeButton medium color="primary" variant="outlinedPrimary" style={{ color: "#1da1f2", border: "2px solid #1da1f2" }} onClick={this.subscribe}>Subscribe</SubscribeButton>
+                    <SubscribeButton color="primary" variant="outlined" color="primary" style={{color:"#1da1f2", border:"2px solid #1da1f2"}} onClick={this.subscribe}>Subscribe</SubscribeButton>
                   }
                   {isSubscribed === true &&
-                    <SubscribeButton medium color="primary" variant="contained" onClick={this.unsubscribe}>Unsubscribe</SubscribeButton>
+                    <SubscribeButton color="primary" variant="contained" onClick={this.unsubscribe}>Unsubscribe</SubscribeButton>
                   }
                 </Grid>
-              </Grid>
-            </DetailsHeader>
+              </DetailsHeader>
 
-            <Tabs onChange={this.handleChange} variant='fullWidth'>
-              <Tab label='Members' />
-              <Tab label='Timeline' />
-            </Tabs>
+              <Tabs
+                value={value}
+                onChange={this.handleChange}
+                variant='fullWidth' >
+                <Tab label='Members' />
+                <Tab label='Timeline'/>
+                </Tabs>
 
 
-            {value === 0 &&
+                {value === 0 &&
               <TabContainer>
 
-                <Grid container spacing={8} direction="column" alignItems="center" justify="center" >
-                  {this.props.listMembers.map(i => {
-                    return (
-                      <Grid item xs={10} sm={8} md={6} style={{ width: "100%" }}>
-                        <List>
-                          <Card >
-                            <ListItem>
-                              <CardContent style={{ width: '100%' }}>
-                                <TopLine>
-                                  <ProfileNameImg>
-                                    <Avatar src={i.profile_img} style={{ marginRight: '5px' }} />
-                                    <Link to={`/profile/${i.twitter_user_id}`} style={{ textDecoration: 'none' }}><ProfileName >{i.name}</ProfileName></Link>
-                                  </ProfileNameImg>
-                                  <Typography>@{i.screen_name}</Typography>
-                                </TopLine>
-                                <Typography>{i.description}</Typography>
-                                {/* {localStorage.getItem("twitter_user_id") === this.props.list.twitter_id ? <FontAwesomeIcon icon="times" onClick={this.removeFromList(i)}/> : null} */}
-                              </CardContent>
-                            </ListItem>
-                          </Card>
-                        </List>
-                      </Grid>)
-                  })}
+              <Grid container spacing={8} direction="column" alignItems="center" justify="center" >
+                <Grid item xs={10} sm={8} md={6} style={{width:"100%"}}>
+                {this.props.listMembers.map(i => {
+                  return (
+                    <List key={i.screen_name}>
+                    <Card >
+                      <ListItem>
+                      <CardContent style={{width:'100%'}}>
+                        <TopLine>
+                          <ProfileNameImg>
+                            <Avatar src={i.profile_img} style={{marginRight: '5px'}}/>
+                            <Link to={`/profile/${i.twitter_user_id}`} style={{textDecoration:'none'}}><ProfileName >{i.name}</ProfileName></Link>
+                            </ProfileNameImg>
+                        <Typography>@{i.screen_name}</Typography>
+                        </TopLine>
+                        <Typography>{i.description}</Typography>
+                        {/* {localStorage.getItem("twitter_user_id") === this.props.list.twitter_id ? <FontAwesomeIcon icon="times" onClick={this.removeFromList(i)}/> : null} */}
+                        </CardContent>
+                        </ListItem>
+                    </Card>
+                    </List>
+                )})}
                 </Grid>
+              </Grid>
 
 
               </TabContainer>
             }
             {value === 1 &&
               <TabContainer>
-                <Grid container spacing={1} direction="column" alignItems="center" justify="center" >
-                  <List>
-                    {this.props.timeline.map(i => {
-                      return (
-                        <Grid item xs={10} sm={8} md={6} style={{ width: "100%" }}>
-                          <Card>
-                            <CardContent>
-                              <Avatar src={i.user.profile_image_url} />
-                              <Typography >{i.user.name}</Typography>
-                              <Typography>{i.text}</Typography>
-                              <Typography>{i.entities.hashtags.text}</Typography>
-                            </CardContent>
-                          </Card>
-                        </Grid>
-                      )
-                    })}
-                  </List>
-                </Grid>
+                <Grid container spacing={0} direction="column" alignItems="center" justify="center" >
 
-              </TabContainer>
-            }
-            <Divider />
-          </Feed>
-          {/* <TweetFloat /> */}
-        </Content>
-      </React.Fragment>
-    );
-  }
+                  {this.props.timeline.map(i => {
+                    return (
+                      <Grid item xs={10} sm={8} md={6} style={{width:"100%"}}>
+                    <List>
+                      <Card>
+                      <CardContent style={{width:'100%'}}>
+                      <Tweet name={i.user.name} profileImg={i.user.profile_image_url} text={i.text} date={i.created_at}/>
+
+                    </CardContent>
+                    </Card>
+                    </List>
+                  </Grid>
+                    )
+                  })}
+                  </Grid>
+
+                </TabContainer>
+              }
+              <Divider />
+            </Feed>
+        {/* <TweetFloat /> */}
+      </Content>
+    </React.Fragment>
+  );
+}
 }
 
 const mapStateToProps = state => {
@@ -268,5 +272,10 @@ const mapActionsToProps = {
   getListSubscribers
 }
 
-export default connect(mapStateToProps, mapActionsToProps)(withTheme(theme)(ListDetails));
+const styledComponent = withTheme(theme)(ListDetails);
+const routedComponent = withRouter(styledComponent)
+
+export default connect(
+  mapStateToProps, mapActionsToProps)
+  (routedComponent);
 

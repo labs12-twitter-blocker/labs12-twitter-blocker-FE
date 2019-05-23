@@ -620,11 +620,11 @@ export const GET_LIST_TIMELINE_FAILURE = "GET_LIST_TIMELINE_FAILURE";
 export const getListTimeline = (list_id, user_id) => dispatch => {
   dispatch({ type: GET_LIST_TIMELINE });
   let token = localStorage.getItem("token")
-  let params = { twitter_user_id: user_id }
+  let data = { twitter_user_id: user_id }
   axios
-    .get(`${url}/lists/timeline/${list_id}`, {
+    .post(`${url}/lists/timeline/${list_id}`, data, {
       headers: { Authorization: token }
-    }, params)
+    })
     .then(res => {
       console.log(res);
       dispatch({ type: GET_LIST_TIMELINE_SUCCESS, payload: res.data });
@@ -637,25 +637,24 @@ export const getListTimeline = (list_id, user_id) => dispatch => {
 
 
 // Add a new List to the database
+// POST to the DS endpoint, and get back a list of members
 
-export const ADD_LIST = "ADD_LIST";
-export const ADD_LIST_SUCCESS = "ADD_LIST_SUCCESS";
-export const ADD_LIST_FAILURE = "ADD_LIST_FAILURE";
+export const DS_LIST = "DS_LIST";
+export const DS_LIST_SUCCESS = "DS_LIST_SUCCESS";
+export const DS_LIST_FAILURE = "DS_LIST_FAILURE";
 
-export const addList = post => dispatch => {
-  dispatch({ type: ADD_LIST });
+export const dsList = post => dispatch => {
+  dispatch({ type: DS_LIST });
   let token = localStorage.getItem("token")
   axios
-    .post(`${url}/lists/`, {
-      headers: { Authorization: token }
-    }, post)
+    .post(`${url}/lists/`, post)
     .then(res => {
       console.log(res);
-      dispatch({ type: ADD_LIST_SUCCESS, payload: res.data });
+      dispatch({ type: DS_LIST_SUCCESS, payload: res.data });
     })
     .catch(err => {
       console.log(err);
-      dispatch({ type: ADD_LIST_FAILURE, payload: err.message });
+      dispatch({ type: DS_LIST_FAILURE, payload: err.message });
     });
 };
 
@@ -669,9 +668,7 @@ export const createList = post => dispatch => {
   dispatch({ type: CREATE_LIST });
   let token = localStorage.getItem("token")
   axios
-    .post(`${url}/lists/create`, {
-      headers: { Authorization: token }
-    }, post)
+    .post(`${url}/lists/create`, post)
     .then(res => {
       console.log(res);
       dispatch({ type: CREATE_LIST_SUCCESS, payload: res.data });
@@ -776,7 +773,8 @@ export const subscribeToList = (params) => dispatch => {
   dispatch({ type: SUBSCRIBE_LIST });
   let token = localStorage.getItem("token")
   axios
-    .post(`${url}/lists/`, {
+    .post(`${url}/lists/subscribe/${listId}/follow/${userId}`, {
+      // .post(`${url}/lists/subscribe`, {
       headers: { Authorization: token }
     }, params)
     .then(res => {
@@ -914,7 +912,7 @@ export function searchLists(searchTerm, history) {
   return (dispatch) => {
     dispatch({ type: SEARCH_LISTS });
     let token = localStorage.getItem("token")
-    axios.get(`${url}/lists`, {
+    axios.get(`${url}/lists/public`, {
       headers: { Authorization: token }
     })
       .then(({ data }) => {
@@ -927,7 +925,7 @@ export function searchLists(searchTerm, history) {
         })
         console.log(filtered);
         dispatch({ type: SEARCH_LISTS_SUCCESS, payload: filtered })
-        history.push("/explorer")
+        // history.push("/explorer")
       })
       .catch(err => {
         console.log(err);

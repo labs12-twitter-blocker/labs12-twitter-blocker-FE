@@ -4,6 +4,7 @@ import classes from '../core/classes';
 const primary = {
   main: '#1da1f2',
   dark: '#1a91da',
+  contrastText: '#fff',
 };
 
 const theme = createMuiTheme({

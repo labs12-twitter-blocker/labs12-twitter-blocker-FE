@@ -12,10 +12,12 @@ import theme from '../../theme/tweeper/theme';
 import withTheme from '../withTheme';
 import ListExplorerTable from '../../components/tweeper/ListExplorerTable.js'
 import LeaderboardTab from '../../components/tweeper/LeaderboardTab.js'
-import { getLists, subscribeToList } from '../../actions'
+import { getPublicLists, subscribeToList } from '../../actions'
 // import atoms from '../../components/atoms';
 // import molecules from '../../components/molecules';
 import { connect } from 'react-redux';
+import {  withRouter } from "react-router-dom";
+import BackButton from '../../components/tweeper/BackButton'
 
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
@@ -61,13 +63,14 @@ class ListExplorer extends React.Component {
     };
 
     componentDidMount() {
-        this.props.getLists();
+        this.props.getPublicLists();
     }
     render() {
       const { value } = this.state;
   return (
     <React.Fragment>
       <CssBaseline />
+      <BackButton />
       <Content>
             <Feed>
             <Tabs 
@@ -106,8 +109,12 @@ const mapStateToProps = state => {
 }
 
 const mapActionsToProps = {
-  getLists: getLists,
-  subscribeToList: subscribeToList
+  getPublicLists, subscribeToList
 }
 
-export default connect( mapStateToProps, mapActionsToProps)(withTheme(theme)(ListExplorer));
+const styledComponent = withTheme(theme)(ListExplorer);
+const routedComponent = withRouter(styledComponent)
+
+export default connect( 
+  mapStateToProps, mapActionsToProps)
+  (routedComponent);

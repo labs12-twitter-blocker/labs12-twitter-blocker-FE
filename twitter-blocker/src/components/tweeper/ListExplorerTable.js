@@ -8,7 +8,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { getLists, addUserVote } from '../../actions/index';
+import { getPublicLists, addUserVote } from '../../actions/index';
 import { Link as RouterLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
@@ -80,7 +80,7 @@ function createData(list_name, description, member_count, subscriber_count, list
   return { id, list_name, description, member_count, subscriber_count, list_points, twitter_list_id };
 }
 
-class LeaderboardAllTable extends Component {
+class ListExplorerTable extends Component {
   state={
       rows: [],
       allListRan: false,
@@ -90,7 +90,7 @@ class LeaderboardAllTable extends Component {
     
   componentDidMount() {
     if (this.props.allLists === null ) {
-      this.props.getLists()
+      this.props.getPublicLists()
     } else {
       this.getListRowBuilder(this.props.allLists);
     }
@@ -153,7 +153,7 @@ class LeaderboardAllTable extends Component {
   render() {
       
       if (this.props.allLists === null || this.props.allLists.length === 0) {
-          return (<div>Loading</div>)
+          return (<div>No Results Found. Please Search Again.</div>)
       } else {
         const { classes } = this.props;
         return (
@@ -203,19 +203,19 @@ class LeaderboardAllTable extends Component {
   }
 }
 
-LeaderboardAllTable.propTypes = {
+ListExplorerTable.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
 
 const mapStateToProps = state => ({
-    allLists: state.listsReducer.lists
+    allLists: state.listsReducer.publicLists
   });
   
 
-const styledComponent = withStyles(styles)(LeaderboardAllTable);
+const styledComponent = withStyles(styles)(ListExplorerTable);
 
 export default connect(
   mapStateToProps,
-  { getLists, addUserVote }
+  { getPublicLists, addUserVote }
 )(styledComponent);

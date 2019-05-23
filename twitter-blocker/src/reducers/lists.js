@@ -56,9 +56,9 @@ import {
   UNSUBSCRIBE_LIST,
   UNSUBSCRIBE_LIST_SUCCESS,
   UNSUBSCRIBE_LIST_FAILURE,
-  ADD_LIST,
-  ADD_LIST_SUCCESS,
-  ADD_LIST_FAILURE,
+  DS_LIST,
+  DS_LIST_SUCCESS,
+  DS_LIST_FAILURE,
   CREATE_LIST,
   CREATE_LIST_SUCCESS,
   CREATE_LIST_FAILURE,
@@ -84,6 +84,7 @@ import {
 
 const initialState = {
   lists: [],
+  dsLists: [],
   profileLists: [],
   publicLists: [],
   privateLists: [],
@@ -118,7 +119,7 @@ const initialState = {
   fetchingFollowListPoints: false,
   fetchingBlockListPoints: false,
   fetchingListTimeline: false,
-  addingList: false,
+  addingDSList: false,
   subscribingList: false,
   unsubscribingList: false,
   creatingList: false,
@@ -128,8 +129,7 @@ const initialState = {
   searchingLists: false,
   newListResponse: null,
   error: null,
-  blockingTimeline: false,
-  blockTimelineList:null
+  addDSListResponseUpdated: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -440,58 +440,63 @@ const reducer = (state = initialState, action) => {
         fetchingListTimeline: false,
         error: action.payload
       };
-    case SUBSCRIBE_LIST:
+      case SUBSCRIBE_LIST:
+        return {
+          ...state,
+          subscribingList: true,
+          error: null
+        };
+      case SUBSCRIBE_LIST_SUCCESS:
+        return {
+          ...state,
+          subscribingList: false,
+          // lists: [...state.lists, action.payload]
+          lists: action.payload
+        };
+      case SUBSCRIBE_LIST_FAILURE:
+        return {
+          ...state,
+          unsubscribingList: false,
+          error: action.payload
+        };
+        case UNSUBSCRIBE_LIST:
+        return {
+          ...state,
+          unsubscribingList: true,
+          error: null
+        };
+      case UNSUBSCRIBE_LIST_SUCCESS:
+        return {
+          ...state,
+          unsubscribingList: false,
+          // lists: [...state.lists, action.payload]
+          lists: action.payload
+        };
+      case UNSUBSCRIBE_LIST_FAILURE:
+        return {
+          ...state,
+          subscribingList: false,
+          error: action.payload
+        };
+    case DS_LIST:
       return {
         ...state,
-        subscribingList: true,
+        addingDSList: true,
+        addDSListResponseUpdated: false,
         error: null
       };
-    case SUBSCRIBE_LIST_SUCCESS:
+    case DS_LIST_SUCCESS:
       return {
         ...state,
-        subscribingList: false,
-        lists: [ ...state.lists, action.payload ]
+        addingDSList: false,
+        addDSListResponseUpdated: true,
+        dsLists: [...state.lists, action.payload]
       };
-    case SUBSCRIBE_LIST_FAILURE:
+    case DS_LIST_FAILURE:
       return {
         ...state,
-        unsubscribingList: false,
-        error: action.payload
-      };
-    case UNSUBSCRIBE_LIST:
-      return {
-        ...state,
-        unsubscribingList: true,
-        error: null
-      };
-    case UNSUBSCRIBE_LIST_SUCCESS:
-      return {
-        ...state,
-        unsubscribingList: false,
-        lists: [ ...state.lists, action.payload ]
-      };
-    case UNSUBSCRIBE_LIST_FAILURE:
-      return {
-        ...state,
-        subscribingList: false,
-        error: action.payload
-      };
-    case ADD_LIST:
-      return {
-        ...state,
-        addingList: true,
-        error: null
-      };
-    case ADD_LIST_SUCCESS:
-      return {
-        ...state,
-        addingList: false,
-        lists: [ ...state.lists, action.payload ]
-      };
-    case ADD_LIST_FAILURE:
-      return {
-        ...state,
-        addingList: false,
+        addingDSList: false,
+        addDSListResponseUpdated: false,
         error: action.payload
       };
     case CREATE_LIST:
@@ -505,7 +510,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         creatingList: false,
-        newListResponse: action.payload.response,
+        newListResponse: action.payload,
         newListResponseUpdated: true,
         lists: [ ...state.lists, action.payload ]
       };
@@ -588,7 +593,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         searchingLists: false,
-        lists: action.payload
+        publicLists: action.payload
       };
     case SEARCH_LISTS_FAILURE:
       return {

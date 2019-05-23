@@ -109,7 +109,7 @@ class HeaderTest extends React.Component {
   render() {
     const { anchorEl } = this.state;
     console.log("**********************" + this.props.loggedIn);
-    let content = (this.props.loggedIn === true) ?
+    let content = (localStorage.getItem("token")) ?
       <Spacer>
         <AppBar position="fixed" elevation={1}>
           <Toolbar>
@@ -238,8 +238,8 @@ class HeaderTest extends React.Component {
                   </Menu>
                   {/* <ListItemText primary="austen" /> */}
                   <React.Fragment>
-                    <Button medium color="primary" variant="contained" href="/create">
-                      Create New List
+                    <Button color="primary" variant="contained" href="/create">
+                      List Creator
                   </Button>
                   </React.Fragment>
                 </ListItem>

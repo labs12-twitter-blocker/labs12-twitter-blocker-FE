@@ -103,7 +103,7 @@ class Header extends React.Component {
                 <Avatar src="./assets/austen.png" style={avatarStyle} />
                 {/* <ListItemText primary="austen" /> */}
                 <React.Fragment>
-                  <Button medium color="primary" variant="contained" href="/create">
+                  <Button color="primary" variant="contained" href="/create">
                     Create New List
                   </Button>
                   {/* <CreateList /> */}
