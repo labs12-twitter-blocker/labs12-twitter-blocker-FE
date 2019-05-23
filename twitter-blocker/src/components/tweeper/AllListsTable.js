@@ -40,6 +40,7 @@ const styles = theme => ({
 		marginTop: 10,
     [theme.breakpoints.down("sm")]: {
       height: 48,
+      // border: 0,
     }
   },
   tableBodyData: {
@@ -52,9 +53,33 @@ const styles = theme => ({
 			fontWeight: 600,
 		},
 
+        [theme.breakpoints.down("sm")]: {
+        	display: 'table-cell',
+        	padding: '0px 4px',
+        	fontSize: 14,
+
+        	"&:before": {
+        		content: "",
+        		display: "none"
+        	}
+        }
+	},
+  pointsBody: {
+    width: '125px',
+    padding: '0px 4px',
+    // padding: 12,
+    fontSize: 14,
+    
+    "&:before": {
+			content: "attr(datatitle)",
+			float: "left",
+			fontWeight: 600,
+    },
+    
     [theme.breakpoints.down("sm")]: {
+      width: '40px',
+      padding: '0px 0 0 0px',
       display: 'table-cell',
-      padding: '0px 4px',
       fontSize: 14,
 
       "&:before": {
@@ -62,8 +87,10 @@ const styles = theme => ({
         display: "none"
       }
     }
-	},
-  pointsColumn: {
+  },
+  pointsRow: {
+    height: "auto",
+		marginTop: 10,
     width: '125px',
     padding: '0px 4px',
     [theme.breakpoints.down("sm")]: {
@@ -133,13 +160,13 @@ class AllListsTable extends Component {
           <Table className={classes.table}>
             <TableHead>
               <TableRow classes={{ root: classes.tableBodyRow }} >
-                <TableCell classes={{ root: classes.tableBodyData, root: classes.pointsColumn }} align="center" padding="checkbox">Points</TableCell>
+                <TableCell classes={{ root: classes.pointsBody }} align="center" padding="checkbox">Points</TableCell>
                 <TableCell classes={{ root: classes.tableBodyData }} align="left" padding="none">Name</TableCell>
                 <TableCell classes={{ root: classes.tableBodyData }} align="right">Members</TableCell>
                 <TableCell classes={{ root: classes.tableBodyData }} align="right">Subscribers</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody classes={{ root: classes.tableBodyRow, root: classes.pointsColumn }}>
+            <TableBody classes={{ root: classes.pointsRow }}>
               {this.state.rows.map(row => (
 
                 <TableRow classes={{ root: classes.tableBodyRow }} key={row.id} hover >

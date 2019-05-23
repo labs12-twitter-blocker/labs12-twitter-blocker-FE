@@ -29,8 +29,8 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
     maxWidth: 850,
     margin: 'auto',
-    marginTop: 30    
-    
+    marginTop: 30
+
   },
 });
 
@@ -53,14 +53,14 @@ class SettingsTabs extends React.Component {
     return (
       <React.Fragment>
         <AppBar position="static" color="default">
-        <h3>Account Settings</h3>
+          <h3>Account Settings</h3>
         </AppBar>
         <UserSettingsCard />
         {/* <UserSettingsTextField /> */}
         {/* <UserSettingsPaymentField /> */}
         {/* <UserSettingsDelete /> */}
       </React.Fragment>
-      
+
       // // <div className={classes.root}>
       //   {/* <AppBar position="static" color="default">
       //     <Tabs
@@ -90,8 +90,8 @@ class SettingsTabs extends React.Component {
 }
 
 SettingsTabs.propTypes = {
-    classes: PropTypes.object.isRequired,
-    theme: PropTypes.object.isRequired,
-  };
-  
-  export default withStyles(styles, { withTheme: true })(SettingsTabs);
+  classes: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles, { withTheme: true })(SettingsTabs);
