@@ -98,6 +98,7 @@ export const ICON = {
   white: 'icon--white',
   red: 'icon--red',
   primary: 'icon--primary',
+  secondary: 'icon--secondary',
   small: 'icon--small',
   text: 'icon--text',
   light: 'icon--light',

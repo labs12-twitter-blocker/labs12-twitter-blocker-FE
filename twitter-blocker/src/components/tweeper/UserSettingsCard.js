@@ -1,15 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
+// import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import atoms from '../../components/atoms';
-import molecules from '../../components/molecules';
+// import molecules from '../../components/molecules';
 import jwt from 'jsonwebtoken';
 
 import { deleteUser } from '../../actions'
@@ -40,9 +40,9 @@ if (localStorage.getItem("token")) {
 }
 
 class UserSettingsCard extends React.Component {
-  constructor(props) {
-    super(props)
-  }
+  // constructor(props) {
+  //   super(props)
+  // }
   deleteAccount = () => {
     this.props.deleteUser(decoded.id)
     // e.preventDefault()

@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
+// import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
+// import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import { getUser, getLogin } from '../../actions/index.js';
 import jwt from 'jsonwebtoken';
@@ -70,7 +70,7 @@ class UserSettingsTextField extends React.Component {
 
   render() {
     const { classes } = this.props;
-    let content = ( ( this.props.loggedIn === true || this.state.twitter_user_id !== null ) && this.props.gotCurrentUser == true )?
+    let content = ( ( this.props.loggedIn === true || this.state.twitter_user_id !== null ) && this.props.gotCurrentUser === true )?
     (
     <form className={classes.container} noValidate autoComplete="off">
     <h4>User Info</h4>
