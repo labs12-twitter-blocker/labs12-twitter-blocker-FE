@@ -936,6 +936,82 @@ export function searchLists(searchTerm, history) {
   }
 }
 
+export const BLOCK_TIMELINE = "BLOCK_TIMELINE";
+export const BLOCK_TIMELINE_SUCCESS = "BLOCK_TIMELINE_SUCCESS";
+export const BLOCK_TIMELINE_FAILURE = "BLOCK_TIMELINE_FAILURE";
+
+export function blockTimeline(params) {
+  return (dispatch) => {
+    dispatch({ type: BLOCK_TIMELINE });
+    // let token = localStorage.getItem("token")
+    console.log("Block Timeline Action");
+
+    axios.post(`${url}/lists/blocklist`, params)
+      .then(res => {
+        console.log("res");
+        console.log(res);
+        dispatch({ type: BLOCK_TIMELINE_SUCCESS, payload: res.data });
+
+      }).catch(err => {
+        console.log(err)
+        console.log("err")
+        dispatch({ type: BLOCK_TIMELINE_FAILURE });
+      })
+  }
+}
+//block a user
+
+export const BLOCK_USER = "BLOCK_USER";
+export const BLOCK_USER_SUCCESS = "BLOCK_USER_SUCCESS";
+export const BLOCK_USER_FAILURE = "BLOCK_USER_FAILURE";
+
+export const blockUser = (params) => dispatch => {
+  dispatch({ type: BLOCK_USER });
+  console.log("inside block user")
+  console.log("blockUser params", params)
+  let token = localStorage.getItem("token")
+  const twitterId = params.twitter_id;
+  const userId = params.user_id;
+  axios
+    .post(`${url}/users/blocks/create/${userId}/${twitterId}`, {
+      headers: { Authorization: token }
+    }, twitterId)
+    .then(res => {
+      console.log(res);
+      dispatch({ type: BLOCK_USER_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: BLOCK_USER_FAILURE, payload: err.message });
+    });
+}
+
+// unblock a user
+
+export const UNBLOCK_USER = "UNBLOCK_USER";
+export const UNBLOCK_USER_SUCCESS = "UNBLOCK_USER_SUCCESS";
+export const UNBLOCK_USER_FAILURE = "UNBLOCK_USER_FAILURE";
+
+export const unblockUser = (params) => dispatch => {
+  dispatch({ type: UNBLOCK_USER });
+  console.log("inside unblock user")
+  console.log("unblockUser params", params)
+  let token = localStorage.getItem("token")
+  const twitterId = params.twitter_id;
+  const userId = params.user_id;
+  axios
+    .post(`${url}/users/blocks/destroy/${userId}/${twitterId}`, {
+      headers: { Authorization: token }
+    }, twitterId)
+    .then(res => {
+      console.log(res);
+      dispatch({ type: UNBLOCK_USER_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: UNBLOCK_USER_FAILURE, payload: err.message });
+    });
+}
 
 export const ERROR_HANDLER = "ERROR_HANDLER";
 

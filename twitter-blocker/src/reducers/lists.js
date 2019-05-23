@@ -74,6 +74,9 @@ import {
   SEARCH_LISTS,
   SEARCH_LISTS_SUCCESS,
   SEARCH_LISTS_FAILURE,
+  BLOCK_TIMELINE,
+  BLOCK_TIMELINE_SUCCESS,
+  BLOCK_TIMELINE_FAILURE,
   // DELETE_LIST_FOLLOW,   ------------> not sure about these either here or in actions/index.js
   // DELETE_LIST_FOLLOW_SUCCESS,
   // DELETE_LIST_FOLLOW_FAILURE
@@ -124,7 +127,9 @@ const initialState = {
   deletingList: false,
   searchingLists: false,
   newListResponse: null,
-  error: null
+  error: null,
+  blockingTimeline: false,
+  blockTimelineList:null
 };
 
 const reducer = (state = initialState, action) => {
@@ -435,42 +440,42 @@ const reducer = (state = initialState, action) => {
         fetchingListTimeline: false,
         error: action.payload
       };
-      case SUBSCRIBE_LIST:
-        return {
-          ...state,
-          subscribingList: true,
-          error: null
-        };
-      case SUBSCRIBE_LIST_SUCCESS:
-        return {
-          ...state,
-          subscribingList: false,
-          lists: [...state.lists, action.payload]
-        };
-      case SUBSCRIBE_LIST_FAILURE:
-        return {
-          ...state,
-          unsubscribingList: false,
-          error: action.payload
-        };
-        case UNSUBSCRIBE_LIST:
-        return {
-          ...state,
-          unsubscribingList: true,
-          error: null
-        };
-      case UNSUBSCRIBE_LIST_SUCCESS:
-        return {
-          ...state,
-          unsubscribingList: false,
-          lists: [...state.lists, action.payload]
-        };
-      case UNSUBSCRIBE_LIST_FAILURE:
-        return {
-          ...state,
-          subscribingList: false,
-          error: action.payload
-        };
+    case SUBSCRIBE_LIST:
+      return {
+        ...state,
+        subscribingList: true,
+        error: null
+      };
+    case SUBSCRIBE_LIST_SUCCESS:
+      return {
+        ...state,
+        subscribingList: false,
+        lists: [ ...state.lists, action.payload ]
+      };
+    case SUBSCRIBE_LIST_FAILURE:
+      return {
+        ...state,
+        unsubscribingList: false,
+        error: action.payload
+      };
+    case UNSUBSCRIBE_LIST:
+      return {
+        ...state,
+        unsubscribingList: true,
+        error: null
+      };
+    case UNSUBSCRIBE_LIST_SUCCESS:
+      return {
+        ...state,
+        unsubscribingList: false,
+        lists: [ ...state.lists, action.payload ]
+      };
+    case UNSUBSCRIBE_LIST_FAILURE:
+      return {
+        ...state,
+        subscribingList: false,
+        error: action.payload
+      };
     case ADD_LIST:
       return {
         ...state,
@@ -481,7 +486,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         addingList: false,
-        lists: [...state.lists, action.payload]
+        lists: [ ...state.lists, action.payload ]
       };
     case ADD_LIST_FAILURE:
       return {
@@ -502,7 +507,7 @@ const reducer = (state = initialState, action) => {
         creatingList: false,
         newListResponse: action.payload.response,
         newListResponseUpdated: true,
-        lists: [...state.lists, action.payload]
+        lists: [ ...state.lists, action.payload ]
       };
     case CREATE_LIST_FAILURE:
       return {
@@ -535,24 +540,24 @@ const reducer = (state = initialState, action) => {
         updatingList: false,
         error: action.payload
       };
-      case UPDATE_LIST_MEMBERS:
-        return {
-          ...state,
-          updatingListMembers: true,
-          error: null
-        };
-      case UPDATE_LIST_MEMBERS_SUCCESS:
-        return {
-          ...state,
-          updatingListMembers: false,
-          listMembers: action.payload
-        };
-      case UPDATE_LIST_MEMBERS_FAILURE:
-        return {
-          ...state,
-          updatingListMembers: false,
-          error: action.payload
-        };
+    case UPDATE_LIST_MEMBERS:
+      return {
+        ...state,
+        updatingListMembers: true,
+        error: null
+      };
+    case UPDATE_LIST_MEMBERS_SUCCESS:
+      return {
+        ...state,
+        updatingListMembers: false,
+        listMembers: action.payload
+      };
+    case UPDATE_LIST_MEMBERS_FAILURE:
+      return {
+        ...state,
+        updatingListMembers: false,
+        error: action.payload
+      };
     //
     case DELETE_LIST:
       return {
@@ -591,7 +596,24 @@ const reducer = (state = initialState, action) => {
         searchingLists: false,
         error: action.payload
       };
-
+    case BLOCK_TIMELINE:
+      return {
+        ...state,
+        blockingTimeline: true,
+        error: null
+      };
+    case BLOCK_TIMELINE_SUCCESS:
+      return {
+        ...state,
+        blockingTimeline: false,
+        blockTimelineList: action.payload
+      };
+    case BLOCK_TIMELINE_FAILURE:
+      return {
+        ...state,
+        blockingTimeline: false,
+        error: action.payload
+      };
 
 
     default:

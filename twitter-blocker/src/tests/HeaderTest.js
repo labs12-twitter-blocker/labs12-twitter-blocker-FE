@@ -18,12 +18,12 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faHome, faSearch, faBell, faEnvelope, faList, faCog } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faHome, faSearch, faBell, faEnvelope, faList, faCog, fa } from '@fortawesome/free-solid-svg-icons';
 import atoms from '../components/atoms';
 import molecules from '../components/molecules';
 import { searchLists, addPost } from '../actions';
 import { connect } from 'react-redux';
-import { Link, Redirect} from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import styled from '@material-ui/styles/styled';
 import theme from '../theme/tweeper/theme';
 import jwt from 'jsonwebtoken';
@@ -50,16 +50,16 @@ const Spacer = styled('div')({
   width: "100%",
   minHeight: 53,
   display: "hidden",
-  [theme.breakpoints.down('xs')]: {
+  [ theme.breakpoints.down('xs') ]: {
     minHeight: 170,
   },
 })
 
 class HeaderTest extends React.Component {
   state = {
-      open: false,
-      searchTerm: "",
-      anchorEl: null,
+    open: false,
+    searchTerm: "",
+    anchorEl: null,
   };
 
   componentDidMount() {
@@ -123,6 +123,19 @@ class HeaderTest extends React.Component {
                         <Link to="/profile">
                           <Tooltip title="Profile">
                             <FontAwesomeIcon icon={faHome} size="2x" color='#38A1F3' />
+                          </Tooltip>
+                        </Link>
+                      </Badge>
+                    }
+                  />
+
+                  <Tab
+                    onlyIcon
+                    icon={
+                      <Badge dotted badgeContent="">
+                        <Link to="/cleantimeline">
+                          <Tooltip title="Clean Timeline">
+                            <FontAwesomeIcon icon={faCog} size="2x" color='#38A1F3' />
                           </Tooltip>
                         </Link>
                       </Badge>
@@ -201,7 +214,7 @@ class HeaderTest extends React.Component {
                     ),
                   }}
                   onChange={this.searchLists}
-                  
+
                 />
               </Grid>
 
@@ -235,8 +248,8 @@ class HeaderTest extends React.Component {
           </Toolbar>
         </AppBar>
       </Spacer>
-    :
-    null;
+      :
+      null;
     return (
       <div>
         {content}

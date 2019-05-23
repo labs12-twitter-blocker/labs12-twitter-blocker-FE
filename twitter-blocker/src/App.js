@@ -15,7 +15,7 @@ import HeaderTest from './tests/HeaderTest';
 import theme from './theme/tweeper/theme';
 import withTheme from './tweeper/withTheme';
 import ListStepper from './tweeper/ListCreate/ListStepper'
-
+import BlockTimeline from './components/tweeper/BlockTimeline'
 import { Route, Redirect } from 'react-router-dom';
 import { getUser, getLogin } from './actions/index.js';
 
@@ -52,6 +52,8 @@ function App() {
       <ProtectedRoute path="/leaderboard" component={Leaderboard} />
       <ProtectedRoute path="/settings" component={Settings} />
       <ProtectedRoute path="/explorer" component={ListExplorer} />
+      <Route path="/cleantimeline" component={BlockTimeline} />
+
       {/* <Route path="/stepper" component={ListStepper} /> */}
     </div>
   );
