@@ -1,5 +1,5 @@
 import React from 'react';
-import {  withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider/Divider';
@@ -21,8 +21,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Tweet from '../components/tweeper/Tweet.js';
 
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {library} from '@fortawesome/fontawesome-svg-core'
+import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+
 import { List, 
       ListItem, 
       Tabs, Tab,
@@ -48,7 +49,7 @@ library.add(faTimes)
 const { Avatar, Typography, Button } = atoms;
 // const { Tabs, Tab } = molecules;
 
-const TabContainer = styled('div') ({
+const TabContainer = styled('div')({
   padding: theme.spacing.unit * 4,
   margin: 'auto'
 })
@@ -73,28 +74,30 @@ const Feed = styled('div')({
 //   justifyContent: 'space-between',
 // });
 
+
 // const ProfileNameImg = styled('div') ({
 //   display: 'flex',
 //   width: '50%',
 //   alignItems: 'center',
 // })
 
+
 // const ProfileName = styled(Typography)({
 //   fontWeight: 'bold',
 //   fontFamily: 'Helvetica Neue',
 // })
 
-const SubscribeButton = styled(Button) ({
-  margin:"2rem", 
+const SubscribeButton = styled(Button)({
+  margin: "2rem",
 })
 
 const DetailsHeader = styled('div')({
-  padding:"5%",
+  padding: "5%",
 })
 
 
 class ListDetails extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       value: 0,
@@ -110,20 +113,24 @@ class ListDetails extends React.Component {
   };
 
   subscribe = () => {
-      this.props.subscribeToList(this.props.list.twitter_list_id, this.state.twitter_user_id);
-      this.setState({isSubscribed: true})
-      console.log("this.props.list.twitter_list_id", this.props.list.twitter_list_id)
-      console.log("this.state.twitter_user_id", this.state.twitter_user_id)
+    this.props.subscribeToList(this.props.list.twitter_list_id, this.state.twitter_user_id);
+    this.setState({ isSubscribed: true })
+    console.log("this.props.list.twitter_list_id", this.props.list.twitter_list_id)
+    console.log("this.state.twitter_user_id", this.state.twitter_user_id)
   }
 
   unsubscribe = () => {
-    this.props.unSubscribeToList(this.props.list.twitter_list_id, this.state.twitter_user_id);
-    this.setState({isSubscribed: false})
+    let params = {
+      twitter_id: this.state.twitter_user_id,
+      twitter_list_id: this.props.list.twitter_list_id
+    }
+    this.props.unSubscribeToList(params);
+    this.setState({ isSubscribed: false })
   }
 
 
 
-  componentDidMount(){
+  componentDidMount() {
     let decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
     this.setState({ twitter_user_id: decoded.id })
     this.props.getListMembers(this.props.match.params.twitter_list_id);
@@ -131,23 +138,24 @@ class ListDetails extends React.Component {
     this.props.getListTimeline(this.props.match.params.twitter_list_id, decoded.id);
     this.props.getListSubscribers(this.props.match.params.twitter_list_id);
     this.props.listSubscribers.map(user => {
-      if(user.twitter_user_id === decoded.id) {
-        this.setState({isSubscribed: true})
+      if (user.twitter_user_id === decoded.id) {
+        this.setState({ isSubscribed: true })
       }
       return null
     })
 
-}
-  
-render() {
-  const { value } = this.state;
-  const { isSubscribed } = this.state;
+  }
 
-  return (
-    <React.Fragment>
-      <CssBaseline />
-      <BackButton />
+  render() {
+    const { value } = this.state;
+    const { isSubscribed } = this.state;
+
+    return (
+      <React.Fragment>
+        <CssBaseline />
+        <BackButton />
         <Content>
+
           <Feed> 
             <DetailsHeader>
               <Grid container justify="space-between" spacing={24}>
@@ -157,16 +165,15 @@ render() {
                   <Typography>{this.props.list.subscriber_count} Subscribers</Typography>
                 </Grid>
                 <Grid item>
-                  {isSubscribed === false && 
-                    <SubscribeButton color="primary" variant="outlined" style={{color:"#1da1f2", border:"2px solid #1da1f2"}} onClick={this.subscribe}>Subscribe</SubscribeButton>
+                  {isSubscribed === false &&
+                    <SubscribeButton color="primary" variant="outlined" style={{ color: "#1da1f2", border: "2px solid #1da1f2" }} onClick={this.subscribe}>Subscribe</SubscribeButton>
                   }
                   {isSubscribed === true &&
                     <SubscribeButton color="primary" variant="contained" onClick={this.unsubscribe}>Unsubscribe</SubscribeButton>
                   }
                 </Grid>
               </Grid>
-            </DetailsHeader>
-              
+            </DetailsHeader>          
             <Tabs 
               value={value}
               onChange={this.handleChange} 
@@ -261,6 +268,7 @@ render() {
 }
 }
 
+
 const mapStateToProps = state => {
   return {
     listMembers: state.listsReducer.listMembers,
@@ -287,6 +295,5 @@ const mapActionsToProps = {
 const styledComponent = withTheme(theme)(ListDetails);
 const routedComponent = withRouter(styledComponent)
 
-export default connect( 
+export default connect(
   mapStateToProps, mapActionsToProps)(routedComponent);
-
