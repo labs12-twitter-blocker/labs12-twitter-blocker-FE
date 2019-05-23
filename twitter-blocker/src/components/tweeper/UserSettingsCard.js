@@ -12,7 +12,7 @@ import atoms from '../../components/atoms';
 // import molecules from '../../components/molecules';
 import jwt from 'jsonwebtoken';
 
-import { deleteUser } from '../../actions'
+import { getUser, deleteUser } from '../../actions'
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
 
@@ -43,6 +43,18 @@ class UserSettingsCard extends React.Component {
   // constructor(props) {
   //   super(props)
   // }
+  componentDidMount() {
+    if (localStorage.getItem("token")) {
+      let decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
+      this.props.getUser(decoded.id)
+      this.setState({ twitter_user_id: decoded.id })
+      this.setState({ displayName: decoded.displayName })
+      this.setState({ profilePic: decoded.profile_img })
+      this.setState({ username: decoded.username })
+      this.setState({ banner_img: decoded.banner_img })
+      console.log("Profile DECODED", decoded)
+    }
+  }
   deleteAccount = () => {
     this.props.deleteUser(decoded.id)
     // e.preventDefault()
@@ -97,6 +109,6 @@ const mapStateToProps = state => ({
 
 export default withRouter(connect(
   mapStateToProps,
-  { deleteUser }
+  { getUser, deleteUser }
 )(styledComponent));
 
