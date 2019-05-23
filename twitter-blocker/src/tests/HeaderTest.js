@@ -64,9 +64,9 @@ const Spacer = styled('div')({
 })
 
 // function LinkTab(props) {
-//   return <Tab component="a" 
-//   // onClick={event => event.preventDefault()} 
-//   {...props} 
+//   return <Tab component="a"
+//   // onClick={event => event.preventDefault()}
+//   {...props}
 //   />;
 // }
 
@@ -195,6 +195,8 @@ class HeaderTest extends React.Component {
     // this.setState({ tweet: "" });
     this.handleClose()
     this.setState({ snackBarOpen: true })
+    this.setState({ tweet: "" });
+    this.handleClose();
 
   }
   cancelTweet = (e) => {
@@ -203,6 +205,7 @@ class HeaderTest extends React.Component {
     this.stopTimer()
     this.resetTimer()
     this.setState({ snackBarOpen: false });
+    this.handleClose()
   }
   handleAvatarClick = event => {
     this.setState({ anchorEl: event.currentTarget });
@@ -305,7 +308,7 @@ class HeaderTest extends React.Component {
             <Grid item sm xs={12}>
               <TextField
                 fullWidth
-                placeholder="Find Lists"
+                placeholder="Search List Explorer"
                 InputProps={{
                   disableUnderline: true,
                   startAdornment: (
@@ -371,7 +374,7 @@ class HeaderTest extends React.Component {
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="secondary">
-              Cancel
+              Close
             </Button>
             <Button onClick={e => this.cancelTweet()} color="secondary">
               Cancel Tweet

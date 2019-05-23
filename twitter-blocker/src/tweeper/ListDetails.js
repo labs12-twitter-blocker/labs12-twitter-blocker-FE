@@ -23,18 +23,18 @@ import Tweet from '../components/tweeper/Tweet.js';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { List, 
-      ListItem, 
+import { List,
+      ListItem,
       Tabs, Tab,
-      // Card, 
+      // Card,
       // CardActions,
       CardContent,
       } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { getList, 
-        getListMembers, 
-        getUser, 
-        getListTimeline, 
+import { getList,
+        getListMembers,
+        getUser,
+        getListTimeline,
         updateListMembers,
         subscribeToList,
         unSubscribeToList,
@@ -123,6 +123,7 @@ class ListDetails extends React.Component {
     }
     this.props.unSubscribeToList(params);
     this.setState({ isSubscribed: false })
+    // console.log(this.state.isSubscribed)
   }
 
 
@@ -152,7 +153,7 @@ class ListDetails extends React.Component {
         <CssBaseline />
         <BackButton />
         <Content>
-          <Feed> 
+          <Feed>
             <DetailsHeader>
               <Grid container justify="space-between" spacing={24}>
                 <Grid item>
@@ -162,7 +163,7 @@ class ListDetails extends React.Component {
                 </Grid>
                 <Grid item>
                   {isSubscribed === false &&
-                    <SubscribeButton color="primary" variant="outlined" style={{ color: "#1da1f2", border: "2px solid #1da1f2" }} onClick={this.subscribe}>Subscribe</SubscribeButton>
+                    <SubscribeButton variant="containedPrimary" style={{ color: "#304ffe", border: "2px solid #304ffe" }} onClick={this.subscribe}>Subscribe</SubscribeButton>
                   }
                   {isSubscribed === true &&
                     <SubscribeButton color="primary" variant="contained" onClick={this.unsubscribe}>Unsubscribe</SubscribeButton>
@@ -170,10 +171,10 @@ class ListDetails extends React.Component {
                 </Grid>
               </Grid>
             </DetailsHeader>
-              
-            <Tabs 
+
+            <Tabs
               value={value}
-              onChange={this.handleChange} 
+              onChange={this.handleChange}
               variant='fullWidth' >
               <Tab label='Members' />
               <Tab label='Timeline'/>
@@ -184,7 +185,7 @@ class ListDetails extends React.Component {
               onChangeIndex={this.handleChangeIndex}
             >
               <TabContainer>
-                {this.props.fetchingListMembersDone ? 
+                {this.props.fetchingListMembersDone ?
                 <Grid container spacing={8} direction="column" alignItems="center" justify="center" >
                 <Grid item xs={12} sm={10} md={8} style={{width:"100%"}}>
                   {this.props.listMembers.map((e, index) => {
@@ -198,7 +199,7 @@ class ListDetails extends React.Component {
                             disableTypography={true}
                             primary={<>
                               <Typography color="textPrimary" variant='subtitle1'style={{display: 'inline-block'}}>
-                                {e.name} 
+                                {e.name}
                               </Typography>
                               <Typography color="textSecondary" variant='caption'style={{display: 'inline-block'}}>
                               &nbsp;@{e.screen_name}
@@ -224,12 +225,12 @@ class ListDetails extends React.Component {
                     >
                       <Grid item xs={3}>
                         <CircularProgress color="primary" />
-                      </Grid>   
+                      </Grid>
                     </Grid>) }
-              
+
               </TabContainer>
               <TabContainer>
-                {this.props.fetchingListTimelineDone ? 
+                {this.props.fetchingListTimelineDone ?
                   <Grid container spacing={0} direction="column" alignItems="center" justify="center" >
                     <Grid item xs={12} sm={10} md={8} style={{width:"100%"}}>
                       {this.props.timeline.map(i => {
@@ -252,7 +253,7 @@ class ListDetails extends React.Component {
                   >
                     <Grid item xs={3}>
                       <CircularProgress color="primary" />
-                    </Grid>   
+                    </Grid>
                   </Grid>)
                 }
               </TabContainer>

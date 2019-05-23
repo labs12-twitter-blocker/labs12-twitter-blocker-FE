@@ -51,8 +51,8 @@ const TabContainer = styled('div') ({
 // });
 
 class ListExplorer extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
           value: 0
         }
@@ -62,11 +62,23 @@ class ListExplorer extends React.Component {
       this.setState({ value });
     };
 
+    updateState = () => {
+      this.setState({value: 0})
+    }
+
     componentDidMount() {
         this.props.getPublicLists();
     }
+
+    componentDidUpdate(prevProps) {
+      if (this.props.allLists.length !== prevProps.allLists.length) {
+        this.updateState();
+      }
+    }
+
     render() {
       const { value } = this.state;
+      console.log(this.state)
   return (
     <React.Fragment>
       <CssBaseline />
@@ -77,12 +89,12 @@ class ListExplorer extends React.Component {
               value={this.state.value}
               onChange={this.handleChange} 
               variant='fullWidth'>
-                <Tab label='List Explorer'/>
-                <Tab label='Leaderboard'/>
+                <Tab label='List Explorer' value={0}/>
+                <Tab label='Leaderboard' value={1} />
               </Tabs>
               {value === 0 &&
               <TabContainer>
-                <ListExplorerTable variant="fullWidth"/>
+                <ListExplorerTable variant="fullWidth" />
               </TabContainer>
               }
               {value === 1 &&
@@ -92,7 +104,6 @@ class ListExplorer extends React.Component {
               }
               <Divider />
             </Feed>
-        {/* <TweetFloat /> */}
       </Content>
     </React.Fragment>
   );
@@ -104,7 +115,8 @@ const mapStateToProps = state => {
   return {
     lists: state.listsReducer.lists,
     user: state.usersReducer.currentUser,
-    list: state.listsReducer.list
+    list: state.listsReducer.list,
+    allLists: state.listsReducer.publicLists
   }
 }
 
