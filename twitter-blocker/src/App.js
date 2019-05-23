@@ -15,7 +15,7 @@ import HeaderTest from './tests/HeaderTest';
 import theme from './theme/tweeper/theme';
 import withTheme from './tweeper/withTheme';
 // import ListStepper from './tweeper/ListCreate/ListStepper'
-
+import BlockTimeline from './components/tweeper/BlockTimeline'
 import { Route, Redirect } from 'react-router-dom';
 import { getLogin } from './actions/index.js';
 // import jwt from 'jsonwebtoken';
@@ -42,6 +42,8 @@ function App() {
       <PrivateRoute path="/leaderboard" component={Leaderboard} />
       <PrivateRoute path="/settings" component={Settings} />
       <PrivateRoute path="/explorer" component={ListExplorer} />
+      <Route path="/cleantimeline" component={BlockTimeline} />
+
       {/* <Route path="/stepper" component={ListStepper} /> */}
     </div>
   );
