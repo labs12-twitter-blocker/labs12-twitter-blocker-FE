@@ -114,7 +114,6 @@ class ListExplorerTable extends Component {
         list.list_points, list.twitter_list_id))
         return newRow;
       })
-      // console.log(newRow);
       this.setState({allListRan: true})
       this.setState({rows: newRow});
   }; 

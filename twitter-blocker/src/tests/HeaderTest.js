@@ -119,6 +119,7 @@ class HeaderTest extends React.Component {
   };
 
   render() {
+    const { value } = this.state;
     const { anchorEl } = this.state;
     // console.log("**********************" + this.props.loggedIn);
     let content = (localStorage.getItem("token")) ?
@@ -166,7 +167,6 @@ class HeaderTest extends React.Component {
                       </Link>
                     }
                   />
-
                 </Tabs>
               </Grid>
 
@@ -268,7 +268,5 @@ const mapActionsToProps = {
   searchLists,
   addPost
 }
-
-// const FormDialogRouter = withRouter(FormDialog);
 
 export default withRouter(connect(mapStateToProps, mapActionsToProps)(HeaderTest));
