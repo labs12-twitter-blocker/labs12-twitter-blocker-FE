@@ -61,6 +61,10 @@ const Spacer = styled('div')({
 //   {...props} 
 //   />;
 // }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 28a0081a15c0c69ec4194d23389b37a9e242a42e
 
 class HeaderTest extends React.Component {
   state = {
