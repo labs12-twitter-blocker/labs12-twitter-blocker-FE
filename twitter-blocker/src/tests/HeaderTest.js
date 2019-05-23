@@ -18,7 +18,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faHome, faSearch, faList } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faHome, faSearch, faList, faCog } from '@fortawesome/free-solid-svg-icons';
 import atoms from '../components/atoms';
 import molecules from '../components/molecules';
 import { searchLists, addPost } from '../actions';
@@ -50,24 +50,24 @@ const Spacer = styled('div')({
   width: "100%",
   minHeight: 53,
   display: "hidden",
-  [theme.breakpoints.down('xs')]: {
+  [ theme.breakpoints.down('xs') ]: {
     minHeight: 170,
   },
 })
 
 function LinkTab(props) {
-  return <Tab component="a" 
-  // onClick={event => event.preventDefault()} 
-  {...props} 
+  return <Tab component="a"
+    // onClick={event => event.preventDefault()}
+    {...props}
   />;
 }
 
 class HeaderTest extends React.Component {
   state = {
-      open: false,
-      searchTerm: "",
-      anchorEl: null,
-      value: 0,
+    open: false,
+    searchTerm: "",
+    anchorEl: null,
+    value: 0,
   };
 
   componentDidMount() {
@@ -126,93 +126,105 @@ class HeaderTest extends React.Component {
       <Spacer>
         <AppBar position="fixed" elevation={1}>
           {/* <Toolbar> */}
-            <Grid container alignItems="center" spacing={16}>
-              <Grid item xs={12} sm={4}>
-                <Tabs 
+          <Grid container alignItems="center" spacing={16}>
+            <Grid item xs={12} sm={4}>
+              <Tabs
                 value={this.state.value}
                 onChange={this.handleTabChange}
                 variant="fullWidth"
                 textColor="primary"
                 indicatorColor="secondary"
-                >
-                  <Tab
-                    value={0}
-                    onlyIcon
-                    icon={
-                        <Link to="/profile">
-                          <Tooltip title="Profile">
-                            <FontAwesomeIcon icon={faHome} size="2x" color='#304ffe' />
-                          </Tooltip>
-                        </Link>
-                    }
-                  />
-                  <Tab 
-                    value={1}
-                    onClick={this.handleClickOpen}
-                    onlyIcon
-                    icon={
-                      <Tooltip title="New Tweet">
-                        <FontAwesomeIcon icon={faPlus} size="2x" color='#304ffe' />
+              >
+                <Tab
+                  value={0}
+                  onlyIcon
+                  icon={
+                    <Link to="/profile">
+                      <Tooltip title="Profile">
+                        <FontAwesomeIcon icon={faHome} size="2x" color='#304ffe' />
                       </Tooltip>
-                    }
-                  />
-                  <Tab
-                  value={2}
-                    onlyIcon
-                    icon={
-                      <Link to="/explorer">
-                        <Tooltip title="List Explorer">
-                          <FontAwesomeIcon icon={faList} size="2x" color='#304ffe' />
+                    </Link>
+                  }
+                />
+                <Tab
+                  onlyIcon
+                  icon={
+                    <Badge dotted badgeContent="">
+                      <Link to="/cleantimeline">
+                        <Tooltip title="Clean Timeline">
+                          <FontAwesomeIcon icon={faCog} size="2x" color='#38A1F3' />
                         </Tooltip>
                       </Link>
-                    }
-                  />
-                </Tabs>
-              </Grid>
-
-              <Grid item sm xs={12}>
-                <TextField
-                  fullWidth
-                  placeholder="Find Lists"
-                  InputProps={{
-                    disableUnderline: true,
-                    startAdornment: (
-                      <InputAdornment position="start" style={searchIcon}>
-                        <FontAwesomeIcon icon={faSearch} color='primary' />
-                      </InputAdornment>
-                    ),
-                  }}
-                  onChange={this.searchLists}
-                  
+                    </Badge>
+                  }
                 />
-              </Grid>
-
-              <Grid item xs={6} sm="auto" >
-                <ListItem>
-                  <Avatar
-                    src={this.state.profile_img}
-                    style={avatarStyle} alt="Your Profile Image"
-                    aria-owns={anchorEl ? 'simple-menu' : undefined}
-                    aria-haspopup="true"
-                    onClick={this.handleAvatarClick}
-                  />
-                  <Menu
-                    id="simple-menu"
-                    anchorEl={anchorEl}
-                    open={Boolean(anchorEl)}
-                    onClose={this.handleAvatarClose}
-                  >
-                    <Link to="/settings" style={{ textDecoration: 'none' }} ><MenuItem>Settings</MenuItem></Link>
-                    <a href="/" style={{ textDecoration: 'none' }} ><MenuItem onClick={this.logOut}>Logout</MenuItem></a>
-                  </Menu>
-                  <React.Fragment>
-                    <Button color="primary" variant="contained" href="/create">
-                      List Creator
-                  </Button>
-                  </React.Fragment>
-                </ListItem>
-              </Grid>
+                <Tab
+                  value={1}
+                  onClick={this.handleClickOpen}
+                  onlyIcon
+                  icon={
+                    <Tooltip title="New Tweet">
+                      <FontAwesomeIcon icon={faPlus} size="2x" color='#304ffe' />
+                    </Tooltip>
+                  }
+                />
+                <Tab
+                  value={2}
+                  onlyIcon
+                  icon={
+                    <Link to="/explorer">
+                      <Tooltip title="List Explorer">
+                        <FontAwesomeIcon icon={faList} size="2x" color='#304ffe' />
+                      </Tooltip>
+                    </Link>
+                  }
+                />
+              </Tabs>
             </Grid>
+
+            <Grid item sm xs={12}>
+              <TextField
+                fullWidth
+                placeholder="Find Lists"
+                InputProps={{
+                  disableUnderline: true,
+                  startAdornment: (
+                    <InputAdornment position="start" style={searchIcon}>
+                      <FontAwesomeIcon icon={faSearch} color='primary' />
+                    </InputAdornment>
+                  ),
+                }}
+                onChange={this.searchLists}
+
+              />
+            </Grid>
+
+            <Grid item xs={6} sm="auto" >
+              <ListItem>
+                <Avatar
+                  src={this.state.profile_img}
+                  style={avatarStyle} alt="Your Profile Image"
+                  aria-owns={anchorEl ? 'simple-menu' : undefined}
+                  aria-haspopup="true"
+                  onClick={this.handleAvatarClick}
+                />
+                <Menu
+                  id="simple-menu"
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={this.handleAvatarClose}
+                >
+                  <Link to="/settings" style={{ textDecoration: 'none' }} ><MenuItem>Settings</MenuItem></Link>
+                  <a href="/" style={{ textDecoration: 'none' }} ><MenuItem onClick={this.logOut}>Logout</MenuItem></a>
+                </Menu>
+                <React.Fragment>
+                  <Button color="primary" variant="contained" href="/create">
+                    List Creator
+                  </Button>
+                </React.Fragment>
+              </ListItem>
+            </Grid>
+          </Grid>
           {/* </Toolbar> */}
         </AppBar>
         <Dialog
@@ -248,9 +260,9 @@ class HeaderTest extends React.Component {
           </DialogActions>
         </Dialog>
       </Spacer>
-      
-    :
-    null;
+
+      :
+      null;
     return (
       <div>
         {content}
