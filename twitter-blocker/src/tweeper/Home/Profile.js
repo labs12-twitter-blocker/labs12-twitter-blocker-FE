@@ -119,7 +119,7 @@ class Profile extends Component {
           <Content>
             <Feed>
 
-              <Cover backgroundImage={`url(${this.state.banner_img})`} />
+              <Cover backgroundimage={`url(${this.state.banner_img})`} />
               <Box p={2} mb={1}>
                 <Box
                   css={{
