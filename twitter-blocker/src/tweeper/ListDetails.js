@@ -164,10 +164,6 @@ class ListDetails extends React.Component {
         <CssBaseline />
         <BackButton />
         <Content>
-<<<<<<< HEAD
-=======
-
->>>>>>> 28a0081a15c0c69ec4194d23389b37a9e242a42e
           <Feed> 
             <DetailsHeader>
               <Grid container justify="space-between" spacing={24}>

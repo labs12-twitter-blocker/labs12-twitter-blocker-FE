@@ -202,7 +202,6 @@ class HeaderTest extends React.Component {
 
               />
             </Grid>
-
             <Grid item xs={6} sm="auto" >
               <ListItem>
                 <Avatar
