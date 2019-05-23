@@ -128,7 +128,7 @@ class BlockTimeline extends Component {
 
 
 
-              {console.log("BLOCK TIMELINE LIST", this.props.timeline)}
+              {/* {console.log("BLOCK TIMELINE LIST", this.props.timeline)} */}
               <Grid item xs={10} sm={8} md={6} style={{ width: "100%" }}>
                 {this.props.timeline.map(item => {
 
