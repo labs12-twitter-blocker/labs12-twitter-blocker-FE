@@ -46,7 +46,7 @@ const Feed = styled('div')({
 const Cover = styled('div')({
   height: 200,
   backgroundSize: "cover",
-  backgroundColor: "#1da1f2",
+  backgroundColor: "#304ffe",
 });
 
 class Profile extends Component {
