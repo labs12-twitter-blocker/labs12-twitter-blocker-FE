@@ -1,14 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { withRouter } from "react-router-dom";
 import { withStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
 import Paper from '@material-ui/core/Paper';
-import styled from '@material-ui/styles/styled';
+// import styled from '@material-ui/styles/styled';
 import green from '@material-ui/core/colors/green';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
@@ -17,14 +17,14 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import InputLabel from '@material-ui/core/InputLabel';
+// import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import BackButton from '../../components/tweeper/BackButton'
 import { dsList, createList, getUser } from '../../actions';
 import { connect } from "react-redux";
-import Grid from '@material-ui/core/Grid';
+// import Grid from '@material-ui/core/Grid';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Divider from '@material-ui/core/Divider';
@@ -35,11 +35,11 @@ import Chip from '@material-ui/core/Chip';
 import FaceIcon from '@material-ui/icons/Face';
 // import Select from 'material-ui/Select';
 
-import { List, ListItem, Tabs, Tab, Card, CardActions, CardContent, } from '@material-ui/core';
+import { List, ListItem } from '@material-ui/core';
 import atoms from '../../components/atoms';
 
 import jwt from 'jsonwebtoken';
-const { Avatar, Icon, Typography, Button } = atoms;
+const { Avatar, Typography, Button } = atoms;
 require('dotenv').config();
 
 const styles = theme => ({
@@ -87,25 +87,25 @@ const styles = theme => ({
   },
 });
 
-const ButtonText = styled('div')({
-  fontSize: 18
-})
+// const ButtonText = styled('div')({
+//   fontSize: 18
+// })
 
-const TopLine = styled('div')({
-  display: 'flex',
-  justifyContent: 'space-between',
-});
+// const TopLine = styled('div')({
+//   display: 'flex',
+//   justifyContent: 'space-between',
+// });
 
-const ProfileNameImg = styled('div')({
-  display: 'flex',
-  width: '50%',
-  alignItems: 'center',
-})
+// const ProfileNameImg = styled('div')({
+//   display: 'flex',
+//   width: '50%',
+//   alignItems: 'center',
+// })
 
-const ProfileName = styled(Typography)({
-  fontWeight: 'bold',
-  fontFamily: 'Helvetica Neue',
-})
+// const ProfileName = styled(Typography)({
+//   fontWeight: 'bold',
+//   fontFamily: 'Helvetica Neue',
+// })
 
 
 class MemberModal extends React.Component {
@@ -141,7 +141,7 @@ class MemberModal extends React.Component {
     let decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
     let screen_name = []
     this.state.checked.map(e => {
-      screen_name.push(e.screen_name)
+      return screen_name.push(e.screen_name)
     })
 
     // console.log("screen_name", screen_name)
@@ -158,7 +158,7 @@ class MemberModal extends React.Component {
   }
 
   render() {
-    const { dsLists, classes, createList } = this.props;
+    const { dsLists, classes } = this.props;
     const { checkedAll, checked } = this.state;
     return (
       <>
@@ -210,11 +210,13 @@ class MemberModal extends React.Component {
             </List>
           )
         })}
-      </DialogContent>
+        </DialogContent>
 
-      <DialogActions>
-        {console.log("can we get it", checked)}
-          <Button onClick={this.handleCreateList} color="primary">
+        <DialogActions>
+          <Button onClick={this.props.handleClose} color="secondary" >
+            Cancel
+          </Button>
+          <Button onClick={this.handleCreateList} color="primary" variant="contained">
             Continue
           </Button>
         </DialogActions>
@@ -298,7 +300,7 @@ class ListStepper extends React.Component {
   };
 
   handleKeypress(event) {
-    if (event.key == "Enter") {
+    if (event.key === "Enter") {
       event.preventDefault();
       const newArray = this.state.twitterHandles;
       const currentcontent = this.state.username.trim();
@@ -362,7 +364,7 @@ class ListStepper extends React.Component {
 
     let usernameArray = [];
     this.state.twitterHandles.map(e => {
-      usernameArray.push(e.username)
+      return usernameArray.push(e.username)
     })
     console.log("+++++++++++++++++++tusernameArray", usernameArray)
 
@@ -507,7 +509,7 @@ class ListStepper extends React.Component {
 
                 <div>
                   {this.state.twitterHandles.map(data => {
-                    let icon = null;
+                    // let icon = null;
 
                     return (
                       <Chip
@@ -669,6 +671,7 @@ class ListStepper extends React.Component {
                   title={this.state.title}
                   mode={this.state.mode}
                   description={this.state.description}
+                  handleClose={this.handleClose}
                   /> 
                 </>
                 : <>

@@ -6,8 +6,8 @@ import Divider from '@material-ui/core/Divider/Divider';
 // import { unstable_Box as Box } from '@material-ui/core/Box';
 import styled from '@material-ui/styles/styled';
 // import Header from '../../components/tweeper/Header';
-import TweetFloat from '../../components/tweeper/TweetFloat.js'
-import HeaderTest from '../../tests/HeaderTest.js'
+// import TweetFloat from '../../components/tweeper/TweetFloat.js'
+// import HeaderTest from '../../tests/HeaderTest.js'
 import theme from '../../theme/tweeper/theme';
 import withTheme from '../withTheme';
 import PublicProfileTab from '../../components/tweeper/PublicProfileTab'
