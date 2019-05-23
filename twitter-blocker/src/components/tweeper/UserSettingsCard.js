@@ -17,7 +17,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import jwt from 'jsonwebtoken';
 
-import { deleteUser } from '../../actions'
+import { getUser, deleteUser } from '../../actions'
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
 
@@ -45,6 +45,7 @@ if (localStorage.getItem("token")) {
 }
 
 class UserSettingsCard extends React.Component {
+  
   constructor(props) {
     super(props)
     this.state = {
@@ -59,6 +60,19 @@ class UserSettingsCard extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
   };
+
+  componentDidMount() {
+    if (localStorage.getItem("token")) {
+      let decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
+      this.props.getUser(decoded.id)
+      this.setState({ twitter_user_id: decoded.id })
+      this.setState({ displayName: decoded.displayName })
+      this.setState({ profilePic: decoded.profile_img })
+      this.setState({ username: decoded.username })
+      this.setState({ banner_img: decoded.banner_img })
+      console.log("Profile DECODED", decoded)
+    }
+  }
 
   deleteAccount = () => {
     this.props.deleteUser(decoded.id)
@@ -139,6 +153,6 @@ const mapStateToProps = state => ({
 
 export default withRouter(connect(
   mapStateToProps,
-  { deleteUser }
+  { getUser, deleteUser }
 )(styledComponent));
 

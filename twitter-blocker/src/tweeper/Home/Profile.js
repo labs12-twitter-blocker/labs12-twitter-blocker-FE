@@ -46,7 +46,7 @@ const Feed = styled('div')({
 const Cover = styled('div')({
   height: 200,
   backgroundSize: "cover",
-  backgroundColor: "#1da1f2",
+  backgroundColor: "#304ffe",
 });
 
 class Profile extends Component {
@@ -106,13 +106,19 @@ class Profile extends Component {
   };
 
   render() {
+    const background = {
+      backgroundImage: `url(${this.state.banner_img})`,
+      backgroundSize: 'cover',
+      overflow: 'hidden',
+    };
+
     let content = ((this.props.loggedIn === true || this.state.twitter_user_id !== null) && this.props.gotCurrentUser === true) ?
       (
         <React.Fragment>
           <CssBaseline />
           <Content>
             <Feed>
-              <Cover backgroundImage={`url(${this.state.banner_img})`} />
+              <Cover style={{ ...background }} />
               <Box p={2} mb={1}>
                 <Box
                   css={{
