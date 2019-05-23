@@ -31,7 +31,7 @@ import theme from '../theme/tweeper/theme';
 import jwt from 'jsonwebtoken';
 require('dotenv').config();
 
-const { AppBar, Avatar, Badge, Toolbar, Button } = atoms;
+const { AppBar, Avatar, Button } = atoms;
 const { Tabs, Tab, ListItem, InputAdornment } = molecules;
 
 
@@ -57,12 +57,12 @@ const Spacer = styled('div')({
   },
 })
 
-function LinkTab(props) {
-  return <Tab component="a"
-    // onClick={event => event.preventDefault()}
-    {...props}
-  />;
-}
+// function LinkTab(props) {
+//   return <Tab component="a" 
+//   // onClick={event => event.preventDefault()} 
+//   {...props} 
+//   />;
+// }
 
 
 
@@ -215,7 +215,7 @@ class HeaderTest extends React.Component {
   };
 
   render() {
-    const { value } = this.state;
+    // const { value } = this.state;
     const { anchorEl } = this.state;
     // console.log("**********************" + this.state.profileId);
     // console.log("**********************" + this.state.tweet);
@@ -250,13 +250,13 @@ class HeaderTest extends React.Component {
                   value={1}
                   onlyIcon
                   icon={
-                    <Badge dotted badgeContent="">
+                    // <Badge dotted badgeContent="">
                       <Link to="/cleantimeline">
                         <Tooltip title="Clean Timeline">
                           <FontAwesomeIcon icon={faCog} size="2x" color='#304ffe' />
                         </Tooltip>
                       </Link>
-                    </Badge>
+                    // </Badge>
                   }
                 />
                 <Tab
@@ -303,7 +303,6 @@ class HeaderTest extends React.Component {
                 onChange={this.searchLists}
               />
             </Grid>
-
             <Grid item xs={6} sm="auto" >
               <ListItem>
                 <Avatar
