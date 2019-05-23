@@ -130,6 +130,7 @@ const initialState = {
   newListResponse: null,
   error: null,
   addDSListResponseUpdated: false,
+  blockTimelineList: null
 };
 
 const reducer = (state = initialState, action) => {
