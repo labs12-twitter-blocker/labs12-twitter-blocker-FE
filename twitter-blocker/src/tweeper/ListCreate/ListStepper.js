@@ -578,7 +578,7 @@ class ListStepper extends React.Component {
   };
 
   handleNextKeypress(event) {
-    if (event.key == "Enter") {
+    if (event.key === "Enter") {
       this.handleNext()
     }
   }

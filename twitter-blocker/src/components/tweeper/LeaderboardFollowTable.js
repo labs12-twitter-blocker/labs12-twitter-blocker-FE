@@ -94,27 +94,69 @@ const styles = theme => ({
   pointsColumn: {
     width: '125px',
     padding: '0px 4px',
+
+    "&:before": {
+			content: "attr(datatitle)",
+			float: "left",
+			fontWeight: 600,
+		},
+
     [theme.breakpoints.down("sm")]: {
+      display: 'table-cell',
       width: '40px',
       height: '45px',
       padding: '0px 13px 0px 13px',
+
+      "&:before": {
+        content: "",
+        display: "none"
+      }
     }
   },
   pointsHead: {
     width: '125px',
     padding: '0px 4px',
+
+		"&:before": {
+			content: "attr(datatitle)",
+			float: "left",
+			fontWeight: 600,
+		},
+
     [theme.breakpoints.down("sm")]: {
+      display: 'table-cell',
       width: '40px',
       height: '45px',
       padding: '0px 0px',
-    }
+
+      "&:before": {
+        content: "",
+        display: "none"
+      },
+    },
   },
   mobileCenter: {
+    padding: 12,
+		fontSize: 14,
+
+		"&:before": {
+			content: "attr(datatitle)",
+			float: "left",
+			fontWeight: 600,
+		},
+
     [theme.breakpoints.down("sm")]: {
+      display: 'table-cell',
       textAlign: 'center',
       padding: '0px 0px',
-    }
-  }
+      fontSize: 14,
+
+      "&:before": {
+        content: "",
+        display: "none"
+      },
+    },
+  },
 });
 
 class LeaderboardFollowTable extends React.Component {
@@ -227,7 +269,7 @@ class LeaderboardFollowTable extends React.Component {
           <Table className={classes.table} aria-labelledby="tableTitle">
             <TableHead>
               <TableRow classes={{ root: classes.tableBodyRow }}>
-                <TableCell classes={{ root: classes.tableBodyData, root: classes.pointsHead }} key={'list_points'} align="center" padding="none" sortDirection={orderBy === 'list_points' ? order : false} >
+                <TableCell classes={{ root: classes.pointsHead }} key={'list_points'} align="center" padding="none" sortDirection={orderBy === 'list_points' ? order : false} >
                   <Tooltip title="Sort" placement={true ? 'bottom-end' : 'bottom-start'} enterDelay={300} >
                     <TableSortLabel active={orderBy === 'list_points'} direction={order} onClick={this.createSortHandler('list_points')} >Points</TableSortLabel>
                   </Tooltip>
@@ -237,12 +279,12 @@ class LeaderboardFollowTable extends React.Component {
                     <TableSortLabel active={orderBy === 'list_name'} direction={order} onClick={this.createSortHandler('list_name')} >Name</TableSortLabel>
                   </Tooltip>
                 </TableCell>
-                <TableCell classes={{ root: classes.tableBodyData, root: classes.mobileCenter }} key={'member_count'} align="right" sortDirection={orderBy === 'member_count' ? order : false} >
+                <TableCell classes={{ root: classes.mobileCenter }} key={'member_count'} align="right" sortDirection={orderBy === 'member_count' ? order : false} >
                   <Tooltip title="Sort by Members" placement={true ? 'bottom-end' : 'bottom-start'} enterDelay={300} >
                     <TableSortLabel active={orderBy === 'member_count'} direction={order} onClick={this.createSortHandler('member_count')} >Members</TableSortLabel>
                   </Tooltip>
                 </TableCell>
-                <TableCell classes={{ root: classes.tableBodyData, root: classes.mobileCenter }} key={'subscriber_count'} align="right" sortDirection={orderBy === 'subscriber_count' ? order : false} >
+                <TableCell classes={{ root: classes.mobileCenter }} key={'subscriber_count'} align="right" sortDirection={orderBy === 'subscriber_count' ? order : false} >
                   <Tooltip title="Sort by Subcribers" placement={true ? 'bottom-end' : 'bottom-start'} enterDelay={300} >
                     <TableSortLabel active={orderBy === 'subscriber_count'} direction={order} onClick={this.createSortHandler('subscriber_count')} >Subscribers</TableSortLabel>
                   </Tooltip>
@@ -260,7 +302,7 @@ class LeaderboardFollowTable extends React.Component {
                       key={n.id}
                       classes={{ root: classes.tableBodyRow }} 
                     >
-                      <TableCell classes={{ root: classes.tableBodyData, root: classes.pointsColumn }} align="center" padding="checkbox">
+                      <TableCell classes={{ root: classes.pointsColumn }} align="center" padding="checkbox">
                       
                         <IconButton rowid={n.id} id={n.twitter_list_id} 
                         onClick={(e)=>{e.currentTarget.style = " color:#33FF33 !important; "; this.up(e) }} >
@@ -280,8 +322,8 @@ class LeaderboardFollowTable extends React.Component {
                         </Typography>
                         <Typography color="textSecondary" variant="body2">{n.description}</Typography>
                       </TableCell>
-                      <TableCell classes={{ root: classes.tableBodyData, root: classes.mobileCenter }} align="right" >{n.member_count}</TableCell>
-                      <TableCell classes={{ root: classes.tableBodyData, root: classes.mobileCenter }} align="right" >{n.subscriber_count}</TableCell>
+                      <TableCell classes={{ root: classes.mobileCenter }} align="right" >{n.member_count}</TableCell>
+                      <TableCell classes={{ root: classes.mobileCenter }} align="right" >{n.subscriber_count}</TableCell>
                     </TableRow>
                   );
                 })}

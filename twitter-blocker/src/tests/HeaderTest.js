@@ -119,7 +119,7 @@ class HeaderTest extends React.Component {
   };
 
   render() {
-    const { value } = this.state;
+    // const { value } = this.state;
     const { anchorEl } = this.state;
     // console.log("**********************" + this.props.loggedIn);
     let content = (localStorage.getItem("token")) ?

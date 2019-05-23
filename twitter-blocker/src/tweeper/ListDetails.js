@@ -35,7 +35,7 @@ import { getList,
         subscribeToList,
         unSubscribeToList,
         getListSubscribers } from '../actions';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import jwt from 'jsonwebtoken';
 require('dotenv').config();
 
@@ -127,6 +127,7 @@ class ListDetails extends React.Component {
       if(user.twitter_user_id === decoded.id) {
         this.setState({isSubscribed: true})
       }
+      return null
     })
 
 }
@@ -176,20 +177,20 @@ render() {
                 {this.props.listMembers.map(i => {
                   return (
                     <List key={i.screen_name}>
-                    <Card >
-                      <ListItem>
-                      <CardContent style={{width:'100%'}}>
-                        <TopLine>
-                          <ProfileNameImg>
-                            <Avatar src={i.profile_img} style={{marginRight: '5px'}}/>
-                            <ProfileName >{i.name}</ProfileName>
+                      <Card >
+                        <ListItem>
+                          <CardContent style={{width:'100%'}}>
+                            <TopLine>
+                              <ProfileNameImg>
+                                <Avatar src={i.profile_img} style={{marginRight: '5px'}}/>
+                                <ProfileName >{i.name}</ProfileName>
                               </ProfileNameImg>
                               <Typography>@{i.screen_name}</Typography>
-                              </TopLine>
-                                <Typography>{i.description}</Typography>
-                              </CardContent>
+                            </TopLine>
+                              <Typography>{i.description}</Typography>
+                          </CardContent>
                         </ListItem>
-                    </Card>
+                      </Card>
                     </List>
                 )})}
                 </Grid>
