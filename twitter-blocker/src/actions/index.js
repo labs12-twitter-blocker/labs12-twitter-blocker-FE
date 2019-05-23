@@ -820,12 +820,17 @@ export const ADD_POST_SUCCESS = "ADD_POST_SUCCESS";
 export const ADD_POST_FAILURE = "ADD_POST_FAILURE";
 
 export const addPost = post => dispatch => {
+
   dispatch({ type: ADD_POST });
   let token = localStorage.getItem("token")
+  console.log("POST HERE +++++++++++++++++++++++++++++++++++++++++++++++++++",post)
+  const params = {
+    status:post.status,
+    twitter_user_id:post.twitter_user_id
+  }
+  console.log("PARAMS________________________________",params)
   axios
-    .post(`${url}/tweets`, {
-      headers: { Authorization: token }
-    }, post)
+    .post(`${url}/tweets`,  post)
     .then(res => {
       console.log(res);
       dispatch({ type: ADD_POST_SUCCESS, payload: res.data });
@@ -835,6 +840,29 @@ export const addPost = post => dispatch => {
       dispatch({ type: ADD_POST_FAILURE, payload: err.message });
     });
 };
+
+
+// Add a new Tweet
+export const CANCEL_POST = "CANCEL_POST";
+export const CANCEL_POST_SUCCESS = "CANCEL_POST_SUCCESS";
+export const CANCEL_POST_FAILURE = "CANCEL_POST_FAILURE";
+
+export const cancelPost = post => dispatch => {
+
+  dispatch({ type: CANCEL_POST });
+  // let token = localStorage.getItem("token")
+  axios
+    .post(`${url}/tweets/cancel`)
+    .then(res => {
+      console.log(res);
+      dispatch({ type: CANCEL_POST_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: CANCEL_POST_FAILURE, payload: err.message });
+    });
+};
+
 
 //<------Votes------->
 

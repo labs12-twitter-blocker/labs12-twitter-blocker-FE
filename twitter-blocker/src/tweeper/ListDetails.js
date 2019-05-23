@@ -162,7 +162,7 @@ class ListDetails extends React.Component {
                 </Grid>
                 <Grid item>
                   {isSubscribed === false &&
-                    <SubscribeButton color="primary" variant="outlined" style={{ color: "#1da1f2", border: "2px solid #1da1f2" }} onClick={this.subscribe}>Subscribe</SubscribeButton>
+                    <SubscribeButton variant="containedPrimary" style={{ color: "#304ffe", border: "2px solid #304ffe" }} onClick={this.subscribe}>Subscribe</SubscribeButton>
                   }
                   {isSubscribed === true &&
                     <SubscribeButton color="primary" variant="contained" onClick={this.unsubscribe}>Unsubscribe</SubscribeButton>
