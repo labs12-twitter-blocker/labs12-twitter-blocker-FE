@@ -60,6 +60,7 @@ class Profile extends Component {
       twitter_user_id: null,
       loggedInRan: false,
       profilePic: '',
+      banner_img: null
     };
   }
 
@@ -72,7 +73,7 @@ class Profile extends Component {
       this.setState({ profilePic: decoded.profile_img })
       this.setState({ username: decoded.username })
       this.setState({ banner_img: decoded.banner_img })
-      console.log(decoded)
+      console.log("Profile DECODED", decoded)
     }
   }
 
@@ -117,7 +118,8 @@ class Profile extends Component {
           <CssBaseline />
           <Content>
             <Feed>
-              <Cover style={{ ...background }} />
+
+              <Cover backgroundImage={`url(${this.state.banner_img})`} />
               <Box p={2} mb={1}>
                 <Box
                   css={{

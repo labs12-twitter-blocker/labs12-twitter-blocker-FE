@@ -16,12 +16,14 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 // import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
+import Typography from '@material-ui/core/Typography';
+
 import MenuItem from '@material-ui/core/MenuItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faHome, faSearch, faList, faCog } from '@fortawesome/free-solid-svg-icons';
 import atoms from '../components/atoms';
 import molecules from '../components/molecules';
-import { searchLists, addPost } from '../actions';
+import { searchLists, addPost, cancelPost } from '../actions';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from '@material-ui/styles/styled';
@@ -62,23 +64,97 @@ const Spacer = styled('div')({
 //   />;
 // }
 
-class HeaderTest extends React.Component {
-  state = {
-    open: false,
-    searchTerm: "",
-    anchorEl: null,
-    value: 0,
-  };
 
+
+
+
+
+
+// render() {
+//   let start = (this.state.time == 0) ?
+//     <button onClick={this.startTimer}>start</button> :
+//     null
+//   let stop = (this.state.time == 0 || !this.state.isOn) ?
+//     null :
+//     <button onClick={this.stopTimer}>stop</button>
+//   let resume = (this.state.time == 0 || this.state.isOn) ?
+//     null :
+//     <button onClick={this.startTimer}>resume</button>
+//   let reset = (this.state.time == 0 || this.state.isOn) ?
+//     null :
+//     <button onClick={this.resetTimer}>reset</button>
+//   return(
+//     <div>
+//       <h3>timer: {ms(this.state.time)}</h3>
+//       {start}
+//       {resume}
+//       {stop}
+//       {reset}
+//     </div>
+//   )
+// }
+
+
+class HeaderTest extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      open: false,
+      searchTerm: "",
+      anchorEl: null,
+      value: 0,
+      tweet: null,
+      profileId: null,
+      time: 0,
+      isOn: false,
+      start: 0,
+      profileBanner: null
+    }
+    this.startTimer = this.startTimer.bind(this)
+    this.stopTimer = this.stopTimer.bind(this)
+    this.resetTimer = this.resetTimer.bind(this)
+  }
+
+  startTimer() {
+    this.setState({
+      isOn: true,
+      time: this.state.time,
+      start: 120 + this.state.time
+    })
+    this.timer = setInterval(() => this.setState({
+      time: this.state.start-- //Date.now() + this.state.start
+    }), 1000);
+  }
+  stopTimer() {
+    this.setState({ isOn: false })
+    clearInterval(this.timer)
+  }
+  resetTimer() {
+    this.setState({ time: 0, isOn: false })
+  }
   componentDidMount() {
     if (localStorage.getItem("token")) {
       let decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
       this.setState({ profile_img: decoded.profile_img })
+      this.setState({ profileId: decoded.id })
+      // this.setState({ profileBanner: decoded.banner_img })
+
+
+      // console.log("DECODED", decoded)
     }
   };
+  componentDidUpdate(prevProps) {
+    if (this.props.time !== prevProps.time) {
+      this.getListRowBuilder(this.props.allLists);
+    }
+  }
 
   handleChange = (event) => {
     this.setState({ searchTerm: event.target.value });
+  }
+
+  handleTweetChange = (event) => {
+    this.setState({ tweet: event.target.value })
   }
   searchLists = (event) => {
     this.props.searchLists(event.target.value);
@@ -94,7 +170,27 @@ class HeaderTest extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
   };
+  sendTweet = (e) => {
+    // e.preventDefault();
+    // console.log("in send tweet")
+    const tweetParams = {
+      "status": this.state.tweet,
+      "twitter_user_id": this.state.profileId
+    }
+    // console.log("Tweet PARAMS_________________", tweetParams)
+    this.props.addPost(tweetParams);
+    this.startTimer()
+    // this.setState({ tweet: "" });
+    this.handleClose();
 
+  }
+  cancelTweet = (e) => {
+    // console.log("in cancel tweet")
+    this.props.cancelPost();
+    this.stopTimer()
+    this.resetTimer()
+
+  }
   handleAvatarClick = event => {
     this.setState({ anchorEl: event.currentTarget });
   };
@@ -121,7 +217,11 @@ class HeaderTest extends React.Component {
   render() {
     // const { value } = this.state;
     const { anchorEl } = this.state;
-    // console.log("**********************" + this.props.loggedIn);
+    // console.log("**********************" + this.state.profileId);
+    // console.log("**********************" + this.state.tweet);
+    // console.log("**********************" + this.state.time);
+
+
     let content = (localStorage.getItem("token")) ?
       <Spacer>
         <AppBar position="fixed" elevation={1}>
@@ -153,7 +253,7 @@ class HeaderTest extends React.Component {
                     // <Badge dotted badgeContent="">
                       <Link to="/cleantimeline">
                         <Tooltip title="Clean Timeline">
-                          <FontAwesomeIcon icon={faCog} size="2x" color='#38A1F3' />
+                          <FontAwesomeIcon icon={faCog} size="2x" color='#304ffe' />
                         </Tooltip>
                       </Link>
                     // </Badge>
@@ -164,11 +264,16 @@ class HeaderTest extends React.Component {
                   onClick={this.handleClickOpen}
                   onlyIcon
                   icon={
-                    <Tooltip title="New Tweet">
+                    <Tooltip title={(this.state.time === 0) ? "New Tweet" : `${this.state.time} seconds until Tweet posts`}>
                       <FontAwesomeIcon icon={faPlus} size="2x" color='#304ffe' />
                     </Tooltip>
                   }
                 />
+                {/* <Grid item>
+              <Tooltip disableFocusListener disableTouchListener title={this.state.time}>
+                <Button>Tweet</Button>
+              </Tooltip>
+            </Grid> */}
                 <Tab
                   value={3}
                   onlyIcon
@@ -196,7 +301,6 @@ class HeaderTest extends React.Component {
                   ),
                 }}
                 onChange={this.searchLists}
-
               />
             </Grid>
             <Grid item xs={6} sm="auto" >
@@ -235,16 +339,18 @@ class HeaderTest extends React.Component {
           <DialogTitle id="form-dialog-title">Tweet in Peace <span role="img" aria-label="peace">✌️</span></DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Compose Your Tweet Below
+              All tweets go through a 2 min. timer before posting so you can make changes if needed.
             </DialogContentText>
             <TextField style={tweetBox}
               autoFocus
               margin="normal"
               id="tweet"
+              value={this.state.tweet}
               label="Tweet"
               variant="outlined"
               multiline
               rows="3"
+              onChange={this.handleTweetChange}
               //   value={this.state.name}
               inputProps={{ maxLength: 280 }}
               fullWidth
@@ -254,7 +360,10 @@ class HeaderTest extends React.Component {
             <Button onClick={this.handleClose} color="secondary">
               Cancel
             </Button>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={e => this.cancelTweet()} color="secondary">
+              Cancel Tweet
+            </Button>
+            <Button onClick={e => this.sendTweet()} color="primary">
               Post Tweet
             </Button>
           </DialogActions>
@@ -278,7 +387,8 @@ const mapStateToProps = state => {
 
 const mapActionsToProps = {
   searchLists,
-  addPost
+  addPost,
+  cancelPost
 }
 
 export default withRouter(connect(mapStateToProps, mapActionsToProps)(HeaderTest));
