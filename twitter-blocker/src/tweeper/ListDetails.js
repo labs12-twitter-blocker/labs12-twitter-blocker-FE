@@ -123,6 +123,7 @@ class ListDetails extends React.Component {
     }
     this.props.unSubscribeToList(params);
     this.setState({ isSubscribed: false })
+    // console.log(this.state.isSubscribed)
   }
 
 
