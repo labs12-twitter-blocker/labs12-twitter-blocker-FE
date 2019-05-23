@@ -8,6 +8,7 @@ import styled from '@material-ui/styles/styled';
 // import Header from '../components/tweeper/Header';
 // import TweetFloat from '../components/tweeper/TweetFloat.js'
 // import HeaderTest from '../tests/HeaderTest.js'
+import SwipeableViews from 'react-swipeable-views';
 import theme from '../theme/tweeper/theme';
 import withTheme from './withTheme';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -16,6 +17,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import BackButton from '../components/tweeper/BackButton'
 import atoms from '../components/atoms';
 // import molecules from '../components/molecules';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Tweet from '../components/tweeper/Tweet.js';
 
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -24,7 +26,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { List, 
       ListItem, 
       Tabs, Tab,
-      Card, 
+      // Card, 
       // CardActions,
       CardContent,
       } from '@material-ui/core';
@@ -103,6 +105,9 @@ class ListDetails extends React.Component {
   handleChange = (event, value) => {
     this.setState({ value });
   };
+  handleChangeIndex = index => {
+    this.setState({ value: index });
+  };
 
   subscribe = () => {
       this.props.subscribeToList(this.props.list.twitter_list_id, this.state.twitter_user_id);
@@ -144,7 +149,7 @@ render() {
       <BackButton />
         <Content>
           <Feed> 
-              <DetailsHeader>
+            <DetailsHeader>
               <Grid container justify="space-between" spacing={24}>
                 <Grid item>
                   <Typography variant='h6'>{this.props.list.list_name}</Typography>
@@ -158,26 +163,26 @@ render() {
                   {isSubscribed === true &&
                     <SubscribeButton color="primary" variant="contained" onClick={this.unsubscribe}>Unsubscribe</SubscribeButton>
                   }
-                  </Grid>
                 </Grid>
-              </DetailsHeader>
+              </Grid>
+            </DetailsHeader>
               
-              <Tabs 
-                value={value}
-                onChange={this.handleChange} 
-                variant='fullWidth' >
-                <Tab label='Members' />
-                <Tab label='Timeline'/>
-                </Tabs>
-               
-                
-                {value === 0 &&
+            <Tabs 
+              value={value}
+              onChange={this.handleChange} 
+              variant='fullWidth' >
+              <Tab label='Members' />
+              <Tab label='Timeline'/>
+            </Tabs>
+            <SwipeableViews
+              axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+              index={this.state.value}
+              onChangeIndex={this.handleChangeIndex}
+            >
               <TabContainer>
-                
-              <Grid container spacing={8} direction="column" alignItems="center" justify="center" >
+                {this.props.fetchingListMembersDone ? 
+                <Grid container spacing={8} direction="column" alignItems="center" justify="center" >
                 <Grid item xs={12} sm={10} md={8} style={{width:"100%"}}>
-                  {/* {console.log("this.props.listMembers", this.props.listMembers)} */}
-
                   {this.props.listMembers.map((e, index) => {
                     return (
                       <List key={e.twitter_user_id} >
@@ -205,33 +210,51 @@ render() {
                     </List>
                   )})}
                 </Grid>
-              </Grid>
-             </TabContainer>
-              }
-              {value === 1 &&
-              <TabContainer>
-                <Grid container spacing={0} direction="column" alignItems="center" justify="center" >
-                  <Grid item xs={10} sm={8} md={6} style={{width:"100%"}}>
-                    {console.log("this.props.timeline", this.props.timeline)}
-                  {this.props.timeline.map(i => {
-                    return (
-                    <List key={i.id_str}>
-                      <Card>
-                      <CardContent style={{width:'100%'}}>
-                      <Tweet name={i.user.name} profileImg={i.user.profile_image_url} text={i.text} />
-                    
-                    </CardContent>
-                    </Card>
-                    </List>
-                    )
-                  })}
-                  </Grid>
                 </Grid>
-                  
-                </TabContainer>
-              }
-              <Divider />
-            </Feed>
+                    : (<Grid //If not done loading, display CircularProgress
+                      container
+                      spacing={0}
+                      direction="column"
+                      alignItems="center"
+                      justify="center"
+                    >
+                      <Grid item xs={3}>
+                        <CircularProgress color="primary" />
+                      </Grid>   
+                    </Grid>) }
+              
+              </TabContainer>
+              <TabContainer>
+                {this.props.fetchingListTimelineDone ? 
+                  <Grid container spacing={0} direction="column" alignItems="center" justify="center" >
+                    <Grid item xs={10} sm={8} md={6} style={{width:"100%"}}>
+                      {this.props.timeline.map(i => {
+                        return (
+                        <List key={i.id_str}>
+                          <CardContent style={{width:'100%'}}>
+                            <Tweet name={i.user.name} profileImg={i.user.profile_image_url} text={i.text} screen_name={i.user.screen_name}/>
+                          </CardContent>
+                        <Divider />
+                        </List>
+                      )})}
+                    </Grid>
+                  </Grid>
+                : (<Grid //If not done loading, display CircularProgress
+                    container
+                    spacing={0}
+                    direction="column"
+                    alignItems="center"
+                    justify="center"
+                  >
+                    <Grid item xs={3}>
+                      <CircularProgress color="primary" />
+                    </Grid>   
+                  </Grid>)
+                }
+              </TabContainer>
+            </SwipeableViews>
+            <Divider />
+          </Feed>
       </Content>
     </React.Fragment>
   );
@@ -241,7 +264,9 @@ render() {
 const mapStateToProps = state => {
   return {
     listMembers: state.listsReducer.listMembers,
+    fetchingListMembersDone: state.listsReducer.fetchingListMembersDone,
     timeline: state.listsReducer.listTimeline,
+    fetchingListTimelineDone: state.listsReducer.fetchingListTimelineDone,
     user: state.usersReducer.currentUser,
     list: state.listsReducer.list,
     listSubscribers: state.listsReducer.listSubscribers

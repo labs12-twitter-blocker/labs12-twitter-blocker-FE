@@ -16,6 +16,7 @@ import Paper from '@material-ui/core/Paper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { getAllListPoints, addUserVote } from '../../actions/index'
+import CircularProgress from '@material-ui/core/CircularProgress';
 import atoms from '../../components/atoms';
 import jwt from 'jsonwebtoken';
 require('dotenv').config();
@@ -258,7 +259,7 @@ class LeaderboardAllTable extends React.Component {
 
   render() {
     if (this.props.allLists === null || this.props.allLists.length === 0 || this.state.twitter_user_id === "" ) {
-      return (<div>Loading</div>)
+      return (<CircularProgress color="primary" />)
     } else {
     const { classes } = this.props;
     
