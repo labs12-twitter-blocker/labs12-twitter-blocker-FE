@@ -126,10 +126,7 @@ class Landing extends Component {
                 <Grid item sm > 
                   <Grid container  alignItems="center">
                     <Grid item>
-                      <img alt="logo" src="/images/feather-logo.png" style={{width:"80px"}} />
-                    </Grid>
-                    <Grid item  >
-                      <Typography variant="h5" color="primary">Larkist</Typography>
+                      <img alt="logo" src="/images/logo_full_color.svg" style={{width:"280px"}} />
                     </Grid>
                   </Grid>
                 </Grid>
@@ -137,7 +134,7 @@ class Landing extends Component {
              
              <Grid item xl={3} >
               <Slogan>
-                <Typography style={{fontSize: "4.1rem", color: "#FFFFFF"}}>Your <span style={{color:'#1da1f2'}}>Twitter</span>.</Typography>
+                <Typography style={{fontSize: "4.1rem", color: "#FFFFFF"}}>Your <span style={{color:'#304ffe'}}>Twitter</span>.</Typography>
                 <Typography style={{fontSize: "8rem", color: "#FFFFFF", lineHeight: "0.5",}}>Better.</Typography>
               </Slogan>
             </Grid>
