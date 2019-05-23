@@ -1,12 +1,12 @@
 import React from 'react';
 import { withRouter } from "react-router-dom";
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
-import Hidden from '@material-ui/core/Hidden';
-import CreateList from '../components/tweeper/CreateList';
-import { withStyles } from '@material-ui/core/styles';
-import { Fab, Tooltip } from '@material-ui/core';
-import classNames from 'classnames';
+// import Hidden from '@material-ui/core/Hidden';
+// import CreateList from '../components/tweeper/CreateList';
+// import { withStyles } from '@material-ui/core/styles';
+import { Tooltip } from '@material-ui/core';
+// import classNames from 'classnames';
 import TextField from '@material-ui/core/TextField';
 // import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -18,18 +18,18 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faHome, faSearch, faBell, faEnvelope, faList, faCog, fa } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faHome, faSearch, faList, faCog } from '@fortawesome/free-solid-svg-icons';
 import atoms from '../components/atoms';
 import molecules from '../components/molecules';
 import { searchLists, addPost } from '../actions';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from '@material-ui/styles/styled';
 import theme from '../theme/tweeper/theme';
 import jwt from 'jsonwebtoken';
 require('dotenv').config();
 
-const { AppBar, Avatar, Badge, Icon, Toolbar, Button } = atoms;
+const { AppBar, Avatar, Badge, Toolbar, Button } = atoms;
 const { Tabs, Tab, ListItem, InputAdornment } = molecules;
 
 
@@ -55,11 +55,19 @@ const Spacer = styled('div')({
   },
 })
 
+function LinkTab(props) {
+  return <Tab component="a"
+    // onClick={event => event.preventDefault()}
+    {...props}
+  />;
+}
+
 class HeaderTest extends React.Component {
   state = {
     open: false,
     searchTerm: "",
     anchorEl: null,
+    value: 0,
   };
 
   componentDidMount() {
@@ -95,6 +103,10 @@ class HeaderTest extends React.Component {
     this.setState({ anchorEl: null });
   };
 
+  handleTabChange = (event, value) => {
+    this.setState({ value });
+  };
+
   logOut = () => {
     // localStorage.removeItem("twitter_user_id");
     localStorage.removeItem("token");
@@ -107,147 +119,148 @@ class HeaderTest extends React.Component {
   };
 
   render() {
+    const { value } = this.state;
     const { anchorEl } = this.state;
-    console.log("**********************" + this.props.loggedIn);
+    // console.log("**********************" + this.props.loggedIn);
     let content = (localStorage.getItem("token")) ?
       <Spacer>
         <AppBar position="fixed" elevation={1}>
-          <Toolbar>
-            <Grid container alignItems="center" spacing={16}>
-              <Grid item xs={12} sm={4}>
-                <Tabs value={0} variant="fullWidth">
-                  <Tab
-                    onlyIcon
-                    icon={
-                      <Badge dotted badgeContent="">
-                        <Link to="/profile">
-                          <Tooltip title="Profile">
-                            <FontAwesomeIcon icon={faHome} size="2x" color='#38A1F3' />
-                          </Tooltip>
-                        </Link>
-                      </Badge>
-                    }
-                  />
-
-                  <Tab
-                    onlyIcon
-                    icon={
-                      <Badge dotted badgeContent="">
-                        <Link to="/cleantimeline">
-                          <Tooltip title="Clean Timeline">
-                            <FontAwesomeIcon icon={faCog} size="2x" color='#38A1F3' />
-                          </Tooltip>
-                        </Link>
-                      </Badge>
-                    }
-                  />
-                  <Tab onClick={this.handleClickOpen}
-                    onlyIcon
-                    icon={
-                      <Tooltip title="New Tweet">
-                        <FontAwesomeIcon icon={faPlus} size="2x" color='#38A1F3' />
+          {/* <Toolbar> */}
+          <Grid container alignItems="center" spacing={16}>
+            <Grid item xs={12} sm={4}>
+              <Tabs
+                value={this.state.value}
+                onChange={this.handleTabChange}
+                variant="fullWidth"
+                textColor="primary"
+                indicatorColor="secondary"
+              >
+                <Tab
+                  value={0}
+                  onlyIcon
+                  icon={
+                    <Link to="/profile">
+                      <Tooltip title="Profile">
+                        <FontAwesomeIcon icon={faHome} size="2x" color='#304ffe' />
                       </Tooltip>
-                    }
-                  />
-                  <Dialog
-                    open={this.state.open}
-                    onClose={this.handleClose}
-                    aria-labelledby="form-dialog-title"
-                  >
-                    <DialogTitle id="form-dialog-title">Tweet in Peace ✌️</DialogTitle>
-                    <DialogContent>
-                      <DialogContentText>
-                        Compose Your Tweet Below
-            </DialogContentText>
-                      <TextField style={tweetBox}
-                        autoFocus
-                        margin="normal"
-                        id="tweet"
-                        label="Tweet"
-                        variant="outlined"
-                        multiline
-                        rows="3"
-                        //   value={this.state.name}
-                        inputProps={{ maxLength: 280 }}
-                        fullWidth
-                      />
-                    </DialogContent>
-                    <DialogActions>
-                      <Button onClick={this.handleClose} color="primary">
-                        Cancel
-            </Button>
-                      <Button onClick={this.handleClose} color="primary">
-                        Post Tweet
-            </Button>
-                    </DialogActions>
-                  </Dialog>
-                  <Tab
-                    onlyIcon
-                    icon={
-                      <Badge >
-                        <Link to="/explorer">
-                          <Tooltip title="List Explorer">
-                            <FontAwesomeIcon icon={faList} size="2x" color='#38A1F3' />
-                          </Tooltip>
-                        </Link>
-                      </Badge>
-                    }
-                  />
-                  {/* <Tab onlyIcon icon={
-                    <Link to="/settings">
-                      <FontAwesomeIcon icon={faCog} size="2x" color='#38A1F3' />
-                    </Link>} /> */}
-                  {/* <Tab onlyIcon icon={<FontAwesomeIcon icon={faEnvelope} size="2x" color='#38A1F3'/>} /> */}
-                </Tabs>
-              </Grid>
-
-              <Grid item sm xs={12}>
-                <TextField
-                  fullWidth
-                  placeholder="Find Lists"
-                  InputProps={{
-                    disableUnderline: true,
-                    startAdornment: (
-                      <InputAdornment position="start" style={searchIcon}>
-                        <FontAwesomeIcon icon={faSearch} color='#38A1F3' />
-                      </InputAdornment>
-                    ),
-                  }}
-                  onChange={this.searchLists}
-
+                    </Link>
+                  }
                 />
-              </Grid>
-
-              <Grid item xs={6} sm="auto" >
-                <ListItem>
-                  <Avatar
-                    src={this.state.profile_img}
-                    style={avatarStyle} alt="Your Profile Image"
-                    aria-owns={anchorEl ? 'simple-menu' : undefined}
-                    aria-haspopup="true"
-                    onClick={this.handleAvatarClick}
-                  />
-                  <Menu
-                    id="simple-menu"
-                    anchorEl={anchorEl}
-                    open={Boolean(anchorEl)}
-                    onClose={this.handleAvatarClose}
-                  >
-                    <Link to="/settings" style={{ textDecoration: 'none' }} ><MenuItem>Settings</MenuItem></Link>
-                    <a href="/" style={{ textDecoration: 'none' }} ><MenuItem onClick={this.logOut}>Logout</MenuItem></a>
-                  </Menu>
-                  {/* <ListItemText primary="austen" /> */}
-                  <React.Fragment>
-                    <Button color="primary" variant="contained" href="/create">
-                      List Creator
-                  </Button>
-                  </React.Fragment>
-                </ListItem>
-              </Grid>
+                <Tab
+                  onlyIcon
+                  icon={
+                    <Badge dotted badgeContent="">
+                      <Link to="/cleantimeline">
+                        <Tooltip title="Clean Timeline">
+                          <FontAwesomeIcon icon={faCog} size="2x" color='#38A1F3' />
+                        </Tooltip>
+                      </Link>
+                    </Badge>
+                  }
+                />
+                <Tab
+                  value={1}
+                  onClick={this.handleClickOpen}
+                  onlyIcon
+                  icon={
+                    <Tooltip title="New Tweet">
+                      <FontAwesomeIcon icon={faPlus} size="2x" color='#304ffe' />
+                    </Tooltip>
+                  }
+                />
+                <Tab
+                  value={2}
+                  onlyIcon
+                  icon={
+                    <Link to="/explorer">
+                      <Tooltip title="List Explorer">
+                        <FontAwesomeIcon icon={faList} size="2x" color='#304ffe' />
+                      </Tooltip>
+                    </Link>
+                  }
+                />
+              </Tabs>
             </Grid>
-          </Toolbar>
+
+            <Grid item sm xs={12}>
+              <TextField
+                fullWidth
+                placeholder="Find Lists"
+                InputProps={{
+                  disableUnderline: true,
+                  startAdornment: (
+                    <InputAdornment position="start" style={searchIcon}>
+                      <FontAwesomeIcon icon={faSearch} color='primary' />
+                    </InputAdornment>
+                  ),
+                }}
+                onChange={this.searchLists}
+
+              />
+            </Grid>
+
+            <Grid item xs={6} sm="auto" >
+              <ListItem>
+                <Avatar
+                  src={this.state.profile_img}
+                  style={avatarStyle} alt="Your Profile Image"
+                  aria-owns={anchorEl ? 'simple-menu' : undefined}
+                  aria-haspopup="true"
+                  onClick={this.handleAvatarClick}
+                />
+                <Menu
+                  id="simple-menu"
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={this.handleAvatarClose}
+                >
+                  <Link to="/settings" style={{ textDecoration: 'none' }} ><MenuItem>Settings</MenuItem></Link>
+                  <a href="/" style={{ textDecoration: 'none' }} ><MenuItem onClick={this.logOut}>Logout</MenuItem></a>
+                </Menu>
+                <React.Fragment>
+                  <Button color="primary" variant="contained" href="/create">
+                    List Creator
+                  </Button>
+                </React.Fragment>
+              </ListItem>
+            </Grid>
+          </Grid>
+          {/* </Toolbar> */}
         </AppBar>
+        <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="form-dialog-title"
+        >
+          <DialogTitle id="form-dialog-title">Tweet in Peace <span role="img" aria-label="peace">✌️</span></DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Compose Your Tweet Below
+            </DialogContentText>
+            <TextField style={tweetBox}
+              autoFocus
+              margin="normal"
+              id="tweet"
+              label="Tweet"
+              variant="outlined"
+              multiline
+              rows="3"
+              //   value={this.state.name}
+              inputProps={{ maxLength: 280 }}
+              fullWidth
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="secondary">
+              Cancel
+            </Button>
+            <Button onClick={this.handleClose} color="primary">
+              Post Tweet
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Spacer>
+
       :
       null;
     return (
@@ -267,7 +280,5 @@ const mapActionsToProps = {
   searchLists,
   addPost
 }
-
-// const FormDialogRouter = withRouter(FormDialog);
 
 export default withRouter(connect(mapStateToProps, mapActionsToProps)(HeaderTest));

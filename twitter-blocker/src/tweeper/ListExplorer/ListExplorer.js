@@ -7,7 +7,7 @@ import { Tabs, Tab } from '@material-ui/core';
 import styled from '@material-ui/styles/styled';
 // import Header from '../../components/tweeper/Header';
 // import TweetFloat from '../../components/tweeper/TweetFloat.js'
-import HeaderTest from '../../tests/HeaderTest.js'
+// import HeaderTest from '../../tests/HeaderTest.js'
 import theme from '../../theme/tweeper/theme';
 import withTheme from '../withTheme';
 import ListExplorerTable from '../../components/tweeper/ListExplorerTable.js'
@@ -113,8 +113,7 @@ const mapActionsToProps = {
 }
 
 const styledComponent = withTheme(theme)(ListExplorer);
-const routedComponent = withRouter(styledComponent)
+const routedComponent = withRouter(styledComponent);
 
 export default connect( 
-  mapStateToProps, mapActionsToProps)
-  (routedComponent);
+  mapStateToProps, mapActionsToProps)(routedComponent);

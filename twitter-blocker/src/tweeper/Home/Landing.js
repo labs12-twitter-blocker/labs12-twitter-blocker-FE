@@ -1,47 +1,47 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import CssBaseline from '@material-ui/core/CssBaseline';
+// import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import Divider from '@material-ui/core/Divider/Divider';
-import { unstable_Box as Box } from '@material-ui/core/Box';
+// import Divider from '@material-ui/core/Divider/Divider';
+// import { unstable_Box as Box } from '@material-ui/core/Box';
 import styled from '@material-ui/styles/styled';
-import { withStyles } from '@material-ui/core/styles';
-import Header from '../../components/tweeper/Header';
-import TweetFloat from '../../components/tweeper/TweetFloat.js'
-import HeaderTest from '../../tests/HeaderTest.js'
+// import { withStyles } from '@material-ui/core/styles';
+// import Header from '../../components/tweeper/Header';
+// import TweetFloat from '../../components/tweeper/TweetFloat.js'
+// import HeaderTest from '../../tests/HeaderTest.js'
 import theme from '../../theme/tweeper/theme';
 import withTheme from '../withTheme';
-import ListTab from '../../components/tweeper/ListTab.js'
+// import ListTab from '../../components/tweeper/ListTab.js'
 import atoms from '../../components/atoms';
-import molecules from '../../components/molecules';
+// import molecules from '../../components/molecules';
 import { getUser, getLogin } from '../../actions/index.js';
 import TwitterLogin from 'react-twitter-auth';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
-import axios from "axios";
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+// import axios from "axios";
 import jwt from 'jsonwebtoken';
 require('dotenv').config();
 
 const url = process.env.REACT_APP_BACKEND_BASE_URL
 
 
-const { Avatar, Icon, Typography, Button } = atoms;
+const { Typography } = atoms;
 // const { Tabs, Tab } = molecules;
 
 
-const Content = styled('div')({
-  maxWidth: 1000,
-  padding: theme.spacing.unit * 4,
-  margin: 'auto',
-  height: '100%',
-});
+// const Content = styled('div')({
+//   maxWidth: 1000,
+//   padding: theme.spacing.unit * 4,
+//   margin: 'auto',
+//   height: '100%',
+// });
 
 
-const Cover = styled('div')({
-  height: 200,
-  backgroundColor: '#ccd6dd',
-});
+// const Cover = styled('div')({
+//   height: 200,
+//   backgroundColor: '#ccd6dd',
+// });
 
 const Wall = styled('div')({
   backgroundImage: `url('/images/mobile_on_wood.jpg')`,
@@ -69,12 +69,12 @@ const Logo = styled('div')({
   margin: '20px'
 })
 
-const LoginContainer = styled('div')({
-  marginTop:"10rem",
-  [theme.breakpoints.down('sm')]: {
-    marginTop: "0",
-  },
-})
+// const LoginContainer = styled('div')({
+//   marginTop:"10rem",
+//   [theme.breakpoints.down('sm')]: {
+//     marginTop: "0",
+//   },
+// })
 
 
 
@@ -126,7 +126,7 @@ class Landing extends Component {
                 <Grid item sm > 
                   <Grid container  alignItems="center">
                     <Grid item>
-                      <img src="/images/feather-logo.png" style={{width:"80px"}} />
+                      <img alt="logo" src="/images/feather-logo.png" style={{width:"80px"}} />
                     </Grid>
                     <Grid item  >
                       <Typography variant="h5" color="primary">Larkist</Typography>
