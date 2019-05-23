@@ -107,6 +107,7 @@ class HeaderTest extends React.Component {
   };
 
   render() {
+    const { value } = this.state;
     const { anchorEl } = this.state;
     console.log("**********************" + this.props.loggedIn);
     let content = (localStorage.getItem("token")) ?
@@ -115,7 +116,7 @@ class HeaderTest extends React.Component {
           <Toolbar>
             <Grid container alignItems="center" spacing={16}>
               <Grid item xs={12} sm={4}>
-                <Tabs value={0} variant="fullWidth">
+                <Tabs value={value} variant="fullWidth">
                   <Tab
                     onlyIcon
                     icon={
@@ -180,11 +181,6 @@ class HeaderTest extends React.Component {
                       </Badge>
                     }
                   />
-                  {/* <Tab onlyIcon icon={
-                    <Link to="/settings">
-                      <FontAwesomeIcon icon={faCog} size="2x" color='#38A1F3' />
-                    </Link>} /> */}
-                  {/* <Tab onlyIcon icon={<FontAwesomeIcon icon={faEnvelope} size="2x" color='#38A1F3'/>} /> */}
                 </Tabs>
               </Grid>
 
@@ -223,7 +219,6 @@ class HeaderTest extends React.Component {
                     <Link to="/settings" style={{ textDecoration: 'none' }} ><MenuItem>Settings</MenuItem></Link>
                     <a href="/" style={{ textDecoration: 'none' }} ><MenuItem onClick={this.logOut}>Logout</MenuItem></a>
                   </Menu>
-                  {/* <ListItemText primary="austen" /> */}
                   <React.Fragment>
                     <Button color="primary" variant="contained" href="/create">
                       List Creator
@@ -254,7 +249,5 @@ const mapActionsToProps = {
   searchLists,
   addPost
 }
-
-// const FormDialogRouter = withRouter(FormDialog);
 
 export default withRouter(connect(mapStateToProps, mapActionsToProps)(HeaderTest));

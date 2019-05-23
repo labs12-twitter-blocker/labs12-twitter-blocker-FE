@@ -115,25 +115,10 @@ class ListDetails extends React.Component {
   }
 
 
-  // removeFromList = (member) => {
-  //   let listMembers = this.props.listmembers;
-  //   for(let i = 0; i < listMembers.length; i++) {
-  //     if(listMembers[i].twitter_user_id === member.twitter_user_id){
-  //       listMembers.splice(i, 1);
-  //     }
-  //   }
-  //   this.props.updateListMembers(listMembers)
-  // }
-
-
 
   componentDidMount(){
     let decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
     this.setState({ twitter_user_id: decoded.id })
-
-
-    // const userId = this.props.getUser(decoded.id)
-
     this.props.getListMembers(this.props.match.params.twitter_list_id);
     this.props.getList(this.props.match.params.twitter_list_id);
     this.props.getListTimeline(this.props.match.params.twitter_list_id, decoded.id);
@@ -197,22 +182,19 @@ render() {
                         <TopLine>
                           <ProfileNameImg>
                             <Avatar src={i.profile_img} style={{marginRight: '5px'}}/>
-                            <Link to={`/profile/${i.twitter_user_id}`} style={{textDecoration:'none'}}><ProfileName >{i.name}</ProfileName></Link>
-                            </ProfileNameImg>
-                        <Typography>@{i.screen_name}</Typography>
-                        </TopLine>
-                        <Typography>{i.description}</Typography>
-                        {/* {localStorage.getItem("twitter_user_id") === this.props.list.twitter_id ? <FontAwesomeIcon icon="times" onClick={this.removeFromList(i)}/> : null} */}
-                        </CardContent>
+                            <ProfileName >{i.name}</ProfileName>
+                              </ProfileNameImg>
+                              <Typography>@{i.screen_name}</Typography>
+                              </TopLine>
+                                <Typography>{i.description}</Typography>
+                              </CardContent>
                         </ListItem>
                     </Card>
                     </List>
                 )})}
                 </Grid>
               </Grid>
-
-              
-              </TabContainer>
+             </TabContainer>
               }
               {value === 1 &&
               <TabContainer>
@@ -238,7 +220,6 @@ render() {
               }
               <Divider />
             </Feed>
-        {/* <TweetFloat /> */}
       </Content>
     </React.Fragment>
   );
