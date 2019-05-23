@@ -349,9 +349,8 @@ class HeaderTest extends React.Component {
               label="Tweet"
               variant="outlined"
               multiline
-              rows="5"
+              rows="6"
               onChange={this.handleTweetChange}
-              //   value={this.state.name}
               inputProps={{ maxLength: 280 }}
               fullWidth
             />
