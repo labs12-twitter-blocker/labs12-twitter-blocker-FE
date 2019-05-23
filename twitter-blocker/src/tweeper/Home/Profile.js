@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import {  withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider/Divider';
@@ -85,7 +85,7 @@ class Profile extends Component {
     console.log("this.props.user", this.props.user);
     if (
       this.props.loggedIn === true &&
-      this.state.loggedInRan === false && 
+      this.state.loggedInRan === false &&
       localStorage.getItem("token")
     ) {
       this.setState({ loggedInRan: true })
@@ -105,28 +105,34 @@ class Profile extends Component {
   };
 
   render() {
+    const background = {
+      backgroundImage: `url(${this.state.banner_img})`,
+      backgroundSize: 'cover',
+      overflow: 'hidden',
+    };
+
     let content = ((this.props.loggedIn === true || this.state.twitter_user_id !== null) && this.props.gotCurrentUser === true) ?
       (
         <React.Fragment>
-        <CssBaseline />
-        <Content>
-              <Feed>
-                <Cover backgroundImage={`url(${this.state.banner_img})`}/>
-                <Box p={2} mb={1}>
-                  <Box
-                    css={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      textAlign: 'right',
-                    }}
-                  >
-                    <Avatar
-                      style={{ marginTop: '-18%', marginBottom: 14 }}
-                      ultraLarge
-                      bordered
-                      src={this.state.profilePic}
-                    />
-                    {/* <Button large color="primary" variant="outlined">
+          <CssBaseline />
+          <Content>
+            <Feed>
+              <Cover style={{ ...background }} />
+              <Box p={2} mb={1}>
+                <Box
+                  css={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    textAlign: 'right',
+                  }}
+                >
+                  <Avatar
+                    style={{ marginTop: '-18%', marginBottom: 14 }}
+                    ultraLarge
+                    bordered
+                    src={this.state.profilePic}
+                  />
+                  {/* <Button large color="primary" variant="outlined">
                       Edit Profile
                     </Button> */}
                 </Box>
@@ -151,21 +157,21 @@ class Profile extends Component {
             <BackButton />
           </Content>
         </React.Fragment >
-      ) 
+      )
       : (localStorage.getItem("token")) ? // If there is a token then display CircularProgress until everythign catches up
-      (<Grid
-        container
-        spacing={0}
-        direction="column"
-        alignItems="center"
-        justify="center"
-        style={{ minHeight: '100vh' }}
-      >
-        <Grid item xs={3}>
-          <CircularProgress color="primary" />
-        </Grid>   
-      </Grid>) 
-      : ( <Landing /> ); // No token, not logged in, display landing
+        (<Grid
+          container
+          spacing={0}
+          direction="column"
+          alignItems="center"
+          justify="center"
+          style={{ minHeight: '100vh' }}
+        >
+          <Grid item xs={3}>
+            <CircularProgress color="primary" />
+          </Grid>
+        </Grid>)
+        : (<Landing />); // No token, not logged in, display landing
 
     return (
       <React.Fragment>
