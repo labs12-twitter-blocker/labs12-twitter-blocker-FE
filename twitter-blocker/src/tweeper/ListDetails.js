@@ -23,10 +23,6 @@ import Tweet from '../components/tweeper/Tweet.js';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-<<<<<<< HEAD
-=======
-
->>>>>>> 28a0081a15c0c69ec4194d23389b37a9e242a42e
 import { List, 
       ListItem, 
       Tabs, Tab,
@@ -77,19 +73,11 @@ const Feed = styled('div')({
 //   justifyContent: 'space-between',
 // });
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 28a0081a15c0c69ec4194d23389b37a9e242a42e
 // const ProfileNameImg = styled('div') ({
 //   display: 'flex',
 //   width: '50%',
 //   alignItems: 'center',
 // })
-<<<<<<< HEAD
-=======
-
->>>>>>> 28a0081a15c0c69ec4194d23389b37a9e242a42e
 
 // const ProfileName = styled(Typography)({
 //   fontWeight: 'bold',
@@ -181,12 +169,8 @@ class ListDetails extends React.Component {
                   }
                 </Grid>
               </Grid>
-<<<<<<< HEAD
             </DetailsHeader>
               
-=======
-            </DetailsHeader>          
->>>>>>> 28a0081a15c0c69ec4194d23389b37a9e242a42e
             <Tabs 
               value={value}
               onChange={this.handleChange} 

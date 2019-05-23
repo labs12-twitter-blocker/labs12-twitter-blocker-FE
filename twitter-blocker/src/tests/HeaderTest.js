@@ -61,10 +61,6 @@ const Spacer = styled('div')({
 //   {...props} 
 //   />;
 // }
-<<<<<<< HEAD
-=======
-
->>>>>>> 28a0081a15c0c69ec4194d23389b37a9e242a42e
 
 class HeaderTest extends React.Component {
   state = {
@@ -151,19 +147,20 @@ class HeaderTest extends React.Component {
                   }
                 />
                 <Tab
+                  value={1}
                   onlyIcon
                   icon={
-                    <Badge dotted badgeContent="">
+                    // <Badge dotted badgeContent="">
                       <Link to="/cleantimeline">
                         <Tooltip title="Clean Timeline">
                           <FontAwesomeIcon icon={faCog} size="2x" color='#38A1F3' />
                         </Tooltip>
                       </Link>
-                    </Badge>
+                    // </Badge>
                   }
                 />
                 <Tab
-                  value={1}
+                  value={2}
                   onClick={this.handleClickOpen}
                   onlyIcon
                   icon={
@@ -173,7 +170,7 @@ class HeaderTest extends React.Component {
                   }
                 />
                 <Tab
-                  value={2}
+                  value={3}
                   onlyIcon
                   icon={
                     <Link to="/explorer">
