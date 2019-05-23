@@ -118,8 +118,7 @@ class Profile extends Component {
           <CssBaseline />
           <Content>
             <Feed>
-
-              <Cover backgroundimage={`url(${this.state.banner_img})`} />
+              <Cover style={{ ...background }} />
               <Box p={2} mb={1}>
                 <Box
                   css={{
