@@ -29,7 +29,7 @@ import theme from '../theme/tweeper/theme';
 import jwt from 'jsonwebtoken';
 require('dotenv').config();
 
-const { AppBar, Avatar, Badge, Toolbar, Button } = atoms;
+const { AppBar, Avatar, Button } = atoms;
 const { Tabs, Tab, ListItem, InputAdornment } = molecules;
 
 
@@ -55,12 +55,12 @@ const Spacer = styled('div')({
   },
 })
 
-function LinkTab(props) {
-  return <Tab component="a" 
-  // onClick={event => event.preventDefault()} 
-  {...props} 
-  />;
-}
+// function LinkTab(props) {
+//   return <Tab component="a" 
+//   // onClick={event => event.preventDefault()} 
+//   {...props} 
+//   />;
+// }
 
 class HeaderTest extends React.Component {
   state = {
