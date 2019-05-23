@@ -5,7 +5,7 @@ import Profile from '../src/tweeper/Home/Profile';
 import PublicProfile from '../src/tweeper/PublicProfile/PublicProfile'
 // import OAuth from '../src/tweeper/OAuth';
 // import ListCreate from '../src/tweeper/ListCreate/ListCreate';
-import CreateList from '../src/tweeper/CreateList';
+// import CreateList from '../src/tweeper/CreateList';
 import ListDetails from '../src/tweeper/ListDetails';
 import Leaderboard from './tweeper/Leaderboard/Leaderboard';
 // import AccordingWhom from './components/tweeper/AccordingWhom';
@@ -17,7 +17,7 @@ import withTheme from './tweeper/withTheme';
 import ListStepper from './tweeper/ListCreate/ListStepper'
 
 import { Route, Redirect } from 'react-router-dom';
-import { getUser, getLogin } from './actions/index.js';
+import { getLogin } from './actions/index.js';
 // import jwt from 'jsonwebtoken';
 // require('dotenv').config();
 

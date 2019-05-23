@@ -2,9 +2,9 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/styles';
 import ListItem from '@material-ui/core/ListItem/ListItem';
-import { unstable_Box as Box } from '@material-ui/core/Box';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRetweet, faCommentAlt, faHeart, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+// import { unstable_Box as Box } from '@material-ui/core/Box';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faRetweet, faCommentAlt, faHeart, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import atoms from '../atoms';
 
 const useStyles = makeStyles({
@@ -16,7 +16,7 @@ const useStyles = makeStyles({
   },
 });
 
-const { Avatar, IconButton, Icon, Typography } = atoms;
+const { Avatar, Typography } = atoms;
 
 function Tweet(props) {
   const classes = useStyles();

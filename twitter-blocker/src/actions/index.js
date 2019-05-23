@@ -645,7 +645,7 @@ export const DS_LIST_FAILURE = "DS_LIST_FAILURE";
 
 export const dsList = post => dispatch => {
   dispatch({ type: DS_LIST });
-  let token = localStorage.getItem("token")
+  // let token = localStorage.getItem("token")
   axios
     .post(`${url}/lists/`, post)
     .then(res => {
@@ -666,7 +666,7 @@ export const CREATE_LIST_FAILURE = "CREATE_LIST_FAILURE";
 
 export const createList = post => dispatch => {
   dispatch({ type: CREATE_LIST });
-  let token = localStorage.getItem("token")
+  // let token = localStorage.getItem("token")
   axios
     .post(`${url}/lists/create`, post)
     .then(res => {
@@ -925,7 +925,7 @@ export function searchLists(searchTerm, history) {
         })
         console.log(filtered);
         dispatch({ type: SEARCH_LISTS_SUCCESS, payload: filtered })
-        history.push("/explorer")
+        // history.push("/explorer")
       })
       .catch(err => {
         console.log(err);

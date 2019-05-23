@@ -1,11 +1,26 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 import classes from '../core/classes';
 
+// Twitter Original
+// const primary = {
+//   main: '#1da1f2',
+//   dark: '#1a91da',
+//   contrastText: '#fff',
+// };
+
 const primary = {
-  main: '#1da1f2',
-  dark: '#1a91da',
+  main: '#304ffe',
+  light: '#7a7cff',
+  dark: '#0026ca',
   contrastText: '#fff',
-};
+}
+
+const secondary = {
+  main: '#ff5722',
+  light: '#ff8a50',
+  dark: '#c41c00',
+  contrastText: '#000000',
+}
 
 const theme = createMuiTheme({
   typography: {
@@ -31,6 +46,7 @@ const theme = createMuiTheme({
   },
   palette: {
     primary,
+    secondary
   },
   spacing: {
     unit: 4,
@@ -73,6 +89,7 @@ export default {
   ...classes,
   theme,
   primary,
+  secondary,
   red,
   linked,
   linkInverted,

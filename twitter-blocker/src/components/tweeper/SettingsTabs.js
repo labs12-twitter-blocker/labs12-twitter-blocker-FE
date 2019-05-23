@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import SwipeableViews from 'react-swipeable-views';
+// import SwipeableViews from 'react-swipeable-views';
 import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+// import Tabs from '@material-ui/core/Tabs';
+// import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-import UserSettingsTextField from './UserSettingsTextField';
-import UserSettingsPaymentField from './UserSettingsPaymentTextField'
-import UserSettingsDelete from './UserSettingsDelete';
+// import UserSettingsTextField from './UserSettingsTextField';
+// import UserSettingsPaymentField from './UserSettingsPaymentTextField'
+// import UserSettingsDelete from './UserSettingsDelete';
 import UserSettingsCard from './UserSettingsCard';
 
 function TabContainer({ children, dir }) {
@@ -48,7 +48,7 @@ class SettingsTabs extends React.Component {
   };
 
   render() {
-    const { classes, theme } = this.props;
+    // const { classes, theme } = this.props;
 
     return (
       <React.Fragment>
