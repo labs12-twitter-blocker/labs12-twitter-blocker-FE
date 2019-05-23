@@ -37,7 +37,7 @@ const { Tabs, Tab, ListItem, InputAdornment } = molecules;
 
 
 const tweetBox = {
-  height: '100px',
+  height: '130px',
 }
 
 const avatarStyle = {
@@ -52,7 +52,7 @@ const Spacer = styled('div')({
   width: "100%",
   minHeight: 53,
   display: "hidden",
-  [ theme.breakpoints.down('xs') ]: {
+  [theme.breakpoints.down('xs')]: {
     minHeight: 170,
   },
 })
@@ -251,11 +251,11 @@ class HeaderTest extends React.Component {
                   onlyIcon
                   icon={
                     // <Badge dotted badgeContent="">
-                      <Link to="/cleantimeline">
-                        <Tooltip title="Clean Timeline">
-                          <FontAwesomeIcon icon={faCog} size="2x" color='#304ffe' />
-                        </Tooltip>
-                      </Link>
+                    <Link to="/cleantimeline">
+                      <Tooltip title="Clean Timeline">
+                        <FontAwesomeIcon icon={faCog} size="2x" color='#304ffe' />
+                      </Tooltip>
+                    </Link>
                     // </Badge>
                   }
                 />
@@ -349,7 +349,7 @@ class HeaderTest extends React.Component {
               label="Tweet"
               variant="outlined"
               multiline
-              rows="3"
+              rows="5"
               onChange={this.handleTweetChange}
               //   value={this.state.name}
               inputProps={{ maxLength: 280 }}
