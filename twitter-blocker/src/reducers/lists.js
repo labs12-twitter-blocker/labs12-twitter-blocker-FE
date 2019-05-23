@@ -115,10 +115,12 @@ const initialState = {
   fetchingUserCoolLists: false,
   fetchingListSubscribers: false,
   fetchingListMembers: false,
+  fetchingListMembersDone: false,
   fetchingAllListPoints: false,
   fetchingFollowListPoints: false,
   fetchingBlockListPoints: false,
   fetchingListTimeline: false,
+  fetchingListTimelineDone: false,
   addingDSList: false,
   subscribingList: false,
   unsubscribingList: false,
@@ -355,18 +357,21 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         fetchingListMembers: true,
+        fetchingListMembersDone: false,
         error: null
       };
     case GET_LIST_MEMBERS_SUCCESS:
       return {
         ...state,
         fetchingListMembers: false,
+        fetchingListMembersDone: true,
         listMembers: action.payload
       };
     case GET_LIST_MEMBERS_FAILURE:
       return {
         ...state,
         fetchingListMembers: false,
+        fetchingListMembersDone: false,
         error: action.payload
       };
     case GET_ALL_LIST_POINTS:
@@ -427,18 +432,21 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         fetchingListTimeline: true,
+        fetchingListTimelineDone: false,
         error: null
       };
     case GET_LIST_TIMELINE_SUCCESS:
       return {
         ...state,
         fetchingListTimeline: false,
+        fetchingListTimelineDone: true,
         listTimeline: action.payload
       };
     case GET_LIST_TIMELINE_FAILURE:
       return {
         ...state,
         fetchingListTimeline: false,
+        fetchingListTimelineDone: false,
         error: action.payload
       };
       case SUBSCRIBE_LIST:

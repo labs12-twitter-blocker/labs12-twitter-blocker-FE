@@ -62,7 +62,33 @@ const styles = theme => ({
         	}
         }
 	},
-  pointsColumn: {
+  pointsBody: {
+    width: '125px',
+    padding: '0px 4px',
+    // padding: 12,
+    fontSize: 14,
+    
+    "&:before": {
+			content: "attr(datatitle)",
+			float: "left",
+			fontWeight: 600,
+    },
+    
+    [theme.breakpoints.down("sm")]: {
+      width: '40px',
+      padding: '0px 0 0 0px',
+      display: 'table-cell',
+      fontSize: 14,
+
+      "&:before": {
+        content: "",
+        display: "none"
+      }
+    }
+  },
+  pointsRow: {
+    height: "auto",
+		marginTop: 10,
     width: '125px',
     padding: '0px 4px',
     [theme.breakpoints.down("sm")]: {
@@ -160,13 +186,13 @@ class ListExplorerTable extends Component {
             <Table className={classes.table}>
               <TableHead>
                 <TableRow classes={{ root: classes.tableBodyRow }} >
-                  <TableCell classes={{ root: classes.tableBodyData, root: classes.pointsColumn }} align="center" padding="none" >Points</TableCell>
+                  <TableCell classes={{ root: classes.pointsBody }} align="center" padding="none" >Points</TableCell>
                   <TableCell classes={{ root: classes.tableBodyData }} align="left" padding="none">Name</TableCell>
                   <TableCell classes={{ root: classes.tableBodyData }} align="right">Members</TableCell>
                   <TableCell classes={{ root: classes.tableBodyData }} align="right">Subscribers</TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody classes={{ root: classes.tableBodyRow, root: classes.pointsColumn }} >
+              <TableBody classes={{ root: classes.pointsRow }} >
                 {this.state.rows.map(row => (
 
                   <TableRow classes={{ root: classes.tableBodyRow }} key={row.id} hover >

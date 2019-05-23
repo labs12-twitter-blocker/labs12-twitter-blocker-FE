@@ -29,7 +29,7 @@ import theme from '../theme/tweeper/theme';
 import jwt from 'jsonwebtoken';
 require('dotenv').config();
 
-const { AppBar, Avatar, Badge, Toolbar, Button } = atoms;
+const { AppBar, Avatar, Button } = atoms;
 const { Tabs, Tab, ListItem, InputAdornment } = molecules;
 
 
@@ -55,12 +55,12 @@ const Spacer = styled('div')({
   },
 })
 
-function LinkTab(props) {
-  return <Tab component="a"
-    // onClick={event => event.preventDefault()}
-    {...props}
-  />;
-}
+// function LinkTab(props) {
+//   return <Tab component="a" 
+//   // onClick={event => event.preventDefault()} 
+//   {...props} 
+//   />;
+// }
 
 class HeaderTest extends React.Component {
   state = {
@@ -119,7 +119,7 @@ class HeaderTest extends React.Component {
   };
 
   render() {
-    const { value } = this.state;
+    // const { value } = this.state;
     const { anchorEl } = this.state;
     // console.log("**********************" + this.props.loggedIn);
     let content = (localStorage.getItem("token")) ?
@@ -147,19 +147,20 @@ class HeaderTest extends React.Component {
                   }
                 />
                 <Tab
+                  value={1}
                   onlyIcon
                   icon={
-                    <Badge dotted badgeContent="">
+                    // <Badge dotted badgeContent="">
                       <Link to="/cleantimeline">
                         <Tooltip title="Clean Timeline">
                           <FontAwesomeIcon icon={faCog} size="2x" color='#38A1F3' />
                         </Tooltip>
                       </Link>
-                    </Badge>
+                    // </Badge>
                   }
                 />
                 <Tab
-                  value={1}
+                  value={2}
                   onClick={this.handleClickOpen}
                   onlyIcon
                   icon={
@@ -169,7 +170,7 @@ class HeaderTest extends React.Component {
                   }
                 />
                 <Tab
-                  value={2}
+                  value={3}
                   onlyIcon
                   icon={
                     <Link to="/explorer">
@@ -198,7 +199,6 @@ class HeaderTest extends React.Component {
 
               />
             </Grid>
-
             <Grid item xs={6} sm="auto" >
               <ListItem>
                 <Avatar
