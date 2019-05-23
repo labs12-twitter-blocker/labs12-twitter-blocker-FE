@@ -58,9 +58,9 @@ const Spacer = styled('div')({
 })
 
 // function LinkTab(props) {
-//   return <Tab component="a" 
-//   // onClick={event => event.preventDefault()} 
-//   {...props} 
+//   return <Tab component="a"
+//   // onClick={event => event.preventDefault()}
+//   {...props}
 //   />;
 // }
 
@@ -180,7 +180,7 @@ class HeaderTest extends React.Component {
     // console.log("Tweet PARAMS_________________", tweetParams)
     this.props.addPost(tweetParams);
     this.startTimer()
-    // this.setState({ tweet: "" });
+    this.setState({ tweet: "" });
     this.handleClose();
 
   }
@@ -189,6 +189,7 @@ class HeaderTest extends React.Component {
     this.props.cancelPost();
     this.stopTimer()
     this.resetTimer()
+    this.handleClose()
 
   }
   handleAvatarClick = event => {
@@ -251,11 +252,11 @@ class HeaderTest extends React.Component {
                   onlyIcon
                   icon={
                     // <Badge dotted badgeContent="">
-                      <Link to="/cleantimeline">
-                        <Tooltip title="Clean Timeline">
-                          <FontAwesomeIcon icon={faCog} size="2x" color='#304ffe' />
-                        </Tooltip>
-                      </Link>
+                    <Link to="/cleantimeline">
+                      <Tooltip title="Clean Timeline">
+                        <FontAwesomeIcon icon={faCog} size="2x" color='#304ffe' />
+                      </Tooltip>
+                    </Link>
                     // </Badge>
                   }
                 />
@@ -358,7 +359,7 @@ class HeaderTest extends React.Component {
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="secondary">
-              Cancel
+              Close
             </Button>
             <Button onClick={e => this.cancelTweet()} color="secondary">
               Cancel Tweet
