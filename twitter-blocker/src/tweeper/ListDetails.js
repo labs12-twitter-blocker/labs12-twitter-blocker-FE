@@ -10,6 +10,8 @@ import styled from '@material-ui/styles/styled';
 // import HeaderTest from '../tests/HeaderTest.js'
 import theme from '../theme/tweeper/theme';
 import withTheme from './withTheme';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 // import ListTab from '../components/tweeper/ListTab.js'
 import BackButton from '../components/tweeper/BackButton'
 import atoms from '../components/atoms';
@@ -64,21 +66,21 @@ const Feed = styled('div')({
 //   backgroundColor: '#ccd6dd',
 // });
 
-const TopLine = styled('div')({
-  display: 'flex',
-  justifyContent: 'space-between',
-});
+// const TopLine = styled('div')({
+//   display: 'flex',
+//   justifyContent: 'space-between',
+// });
 
-const ProfileNameImg = styled('div') ({
-  display: 'flex',
-  width: '50%',
-  alignItems: 'center',
-})
+// const ProfileNameImg = styled('div') ({
+//   display: 'flex',
+//   width: '50%',
+//   alignItems: 'center',
+// })
 
-const ProfileName = styled(Typography)({
-  fontWeight: 'bold',
-  fontFamily: 'Helvetica Neue',
-})
+// const ProfileName = styled(Typography)({
+//   fontWeight: 'bold',
+//   fontFamily: 'Helvetica Neue',
+// })
 
 const SubscribeButton = styled(Button) ({
   margin:"2rem", 
@@ -173,27 +175,35 @@ render() {
               <TabContainer>
                 
               <Grid container spacing={8} direction="column" alignItems="center" justify="center" >
-                <Grid item xs={10} sm={8} md={6} style={{width:"100%"}}>
-                  {console.log("this.props.listMembers", this.props.listMembers)}
-                {this.props.listMembers.map(i => {
-                  return (
-                    <List key={i.screen_name}>
-                      <Card >
-                        <ListItem>
-                          <CardContent style={{width:'100%'}}>
-                            <TopLine>
-                              <ProfileNameImg>
-                                <Avatar src={i.profile_img} style={{marginRight: '5px'}}/>
-                                <ProfileName >{i.name}</ProfileName>
-                              </ProfileNameImg>
-                              <Typography>@{i.screen_name}</Typography>
-                            </TopLine>
-                              <Typography>{i.description}</Typography>
-                          </CardContent>
-                        </ListItem>
-                      </Card>
+                <Grid item xs={12} sm={10} md={8} style={{width:"100%"}}>
+                  {/* {console.log("this.props.listMembers", this.props.listMembers)} */}
+
+                  {this.props.listMembers.map((e, index) => {
+                    return (
+                      <List key={e.twitter_user_id} >
+                        <ListItem alignItems="flex-start" >
+                          <ListItemAvatar>
+                            <Avatar src={e.profile_img} />
+                          </ListItemAvatar>
+                          <ListItemText
+                            disableTypography={true}
+                            primary={<>
+                              <Typography color="textPrimary" variant='subtitle1'style={{display: 'inline-block'}}>
+                                {e.name} 
+                              </Typography>
+                              <Typography color="textSecondary" variant='caption'style={{display: 'inline-block'}}>
+                              &nbsp;@{e.screen_name}
+                              </Typography></>}
+                            secondary={
+                              <Typography component="span" color="textSecondary" variant='body2'>
+                                {e.description}
+                              </Typography>
+                            }
+                          />
+                      </ListItem>
+                      <Divider />
                     </List>
-                )})}
+                  )})}
                 </Grid>
               </Grid>
              </TabContainer>
@@ -202,12 +212,13 @@ render() {
               <TabContainer>
                 <Grid container spacing={0} direction="column" alignItems="center" justify="center" >
                   <Grid item xs={10} sm={8} md={6} style={{width:"100%"}}>
+                    {console.log("this.props.timeline", this.props.timeline)}
                   {this.props.timeline.map(i => {
                     return (
                     <List key={i.id_str}>
                       <Card>
                       <CardContent style={{width:'100%'}}>
-                      <Tweet name={i.user.name} profileImg={i.user.profile_image_url} text={i.text} date={i.created_at}/>
+                      <Tweet name={i.user.name} profileImg={i.user.profile_image_url} text={i.text} />
                     
                     </CardContent>
                     </Card>
