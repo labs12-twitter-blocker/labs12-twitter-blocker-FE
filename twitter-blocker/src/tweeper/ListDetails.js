@@ -174,6 +174,7 @@ render() {
                 
               <Grid container spacing={8} direction="column" alignItems="center" justify="center" >
                 <Grid item xs={10} sm={8} md={6} style={{width:"100%"}}>
+                  {console.log("this.props.listMembers", this.props.listMembers)}
                 {this.props.listMembers.map(i => {
                   return (
                     <List key={i.screen_name}>

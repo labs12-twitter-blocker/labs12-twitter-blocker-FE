@@ -274,7 +274,7 @@ class LeaderboardFollowTable extends React.Component {
                     <TableSortLabel active={orderBy === 'list_points'} direction={order} onClick={this.createSortHandler('list_points')} >Points</TableSortLabel>
                   </Tooltip>
                 </TableCell>
-                <TableCell classes={{ root: classes.tableBodyData }} key={'list_name'} align="left" padding="none" sortDirection={orderBy === 'list_name' ? order : true} >
+                <TableCell classes={{ root: classes.tableBodyData }} key={'list_name'} align="left" padding="none" sortDirection={orderBy === 'list_name' ? order : 'asc'} >
                   <Tooltip title="Sort by Points" placement={false ? 'bottom-end' : 'bottom-start'} enterDelay={300} >
                     <TableSortLabel active={orderBy === 'list_name'} direction={order} onClick={this.createSortHandler('list_name')} >Name</TableSortLabel>
                   </Tooltip>
@@ -357,7 +357,7 @@ class LeaderboardFollowTable extends React.Component {
 
 LeaderboardFollowTable.propTypes = {
   classes: PropTypes.object.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
+  // onRequestSort: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
