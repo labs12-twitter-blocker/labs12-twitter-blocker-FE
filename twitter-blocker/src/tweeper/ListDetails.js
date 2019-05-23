@@ -229,7 +229,7 @@ class ListDetails extends React.Component {
               
               </TabContainer>
               <TabContainer>
-                {this.props.fetchingListTimelineDone ? 
+                { (this.props.fetchingListTimelineDone && this.props.timeline ) ? 
                   <Grid container spacing={0} direction="column" alignItems="center" justify="center" >
                     <Grid item xs={12} sm={10} md={8} style={{width:"100%"}}>
                       {this.props.timeline.map(i => {
