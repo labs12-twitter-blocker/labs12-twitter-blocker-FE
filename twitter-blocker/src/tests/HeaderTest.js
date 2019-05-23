@@ -292,7 +292,7 @@ class HeaderTest extends React.Component {
             <Grid item sm xs={12}>
               <TextField
                 fullWidth
-                placeholder="Find Lists"
+                placeholder="Search List Explorer"
                 InputProps={{
                   disableUnderline: true,
                   startAdornment: (
