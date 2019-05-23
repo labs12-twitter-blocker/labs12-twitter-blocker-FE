@@ -227,7 +227,7 @@ render() {
               <TabContainer>
                 {this.props.fetchingListTimelineDone ? 
                   <Grid container spacing={0} direction="column" alignItems="center" justify="center" >
-                    <Grid item xs={10} sm={8} md={6} style={{width:"100%"}}>
+                    <Grid item xs={12} sm={10} md={8} style={{width:"100%"}}>
                       {this.props.timeline.map(i => {
                         return (
                         <List key={i.id_str}>
