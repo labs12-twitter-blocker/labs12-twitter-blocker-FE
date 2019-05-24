@@ -196,12 +196,12 @@ class BlockTimeline extends Component {
   }
 
   componentDidUpdate() {
-    // if (this.props.timeline && this.state.twitter_user_id) {
-    // this.getListRowBuilder(this.props.timeline)
-    // }
-    // if (this.props.allLists !== null  && this.state.allListRan === false && this.state.twitter_user_id !== "" ) {
-    //   this.getListRowBuilder(this.props.allLists);
-    // }
+    if (this.props.timeline && this.state.twitter_user_id && this.state.timelineRan === false) {
+      this.getListRowBuilder(this.props.timeline)
+    }
+    if (this.props.allLists !== null && this.state.allListRan === false && this.state.twitter_user_id !== "") {
+      this.getListRowBuilder(this.props.allLists);
+    }
   };
   // checked = (id) => {
   //   // add to checked state here
