@@ -233,10 +233,10 @@ class LeaderboardFollowTable extends React.Component {
   handleRequestSort = (event, property) => {
     console.log("handleRequestSort")
     const orderBy = property;
-    let order = 'desc';
+    let order = 'asc';
 
-    if (this.state.orderBy === property && this.state.order === 'desc') {
-      order = 'asc';
+    if (this.state.orderBy === property && this.state.order === 'asc') {
+      order = 'desc';
     }
 
     this.setState({ order, orderBy });
