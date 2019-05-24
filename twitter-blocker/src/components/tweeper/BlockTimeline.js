@@ -190,19 +190,16 @@ class BlockTimeline extends Component {
 
     }
     // console.log(this.state.blockTimelineList)
-    if (this.props.timeline && this.props.blockTimelineListDone) {
+    if (this.props.timeline && this.props.blockTimelineListDone && this.state.timelineRan === false) {
       this.getListRowBuilder(this.props.timeline);
     }
     // this.setState({ timeline: action.payload })
   }
 
   componentDidUpdate() {
-    if (this.props.timeline && this.props.blockTimelineListDone) {
+    if (this.props.timeline && this.props.blockTimelineListDone && this.state.timelineRan === false) {
       this.getListRowBuilder(this.props.timeline)
     }
-    // if (this.props.allLists !== null  && this.state.allListRan === false && this.state.twitter_user_id !== "" ) {
-    //   this.getListRowBuilder(this.props.allLists);
-    // }
   };
   // checked = (id) => {
   //   // add to checked state here
