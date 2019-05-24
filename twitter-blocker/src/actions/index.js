@@ -510,9 +510,7 @@ export const getListSubscribers = list_id => dispatch => {
   dispatch({ type: GET_LIST_SUBSCRIBERS });
   let token = localStorage.getItem("token")
   axios
-    .get(`${url}/lists/subscribers/${list_id}`, {
-      headers: { Authorization: token }
-    })
+    .get(`${url}/lists/subscribers/${list_id}`)
     .then(res => {
       console.log(res);
       dispatch({ type: GET_LIST_SUBSCRIBERS_SUCCESS, payload: res.data[ 0 ].list_followers });
@@ -726,7 +724,7 @@ export const DELETE_LIST_FAILURE = "DELETE_LIST_FAILURE";
 
 export const deleteList = (list_id, user_id) => dispatch => {
   dispatch({ type: DELETE_LIST });
-  let data = {twitter_id: user_id}
+  let data = { twitter_id: user_id }
   let token = localStorage.getItem("token")
   axios
     .post(`${url}/lists/${list_id}`, data, {
@@ -824,14 +822,14 @@ export const addPost = post => dispatch => {
 
   dispatch({ type: ADD_POST });
   // let token = localStorage.getItem("token")
-  console.log("POST HERE +++++++++++++++++++++++++++++++++++++++++++++++++++",post)
+  console.log("POST HERE +++++++++++++++++++++++++++++++++++++++++++++++++++", post)
   const params = {
-    status:post.status,
-    twitter_user_id:post.twitter_user_id
+    status: post.status,
+    twitter_user_id: post.twitter_user_id
   }
-  console.log("PARAMS________________________________",params)
+  console.log("PARAMS________________________________", params)
   axios
-    .post(`${url}/tweets`,  post)
+    .post(`${url}/tweets`, post)
     .then(res => {
       console.log(res);
       dispatch({ type: ADD_POST_SUCCESS, payload: res.data });
