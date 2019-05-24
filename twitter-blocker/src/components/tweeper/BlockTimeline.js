@@ -1,5 +1,11 @@
+
 import React, { Component } from 'react';
+import Fade from '@material-ui/core/Fade';
+import Popper from '@material-ui/core/Popper';
 // import BlockTimelineCard from './BlockTimelineCard'
+import BackButton from './BackButton';
+
+
 import { blockTimeline, blockUser, unblockUser } from '../../actions/index'
 import CssBaseline from '@material-ui/core/CssBaseline';
 import styled from '@material-ui/styles/styled';
@@ -38,65 +44,38 @@ import {
   CardContent,
 
 } from '@material-ui/core';
-import BackButton from '../../components/tweeper/BackButton.js'
-
 
 const { AppBar, Avatar, Badge, Icon, Toolbar } = atoms;
 
 let id = 0;
-function createData(screen_name, tweet_text, name, profile_img, twitter_user_id,hate, insult, obscene, toxic, severe_toxic, threat ) {
+function createData(screen_name, tweet_text, name, profile_img, twitter_user_id, hate, insult, obscene, toxic, severe_toxic, threat) {
   id += 1;
-  return { id, screen_name, tweet_text, name, profile_img, twitter_user_id, hate, insult, obscene, toxic, severe_toxic, threat  };
+  return { id, screen_name, tweet_text, name, profile_img, twitter_user_id, hate, insult, obscene, toxic, severe_toxic, threat };
 }
 
-
-
-// User: {item.tweet.user.screen_name}
-// Tweet: {item.tweet.full_text}
-// Identity Hate: {`${item.bert_result.identity_hate * 100}%`}
-// Insult: {`${item.bert_result.insult * 100}%`}
-// Obscene: {`${item.bert_result.obscene}%`}
-// Severe Toxic: {`${item.bert_result.severe_toxic}`}
-// Threat: {`${item.bert_result.threat * 100}%`}
-// Toxic: {`${item.bert_result.toxic}%`}
-// Average: {`${((item.bert_result.toxic + item.bert_result.identity_hate + item.bert_result.insult +
-//   item.bert_result.obscene + item.bert_result.severe_toxic + item.bert_result.threat) / 6) * 100}%`}
-
-{/* <Tweet 
-name={i.user.name} 
-profileImg={i.user.profile_image_url} 
-text={i.text} 
-screen_name={i.user.screen_name}
-/> */}
-
-
 function desc(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
+  if (b[ orderBy ] < a[ orderBy ]) {
     return -1;
   }
-  if (b[orderBy] > a[orderBy]) {
+  if (b[ orderBy ] > a[ orderBy ]) {
     return 1;
   }
   return 0;
 }
 
 function stableSort(array, cmp) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
+  const stabilizedThis = array.map((el, index) => [ el, index ]);
   stabilizedThis.sort((a, b) => {
-    const order = cmp(a[0], b[0]);
+    const order = cmp(a[ 0 ], b[ 0 ]);
     if (order !== 0) return order;
-    return a[1] - b[1];
+    return a[ 1 ] - b[ 1 ];
   });
-  return stabilizedThis.map(el => el[0]);
+  return stabilizedThis.map(el => el[ 0 ]);
 }
 
 function getSorting(order, orderBy) {
   return order === 'desc' ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy);
 }
-
-
-
-
 
 const styles = {
   card: {
@@ -113,6 +92,28 @@ const styles = {
   pos: {
     marginBottom: 12,
   },
+  tableBodyRow: {
+    height: "auto",
+    marginTop: 10,
+  },
+  table: {
+    margin: "2rem 0",
+    // padding: "1rem"
+    // [ theme.breakpoints.down("sm") ]: {
+    // padding: '0px 4px',
+  },
+  tweet: {
+    margin: "2rem"
+  },
+  blockButton: {
+    [ theme.breakpoints.down("sm") ]: {
+      width: '40px',
+      height: '45px',
+      padding: '0px 0 0 0px',
+    }
+
+
+  }
 
 };
 const Feed = styled('div')({
@@ -129,11 +130,14 @@ const Content = styled('div')({
   margin: 'auto',
 });
 const BlockButton = styled(Button)({
-  margin: "2rem",
+  // margin: "2rem",
+  // width: "10px",
+  // [ theme.breakpoints.down("sm") ]: {
+  // width: '1em',
+  // height: '15px',
+  // padding: '0px 0 0 0px',
+  // }
 })
-
-
-
 class BlockTimeline extends Component {
   constructor(props) {
     super(props)
@@ -146,6 +150,7 @@ class BlockTimeline extends Component {
       page: 0,
       rowsPerPage: 25,
       timelineRan: false,
+      checked: []
     }
   }
 
@@ -178,48 +183,63 @@ class BlockTimeline extends Component {
       const decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
       this.setState({ twitter_user_id: decoded.id })
       console.log("decoded", decoded)
-
       console.log("CDM")
       console.log(this.state)
       const params = {
         twitter_user_id: decoded.id
       }
       this.props.blockTimeline(params)
-    }
-    this.getListRowBuilder(timelineXX);
-    // console.log(this.state.blockTimelineList)
 
+    }
+    // console.log(this.state.blockTimelineList)
+    if (this.props.timeline) {
+      this.getListRowBuilder(this.props.timeline);
+    }
     // this.setState({ timeline: action.payload })
   }
 
   componentDidUpdate() {
+    if (this.props.timeline && this.state.twitter_user_id) {
+      this.getListRowBuilder(this.props.timeline)
+    }
     // if (this.props.allLists !== null  && this.state.allListRan === false && this.state.twitter_user_id !== "" ) {
     //   this.getListRowBuilder(this.props.allLists);
     // }
   };
-
-   
+  // checked = (id) => {
+  //   // add to checked state here
+  //   // if (this.state.checked.includes(id)) {
+  //   //   let location = this.state.checked.indexOf(id)
+  //   //   console.log("location if", location)
+  //   //   let slicedCheck = this.state.checked.slice(location)
+  //   //   console.log("slicedCheck if", slicedCheck)
+  //   // } else {
+  //   //   console.log("checked id else", id)
+  //   //   console.log("this.state.checked else", this.state.checked)
+  //   //   if (this.state.checked.includes(id)) {
+  //   //     let checkedId = this.state.checked.indexOf(id)
+  //   //     console.log("checkedId else", checkedId)
+  //   //     let slicedCheck = this.state.checked.slice(checkedId)
+  //   //     console.log("slicedCheck else", slicedCheck)
+  //   //   }
+  //     this.state.checked.push(id)
+  //   }
+  // }
   getListRowBuilder = (timeline) => {
     console.log("getListRowBuilder")
     let newRow = [];
     timeline.map(e => {
       newRow.push(createData(
-        e.tweet.user.screen_name, e.tweet.full_text, e.tweet.user.name, 
-        e.tweet.user.profile_image_url_https, e.tweet.user.id_str, 
-        e.bert_result.identity_hate, e.bert_result.insult, e.bert_result.obscene, 
+        e.tweet.user.screen_name, e.tweet.full_text, e.tweet.user.name,
+        e.tweet.user.profile_image_url_https, e.tweet.user.id_str,
+        e.bert_result.identity_hate, e.bert_result.insult, e.bert_result.obscene,
         e.bert_result.toxic, e.bert_result.severe_toxic, e.bert_result.threat))
-        return newRow;
-      })
-      console.log("getListRowBuilder timeline", timeline)
-      this.setState({timelineRan: true})
-      this.setState({data: newRow});
+      return newRow;
+    })
+    console.log("getListRowBuilder timeline", timeline)
+    this.setState({ timelineRan: true })
+    this.setState({ data: newRow });
   };
-
-
-
-
-
-
 
   handleRequestSort = (event, property) => {
     console.log("handleRequestSort")
@@ -247,192 +267,165 @@ class BlockTimeline extends Component {
     this.handleRequestSort(event, property);
   };
 
-  // handleToggle = value => () => {
-  //   const { checked } = this.state;
-  //   const currentIndex = checked.indexOf(value);
-  //   const newChecked = [ ...checked ];
-
-  //   if (currentIndex === -1) {
-  //     newChecked.push(value);
-  //   } else {
-  //     newChecked.splice(currentIndex, 1);
-  //   }
-
-  //   this.setState({
-  //     checked: newChecked,
-  //   });
-  // };
-
   render() {
+    const { orderBy, order, anchorEl, setAnchorEl } = this.state;
 
-    const { orderBy, order } = this.state;
-    if (timelineXX === null) {
+
+    // const open = Boolean(anchorEl);
+    // const popId = open ? 'simple-popper' : null;
+
+    // console.log("open", this.state.open)
+    if (this.props.timeline === null) {
       return (<CircularProgress color="primary" />)
     } else {
       const { classes } = this.props;
-    
+
       const { data, order, orderBy, rowsPerPage, page } = this.state;
       const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
-
       return (
-        <Paper >
-          <Table aria-labelledby="tableTitle">
-            <TableHead>
-              <TableRow >
-                <TableCell key={'block'} align="center" padding="checkbox">
-                  <Tooltip title="Block" placement={true ? 'bottom-end' : 'bottom-start'} enterDelay={300} >
-                    <TableSortLabel >Block</TableSortLabel>
-                  </Tooltip>
-                </TableCell>
-                <TableCell key={'tweet'} align="left" >
-                  <Tooltip title="Tweets" placement={false ? 'bottom-end' : 'bottom-start'} enterDelay={300} >
-                    <TableSortLabel >Tweets</TableSortLabel>
-                  </Tooltip>
-                </TableCell>
+        <React.Fragment>
+          <CssBaseline />
+          <BackButton />
+          <Content>
+            <Feed>
 
-                <TableCell key={'hate'} align="right" padding="none" sortDirection={orderBy === 'hate' ? order : false} >
-                  <Tooltip title="Sort by hate" placement={true ? 'bottom-end' : 'bottom-start'} enterDelay={300} >
-                    <TableSortLabel active={orderBy === 'hate'} direction={order} onClick={this.createSortHandler('hate')} >Hate</TableSortLabel>
-                  </Tooltip>
-                </TableCell>
-                <TableCell key={'insult'} align="right" padding="none" sortDirection={orderBy === 'insult' ? order : false} >
-                  <Tooltip title="Sort by insult" placement={true ? 'bottom-end' : 'bottom-start'} enterDelay={300} >
-                    <TableSortLabel active={orderBy === 'insult'} direction={order} onClick={this.createSortHandler('insult')} >Insult</TableSortLabel>
-                  </Tooltip>
-                </TableCell>
-                <TableCell key={'obscene'} align="right" padding="none" sortDirection={orderBy === 'obscene' ? order : false} >
-                  <Tooltip title="Sort by obscene" placement={true ? 'bottom-end' : 'bottom-start'} enterDelay={300} >
-                    <TableSortLabel active={orderBy === 'obscene'} direction={order} onClick={this.createSortHandler('obscene')} >Obscene</TableSortLabel>
-                  </Tooltip>
-                </TableCell>
-                <TableCell key={'toxic'} align="right" padding="none" sortDirection={orderBy === 'toxic' ? order : false} >
-                  <Tooltip title="Sort by toxic" placement={true ? 'bottom-end' : 'bottom-start'} enterDelay={300} >
-                    <TableSortLabel active={orderBy === 'toxic'} direction={order} onClick={this.createSortHandler('toxic')} >Toxic</TableSortLabel>
-                  </Tooltip>
-                </TableCell>
-                <TableCell key={'severe_toxic'} align="right" padding="none" sortDirection={orderBy === 'severe_toxic' ? order : false} >
-                  <Tooltip title="Sort by severe_toxic" placement={true ? 'bottom-end' : 'bottom-start'} enterDelay={300} >
-                    <TableSortLabel active={orderBy === 'severe_toxic'} direction={order} onClick={this.createSortHandler('severe_toxic')} >Severe Toxic</TableSortLabel>
-                  </Tooltip>
-                </TableCell>
-                <TableCell key={'threat'} align="right" sortDirection={orderBy === 'threat' ? order : false} >
-                  <Tooltip title="Sort by threat" placement={true ? 'bottom-end' : 'bottom-start'} enterDelay={300} >
-                    <TableSortLabel active={orderBy === 'threat'} direction={order} onClick={this.createSortHandler('threat')} >Threat</TableSortLabel>
-                  </Tooltip>
-                </TableCell>
-
-              </TableRow>
-            </TableHead>
-            <TableBody >
-              {stableSort(data, getSorting(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map(n => {
-                  return (
-                    <TableRow
-                      hover
-                      tabIndex={-1}
-                      key={n.id}
-                    >
-                      <TableCell align="center" padding="checkbox">
-                      
-                        <Grid item>
-                          {/* {this.state.isBlocked === false &&
-                            <BlockButton medium color="secondary" variant="outlinedPrimary" style={{ color: "#1da1f2", border: "2px solid #1da1f2" }} onClick={() => this.block(n.tweet.user.id)}>Block</BlockButton>
-                          }
-                          {this.state.isBlocked === true &&
-                            <BlockButton medium color="secondary" variant="contained" onClick={() => this.unblock(n.tweet.user.id)}>Unblock</BlockButton>
-                          } */}
-                          <Checkbox
-              // checked={this.state.open}
-              // value="Select all"
-              // onClick={this.selectAll}
-              color="secondary"
-            />
-                        </Grid>
-                        
+              <Paper >
+                {/* <Button>Submit Blocks</Button> */}
+                <Table aria-labelledby="tableTitle" classes={{ root: classes.table }} >
+                  <TableHead>
+                    <TableRow classes={{ root: classes.tableBodyRow }}>
+                      <TableCell key={'block'} align="center" padding="checkbox" classes={{ root: classes.blockButton }}>
+                        <Tooltip title="Block" placement={true ? 'bottom-end' : 'bottom-start'} enterDelay={300} >
+                          <TableSortLabel >Block</TableSortLabel>
+                        </Tooltip>
                       </TableCell>
-                      <TableCell  align="left" padding="none">
-                          {/* <Tweet name={n.name} profileImg={n.profile_img} text={n.tweet_text} screen_name={n.screen_name}/> */}
-                          <Avatar src={n.profile_img} style={{display: 'inline-block'}}/>
-                          <Typography color="textPrimary" variant='subtitle1'style={{display: 'inline-block'}}>
-                                {n.name}
-                              </Typography>
-                              <Typography color="textSecondary" variant='caption'style={{display: 'inline-block'}}>
-                              &nbsp;@{n.screen_name}
-                              </Typography>
+                      <TableCell key={'tweet'} align="left"  >
+                        <Tooltip title="Tweets" placement={false ? 'bottom-end' : 'bottom-start'} enterDelay={300} >
+                          <TableSortLabel >Tweets</TableSortLabel>
+                        </Tooltip>
+                      </TableCell>
+                      <TableCell key={'hate'} align="right" padding="none" sortDirection={orderBy === 'hate' ? order : false} >
+                        <Tooltip title="Sort by hate" placement={true ? 'bottom-end' : 'bottom-start'} enterDelay={300} >
+                          <TableSortLabel active={orderBy === 'hate'} direction={order} onClick={this.createSortHandler('hate')} >Hate</TableSortLabel>
+                        </Tooltip>
+                      </TableCell>
+                      <TableCell key={'insult'} align="right" padding="none" sortDirection={orderBy === 'insult' ? order : false} >
+                        <Tooltip title="Sort by insult" placement={true ? 'bottom-end' : 'bottom-start'} enterDelay={300} >
+                          <TableSortLabel active={orderBy === 'insult'} direction={order} onClick={this.createSortHandler('insult')} >Insult</TableSortLabel>
+                        </Tooltip>
+                      </TableCell>
+                      <TableCell key={'obscene'} align="right" padding="none" sortDirection={orderBy === 'obscene' ? order : false} >
+                        <Tooltip title="Sort by obscene" placement={true ? 'bottom-end' : 'bottom-start'} enterDelay={300} >
+                          <TableSortLabel active={orderBy === 'obscene'} direction={order} onClick={this.createSortHandler('obscene')} >Obscene</TableSortLabel>
+                        </Tooltip>
+                      </TableCell>
+                      <TableCell key={'toxic'} align="right" padding="none" sortDirection={orderBy === 'toxic' ? order : false} >
+                        <Tooltip title="Sort by toxic" placement={true ? 'bottom-end' : 'bottom-start'} enterDelay={300} >
+                          <TableSortLabel active={orderBy === 'toxic'} direction={order} onClick={this.createSortHandler('toxic')} >Toxic</TableSortLabel>
+                        </Tooltip>
+                      </TableCell>
+                      <TableCell key={'severe_toxic'} align="right" padding="none" sortDirection={orderBy === 'severe_toxic' ? order : false} >
+                        <Tooltip title="Sort by severe_toxic" placement={true ? 'bottom-end' : 'bottom-start'} enterDelay={300} >
+                          <TableSortLabel active={orderBy === 'severe_toxic'} direction={order} onClick={this.createSortHandler('severe_toxic')} >Severe Toxic</TableSortLabel>
+                        </Tooltip>
+                      </TableCell>
+                      <TableCell key={'threat'} align="right" sortDirection={orderBy === 'threat' ? order : false} >
+                        <Tooltip title="Sort by threat" placement={true ? 'bottom-end' : 'bottom-start'} enterDelay={300} >
+                          <TableSortLabel active={orderBy === 'threat'} direction={order} onClick={this.createSortHandler('threat')} >Threat</TableSortLabel>
+                        </Tooltip>
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody >
+                    {stableSort(data, getSorting(order, orderBy))
+                      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                      .map(n => {
+                        { console.log("n", n) }
+                        return (
 
-                              <Typography component="span" color="textSecondary" variant='body2'>
-                                {n.tweet_text}
-                              </Typography>
-                        {/* <Typography color="primary"variant="body1">
+                          < TableRow
+                            hover
+                            tabIndex={- 1
+                            }
+                            key={n.id}
+                          >
+                            <TableCell align="center" padding="checkbox">
+                              <Grid item>
+
+                                <BlockButton medium color="secondary" variant="outlinedPrimary" aria-describedby={this.id} variant="contained"
+                                  style={{ color: "304ffe", border: "2px solid secondary" }}
+                                  onClick={(e) => this.block(n.twitter_user_id)}>Block</BlockButton>
+
+                              </Grid>
+                            </TableCell>
+                            {/* <TableCell align="left" padding="none" classes={{ root: classes.tweet }}> */}
+                            <Tweet name={n.name} profileImg={n.profile_img} text={n.tweet_text} screen_name={n.screen_name} />
+                            {/* <Avatar src={n.profile_img} style={{ display: 'inline-block' }} /> */}
+                            {/* <Typography color="textPrimary" variant='subtitle1' style={{ display: 'inline-block' }}> */}
+                            {/* {n.name} */}
+                            {/* </Typography> */}
+                            {/* <Typography color="textSecondary" variant='caption' style={{ display: 'inline-block' }}> */}
+                            {/* &nbsp;@{n.screen_name} */}
+                            {/* </Typography> */}
+
+                            {/* <Typography component="span" color="textSecondary" variant='body2'> */}
+                            {/* {n.tweet_text} */}
+                            {/* </Typography> */}
+                            {/* <Typography color="primary"variant="body1">
                           {console.log("n: ",n)}
                         </Typography> */}
-                      </TableCell>
-                      <TableCell align="right" padding="none" >
-                        {`${(n.hate*100).toFixed(2)}%`}
-                      </TableCell>
-                      <TableCell  align="right" padding="none" >
-                        {`${(n.insult*100).toFixed(2)}%`}
-                      </TableCell>
-                      <TableCell  align="right" padding="none" >
-                        {`${(n.obscene*100).toFixed(2)}%`}
-                      </TableCell>
-                      <TableCell  align="right" padding="none" >
-                        {`${(n.toxic*100).toFixed(2)}%`}
-                      </TableCell>
-                      <TableCell  align="right" padding="none" >
-                        {`${(n.severe_toxic*100).toFixed(2)}%`}
-                      </TableCell>
-                      <TableCell  align="right" >
-                        {`${(n.threat*100).toFixed(2)}%`}
-                      </TableCell>
-                      
-                    </TableRow>
-                  );
-                })}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 49 * emptyRows }} classes={{ root: classes.tableBodyRow }} >
-                  <TableCell colSpan={6} classes={{ root: classes.tableBodyData }}/>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        {/* </div> */}
-        <TablePagination
-          rowsPerPageOptions={[10, 25, 50, 100]}
-          component="div"
-          count={data.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          backIconButtonProps={{
-            'aria-label': 'Previous Page',
-          }}
-          nextIconButtonProps={{
-            'aria-label': 'Next Page',
-          }}
-          onChangePage={this.handleChangePage}
-          onChangeRowsPerPage={this.handleChangeRowsPerPage}
-        />
-         <BackButton />
-      </Paper>
+                            {/* </TableCell> */}
+                            <TableCell align="right" padding="none" >
+                              {`${(n.hate * 100).toFixed(2)}%`}
+                            </TableCell>
+                            <TableCell align="right" padding="none" >
+                              {`${(n.insult * 100).toFixed(2)}%`}
+                            </TableCell>
+                            <TableCell align="right" padding="none" >
+                              {`${(n.obscene * 100).toFixed(2)}%`}
+                            </TableCell>
+                            <TableCell align="right" padding="none" >
+                              {`${(n.toxic * 100).toFixed(2)}%`}
+                            </TableCell>
+                            <TableCell align="right" padding="none" >
+                              {`${(n.severe_toxic * 100).toFixed(2)}%`}
+                            </TableCell>
+                            <TableCell align="right" >
+                              {`${(n.threat * 100).toFixed(2)}%`}
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                    {emptyRows > 0 && (
+                      <TableRow style={{ height: 49 * emptyRows }} classes={{ root: classes.tableBodyRow }} >
+                        <TableCell colSpan={6} classes={{ root: classes.tableBodyData }} />
+                      </TableRow>
+                    )}
+                  </TableBody>
+                </Table>
+                {/* </div> */}
+                <TablePagination
+                  rowsPerPageOptions={[ 10, 25, 50, 100 ]}
+                  component="div"
+                  count={data.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  backIconButtonProps={{
+                    'aria-label': 'Previous Page',
+                  }}
+                  nextIconButtonProps={{
+                    'aria-label': 'Next Page',
+                  }}
+                  onChangePage={this.handleChangePage}
+                  onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                />
+              </Paper>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
+              <Divider />
+            </Feed>
+            <BackButton />
+          </Content>
+        </React.Fragment>
       );
     }
   }
@@ -442,7 +435,7 @@ const routedComponent = withRouter(styledComponent)
 
 
 const mapStateToProps = state => ({
-  // timeline: state.listsReducer.blockTimelineList
+  timeline: state.listsReducer.blockTimelineList
 });
 
 export default withRouter(connect(
@@ -1369,5 +1362,5 @@ let timelineXX = [
       "threat": 0.7901,
       "toxic": 0.9879
     }
-   }
-  ]
+  }
+]

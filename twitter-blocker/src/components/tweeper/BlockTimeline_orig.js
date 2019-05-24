@@ -62,8 +62,6 @@ const BlockButton = styled(Button)({
   margin: "2rem",
 })
 
-
-
 class BlockTimeline extends Component {
   constructor(props) {
     super(props)
@@ -206,7 +204,7 @@ const styledComponent = withStyles(styles)(BlockTimeline);
 
 
 const mapStateToProps = state => ({
-  // timeline: state.listsReducer.blockTimelineList
+  timeline: state.listsReducer.blockTimelineList
 });
 
 export default withRouter(connect(
@@ -1133,5 +1131,5 @@ let timeline = [
       "threat": 0.7901,
       "toxic": 0.9879
     }
-   }
-  ]
+  }
+]

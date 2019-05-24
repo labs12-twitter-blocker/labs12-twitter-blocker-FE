@@ -127,12 +127,12 @@ class Profile extends Component {
                     textAlign: 'right',
                   }}
                 >
-                  <Avatar
+                  {/* <Avatar
                     style={{ marginTop: '-18%', marginBottom: 14 }}
                     ultraLarge
                     bordered
                     src={this.state.profilePic}
-                  />
+                  /> */}
                   {/* <Button large color="primary" variant="outlined">
                       Edit Profile
                     </Button> */}
