@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
-import Fade from '@material-ui/core/Fade';
-import Popper from '@material-ui/core/Popper';
+// import Fade from '@material-ui/core/Fade';
+// import Popper from '@material-ui/core/Popper';
 // import BlockTimelineCard from './BlockTimelineCard'
 import BackButton from './BackButton';
 
@@ -10,9 +10,9 @@ import { blockTimeline, blockUser, unblockUser } from '../../actions/index'
 import CssBaseline from '@material-ui/core/CssBaseline';
 import styled from '@material-ui/styles/styled';
 import theme from '../../theme/tweeper/theme';
-import withTheme from '../../tweeper/withTheme';
+// import withTheme from '../../tweeper/withTheme';
 import Divider from '@material-ui/core/Divider';
-import atoms from '../atoms';
+// import atoms from '../atoms';
 import jwt from 'jsonwebtoken';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
@@ -25,27 +25,27 @@ import Tooltip from '@material-ui/core/Tooltip';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Paper from '@material-ui/core/Paper';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
-import { getAllListPoints, addUserVote } from '../../actions/index'
-import Checkbox from '@material-ui/core/Checkbox';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
+// import { getAllListPoints, addUserVote } from '../../actions/index'
+// import Checkbox from '@material-ui/core/Checkbox';
 import Tweet from './Tweet.js';
 import CircularProgress from '@material-ui/core/CircularProgress';
 // import { LIST_ITEM } from '../../theme/core/classes';
 import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
+// import Card from '@material-ui/core/Card';
+// import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import {
-  List,
-  ListItem,
-  CardContent,
+// import {
+//   List,
+//   ListItem,
+//   CardContent,
 
-} from '@material-ui/core';
+// } from '@material-ui/core';
 
-const { AppBar, Avatar, Badge, Icon, Toolbar } = atoms;
+// const { AppBar, Avatar, Badge, Icon, Toolbar } = atoms;
 
 let id = 0;
 function createData(screen_name, tweet_text, name, profile_img, twitter_user_id, hate, insult, obscene, toxic, severe_toxic, threat) {
