@@ -795,9 +795,7 @@ export const unSubscribeToList = (listId, userId) => dispatch => {
   dispatch({ type: UNSUBSCRIBE_LIST });
   let token = localStorage.getItem("token")
   axios
-    .post(`${url}/lists/${listId}/unfollow/${userId}`, {
-      headers: { Authorization: token }
-    })
+    .post(`${url}/lists/${listId}/unfollow/${userId}`)
     .then(res => {
       console.log(res);
       dispatch({ type: UNSUBSCRIBE_LIST_SUCCESS, payload: res.data });
