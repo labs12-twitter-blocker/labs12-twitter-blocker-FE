@@ -38,7 +38,8 @@ import { getList,
         updateListMembers,
         subscribeToList,
         unSubscribeToList,
-        getListSubscribers } from '../actions';
+        getListSubscribers,
+        deleteList } from '../actions';
 // import { Link } from 'react-router-dom';
 import jwt from 'jsonwebtoken';
 require('dotenv').config();
@@ -99,6 +100,9 @@ class ListDetails extends React.Component {
     this.state = {
       value: 0,
       isSubscribed: false,
+      isCreator: false,
+      listId: "",
+      listCreatorId: "",
     }
   }
 
@@ -126,6 +130,10 @@ class ListDetails extends React.Component {
     // console.log(this.state.isSubscribed)
   }
 
+  deleteList = () => {
+    this.props.deleteList(this.state.listId)
+  }
+
 
 
   componentDidMount() {
@@ -135,18 +143,27 @@ class ListDetails extends React.Component {
     this.props.getList(this.props.match.params.twitter_list_id);
     this.props.getListTimeline(this.props.match.params.twitter_list_id, decoded.id);
     this.props.getListSubscribers(this.props.match.params.twitter_list_id);
+
+
+    setTimeout(() => {
+      this.setState({listId: this.props.list.twitter_list_id})
+      this.setState({listCreatorId: this.props.list.twitter_id})
+      if (decoded. id == this.state.listCreatorId) {
+        this.setState({isCreator: true})
+      }
     this.props.listSubscribers.map(user => {
-      if (user.twitter_user_id === decoded.id) {
+      if (user.twitter_user_id == decoded.id) {
         this.setState({ isSubscribed: true })
       }
-      return null
     })
+  }, 1000)
 
   }
 
   render() {
     const { value } = this.state;
     const { isSubscribed } = this.state;
+    const { isCreator } = this.state;
 
     return (
       <React.Fragment>
@@ -162,12 +179,16 @@ class ListDetails extends React.Component {
                   <Typography>{this.props.list.subscriber_count} Subscribers</Typography>
                 </Grid>
                 <Grid item>
-                  {isSubscribed === false &&
+                  {isCreator === false && isSubscribed === false ?
                     <SubscribeButton variant="containedPrimary" style={{ color: "#304ffe", border: "2px solid #304ffe" }} onClick={this.subscribe}>Subscribe</SubscribeButton>
+                  : null
                   }
-                  {isSubscribed === true &&
+                  {isSubscribed === true && isCreator === false ?
                     <SubscribeButton color="primary" variant="contained" onClick={this.unsubscribe}>Unsubscribe</SubscribeButton>
+                  : null
                   }
+                  {isCreator === true &&
+                  <SubscribeButton variant="contained" style={{ color: "#ffffff", background: "#ff5252" }}onClick={this.deleteList}>Delete List</SubscribeButton>}
                 </Grid>
               </Grid>
             </DetailsHeader>
@@ -287,7 +308,8 @@ const mapActionsToProps = {
   updateListMembers,
   subscribeToList,
   unSubscribeToList,
-  getListSubscribers
+  getListSubscribers,
+  deleteList
 }
 
 const styledComponent = withTheme(theme)(ListDetails);
