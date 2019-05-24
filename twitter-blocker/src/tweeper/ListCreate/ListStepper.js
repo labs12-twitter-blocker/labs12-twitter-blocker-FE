@@ -486,7 +486,7 @@ class ListStepper extends React.Component {
       case 3:
         return (
           <>
-            <Typography variant='h6' color='primary'>Please a Twitter Handle to create your list. We recommend at least 5.</Typography>
+            <Typography variant='h6' color='primary'>Please enter a Twitter handle to create your list. We recommend at least 5.</Typography>
             <FormControl className={this.props.classes.formControl} >
               <form
                 value={this.state.maxWidth}
