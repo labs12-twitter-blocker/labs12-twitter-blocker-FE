@@ -107,17 +107,22 @@ function createData(list_name, description, member_count, subscriber_count, list
 }
 
 class ListExplorerTable extends Component {
-  state={
+  constructor(props) {
+    super(props);
+    this.state={
       rows: [],
       allListRan: false,
       twitter_user_id: "",
       lists: []
   }
+  }
+
     
   componentDidMount() {
     if (this.props.allLists === null ) {
       this.props.getPublicLists()
     } else {
+      id = 0;
       this.getListRowBuilder(this.props.allLists);
     }
     if (localStorage.getItem("token")) {
@@ -145,9 +150,6 @@ class ListExplorerTable extends Component {
   }; 
 
   up = (e) => {
-    console.log("e.currentTarget.getAttribute(rowid)", e.currentTarget.getAttribute("rowid"))
-    console.log("e.currentTarget.id", e.currentTarget.id)
-
     const rowPointer = e.currentTarget.getAttribute("rowid") - 1;
     let upvote = {
       "twitter_list_id": e.currentTarget.id, 

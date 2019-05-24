@@ -32,7 +32,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Modal from '@material-ui/core/Modal';
 import Chip from '@material-ui/core/Chip';
-import FaceIcon from '@material-ui/icons/Face';
+import InputAdornment from '@material-ui/core/InputAdornment';
+// import FaceIcon from '@material-ui/icons/Face';
 // import Select from 'material-ui/Select';
 
 import { List, ListItem } from '@material-ui/core';
@@ -71,7 +72,7 @@ const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    minWidth: 350
+    maxWidth: 350
   },
   dense: {
     marginTop: 10,
@@ -87,34 +88,27 @@ const styles = theme => ({
   },
   usernameGroup: {
     display: 'flex',
-    flexWrap: 'wrap',
+    flexWrap: 'nowrap',
     flexDirection: 'row',
   },
   usernameButton: {
     margin: 13,
-    marginTop: 22
-  }
+    marginTop: 22,
+    [theme.breakpoints.down("sm")]: {
+      // width: '20%',
+    }
+  },
+  dialogPaper: {
+    [theme.breakpoints.down("md")]: {
+      minWidth: '50%',
+      maxWidth: '50%',
+    },
+    [theme.breakpoints.down("sm")]: {
+      minWidth: '95%',
+      maxWidth: '95%',
+    },
+  },
 });
-
-// const ButtonText = styled('div')({
-//   fontSize: 18
-// })
-
-// const TopLine = styled('div')({
-//   display: 'flex',
-//   justifyContent: 'space-between',
-// });
-
-// const ProfileNameImg = styled('div')({
-//   display: 'flex',
-//   width: '50%',
-//   alignItems: 'center',
-// })
-
-// const ProfileName = styled(Typography)({
-//   fontWeight: 'bold',
-//   fontFamily: 'Helvetica Neue',
-// })
 
 
 class MemberModal extends React.Component {
@@ -161,14 +155,14 @@ class MemberModal extends React.Component {
       "description": this.props.description,
       "screen_name": screen_name.toString()
     }
-    console.log("listParams", listParams)
+    // console.log("listParams", listParams)
 
     this.props.createList(listParams)
   }
 
   render() {
     const { dsLists, classes } = this.props;
-    const { checkedAll, checked } = this.state;
+    const { checkedAll } = this.state;
     return (
       <>
         <DialogTitle id="form-dialog-title">Select Members to Add to List
@@ -182,7 +176,6 @@ class MemberModal extends React.Component {
             />
           </Typography>
         </DialogTitle>
-        {console.log("checked", checked)}
         <DialogContent>
           {dsLists.map((e, index) => {
             return (
@@ -376,15 +369,7 @@ class ListStepper extends React.Component {
     this.state.twitterHandles.map(e => {
       return usernameArray.push(e.username)
     })
-    console.log("+++++++++++++++++++tusernameArray", usernameArray)
-
-    console.log("++++++++open+++++++++++this.state.open", this.state.open)
-
-
-    const token = localStorage.getItem("token");
-    console.log("TOKEN", token);
-    console.log("THIS.STATE", this.state);
-
+    // const token = localStorage.getItem("token");
     const listParams = {
       "user_id": this.state.twitter_user_id,
       "original_user": this.state.twitter_user_id,
@@ -417,6 +402,7 @@ class ListStepper extends React.Component {
           <>
             <Typography variant='h6' color='primary'>Please enter the title of your list</Typography>
             <TextField
+              autoFocus
               required
               name="title"
               id="outlined-required"
@@ -439,6 +425,7 @@ class ListStepper extends React.Component {
           <>
             <Typography variant='h6' color='primary'>Please enter the list description</Typography>
             <TextField
+              autoFocus
               required
               name="description"
               id="outlined-multiline-static"
@@ -486,7 +473,7 @@ class ListStepper extends React.Component {
       case 3:
         return (
           <>
-            <Typography variant='h6' color='primary'>Please a Twitter Handle to create your list. We recommend at least 5.</Typography>
+            <Typography variant='h6' color='primary'>Please enter a Twitter handle to create your list. We recommend at least 5.</Typography>
             <FormControl className={this.props.classes.formControl} >
               <form
                 value={this.state.maxWidth}
@@ -494,11 +481,12 @@ class ListStepper extends React.Component {
               >
                 <div className={this.props.classes.usernameGroup}>
                   <TextField
+                    autoFocus
                     required
                     name="user1"
                     id="outlined-name"
                     label="Required"
-                    placeholder="Once you type in a username, hit enter"
+                    placeholder="Twitter Handle"
                     className={this.props.classes.textField}
                     value={this.state.username}
                     onChange={this.handleUsernameChange}
@@ -507,6 +495,9 @@ class ListStepper extends React.Component {
                     variant="outlined"
                     helperText={this.state.usernameHelperText}
                     error={this.state.usernameError}
+                    InputProps={{
+                      startAdornment: <InputAdornment position="start">@</InputAdornment>,
+                    }}
                   />
 
 
@@ -514,7 +505,7 @@ class ListStepper extends React.Component {
                     onClick={this.handleChipAdd}
                     variant="contained"
                     color="primary"
-                    size="medium"
+                    size="small"
                     className={this.props.classes.usernameButton}
                   >
                     Add
@@ -531,8 +522,7 @@ class ListStepper extends React.Component {
                         color="primary"
                         onDelete={this.handleDelete(data)}
                         label={data.username}
-                        icon={<FaceIcon />}
-                      // variant="outlined"
+                        avatar={<Avatar>@</Avatar>}
                       />
                     );
                   })}
@@ -546,17 +536,8 @@ class ListStepper extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log("CDUpdate");
-    console.log("this.state.twitterHandles", this.state.twitterHandles);
-    console.log("this.props.listParams", this.props.listParams);
-    console.log("this.props.newListResponseUpdated", this.props.newListResponseUpdated);
-    console.log("this.state.newListResponseUpdated", this.state.newListResponseUpdated);
-    console.log("this.props.newListResponse", this.props.newListResponse);
-
     // The list has been created successfully, push to that page
     if (this.props.newListResponseUpdated) {
-      console.log("CDU IF 1");
-      console.log("this.props.newListResponse", this.props.newListResponse);
       this.props.history.push(`/details/${this.props.newListResponse.id_str}`)
     }
   }
@@ -676,8 +657,10 @@ class ListStepper extends React.Component {
               <Modal
                 open={this.state.open}
                 onClose={this.handleClose}
+                classes={{ paper: classes.dialogPaper }}
               >
               <Dialog
+                classes={{ paper: classes.dialogPaper }}
                 open={this.state.open}
                 aria-labelledby="form-dialog-title"
               >
@@ -692,6 +675,20 @@ class ListStepper extends React.Component {
                   handleClose={this.handleClose}
                   /> 
                 </>
+                : (this.props.addingDSListFailure) ?
+                <>
+                    <DialogTitle id="form-dialog-title">List Creation Problem.</DialogTitle>
+                    <DialogContent>
+                      <DialogContentText >
+                        I'm sorry, there was a problem. Please try again.
+                      </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={this.handleClose} color="secondary" >
+                        Cancel
+                      </Button>
+                    </DialogActions>
+                  </>
                 : <>
                     <DialogTitle id="form-dialog-title">List Submitted for Creation.</DialogTitle>
                     <DialogContent>
@@ -702,6 +699,11 @@ class ListStepper extends React.Component {
                           <CircularProgress color="primary" />
                         </DialogContentText>
                       </DialogContent>
+                      <DialogActions>
+                        <Button onClick={this.handleClose} color="secondary" >
+                          Cancel
+                        </Button>
+                      </DialogActions>
                     </>
                   }
                 </Dialog>
@@ -720,7 +722,7 @@ const mapStateToProps = state => ({
   newListResponseUpdated: state.listsReducer.newListResponseUpdated,
   dsLists: state.listsReducer.dsLists, // members back from DS
   addDSListResponseUpdated: state.listsReducer.addDSListResponseUpdated, // members back from DS
-
+  addingDSListFailure: state.listsReducer.addingDSListFailure,
 });
 
 

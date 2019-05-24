@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from "react-router-dom";
+import { makeStyles } from '@material-ui/core/styles';
 // import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 // import Hidden from '@material-ui/core/Hidden';
@@ -16,9 +17,11 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 // import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
-import Typography from '@material-ui/core/Typography';
-
+// import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faHome, faSearch, faList, faCog } from '@fortawesome/free-solid-svg-icons';
 import atoms from '../components/atoms';
@@ -35,9 +38,12 @@ const { AppBar, Avatar, Button } = atoms;
 const { Tabs, Tab, ListItem, InputAdornment } = molecules;
 
 
+const close = {
+  padding: '10 px'
+}
 
 const tweetBox = {
-  height: '100px',
+  height: '130px',
 }
 
 const avatarStyle = {
@@ -52,22 +58,10 @@ const Spacer = styled('div')({
   width: "100%",
   minHeight: 53,
   display: "hidden",
-  [ theme.breakpoints.down('xs') ]: {
+  [theme.breakpoints.down('xs')]: {
     minHeight: 170,
   },
 })
-
-// function LinkTab(props) {
-//   return <Tab component="a"
-//   // onClick={event => event.preventDefault()}
-//   {...props}
-//   />;
-// }
-
-
-
-
-
 
 
 // render() {
@@ -100,6 +94,7 @@ class HeaderTest extends React.Component {
     super(props)
     this.state = {
       open: false,
+      snackBarOpen: false,
       searchTerm: "",
       anchorEl: null,
       value: 0,
@@ -125,24 +120,24 @@ class HeaderTest extends React.Component {
       time: this.state.start-- //Date.now() + this.state.start
     }), 1000);
   }
+
   stopTimer() {
     this.setState({ isOn: false })
     clearInterval(this.timer)
   }
+
   resetTimer() {
     this.setState({ time: 0, isOn: false })
   }
+
   componentDidMount() {
     if (localStorage.getItem("token")) {
       let decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
       this.setState({ profile_img: decoded.profile_img })
       this.setState({ profileId: decoded.id })
-      // this.setState({ profileBanner: decoded.banner_img })
-
-
-      // console.log("DECODED", decoded)
     }
   };
+
   componentDidUpdate(prevProps) {
     if (this.props.time !== prevProps.time) {
       this.getListRowBuilder(this.props.allLists);
@@ -170,6 +165,11 @@ class HeaderTest extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
   };
+
+  handleSBClose = () => {
+    this.setState({ snackBarOpen: false });
+  };
+
   sendTweet = (e) => {
     // e.preventDefault();
     // console.log("in send tweet")
@@ -177,20 +177,21 @@ class HeaderTest extends React.Component {
       "status": this.state.tweet,
       "twitter_user_id": this.state.profileId
     }
-    // console.log("Tweet PARAMS_________________", tweetParams)
     this.props.addPost(tweetParams);
     this.startTimer()
+    // this.setState({ tweet: "" });
+    this.handleClose()
+    this.setState({ snackBarOpen: true })
     this.setState({ tweet: "" });
     this.handleClose();
 
   }
   cancelTweet = (e) => {
-    // console.log("in cancel tweet")
     this.props.cancelPost();
     this.stopTimer()
     this.resetTimer()
+    this.setState({ snackBarOpen: false });
     this.handleClose()
-
   }
   handleAvatarClick = event => {
     this.setState({ anchorEl: event.currentTarget });
@@ -205,29 +206,17 @@ class HeaderTest extends React.Component {
   };
 
   logOut = () => {
-    // localStorage.removeItem("twitter_user_id");
     localStorage.removeItem("token");
-    // localStorage.removeItem("username");
-    // localStorage.removeItem("profile_img");
-    // localStorage.removeItem("displayName");
-    // localStorage.removeItem("banner_img");
-    // this.props.checkSignIn();
     this.props.history.push("/");
   };
 
   render() {
-    // const { value } = this.state;
     const { anchorEl } = this.state;
-    // console.log("**********************" + this.state.profileId);
-    // console.log("**********************" + this.state.tweet);
-    // console.log("**********************" + this.state.time);
-
 
     let content = (localStorage.getItem("token")) ?
       <Spacer>
         <AppBar position="fixed" elevation={1}>
-          {/* <Toolbar> */}
-          <Grid container alignItems="center" spacing={16}>
+          <Grid container alignItems="center" spacing={8} justify='space-evenly'>
             <Grid item xs={12} sm={4}>
               <Tabs
                 value={this.state.value}
@@ -270,11 +259,6 @@ class HeaderTest extends React.Component {
                     </Tooltip>
                   }
                 />
-                {/* <Grid item>
-              <Tooltip disableFocusListener disableTouchListener title={this.state.time}>
-                <Button>Tweet</Button>
-              </Tooltip>
-            </Grid> */}
                 <Tab
                   value={3}
                   onlyIcon
@@ -288,11 +272,10 @@ class HeaderTest extends React.Component {
                 />
               </Tabs>
             </Grid>
-
-            <Grid item sm xs={12}>
+            <Grid item xs={5} sm >
               <TextField
                 fullWidth
-                placeholder="Find Lists"
+                placeholder="Search List Explorer"
                 InputProps={{
                   disableUnderline: true,
                   startAdornment: (
@@ -330,7 +313,6 @@ class HeaderTest extends React.Component {
               </ListItem>
             </Grid>
           </Grid>
-          {/* </Toolbar> */}
         </AppBar>
         <Dialog
           open={this.state.open}
@@ -350,9 +332,8 @@ class HeaderTest extends React.Component {
               label="Tweet"
               variant="outlined"
               multiline
-              rows="3"
+              rows="6"
               onChange={this.handleTweetChange}
-              //   value={this.state.name}
               inputProps={{ maxLength: 280 }}
               fullWidth
             />
@@ -369,6 +350,33 @@ class HeaderTest extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
+
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          open={this.state.snackBarOpen}
+          autoHideDuration={1000 * 120}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={`${this.state.time} seconds until Tweet posts`}
+          action={[
+            <Button key="undo" color="secondary" size="small" onClick={this.cancelTweet}>
+              Cancel Tweet
+            </Button>,
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              style={close}
+              onClick={this.handleSBClose}
+            >
+              <CloseIcon />
+            </IconButton>,
+          ]}
+        />
       </Spacer>
 
       :

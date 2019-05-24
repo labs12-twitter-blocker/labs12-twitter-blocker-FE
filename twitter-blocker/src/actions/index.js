@@ -195,9 +195,9 @@ export const addUser = user => dispatch => {
   dispatch({ type: ADD_USER });
   let token = localStorage.getItem("token")
   axios
-    .post(`${url}/users`, {
+    .post(`${url}/users`, user, {
       headers: { Authorization: token }
-    }, user)
+    })
     .then(res => {
       console.log(res);
       dispatch({ type: ADD_USER_SUCCESS, payload: res.data });
@@ -724,11 +724,12 @@ export const DELETE_LIST = "DELETE_LIST";
 export const DELETE_LIST_SUCCESS = "DELETE_LIST_SUCCESS";
 export const DELETE_LIST_FAILURE = "DELETE_LIST_FAILURE";
 
-export const deleteList = list_id => dispatch => {
+export const deleteList = (list_id, user_id) => dispatch => {
   dispatch({ type: DELETE_LIST });
+  let data = {twitter_id: user_id}
   let token = localStorage.getItem("token")
   axios
-    .delete(`${url}/lists/${list_id}`, {
+    .post(`${url}/lists/${list_id}`, data, {
       headers: { Authorization: token }
     })
     .then(res => {
@@ -789,9 +790,9 @@ export const subscribeToList = (listId, userId) => dispatch => {
 
 // Unsubscribe to a List
 
-export const UNSUBSCRIBE_LIST = "SUBSCRIBE_LIST";
-export const UNSUBSCRIBE_LIST_SUCCESS = "SUBSCRIBE_LIST_SUCCESS";
-export const UNSUBSCRIBE_LIST_FAILURE = "SUBSCRIBE_LIST_FAILURE";
+export const UNSUBSCRIBE_LIST = "UNSUBSCRIBE_LIST";
+export const UNSUBSCRIBE_LIST_SUCCESS = "UNSUBSCRIBE_LIST_SUCCESS";
+export const UNSUBSCRIBE_LIST_FAILURE = "UNSUBSCRIBE_LIST_FAILURE";
 
 export const unSubscribeToList = (listId, userId) => dispatch => {
   dispatch({ type: UNSUBSCRIBE_LIST });
@@ -822,7 +823,7 @@ export const ADD_POST_FAILURE = "ADD_POST_FAILURE";
 export const addPost = post => dispatch => {
 
   dispatch({ type: ADD_POST });
-  let token = localStorage.getItem("token")
+  // let token = localStorage.getItem("token")
   console.log("POST HERE +++++++++++++++++++++++++++++++++++++++++++++++++++",post)
   const params = {
     status:post.status,
@@ -919,9 +920,9 @@ export const addUserVote = vote => dispatch => {
   dispatch({ type: ADD_USER_VOTE });
   let token = localStorage.getItem("token")
   axios
-    .post(`${url}/votes/`, {
+    .post(`${url}/votes/`, vote, {
       headers: { Authorization: token }
-    }, vote)
+    })
     .then(res => {
       console.log(res);
       dispatch({ type: ADD_USER_VOTE_SUCCESS, payload: res.data });
@@ -999,9 +1000,9 @@ export const blockUser = (params) => dispatch => {
   const twitterId = params.twitter_id;
   const userId = params.user_id;
   axios
-    .post(`${url}/users/blocks/create/${userId}/${twitterId}`, {
+    .post(`${url}/users/blocks/create/${userId}/${twitterId}`, twitterId, {
       headers: { Authorization: token }
-    }, twitterId)
+    })
     .then(res => {
       console.log(res);
       dispatch({ type: BLOCK_USER_SUCCESS, payload: res.data });
@@ -1026,9 +1027,9 @@ export const unblockUser = (params) => dispatch => {
   const twitterId = params.twitter_id;
   const userId = params.user_id;
   axios
-    .post(`${url}/users/blocks/destroy/${userId}/${twitterId}`, {
+    .post(`${url}/users/blocks/destroy/${userId}/${twitterId}`, twitterId, {
       headers: { Authorization: token }
-    }, twitterId)
+    })
     .then(res => {
       console.log(res);
       dispatch({ type: UNBLOCK_USER_SUCCESS, payload: res.data });
