@@ -12,7 +12,7 @@ import LeaderboardBlockTable from './LeaderboardBlockTable'
 import styled from '@material-ui/styles/styled';
 import theme from '../../theme/tweeper/theme';
 
-const TabContainer = styled('div') ({
+const TabContainer = styled('div')({
   // padding: theme.spacing.unit * 4,
   padding: theme.spacing.unit,
 
@@ -61,7 +61,6 @@ class FullWidthTabs extends React.Component {
           >
             <Tab label="Top Lists" />
             <Tab label="Top Follow Lists" />
-            <Tab label="Top Block Lists" />
           </Tabs>
         </AppBar>
         <SwipeableViews
@@ -69,9 +68,8 @@ class FullWidthTabs extends React.Component {
           index={this.state.value}
           onChangeIndex={this.handleChangeIndex}
         >
-          <TabContainer dir={theme.direction}><LeaderboardAllTable  /></TabContainer>
-          <TabContainer dir={theme.direction}><LeaderboardFollowTable  /></TabContainer>
-          <TabContainer dir={theme.direction}><LeaderboardBlockTable /></TabContainer>
+          <TabContainer dir={theme.direction}><LeaderboardAllTable /></TabContainer>
+          <TabContainer dir={theme.direction}><LeaderboardFollowTable /></TabContainer>
         </SwipeableViews>
       </div>
     );
