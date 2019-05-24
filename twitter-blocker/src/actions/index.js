@@ -789,9 +789,9 @@ export const subscribeToList = (listId, userId) => dispatch => {
 
 // Unsubscribe to a List
 
-export const UNSUBSCRIBE_LIST = "SUBSCRIBE_LIST";
-export const UNSUBSCRIBE_LIST_SUCCESS = "SUBSCRIBE_LIST_SUCCESS";
-export const UNSUBSCRIBE_LIST_FAILURE = "SUBSCRIBE_LIST_FAILURE";
+export const UNSUBSCRIBE_LIST = "UNSUBSCRIBE_LIST";
+export const UNSUBSCRIBE_LIST_SUCCESS = "UNSUBSCRIBE_LIST_SUCCESS";
+export const UNSUBSCRIBE_LIST_FAILURE = "UNSUBSCRIBE_LIST_FAILURE";
 
 export const unSubscribeToList = (listId, userId) => dispatch => {
   dispatch({ type: UNSUBSCRIBE_LIST });

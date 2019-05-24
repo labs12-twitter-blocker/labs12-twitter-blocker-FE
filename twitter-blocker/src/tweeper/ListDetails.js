@@ -114,18 +114,20 @@ class ListDetails extends React.Component {
   };
 
   subscribe = () => {
-    this.props.subscribeToList(this.props.list.twitter_list_id, this.state.twitter_user_id);
+    let decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
+    this.props.subscribeToList(this.state.listId, decoded.id);
     this.setState({ isSubscribed: true })
     console.log("this.props.list.twitter_list_id", this.props.list.twitter_list_id)
     console.log("this.state.twitter_user_id", this.state.twitter_user_id)
   }
 
   unsubscribe = () => {
-    let params = {
-      twitter_id: this.state.twitter_user_id,
-      twitter_list_id: this.props.list.twitter_list_id
-    }
-    this.props.unSubscribeToList(params);
+    let decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET)
+    // let params = {
+    //   twitter_id: decoded.id,
+    //   twitter_list_id: this.state.listId
+    // }
+    this.props.unSubscribeToList(this.state.listId, decoded.id);
     this.setState({ isSubscribed: false })
     // console.log(this.state.isSubscribed)
   }
