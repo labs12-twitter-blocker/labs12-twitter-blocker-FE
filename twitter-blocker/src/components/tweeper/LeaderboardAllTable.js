@@ -176,6 +176,7 @@ class LeaderboardAllTable extends React.Component {
     if (this.props.allLists === null ) {
       this.props.getAllListPoints()
     } else {
+      id = 0;
       this.getListRowBuilder(this.props.allLists);
     }
     if (localStorage.getItem("token")) {

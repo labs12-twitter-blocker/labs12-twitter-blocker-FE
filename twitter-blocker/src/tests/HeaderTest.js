@@ -16,7 +16,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 // import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 
 import MenuItem from '@material-ui/core/MenuItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -56,18 +56,6 @@ const Spacer = styled('div')({
     minHeight: 170,
   },
 })
-
-// function LinkTab(props) {
-//   return <Tab component="a"
-//   // onClick={event => event.preventDefault()}
-//   {...props}
-//   />;
-// }
-
-
-
-
-
 
 
 // render() {
@@ -125,24 +113,24 @@ class HeaderTest extends React.Component {
       time: this.state.start-- //Date.now() + this.state.start
     }), 1000);
   }
+
   stopTimer() {
     this.setState({ isOn: false })
     clearInterval(this.timer)
   }
+
   resetTimer() {
     this.setState({ time: 0, isOn: false })
   }
+
   componentDidMount() {
     if (localStorage.getItem("token")) {
       let decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
       this.setState({ profile_img: decoded.profile_img })
       this.setState({ profileId: decoded.id })
-      // this.setState({ profileBanner: decoded.banner_img })
-
-
-      // console.log("DECODED", decoded)
     }
   };
+
   componentDidUpdate(prevProps) {
     if (this.props.time !== prevProps.time) {
       this.getListRowBuilder(this.props.allLists);
@@ -177,7 +165,6 @@ class HeaderTest extends React.Component {
       "status": this.state.tweet,
       "twitter_user_id": this.state.profileId
     }
-    // console.log("Tweet PARAMS_________________", tweetParams)
     this.props.addPost(tweetParams);
     this.startTimer()
     this.setState({ tweet: "" });
@@ -185,7 +172,6 @@ class HeaderTest extends React.Component {
 
   }
   cancelTweet = (e) => {
-    // console.log("in cancel tweet")
     this.props.cancelPost();
     this.stopTimer()
     this.resetTimer()
@@ -205,29 +191,17 @@ class HeaderTest extends React.Component {
   };
 
   logOut = () => {
-    // localStorage.removeItem("twitter_user_id");
     localStorage.removeItem("token");
-    // localStorage.removeItem("username");
-    // localStorage.removeItem("profile_img");
-    // localStorage.removeItem("displayName");
-    // localStorage.removeItem("banner_img");
-    // this.props.checkSignIn();
     this.props.history.push("/");
   };
 
   render() {
-    // const { value } = this.state;
     const { anchorEl } = this.state;
-    // console.log("**********************" + this.state.profileId);
-    // console.log("**********************" + this.state.tweet);
-    // console.log("**********************" + this.state.time);
-
 
     let content = (localStorage.getItem("token")) ?
       <Spacer>
         <AppBar position="fixed" elevation={1}>
-          {/* <Toolbar> */}
-          <Grid container alignItems="center" spacing={16}>
+          <Grid container alignItems="center" spacing={8} justify='space-evenly'>
             <Grid item xs={12} sm={4}>
               <Tabs
                 value={this.state.value}
@@ -270,11 +244,6 @@ class HeaderTest extends React.Component {
                     </Tooltip>
                   }
                 />
-                {/* <Grid item>
-              <Tooltip disableFocusListener disableTouchListener title={this.state.time}>
-                <Button>Tweet</Button>
-              </Tooltip>
-            </Grid> */}
                 <Tab
                   value={3}
                   onlyIcon
@@ -288,8 +257,7 @@ class HeaderTest extends React.Component {
                 />
               </Tabs>
             </Grid>
-
-            <Grid item sm xs={12}>
+            <Grid item xs={5} sm >
               <TextField
                 fullWidth
                 placeholder="Find Lists"
@@ -330,7 +298,6 @@ class HeaderTest extends React.Component {
               </ListItem>
             </Grid>
           </Grid>
-          {/* </Toolbar> */}
         </AppBar>
         <Dialog
           open={this.state.open}
