@@ -123,17 +123,14 @@ class ListDetails extends React.Component {
 
   unsubscribe = () => {
     let decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET)
-    let params = {
-      twitter_id: decoded.id,
-      twitter_list_id: this.state.listId
-    }
     this.props.unSubscribeToList(this.state.listId, decoded.id);
     this.setState({ isSubscribed: false })
     // console.log(this.state.isSubscribed)
   }
 
   deleteList = () => {
-    this.props.deleteList(this.state.listId)
+    let decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET)
+    this.props.deleteList(this.state.listId, decoded.id)
   }
 
 

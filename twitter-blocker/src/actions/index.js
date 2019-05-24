@@ -724,11 +724,12 @@ export const DELETE_LIST = "DELETE_LIST";
 export const DELETE_LIST_SUCCESS = "DELETE_LIST_SUCCESS";
 export const DELETE_LIST_FAILURE = "DELETE_LIST_FAILURE";
 
-export const deleteList = list_id => dispatch => {
+export const deleteList = (list_id, user_id) => dispatch => {
   dispatch({ type: DELETE_LIST });
+  let data = {twitter_id: user_id}
   let token = localStorage.getItem("token")
   axios
-    .delete(`${url}/lists/${list_id}`, {
+    .post(`${url}/lists/${list_id}`, data, {
       headers: { Authorization: token }
     })
     .then(res => {
