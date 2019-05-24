@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
+// import { makeStyles } from '@material-ui/core/styles';
 // import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 // import Hidden from '@material-ui/core/Hidden';
@@ -23,7 +23,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faHome, faSearch, faList, faCog } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faHome, faSearch, faList, faBroom } from '@fortawesome/free-solid-svg-icons';
 import atoms from '../components/atoms';
 import molecules from '../components/molecules';
 import { searchLists, addPost, cancelPost } from '../actions';
@@ -243,7 +243,7 @@ class HeaderTest extends React.Component {
                     // <Badge dotted badgeContent="">
                     <Link to="/cleantimeline">
                       <Tooltip title="Clean Timeline">
-                        <FontAwesomeIcon icon={faCog} size="2x" color='#304ffe' />
+                        <FontAwesomeIcon icon={faBroom} size="2x" color='#304ffe' />
                       </Tooltip>
                     </Link>
                     // </Badge>

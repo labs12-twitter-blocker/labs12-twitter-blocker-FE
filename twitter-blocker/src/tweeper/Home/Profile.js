@@ -30,7 +30,9 @@ require('dotenv').config();
 // const url = process.env.REACT_APP_BACKEND_BASE_URL
 
 
-const { Avatar, Typography } = atoms;
+const { 
+  // Avatar, 
+  Typography } = atoms;
 // const { Tabs, Tab } = molecules;
 
 const Content = styled('div')({

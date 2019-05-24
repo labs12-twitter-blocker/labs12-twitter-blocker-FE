@@ -91,7 +91,7 @@ class UserSettingsCard extends React.Component {
       <Card className={classes.card} style={{ margin: "auto", marginTop: "2rem" }}>
         <CardActionArea>
           <Avatar
-            // src={decoded.profile_img}
+            src={decoded.profile_img}
             style={avatarStyle} alt="Your Profile Image"
           />
           <CardContent>
