@@ -423,6 +423,7 @@ class BlockTimeline extends Component {
 
               <Divider />
             </Feed>
+            <BackButton />
           </Content>
         </React.Fragment>
       );
@@ -430,6 +431,7 @@ class BlockTimeline extends Component {
   }
 }
 const styledComponent = withStyles(styles)(BlockTimeline);
+const routedComponent = withRouter(styledComponent)
 
 
 const mapStateToProps = state => ({
@@ -439,7 +441,7 @@ const mapStateToProps = state => ({
 export default withRouter(connect(
   mapStateToProps,
   { blockTimeline, blockUser, unblockUser }
-)(styledComponent));
+)(routedComponent));
 
 
 let timelineXX = [
