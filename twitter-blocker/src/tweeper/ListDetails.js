@@ -147,11 +147,11 @@ class ListDetails extends React.Component {
     setTimeout(() => {
       this.setState({listId: this.props.list.twitter_list_id})
       this.setState({listCreatorId: this.props.list.twitter_id})
-      if (decoded. id == this.state.listCreatorId) {
+      if (decoded.id === this.state.listCreatorId) {
         this.setState({isCreator: true})
       }
     this.props.listSubscribers.map(user => {
-      if (user.twitter_user_id == decoded.id) {
+      if (user.twitter_user_id === decoded.id) {
         this.setState({ isSubscribed: true })
       }
     })
