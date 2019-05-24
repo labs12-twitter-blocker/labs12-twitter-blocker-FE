@@ -146,13 +146,13 @@ class MemberModal extends React.Component {
     this.state.checked.map(e => {
       return screen_name.push(e.screen_name)
     })
-
+    let updatedDescription = this.props.description + " list by larkist.com"
     // console.log("screen_name", screen_name)
     const listParams = {
       "user_id": decoded.id,
       "name": this.props.title,
       "mode": this.props.mode,
-      "description": this.props.description,
+      "description": updatedDescription,
       "screen_name": screen_name.toString()
     }
     // console.log("listParams", listParams)
@@ -437,7 +437,7 @@ class ListStepper extends React.Component {
               value={this.state.description}
               onChange={this.handleDescriptionChange}
               onKeyPress={this.handleNextKeypress}
-              inputProps={{ maxLength: 100 }}
+              inputProps={{ maxLength: 80 }}
               margin="normal"
               variant="outlined"
               helperText={this.state.descrHelperText}
