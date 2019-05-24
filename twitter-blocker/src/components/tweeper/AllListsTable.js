@@ -69,13 +69,12 @@ const styles = theme => ({
     padding: '0px 4px',
     // padding: 12,
     fontSize: 14,
-    
     "&:before": {
 			content: "attr(datatitle)",
 			float: "left",
 			fontWeight: 600,
     },
-    
+
     [theme.breakpoints.down("sm")]: {
       width: '40px',
       padding: '0px 0 0 0px',
@@ -133,8 +132,8 @@ class AllListsTable extends Component {
   getListRowBuilder = (list) => {
     let newRow = [];
     list.map(list => {
-      newRow.push(createData(list.list_name, list.description, 
-        list.member_count, list.subscriber_count, 
+      newRow.push(createData(list.list_name, list.description,
+        list.member_count, list.subscriber_count,
         list.list_points, list.twitter_list_id))
         return newRow;
     })
