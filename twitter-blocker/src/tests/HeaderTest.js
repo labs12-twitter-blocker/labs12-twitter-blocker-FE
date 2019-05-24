@@ -58,7 +58,7 @@ const Spacer = styled('div')({
   width: "100%",
   minHeight: 53,
   display: "hidden",
-  [ theme.breakpoints.down('xs') ]: {
+  [theme.breakpoints.down('xs')]: {
     minHeight: 170,
   },
 })
@@ -339,12 +339,12 @@ class HeaderTest extends React.Component {
             />
           </DialogContent>
           <DialogActions>
-            {/* <Button onClick={this.handleClose} color="secondary">
+            <Button onClick={this.handleClose} color="secondary">
               Close
-            </Button> */}
-            <Button onClick={e => this.cancelTweet()} color="secondary">
-              Cancel Tweet
             </Button>
+            {/* <Button onClick={e => this.cancelTweet()} color="secondary">
+              Cancel Tweet
+            </Button> */}
             <Button onClick={e => this.sendTweet()} color="primary">
               Post Tweet
             </Button>

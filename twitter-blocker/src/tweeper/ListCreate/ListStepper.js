@@ -206,12 +206,12 @@ class MemberModal extends React.Component {
                     tabIndex={-1}
                     color="primary"
                   // disableRipple
-                />
-              </ListItem>
-              <Divider />
-            </List>
-          )
-        })}
+                  />
+                </ListItem>
+                <Divider />
+              </List>
+            )
+          })}
         </DialogContent>
 
         <DialogActions>
@@ -511,24 +511,24 @@ class ListStepper extends React.Component {
                     Add
                 </Button>
                 </div>
-                <div>
-                  {this.state.twitterHandles.map(data => {
-                    // let icon = null;
-
-                    return (
-                      <Chip
-                        key={data.username}
-                        className={this.props.classes.chip}
-                        color="primary"
-                        onDelete={this.handleDelete(data)}
-                        label={data.username}
-                        avatar={<Avatar>@</Avatar>}
-                      />
-                    );
-                  })}
-                </div>
               </form>
             </FormControl>
+            <div>
+              {this.state.twitterHandles.map(data => {
+                // let icon = null;
+
+                return (
+                  <Chip
+                    key={data.username}
+                    className={this.props.classes.chip}
+                    color="primary"
+                    onDelete={this.handleDelete(data)}
+                    label={data.username}
+                    avatar={<Avatar>@</Avatar>}
+                  />
+                );
+              })}
+            </div>
           </>);
       default:
         return 'Unknown step';
@@ -659,52 +659,52 @@ class ListStepper extends React.Component {
                 onClose={this.handleClose}
                 classes={{ paper: classes.dialogPaper }}
               >
-              <Dialog
-                classes={{ paper: classes.dialogPaper }}
-                open={this.state.open}
-                aria-labelledby="form-dialog-title"
-              >
-                { this.props.addDSListResponseUpdated ? 
-                <> 
-                  <MemberModal 
-                  dsLists={this.props.dsLists[0]} 
-                  createList={this.props.createList} 
-                  title={this.state.title}
-                  mode={this.state.mode}
-                  description={this.state.description}
-                  handleClose={this.handleClose}
-                  /> 
-                </>
-                : (this.props.addingDSListFailure) ?
-                <>
-                    <DialogTitle id="form-dialog-title">List Creation Problem.</DialogTitle>
-                    <DialogContent>
-                      <DialogContentText >
-                        I'm sorry, there was a problem. Please try again.
-                      </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                      <Button onClick={this.handleClose} color="secondary" >
-                        Cancel
-                      </Button>
-                    </DialogActions>
-                  </>
-                : <>
-                    <DialogTitle id="form-dialog-title">List Submitted for Creation.</DialogTitle>
-                    <DialogContent>
-                      <DialogContentText >
-                        Please be patient. It can take up to a minute for us to analyze and find members.
-                      </DialogContentText>
-                        <DialogContentText align='center'>
-                          <CircularProgress color="primary" />
-                        </DialogContentText>
-                      </DialogContent>
-                      <DialogActions>
-                        <Button onClick={this.handleClose} color="secondary" >
-                          Cancel
-                        </Button>
-                      </DialogActions>
+                <Dialog
+                  classes={{ paper: classes.dialogPaper }}
+                  open={this.state.open}
+                  aria-labelledby="form-dialog-title"
+                >
+                  {this.props.addDSListResponseUpdated ?
+                    <>
+                      <MemberModal
+                        dsLists={this.props.dsLists[0]}
+                        createList={this.props.createList}
+                        title={this.state.title}
+                        mode={this.state.mode}
+                        description={this.state.description}
+                        handleClose={this.handleClose}
+                      />
                     </>
+                    : (this.props.addingDSListFailure) ?
+                      <>
+                        <DialogTitle id="form-dialog-title">List Creation Problem.</DialogTitle>
+                        <DialogContent>
+                          <DialogContentText >
+                            I'm sorry, there was a problem. Please try again.
+                      </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                          <Button onClick={this.handleClose} color="secondary" >
+                            Cancel
+                      </Button>
+                        </DialogActions>
+                      </>
+                      : <>
+                        <DialogTitle id="form-dialog-title">List Submitted for Creation.</DialogTitle>
+                        <DialogContent>
+                          <DialogContentText >
+                            Please be patient. It can take up to a minute for us to analyze and find members.
+                      </DialogContentText>
+                          <DialogContentText align='center'>
+                            <CircularProgress color="primary" />
+                          </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                          <Button onClick={this.handleClose} color="secondary" >
+                            Cancel
+                        </Button>
+                        </DialogActions>
+                      </>
                   }
                 </Dialog>
               </Modal>
