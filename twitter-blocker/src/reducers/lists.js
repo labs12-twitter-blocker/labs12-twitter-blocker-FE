@@ -122,6 +122,7 @@ const initialState = {
   fetchingListTimeline: false,
   fetchingListTimelineDone: false,
   addingDSList: false,
+  addingDSListFailure: false,
   subscribingList: false,
   unsubscribingList: false,
   creatingList: false,
@@ -491,6 +492,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         addingDSList: true,
+        addingDSListFailure: false,
         addDSListResponseUpdated: false,
         error: null
       };
@@ -498,6 +500,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         addingDSList: false,
+        addingDSListFailure: false,
         addDSListResponseUpdated: true,
         dsLists: [...state.lists, action.payload]
       };
@@ -505,6 +508,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         addingDSList: false,
+        addingDSListFailure: true,
         addDSListResponseUpdated: false,
         error: action.payload
       };

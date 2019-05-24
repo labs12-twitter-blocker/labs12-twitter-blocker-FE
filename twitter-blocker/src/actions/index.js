@@ -195,9 +195,9 @@ export const addUser = user => dispatch => {
   dispatch({ type: ADD_USER });
   let token = localStorage.getItem("token")
   axios
-    .post(`${url}/users`, {
+    .post(`${url}/users`, user, {
       headers: { Authorization: token }
-    }, user)
+    })
     .then(res => {
       console.log(res);
       dispatch({ type: ADD_USER_SUCCESS, payload: res.data });
@@ -823,7 +823,7 @@ export const ADD_POST_FAILURE = "ADD_POST_FAILURE";
 export const addPost = post => dispatch => {
 
   dispatch({ type: ADD_POST });
-  let token = localStorage.getItem("token")
+  // let token = localStorage.getItem("token")
   console.log("POST HERE +++++++++++++++++++++++++++++++++++++++++++++++++++",post)
   const params = {
     status:post.status,
@@ -920,9 +920,9 @@ export const addUserVote = vote => dispatch => {
   dispatch({ type: ADD_USER_VOTE });
   let token = localStorage.getItem("token")
   axios
-    .post(`${url}/votes/`, {
+    .post(`${url}/votes/`, vote, {
       headers: { Authorization: token }
-    }, vote)
+    })
     .then(res => {
       console.log(res);
       dispatch({ type: ADD_USER_VOTE_SUCCESS, payload: res.data });
@@ -1000,9 +1000,9 @@ export const blockUser = (params) => dispatch => {
   const twitterId = params.twitter_id;
   const userId = params.user_id;
   axios
-    .post(`${url}/users/blocks/create/${userId}/${twitterId}`, {
+    .post(`${url}/users/blocks/create/${userId}/${twitterId}`, twitterId, {
       headers: { Authorization: token }
-    }, twitterId)
+    })
     .then(res => {
       console.log(res);
       dispatch({ type: BLOCK_USER_SUCCESS, payload: res.data });
@@ -1027,9 +1027,9 @@ export const unblockUser = (params) => dispatch => {
   const twitterId = params.twitter_id;
   const userId = params.user_id;
   axios
-    .post(`${url}/users/blocks/destroy/${userId}/${twitterId}`, {
+    .post(`${url}/users/blocks/destroy/${userId}/${twitterId}`, twitterId, {
       headers: { Authorization: token }
-    }, twitterId)
+    })
     .then(res => {
       console.log(res);
       dispatch({ type: UNBLOCK_USER_SUCCESS, payload: res.data });

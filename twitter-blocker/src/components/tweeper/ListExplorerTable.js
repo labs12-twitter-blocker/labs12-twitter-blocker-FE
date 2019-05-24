@@ -122,6 +122,7 @@ class ListExplorerTable extends Component {
     if (this.props.allLists === null ) {
       this.props.getPublicLists()
     } else {
+      id = 0;
       this.getListRowBuilder(this.props.allLists);
     }
     if (localStorage.getItem("token")) {
@@ -149,9 +150,6 @@ class ListExplorerTable extends Component {
   }; 
 
   up = (e) => {
-    console.log("e.currentTarget.getAttribute(rowid)", e.currentTarget.getAttribute("rowid"))
-    console.log("e.currentTarget.id", e.currentTarget.id)
-
     const rowPointer = e.currentTarget.getAttribute("rowid") - 1;
     let upvote = {
       "twitter_list_id": e.currentTarget.id, 

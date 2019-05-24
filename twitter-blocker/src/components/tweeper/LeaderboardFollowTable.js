@@ -175,6 +175,7 @@ class LeaderboardFollowTable extends React.Component {
     if (this.props.followLists === null ) {
       this.props.getFollowListPoints()
     } else {
+      id = 0;
       this.getListRowBuilder(this.props.followLists);
     }
     if (localStorage.getItem("token")) {

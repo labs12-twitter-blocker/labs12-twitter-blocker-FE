@@ -175,6 +175,7 @@ class LeaderboardBlockTable extends React.Component {
     if (this.props.blockLists === null ) {
       this.props.getBlockListPoints()
     } else {
+      id = 0;
       this.getListRowBuilder(this.props.blockLists);
     }
     if (localStorage.getItem("token")) {
