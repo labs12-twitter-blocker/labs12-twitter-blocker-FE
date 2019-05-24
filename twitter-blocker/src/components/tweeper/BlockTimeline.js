@@ -349,7 +349,7 @@ class BlockTimeline extends Component {
                                 <BlockButton medium color="secondary" variant="outlinedPrimary" aria-describedby={this.id} variant="contained"
                                   style={{ color: "304ffe", border: "2px solid secondary" }}
                                   // onClick={(e) => this.block(n.twitter_user_id)}
-                                  onClick={(e)=>{e.currentTarget.style = " color:#FF3333 !important; "; this.block(n.twitter_user_id) }} 
+                                  onClick={(e)=>{e.currentTarget.style = "backgroundColor:#FF3333 !important; "; this.block(n.twitter_user_id) }} 
                                   >Block</BlockButton>
 
                               </Grid>
