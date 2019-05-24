@@ -115,10 +115,10 @@ const styles = {
 };
 const Feed = styled('div')({
   backgroundColor: '#fff',
-  margin: "auto",
-  display: "flex",
-  justifyContent: "center",
-  padding: theme.spacing.unit * 4
+  // margin: "auto",
+  // display: "flex",
+  // justifyContent: "center",
+  // padding: theme.spacing.unit * 4
 });
 
 const Content = styled('div')({
@@ -126,6 +126,7 @@ const Content = styled('div')({
   padding: theme.spacing.unit * 4,
   margin: 'auto',
 });
+
 const BlockButton = styled(Button)({
   // margin: "2rem",
   // width: "10px",
@@ -189,16 +190,16 @@ class BlockTimeline extends Component {
 
     }
     // console.log(this.state.blockTimelineList)
-    if (this.props.timeline) {
+    if (this.props.timeline && this.props.blockTimelineListDone) {
       this.getListRowBuilder(this.props.timeline);
     }
     // this.setState({ timeline: action.payload })
   }
 
   componentDidUpdate() {
-    // if (this.props.timeline && this.state.twitter_user_id) {
-    // this.getListRowBuilder(this.props.timeline)
-    // }
+    if (this.props.timeline && this.props.blockTimelineListDone) {
+      this.getListRowBuilder(this.props.timeline)
+    }
     // if (this.props.allLists !== null  && this.state.allListRan === false && this.state.twitter_user_id !== "" ) {
     //   this.getListRowBuilder(this.props.allLists);
     // }
@@ -431,7 +432,8 @@ const routedComponent = withRouter(styledComponent)
 
 
 const mapStateToProps = state => ({
-  timeline: state.listsReducer.blockTimelineList
+  timeline: state.listsReducer.blockTimelineList,
+  blockTimelineListDone: state.listsReducer.blockTimelineListDone
 });
 
 export default withRouter(connect(

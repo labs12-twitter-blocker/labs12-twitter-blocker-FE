@@ -133,7 +133,8 @@ const initialState = {
   newListResponse: null,
   error: null,
   addDSListResponseUpdated: false,
-  blockTimelineList: null
+  blockTimelineList: null,
+  blockTimelineListDone: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -618,18 +619,21 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         blockingTimeline: true,
+        blockTimelineListDone: false,
         error: null
       };
     case BLOCK_TIMELINE_SUCCESS:
       return {
         ...state,
         blockingTimeline: false,
+        blockTimelineListDone: true,
         blockTimelineList: action.payload
       };
     case BLOCK_TIMELINE_FAILURE:
       return {
         ...state,
         blockingTimeline: false,
+        blockTimelineListDone: false,
         error: action.payload
       };
 
