@@ -107,12 +107,16 @@ function createData(list_name, description, member_count, subscriber_count, list
 }
 
 class ListExplorerTable extends Component {
-  state={
+  constructor(props) {
+    super(props);
+    this.state={
       rows: [],
       allListRan: false,
       twitter_user_id: "",
       lists: []
   }
+  }
+
     
   componentDidMount() {
     if (this.props.allLists === null ) {

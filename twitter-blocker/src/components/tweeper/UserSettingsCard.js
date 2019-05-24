@@ -10,6 +10,11 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import atoms from '../../components/atoms';
 // import molecules from '../../components/molecules';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import jwt from 'jsonwebtoken';
 
 import { getUser, deleteUser } from '../../actions'
@@ -23,7 +28,7 @@ const { Avatar } = atoms;
 const avatarStyle = {
   // marginLeft: '8px',
   margin: 'auto',
-  marginTop: '8px'
+  marginTop: '24px'
 }
 
 const styles = {
@@ -40,9 +45,22 @@ if (localStorage.getItem("token")) {
 }
 
 class UserSettingsCard extends React.Component {
-  // constructor(props) {
-  //   super(props)
-  // }
+  
+  constructor(props) {
+    super(props)
+    this.state = {
+      open: false,
+  }
+}
+
+  handleClickOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
   componentDidMount() {
     if (localStorage.getItem("token")) {
       let decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
@@ -55,6 +73,7 @@ class UserSettingsCard extends React.Component {
       console.log("Profile DECODED", decoded)
     }
   }
+
   deleteAccount = () => {
     this.props.deleteUser(decoded.id)
     // e.preventDefault()
@@ -72,7 +91,7 @@ class UserSettingsCard extends React.Component {
       <Card className={classes.card} style={{ margin: "auto", marginTop: "2rem" }}>
         <CardActionArea>
           <Avatar
-            src={decoded.profile_img}
+            // src={decoded.profile_img}
             style={avatarStyle} alt="Your Profile Image"
           />
           <CardContent>
@@ -88,14 +107,39 @@ class UserSettingsCard extends React.Component {
           {/* <Button size="small" color="primary">
           Share
         </Button> */}
-          <Button size="small" color="primary" style={{ margin: "auto" }} onClick={() => this.deleteAccount()}>
+          <Button size="small" color="secondary" style={{ margin: "auto" }} onClick={this.handleClickOpen }>
             Deactivate Your Larkist Account
         </Button>
         </CardActions>
+        <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="form-dialog-title"
+        >
+       <DialogTitle id="form-dialog-title">Are You Sure You Want to Deactivate?</DialogTitle>
+       <DialogContent>
+         <DialogContentText>
+           We hate to see you go, but at least we will always have lists...
+         </DialogContentText>
+       </DialogContent>
+       <DialogActions>
+         <Button onClick={this.handleClose} color="secondary">
+           Oops, No Way!
+         </Button>
+         <Button onClick={() => this.deleteAccount()} color="primary">
+           Yes, Deactivate My Larkist Account
+         </Button>
+       </DialogActions>
+     </Dialog>
+
       </Card>
+      
+
     );
   }
 }
+
+// onClick={() => this.deleteAccount()}
 
 // UserSettingsCard.propTypes = {
 //   classes: PropTypes.object.isRequired,
