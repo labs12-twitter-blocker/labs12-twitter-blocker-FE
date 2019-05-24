@@ -38,6 +38,7 @@ import {
   CardContent,
 
 } from '@material-ui/core';
+import BackButton from '../../components/tweeper/BackButton.js'
 
 
 const { AppBar, Avatar, Badge, Icon, Toolbar } = atoms;
@@ -412,6 +413,7 @@ class BlockTimeline extends Component {
           onChangePage={this.handleChangePage}
           onChangeRowsPerPage={this.handleChangeRowsPerPage}
         />
+         <BackButton />
       </Paper>
 
 
@@ -436,6 +438,7 @@ class BlockTimeline extends Component {
   }
 }
 const styledComponent = withStyles(styles)(BlockTimeline);
+const routedComponent = withRouter(styledComponent)
 
 
 const mapStateToProps = state => ({
@@ -445,7 +448,7 @@ const mapStateToProps = state => ({
 export default withRouter(connect(
   mapStateToProps,
   { blockTimeline, blockUser, unblockUser }
-)(styledComponent));
+)(routedComponent));
 
 
 let timelineXX = [
