@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from "react-router-dom";
+import { makeStyles } from '@material-ui/core/styles';
 // import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 // import Hidden from '@material-ui/core/Hidden';
@@ -17,8 +18,10 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 // import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import Typography from '@material-ui/core/Typography';
-
 import MenuItem from '@material-ui/core/MenuItem';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faHome, faSearch, faList, faCog } from '@fortawesome/free-solid-svg-icons';
 import atoms from '../components/atoms';
@@ -35,9 +38,12 @@ const { AppBar, Avatar, Button } = atoms;
 const { Tabs, Tab, ListItem, InputAdornment } = molecules;
 
 
+const close = {
+  padding: '10 px'
+}
 
 const tweetBox = {
-  height: '100px',
+  height: '130px',
 }
 
 const avatarStyle = {
@@ -52,7 +58,7 @@ const Spacer = styled('div')({
   width: "100%",
   minHeight: 53,
   display: "hidden",
-  [ theme.breakpoints.down('xs') ]: {
+  [theme.breakpoints.down('xs')]: {
     minHeight: 170,
   },
 })
@@ -100,6 +106,7 @@ class HeaderTest extends React.Component {
     super(props)
     this.state = {
       open: false,
+      snackBarOpen: false,
       searchTerm: "",
       anchorEl: null,
       value: 0,
@@ -170,6 +177,11 @@ class HeaderTest extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
   };
+
+  handleSBClose = () => {
+    this.setState({ snackBarOpen: false });
+  };
+
   sendTweet = (e) => {
     // e.preventDefault();
     // console.log("in send tweet")
@@ -180,6 +192,9 @@ class HeaderTest extends React.Component {
     // console.log("Tweet PARAMS_________________", tweetParams)
     this.props.addPost(tweetParams);
     this.startTimer()
+    // this.setState({ tweet: "" });
+    this.handleClose()
+    this.setState({ snackBarOpen: true })
     this.setState({ tweet: "" });
     this.handleClose();
 
@@ -189,8 +204,8 @@ class HeaderTest extends React.Component {
     this.props.cancelPost();
     this.stopTimer()
     this.resetTimer()
+    this.setState({ snackBarOpen: false });
     this.handleClose()
-
   }
   handleAvatarClick = event => {
     this.setState({ anchorEl: event.currentTarget });
@@ -217,6 +232,7 @@ class HeaderTest extends React.Component {
 
   render() {
     // const { value } = this.state;
+    const { classes } = this.props;
     const { anchorEl } = this.state;
     // console.log("**********************" + this.state.profileId);
     // console.log("**********************" + this.state.tweet);
@@ -350,9 +366,8 @@ class HeaderTest extends React.Component {
               label="Tweet"
               variant="outlined"
               multiline
-              rows="3"
+              rows="6"
               onChange={this.handleTweetChange}
-              //   value={this.state.name}
               inputProps={{ maxLength: 280 }}
               fullWidth
             />
@@ -369,6 +384,33 @@ class HeaderTest extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
+
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          open={this.state.snackBarOpen}
+          autoHideDuration={1000 * 120}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={`${this.state.time} seconds until Tweet posts`}
+          action={[
+            <Button key="undo" color="secondary" size="small" onClick={this.cancelTweet}>
+              Cancel Tweet
+            </Button>,
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              style={close}
+              onClick={this.handleSBClose}
+            >
+              <CloseIcon />
+            </IconButton>,
+          ]}
+        />
       </Spacer>
 
       :
