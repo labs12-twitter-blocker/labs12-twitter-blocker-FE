@@ -17,12 +17,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 // import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
-<<<<<<< HEAD
 // import Typography from '@material-ui/core/Typography';
-
-=======
-import Typography from '@material-ui/core/Typography';
->>>>>>> origin
 import MenuItem from '@material-ui/core/MenuItem';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
