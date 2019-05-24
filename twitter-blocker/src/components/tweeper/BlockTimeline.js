@@ -111,17 +111,14 @@ const styles = {
       height: '45px',
       padding: '0px 0 0 0px',
     }
-
-
   }
-
 };
 const Feed = styled('div')({
   backgroundColor: '#fff',
-  margin: "auto",
-  display: "flex",
-  justifyContent: "center",
-  padding: theme.spacing.unit * 4
+  // margin: "auto",
+  // display: "flex",
+  // justifyContent: "center",
+  // padding: theme.spacing.unit * 4
 });
 
 const Content = styled('div')({
@@ -129,6 +126,7 @@ const Content = styled('div')({
   padding: theme.spacing.unit * 4,
   margin: 'auto',
 });
+
 const BlockButton = styled(Button)({
   // margin: "2rem",
   // width: "10px",
@@ -192,14 +190,14 @@ class BlockTimeline extends Component {
 
     }
     // console.log(this.state.blockTimelineList)
-    if (this.props.timeline) {
+    if (this.props.timeline && this.props.blockTimelineListDone) {
       this.getListRowBuilder(this.props.timeline);
     }
     // this.setState({ timeline: action.payload })
   }
 
   componentDidUpdate() {
-    if (this.props.timeline && this.state.twitter_user_id) {
+    if (this.props.timeline && this.props.blockTimelineListDone) {
       this.getListRowBuilder(this.props.timeline)
     }
     // if (this.props.allLists !== null  && this.state.allListRan === false && this.state.twitter_user_id !== "" ) {
@@ -288,7 +286,6 @@ class BlockTimeline extends Component {
           <BackButton />
           <Content>
             <Feed>
-
               <Paper >
                 {/* <Button>Submit Blocks</Button> */}
                 <Table aria-labelledby="tableTitle" classes={{ root: classes.table }} >
@@ -340,7 +337,7 @@ class BlockTimeline extends Component {
                     {stableSort(data, getSorting(order, orderBy))
                       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                       .map(n => {
-                        { console.log("n", n) }
+                        // { console.log("n", n) }
                         return (
 
                           < TableRow
@@ -423,6 +420,7 @@ class BlockTimeline extends Component {
 
               <Divider />
             </Feed>
+            <BackButton />
           </Content>
         </React.Fragment>
       );
@@ -430,16 +428,18 @@ class BlockTimeline extends Component {
   }
 }
 const styledComponent = withStyles(styles)(BlockTimeline);
+const routedComponent = withRouter(styledComponent)
 
 
 const mapStateToProps = state => ({
-  timeline: state.listsReducer.blockTimelineList
+  timeline: state.listsReducer.blockTimelineList,
+  blockTimelineListDone: state.listsReducer.blockTimelineListDone
 });
 
 export default withRouter(connect(
   mapStateToProps,
   { blockTimeline, blockUser, unblockUser }
-)(styledComponent));
+)(routedComponent));
 
 
 let timelineXX = [
