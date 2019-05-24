@@ -111,10 +111,7 @@ const styles = {
       height: '45px',
       padding: '0px 0 0 0px',
     }
-
-
   }
-
 };
 const Feed = styled('div')({
   backgroundColor: '#fff',
@@ -199,9 +196,9 @@ class BlockTimeline extends Component {
   }
 
   componentDidUpdate() {
-    if (this.props.timeline && this.state.twitter_user_id) {
-      this.getListRowBuilder(this.props.timeline)
-    }
+    // if (this.props.timeline && this.state.twitter_user_id) {
+    // this.getListRowBuilder(this.props.timeline)
+    // }
     // if (this.props.allLists !== null  && this.state.allListRan === false && this.state.twitter_user_id !== "" ) {
     //   this.getListRowBuilder(this.props.allLists);
     // }
@@ -288,7 +285,6 @@ class BlockTimeline extends Component {
           <BackButton />
           <Content>
             <Feed>
-
               <Paper >
                 {/* <Button>Submit Blocks</Button> */}
                 <Table aria-labelledby="tableTitle" classes={{ root: classes.table }} >
@@ -340,7 +336,7 @@ class BlockTimeline extends Component {
                     {stableSort(data, getSorting(order, orderBy))
                       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                       .map(n => {
-                        { console.log("n", n) }
+                        // { console.log("n", n) }
                         return (
 
                           < TableRow
