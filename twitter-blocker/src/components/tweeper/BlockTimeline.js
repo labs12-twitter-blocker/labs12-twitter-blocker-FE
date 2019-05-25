@@ -146,7 +146,7 @@ class BlockTimeline extends Component {
 
   block = (id) => {
 
-    console.log(id)
+    // console.log(id)
     let params = {
       twitter_id: this.state.twitter_user_id,
       user_id: id
@@ -154,7 +154,7 @@ class BlockTimeline extends Component {
     this.props.blockUser(params)
     this.setState({ isBlocked: true })
 
-    console.log("block")
+    // console.log("block")
   }
   unblock = (id) => {
     let params = {
@@ -165,16 +165,16 @@ class BlockTimeline extends Component {
     this.props.unblockUser(params)
     this.setState({ isBlocked: false })
 
-    console.log("unblock")
+    // console.log("unblock")
 
   }
   componentDidMount() {
     if (localStorage.getItem("token")) {
       const decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
       this.setState({ twitter_user_id: decoded.id })
-      console.log("decoded", decoded)
-      console.log("CDM")
-      console.log(this.state)
+      // console.log("decoded", decoded)
+      // console.log("CDM")
+      // console.log(this.state)
       const params = {
         twitter_user_id: decoded.id
       }

@@ -50,6 +50,10 @@ class UserSettingsCard extends React.Component {
     super(props)
     this.state = {
       open: false,
+      profilePic: '',
+      displayName: '',
+      username: '',
+      banner_img: '',
   }
 }
 
@@ -70,20 +74,20 @@ class UserSettingsCard extends React.Component {
       this.setState({ profilePic: decoded.profile_img })
       this.setState({ username: decoded.username })
       this.setState({ banner_img: decoded.banner_img })
-      console.log("Profile DECODED", decoded)
+      // console.log("Profile DECODED", decoded)
     }
   }
 
   deleteAccount = () => {
     this.props.deleteUser(decoded.id)
     // e.preventDefault()
-    console.log("Decoded id", decoded.id)
-    console.log("Deleted")
+    // console.log("Decoded id", decoded.id)
+    // console.log("Deleted")
     localStorage.removeItem("token");
     this.props.history.push('/')
   }
   render() {
-    console.log(this.props)
+    // console.log(this.props)
 
     const { classes } = this.props;
 
@@ -91,15 +95,15 @@ class UserSettingsCard extends React.Component {
       <Card className={classes.card} style={{ margin: "auto", marginTop: "2rem" }}>
         <CardActionArea>
           <Avatar
-            // src={decoded.profile_img}
+            src={this.state.profilePic}
             style={avatarStyle} alt="Your Profile Image"
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
-              {decoded.displayName}
+              {this.state.displayName}
             </Typography>
             <Typography component="p">
-              {decoded.username}
+              {this.state.username}
             </Typography>
           </CardContent>
         </CardActionArea>

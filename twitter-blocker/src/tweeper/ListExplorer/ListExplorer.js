@@ -78,7 +78,7 @@ class ListExplorer extends React.Component {
 
     render() {
       const { value } = this.state;
-      console.log(this.state)
+      // console.log(this.state)
   return (
     <React.Fragment>
       <CssBaseline />

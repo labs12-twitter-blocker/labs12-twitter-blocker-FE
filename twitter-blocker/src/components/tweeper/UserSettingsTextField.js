@@ -52,14 +52,14 @@ class UserSettingsTextField extends React.Component {
   }
 
     componentDidUpdate(prevProps) {
-      console.log("CDUpdate");
-      console.log("this.state.loggedIn", this.state.loggedIn);
-      console.log("this.props.currentUser", this.props.currentUser);
-      console.log("this.props.user", this.props.user);
+      // console.log("CDUpdate");
+      // console.log("this.state.loggedIn", this.state.loggedIn);
+      // console.log("this.props.currentUser", this.props.currentUser);
+      // console.log("this.props.user", this.props.user);
       if (this.props.user.id !== prevProps.user.id) {
         this.props.getUser(this.props.user.id)
       }
-      console.log("twitter_user_id", this.state.twitter_user_id);
+      // console.log("twitter_user_id", this.state.twitter_user_id);
     }
 
   handleChange = name => event => {
