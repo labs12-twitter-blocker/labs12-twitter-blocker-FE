@@ -117,8 +117,8 @@ class ListDetails extends React.Component {
     let decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
     this.props.subscribeToList(this.state.listId, decoded.id);
     this.setState({ isSubscribed: true })
-    console.log("this.props.list.twitter_list_id", this.props.list.twitter_list_id)
-    console.log("this.state.twitter_user_id", this.state.twitter_user_id)
+    // console.log("this.props.list.twitter_list_id", this.props.list.twitter_list_id)
+    // console.log("this.state.twitter_user_id", this.state.twitter_user_id)
   }
 
   unsubscribe = () => {

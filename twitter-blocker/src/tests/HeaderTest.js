@@ -103,7 +103,8 @@ class HeaderTest extends React.Component {
       time: 0,
       isOn: false,
       start: 0,
-      profileBanner: null
+      profileBanner: null,
+      profile_img: ''
     }
     this.startTimer = this.startTimer.bind(this)
     this.stopTimer = this.stopTimer.bind(this)

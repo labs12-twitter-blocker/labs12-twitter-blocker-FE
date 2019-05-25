@@ -48,7 +48,7 @@ class ListInfo extends React.Component {
   };
 
   handleSelect = e => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     this.setState({
       mode: e.target.value
     }
