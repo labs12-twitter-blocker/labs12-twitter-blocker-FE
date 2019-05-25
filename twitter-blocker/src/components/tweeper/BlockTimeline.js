@@ -24,7 +24,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Tooltip from '@material-ui/core/Tooltip';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Paper from '@material-ui/core/Paper';
+// import Paper from '@material-ui/core/Paper';
+// import red from '@material-ui/core/colors/red';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 // import { getAllListPoints, addUserVote } from '../../actions/index'
@@ -97,7 +98,9 @@ const styles = {
     marginTop: 10,
   },
   table: {
-    margin: "2rem 0",
+    // margin: "2rem 0",
+  margin: "auto",
+
     // padding: "1rem"
     // [ theme.breakpoints.down("sm") ]: {
     // padding: '0px 4px',
@@ -111,14 +114,12 @@ const styles = {
       height: '45px',
       padding: '0px 0 0 0px',
     }
-  }
+  },
 };
+
 const Feed = styled('div')({
   backgroundColor: '#fff',
-  // margin: "auto",
-  // display: "flex",
-  // justifyContent: "center",
-  // padding: theme.spacing.unit * 4
+  width: "fit-content",
 });
 
 const Content = styled('div')({
@@ -127,15 +128,6 @@ const Content = styled('div')({
   margin: 'auto',
 });
 
-const BlockButton = styled(Button)({
-  // margin: "2rem",
-  // width: "10px",
-  // [ theme.breakpoints.down("sm") ]: {
-  // width: '1em',
-  // height: '15px',
-  // padding: '0px 0 0 0px',
-  // }
-})
 class BlockTimeline extends Component {
   constructor(props) {
     super(props)
@@ -154,7 +146,7 @@ class BlockTimeline extends Component {
 
   block = (id) => {
 
-    console.log(id)
+    // console.log(id)
     let params = {
       twitter_id: this.state.twitter_user_id,
       user_id: id
@@ -162,7 +154,7 @@ class BlockTimeline extends Component {
     this.props.blockUser(params)
     this.setState({ isBlocked: true })
 
-    console.log("block")
+    // console.log("block")
   }
   unblock = (id) => {
     let params = {
@@ -173,16 +165,16 @@ class BlockTimeline extends Component {
     this.props.unblockUser(params)
     this.setState({ isBlocked: false })
 
-    console.log("unblock")
+    // console.log("unblock")
 
   }
   componentDidMount() {
     if (localStorage.getItem("token")) {
       const decoded = jwt.verify(localStorage.getItem("token"), process.env.REACT_APP_SESSION_SECRET);
       this.setState({ twitter_user_id: decoded.id })
-      console.log("decoded", decoded)
-      console.log("CDM")
-      console.log(this.state)
+      // console.log("decoded", decoded)
+      // console.log("CDM")
+      // console.log(this.state)
       const params = {
         twitter_user_id: decoded.id
       }
@@ -263,7 +255,7 @@ class BlockTimeline extends Component {
   };
 
   render() {
-    const { orderBy, order, anchorEl, setAnchorEl } = this.state;
+    // const { orderBy, order, anchorEl, setAnchorEl } = this.state;
 
 
     // const open = Boolean(anchorEl);
@@ -283,7 +275,7 @@ class BlockTimeline extends Component {
           <BackButton />
           <Content>
             <Feed>
-              <Paper >
+              {/* <Paper > */}
                 {/* <Button>Submit Blocks</Button> */}
                 <Table aria-labelledby="tableTitle" classes={{ root: classes.table }} >
                   <TableHead>
@@ -343,14 +335,12 @@ class BlockTimeline extends Component {
                             }
                             key={n.id}
                           >
-                            <TableCell align="center" padding="checkbox">
+                            <TableCell align="center" padding="none">
                               <Grid item>
 
-                                <BlockButton medium color="secondary" variant="outlinedPrimary" aria-describedby={this.id} variant="contained"
-                                  style={{ color: "304ffe", border: "2px solid secondary" }}
-                                  // onClick={(e) => this.block(n.twitter_user_id)}
-                                  onClick={(e)=>{e.currentTarget.style = "backgroundColor:#FF3333 !important; "; this.block(n.twitter_user_id) }} 
-                                  >Block</BlockButton>
+                                <Button side="medium" color="secondary" variant="outlined" aria-describedby={this.id}
+                                  onClick={(e) => this.block(n.twitter_user_id)}
+                                  >Block</Button>
 
                               </Grid>
                             </TableCell>
@@ -415,7 +405,7 @@ class BlockTimeline extends Component {
                   onChangePage={this.handleChangePage}
                   onChangeRowsPerPage={this.handleChangeRowsPerPage}
                 />
-              </Paper>
+              {/* </Paper> */}
 
               <Divider />
             </Feed>
@@ -439,925 +429,3 @@ export default withRouter(connect(
   mapStateToProps,
   { blockTimeline, blockUser, unblockUser }
 )(routedComponent));
-
-
-let timelineXX = [
-  {
-    "tweet": {
-      "created_at": "Wed May 15 00:12:33 +0000 2019",
-      "id": 1128453074475896832,
-      "id_str": "1128453074475896832",
-      "full_text": "@dev_nikema @Dstar3248 Public works best for now. Thank you for helping!",
-      "truncated": false,
-      "display_text_range": [
-        23,
-        72
-      ],
-      "entities": {
-        "hashtags": [],
-        "symbols": [],
-        "user_mentions": [
-          {
-            "screen_name": "dev_nikema",
-            "name": "Nikema Prophet 🦓 (she/her)",
-            "id": 744302714226544640,
-            "id_str": "744302714226544640",
-            "indices": [
-              0,
-              11
-            ]
-          },
-          {
-            "screen_name": "Dstar3248",
-            "name": "Daniel",
-            "id": 802197601592508416,
-            "id_str": "802197601592508416",
-            "indices": [
-              12,
-              22
-            ]
-          }
-        ],
-        "urls": []
-      },
-      "source": "<a href=\"http://twitter.com\" rel=\"nofollow\">Twitter Web Client</a>",
-      "in_reply_to_status_id": 1128452902668759040,
-      "in_reply_to_status_id_str": "1128452902668759040",
-      "in_reply_to_user_id": 744302714226544640,
-      "in_reply_to_user_id_str": "744302714226544640",
-      "in_reply_to_screen_name": "dev_nikema",
-      "user": {
-        "id": 1123316691100786688,
-        "id_str": "1123316691100786688",
-        "name": "DstarDev",
-        "screen_name": "DstarDev",
-        "location": "",
-        "description": "",
-        "url": null,
-        "entities": {
-          "description": {
-            "urls": []
-          }
-        },
-        "protected": false,
-        "followers_count": 5,
-        "friends_count": 1,
-        "listed_count": 0,
-        "created_at": "Tue Apr 30 20:02:24 +0000 2019",
-        "favourites_count": 8,
-        "utc_offset": null,
-        "time_zone": null,
-        "geo_enabled": false,
-        "verified": false,
-        "statuses_count": 5,
-        "lang": null,
-        "contributors_enabled": false,
-        "is_translator": false,
-        "is_translation_enabled": false,
-        "profile_background_color": "F5F8FA",
-        "profile_background_image_url": null,
-        "profile_background_image_url_https": null,
-        "profile_background_tile": false,
-        "profile_image_url": "http://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png",
-        "profile_image_url_https": "https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png",
-        "profile_link_color": "1DA1F2",
-        "profile_sidebar_border_color": "C0DEED",
-        "profile_sidebar_fill_color": "DDEEF6",
-        "profile_text_color": "333333",
-        "profile_use_background_image": true,
-        "has_extended_profile": false,
-        "default_profile": true,
-        "default_profile_image": true,
-        "following": false,
-        "follow_request_sent": false,
-        "notifications": false,
-        "translator_type": "none"
-      },
-      "geo": null,
-      "coordinates": null,
-      "place": null,
-      "contributors": null,
-      "is_quote_status": false,
-      "retweet_count": 0,
-      "favorite_count": 1,
-      "favorited": false,
-      "retweeted": false,
-      "lang": "en"
-    },
-    "bert_result": {
-      "identity_hate": 0.0001,
-      "insult": 0.0001,
-      "obscene": 0.0001,
-      "severe_toxic": 0.0001,
-      "threat": 0.0001,
-      "toxic": 0.0002
-    }
-  },
-  {
-    "tweet": {
-      "created_at": "Tue May 14 23:47:46 +0000 2019",
-      "id": 1128446838997041153,
-      "id_str": "1128446838997041153",
-      "full_text": "RT @Dstar3248: I am working on a project to help with toxic people on twitter. If you have time I would be grateful if you could go be mean…",
-      "truncated": false,
-      "display_text_range": [
-        0,
-        140
-      ],
-      "entities": {
-        "hashtags": [],
-        "symbols": [],
-        "user_mentions": [
-          {
-            "screen_name": "Dstar3248",
-            "name": "Daniel",
-            "id": 802197601592508416,
-            "id_str": "802197601592508416",
-            "indices": [
-              3,
-              13
-            ]
-          }
-        ],
-        "urls": []
-      },
-      "source": "<a href=\"http://twitter.com\" rel=\"nofollow\">Twitter Web Client</a>",
-      "in_reply_to_status_id": null,
-      "in_reply_to_status_id_str": null,
-      "in_reply_to_user_id": null,
-      "in_reply_to_user_id_str": null,
-      "in_reply_to_screen_name": null,
-      "user": {
-        "id": 1123316691100786688,
-        "id_str": "1123316691100786688",
-        "name": "DstarDev",
-        "screen_name": "DstarDev",
-        "location": "",
-        "description": "",
-        "url": null,
-        "entities": {
-          "description": {
-            "urls": []
-          }
-        },
-        "protected": false,
-        "followers_count": 5,
-        "friends_count": 1,
-        "listed_count": 0,
-        "created_at": "Tue Apr 30 20:02:24 +0000 2019",
-        "favourites_count": 8,
-        "utc_offset": null,
-        "time_zone": null,
-        "geo_enabled": false,
-        "verified": false,
-        "statuses_count": 5,
-        "lang": null,
-        "contributors_enabled": false,
-        "is_translator": false,
-        "is_translation_enabled": false,
-        "profile_background_color": "F5F8FA",
-        "profile_background_image_url": null,
-        "profile_background_image_url_https": null,
-        "profile_background_tile": false,
-        "profile_image_url": "http://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png",
-        "profile_image_url_https": "https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png",
-        "profile_link_color": "1DA1F2",
-        "profile_sidebar_border_color": "C0DEED",
-        "profile_sidebar_fill_color": "DDEEF6",
-        "profile_text_color": "333333",
-        "profile_use_background_image": true,
-        "has_extended_profile": false,
-        "default_profile": true,
-        "default_profile_image": true,
-        "following": false,
-        "follow_request_sent": false,
-        "notifications": false,
-        "translator_type": "none"
-      },
-      "geo": null,
-      "coordinates": null,
-      "place": null,
-      "contributors": null,
-      "retweeted_status": {
-        "created_at": "Tue May 14 23:39:46 +0000 2019",
-        "id": 1128444825387167744,
-        "id_str": "1128444825387167744",
-        "full_text": "I am working on a project to help with toxic people on twitter. If you have time I would be grateful if you could go be mean to @DstarDev on twitter. If you are not feeling toxic you can say something nice, that helps too.",
-        "truncated": false,
-        "display_text_range": [
-          0,
-          222
-        ],
-        "entities": {
-          "hashtags": [],
-          "symbols": [],
-          "user_mentions": [
-            {
-              "screen_name": "DstarDev",
-              "name": "DstarDev",
-              "id": 1123316691100786688,
-              "id_str": "1123316691100786688",
-              "indices": [
-                128,
-                137
-              ]
-            }
-          ],
-          "urls": []
-        },
-        "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
-        "in_reply_to_status_id": null,
-        "in_reply_to_status_id_str": null,
-        "in_reply_to_user_id": null,
-        "in_reply_to_user_id_str": null,
-        "in_reply_to_screen_name": null,
-        "user": {
-          "id": 802197601592508416,
-          "id_str": "802197601592508416",
-          "name": "Daniel",
-          "screen_name": "Dstar3248",
-          "location": "Tucson, AZ",
-          "description": "@LambdaSchool student.  Full Stack Web Dev",
-          "url": null,
-          "entities": {
-            "description": {
-              "urls": []
-            }
-          },
-          "protected": false,
-          "followers_count": 280,
-          "friends_count": 765,
-          "listed_count": 9,
-          "created_at": "Fri Nov 25 17:09:47 +0000 2016",
-          "favourites_count": 203,
-          "utc_offset": null,
-          "time_zone": null,
-          "geo_enabled": false,
-          "verified": false,
-          "statuses_count": 114,
-          "lang": null,
-          "contributors_enabled": false,
-          "is_translator": false,
-          "is_translation_enabled": false,
-          "profile_background_color": "F5F8FA",
-          "profile_background_image_url": null,
-          "profile_background_image_url_https": null,
-          "profile_background_tile": false,
-          "profile_image_url": "http://pbs.twimg.com/profile_images/1096580144767033344/LcmdVUMn_normal.png",
-          "profile_image_url_https": "https://pbs.twimg.com/profile_images/1096580144767033344/LcmdVUMn_normal.png",
-          "profile_banner_url": "https://pbs.twimg.com/profile_banners/802197601592508416/1558024583",
-          "profile_link_color": "1DA1F2",
-          "profile_sidebar_border_color": "C0DEED",
-          "profile_sidebar_fill_color": "DDEEF6",
-          "profile_text_color": "333333",
-          "profile_use_background_image": true,
-          "has_extended_profile": false,
-          "default_profile": true,
-          "default_profile_image": false,
-          "following": false,
-          "follow_request_sent": false,
-          "notifications": false,
-          "translator_type": "none"
-        },
-        "geo": null,
-        "coordinates": null,
-        "place": null,
-        "contributors": null,
-        "is_quote_status": false,
-        "retweet_count": 4,
-        "favorite_count": 5,
-        "favorited": true,
-        "retweeted": true,
-        "lang": "en"
-      },
-      "is_quote_status": false,
-      "retweet_count": 4,
-      "favorite_count": 0,
-      "favorited": true,
-      "retweeted": true,
-      "lang": "en"
-    },
-    "bert_result": {
-      "identity_hate": 0.0001,
-      "insult": 0.0001,
-      "obscene": 0.0001,
-      "severe_toxic": 0.0001,
-      "threat": 0.0,
-      "toxic": 0.0002
-    }
-  },
-  {
-    "tweet": {
-      "created_at": "Tue May 14 23:40:24 +0000 2019",
-      "id": 1128444984615587840,
-      "id_str": "1128444984615587840",
-      "full_text": "@Dstar3248 I am @dstardev and I approved this message.",
-      "truncated": false,
-      "display_text_range": [
-        11,
-        54
-      ],
-      "entities": {
-        "hashtags": [],
-        "symbols": [],
-        "user_mentions": [
-          {
-            "screen_name": "Dstar3248",
-            "name": "Daniel",
-            "id": 802197601592508416,
-            "id_str": "802197601592508416",
-            "indices": [
-              0,
-              10
-            ]
-          },
-          {
-            "screen_name": "DstarDev",
-            "name": "DstarDev",
-            "id": 1123316691100786688,
-            "id_str": "1123316691100786688",
-            "indices": [
-              16,
-              25
-            ]
-          }
-        ],
-        "urls": []
-      },
-      "source": "<a href=\"http://twitter.com\" rel=\"nofollow\">Twitter Web Client</a>",
-      "in_reply_to_status_id": 1128444825387167744,
-      "in_reply_to_status_id_str": "1128444825387167744",
-      "in_reply_to_user_id": 802197601592508416,
-      "in_reply_to_user_id_str": "802197601592508416",
-      "in_reply_to_screen_name": "Dstar3248",
-      "user": {
-        "id": 1123316691100786688,
-        "id_str": "1123316691100786688",
-        "name": "DstarDev",
-        "screen_name": "DstarDev",
-        "location": "",
-        "description": "",
-        "url": null,
-        "entities": {
-          "description": {
-            "urls": []
-          }
-        },
-        "protected": false,
-        "followers_count": 5,
-        "friends_count": 1,
-        "listed_count": 0,
-        "created_at": "Tue Apr 30 20:02:24 +0000 2019",
-        "favourites_count": 8,
-        "utc_offset": null,
-        "time_zone": null,
-        "geo_enabled": false,
-        "verified": false,
-        "statuses_count": 5,
-        "lang": null,
-        "contributors_enabled": false,
-        "is_translator": false,
-        "is_translation_enabled": false,
-        "profile_background_color": "F5F8FA",
-        "profile_background_image_url": null,
-        "profile_background_image_url_https": null,
-        "profile_background_tile": false,
-        "profile_image_url": "http://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png",
-        "profile_image_url_https": "https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png",
-        "profile_link_color": "1DA1F2",
-        "profile_sidebar_border_color": "C0DEED",
-        "profile_sidebar_fill_color": "DDEEF6",
-        "profile_text_color": "333333",
-        "profile_use_background_image": true,
-        "has_extended_profile": false,
-        "default_profile": true,
-        "default_profile_image": true,
-        "following": false,
-        "follow_request_sent": false,
-        "notifications": false,
-        "translator_type": "none"
-      },
-      "geo": null,
-      "coordinates": null,
-      "place": null,
-      "contributors": null,
-      "is_quote_status": false,
-      "retweet_count": 0,
-      "favorite_count": 1,
-      "favorited": false,
-      "retweeted": false,
-      "lang": "en"
-    },
-    "bert_result": {
-      "identity_hate": 0.0001,
-      "insult": 0.0001,
-      "obscene": 0.0001,
-      "severe_toxic": 0.0001,
-      "threat": 0.0001,
-      "toxic": 0.0002
-    }
-  },
-  {
-    "tweet": {
-      "created_at": "Tue May 14 23:29:43 +0000 2019",
-      "id": 1128442296519647232,
-      "id_str": "1128442296519647232",
-      "full_text": "RT @workingjubilee: Please send your sickest burns @DstarDev",
-      "truncated": false,
-      "display_text_range": [
-        0,
-        60
-      ],
-      "entities": {
-        "hashtags": [],
-        "symbols": [],
-        "user_mentions": [
-          {
-            "screen_name": "workingjubilee",
-            "name": "Jubilee",
-            "id": 1107835175411421184,
-            "id_str": "1107835175411421184",
-            "indices": [
-              3,
-              18
-            ]
-          },
-          {
-            "screen_name": "DstarDev",
-            "name": "DstarDev",
-            "id": 1123316691100786688,
-            "id_str": "1123316691100786688",
-            "indices": [
-              51,
-              60
-            ]
-          }
-        ],
-        "urls": []
-      },
-      "source": "<a href=\"http://twitter.com\" rel=\"nofollow\">Twitter Web Client</a>",
-      "in_reply_to_status_id": null,
-      "in_reply_to_status_id_str": null,
-      "in_reply_to_user_id": null,
-      "in_reply_to_user_id_str": null,
-      "in_reply_to_screen_name": null,
-      "user": {
-        "id": 1123316691100786688,
-        "id_str": "1123316691100786688",
-        "name": "DstarDev",
-        "screen_name": "DstarDev",
-        "location": "",
-        "description": "",
-        "url": null,
-        "entities": {
-          "description": {
-            "urls": []
-          }
-        },
-        "protected": false,
-        "followers_count": 5,
-        "friends_count": 1,
-        "listed_count": 0,
-        "created_at": "Tue Apr 30 20:02:24 +0000 2019",
-        "favourites_count": 8,
-        "utc_offset": null,
-        "time_zone": null,
-        "geo_enabled": false,
-        "verified": false,
-        "statuses_count": 5,
-        "lang": null,
-        "contributors_enabled": false,
-        "is_translator": false,
-        "is_translation_enabled": false,
-        "profile_background_color": "F5F8FA",
-        "profile_background_image_url": null,
-        "profile_background_image_url_https": null,
-        "profile_background_tile": false,
-        "profile_image_url": "http://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png",
-        "profile_image_url_https": "https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png",
-        "profile_link_color": "1DA1F2",
-        "profile_sidebar_border_color": "C0DEED",
-        "profile_sidebar_fill_color": "DDEEF6",
-        "profile_text_color": "333333",
-        "profile_use_background_image": true,
-        "has_extended_profile": false,
-        "default_profile": true,
-        "default_profile_image": true,
-        "following": false,
-        "follow_request_sent": false,
-        "notifications": false,
-        "translator_type": "none"
-      },
-      "geo": null,
-      "coordinates": null,
-      "place": null,
-      "contributors": null,
-      "retweeted_status": {
-        "created_at": "Tue May 14 23:22:22 +0000 2019",
-        "id": 1128440447083225088,
-        "id_str": "1128440447083225088",
-        "full_text": "Please send your sickest burns @DstarDev",
-        "truncated": false,
-        "display_text_range": [
-          0,
-          40
-        ],
-        "entities": {
-          "hashtags": [],
-          "symbols": [],
-          "user_mentions": [
-            {
-              "screen_name": "DstarDev",
-              "name": "DstarDev",
-              "id": 1123316691100786688,
-              "id_str": "1123316691100786688",
-              "indices": [
-                31,
-                40
-              ]
-            }
-          ],
-          "urls": []
-        },
-        "source": "<a href=\"http://twitter.com\" rel=\"nofollow\">Twitter Web Client</a>",
-        "in_reply_to_status_id": null,
-        "in_reply_to_status_id_str": null,
-        "in_reply_to_user_id": null,
-        "in_reply_to_user_id_str": null,
-        "in_reply_to_screen_name": null,
-        "user": {
-          "id": 1107835175411421184,
-          "id_str": "1107835175411421184",
-          "name": "Jubilee",
-          "screen_name": "workingjubilee",
-          "location": "",
-          "description": "Just another builder of electric minds in castles made of sand. @LambdaSchool",
-          "url": null,
-          "entities": {
-            "description": {
-              "urls": []
-            }
-          },
-          "protected": false,
-          "followers_count": 124,
-          "friends_count": 268,
-          "listed_count": 1,
-          "created_at": "Tue Mar 19 02:44:23 +0000 2019",
-          "favourites_count": 1047,
-          "utc_offset": null,
-          "time_zone": null,
-          "geo_enabled": false,
-          "verified": false,
-          "statuses_count": 384,
-          "lang": null,
-          "contributors_enabled": false,
-          "is_translator": false,
-          "is_translation_enabled": false,
-          "profile_background_color": "000000",
-          "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
-          "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
-          "profile_background_tile": false,
-          "profile_image_url": "http://pbs.twimg.com/profile_images/1107843862473498624/J2NJLqHm_normal.png",
-          "profile_image_url_https": "https://pbs.twimg.com/profile_images/1107843862473498624/J2NJLqHm_normal.png",
-          "profile_banner_url": "https://pbs.twimg.com/profile_banners/1107835175411421184/1552964679",
-          "profile_link_color": "91D2FA",
-          "profile_sidebar_border_color": "000000",
-          "profile_sidebar_fill_color": "000000",
-          "profile_text_color": "000000",
-          "profile_use_background_image": false,
-          "has_extended_profile": false,
-          "default_profile": false,
-          "default_profile_image": false,
-          "following": false,
-          "follow_request_sent": false,
-          "notifications": false,
-          "translator_type": "none"
-        },
-        "geo": null,
-        "coordinates": null,
-        "place": null,
-        "contributors": null,
-        "is_quote_status": false,
-        "retweet_count": 1,
-        "favorite_count": 2,
-        "favorited": true,
-        "retweeted": true,
-        "lang": "en"
-      },
-      "is_quote_status": false,
-      "retweet_count": 1,
-      "favorite_count": 0,
-      "favorited": true,
-      "retweeted": true,
-      "lang": "en"
-    },
-    "bert_result": {
-      "identity_hate": 0.0009,
-      "insult": 0.0151,
-      "obscene": 0.0096,
-      "severe_toxic": 0.002,
-      "threat": 0.0059,
-      "toxic": 0.9925
-    }
-  },
-  {
-    "tweet": {
-      "created_at": "Tue May 14 23:29:42 +0000 2019",
-      "id": 1128442291595677696,
-      "id_str": "1128442291595677696",
-      "full_text": "@DstarDev but sometimes i will be nice to you because you're beautiful.",
-      "truncated": false,
-      "display_text_range": [
-        0,
-        71
-      ],
-      "entities": {
-        "hashtags": [],
-        "symbols": [],
-        "user_mentions": [
-          {
-            "screen_name": "DstarDev",
-            "name": "DstarDev",
-            "id": 1123316691100786688,
-            "id_str": "1123316691100786688",
-            "indices": [
-              0,
-              9
-            ]
-          }
-        ],
-        "urls": []
-      },
-      "source": "<a href=\"http://twitter.com\" rel=\"nofollow\">Twitter Web Client</a>",
-      "in_reply_to_status_id": null,
-      "in_reply_to_status_id_str": null,
-      "in_reply_to_user_id": 1123316691100786688,
-      "in_reply_to_user_id_str": "1123316691100786688",
-      "in_reply_to_screen_name": "DstarDev",
-      "user": {
-        "id": 1125968227513786369,
-        "id_str": "1125968227513786369",
-        "name": "BrittonsTestAccount",
-        "screen_name": "BrittonsTest",
-        "location": "",
-        "description": "Just testing software and trying not to delete my real friends. All toxic comments are test data.",
-        "url": null,
-        "entities": {
-          "description": {
-            "urls": []
-          }
-        },
-        "protected": false,
-        "followers_count": 1,
-        "friends_count": 3,
-        "listed_count": 0,
-        "created_at": "Wed May 08 03:38:39 +0000 2019",
-        "favourites_count": 4,
-        "utc_offset": null,
-        "time_zone": null,
-        "geo_enabled": false,
-        "verified": false,
-        "statuses_count": 2,
-        "lang": null,
-        "contributors_enabled": false,
-        "is_translator": false,
-        "is_translation_enabled": false,
-        "profile_background_color": "F5F8FA",
-        "profile_background_image_url": null,
-        "profile_background_image_url_https": null,
-        "profile_background_tile": false,
-        "profile_image_url": "http://pbs.twimg.com/profile_images/1126982195774664705/bMc1xjby_normal.png",
-        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1126982195774664705/bMc1xjby_normal.png",
-        "profile_link_color": "1DA1F2",
-        "profile_sidebar_border_color": "C0DEED",
-        "profile_sidebar_fill_color": "DDEEF6",
-        "profile_text_color": "333333",
-        "profile_use_background_image": true,
-        "has_extended_profile": true,
-        "default_profile": true,
-        "default_profile_image": false,
-        "following": true,
-        "follow_request_sent": false,
-        "notifications": false,
-        "translator_type": "none"
-      },
-      "geo": null,
-      "coordinates": null,
-      "place": null,
-      "contributors": null,
-      "is_quote_status": false,
-      "retweet_count": 0,
-      "favorite_count": 0,
-      "favorited": false,
-      "retweeted": false,
-      "lang": "en"
-    },
-    "bert_result": {
-      "identity_hate": 0.0001,
-      "insult": 0.0002,
-      "obscene": 0.0001,
-      "severe_toxic": 0.0001,
-      "threat": 0.0001,
-      "toxic": 0.0003
-    }
-  },
-  {
-    "tweet": {
-      "created_at": "Tue May 14 23:25:18 +0000 2019",
-      "id": 1128441185880530945,
-      "id_str": "1128441185880530945",
-      "full_text": "If everyone could be really toxic to me it would really help our project. So get all those insults out...for science.",
-      "truncated": false,
-      "display_text_range": [
-        0,
-        117
-      ],
-      "entities": {
-        "hashtags": [],
-        "symbols": [],
-        "user_mentions": [],
-        "urls": []
-      },
-      "source": "<a href=\"http://twitter.com\" rel=\"nofollow\">Twitter Web Client</a>",
-      "in_reply_to_status_id": null,
-      "in_reply_to_status_id_str": null,
-      "in_reply_to_user_id": null,
-      "in_reply_to_user_id_str": null,
-      "in_reply_to_screen_name": null,
-      "user": {
-        "id": 1123316691100786688,
-        "id_str": "1123316691100786688",
-        "name": "DstarDev",
-        "screen_name": "DstarDev",
-        "location": "",
-        "description": "",
-        "url": null,
-        "entities": {
-          "description": {
-            "urls": []
-          }
-        },
-        "protected": false,
-        "followers_count": 5,
-        "friends_count": 1,
-        "listed_count": 0,
-        "created_at": "Tue Apr 30 20:02:24 +0000 2019",
-        "favourites_count": 8,
-        "utc_offset": null,
-        "time_zone": null,
-        "geo_enabled": false,
-        "verified": false,
-        "statuses_count": 5,
-        "lang": null,
-        "contributors_enabled": false,
-        "is_translator": false,
-        "is_translation_enabled": false,
-        "profile_background_color": "F5F8FA",
-        "profile_background_image_url": null,
-        "profile_background_image_url_https": null,
-        "profile_background_tile": false,
-        "profile_image_url": "http://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png",
-        "profile_image_url_https": "https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png",
-        "profile_link_color": "1DA1F2",
-        "profile_sidebar_border_color": "C0DEED",
-        "profile_sidebar_fill_color": "DDEEF6",
-        "profile_text_color": "333333",
-        "profile_use_background_image": true,
-        "has_extended_profile": false,
-        "default_profile": true,
-        "default_profile_image": true,
-        "following": false,
-        "follow_request_sent": false,
-        "notifications": false,
-        "translator_type": "none"
-      },
-      "geo": null,
-      "coordinates": null,
-      "place": null,
-      "contributors": null,
-      "is_quote_status": false,
-      "retweet_count": 0,
-      "favorite_count": 1,
-      "favorited": false,
-      "retweeted": false,
-      "lang": "en"
-    },
-    "bert_result": {
-      "identity_hate": 0.0,
-      "insult": 0.0002,
-      "obscene": 0.0001,
-      "severe_toxic": 0.0,
-      "threat": 0.0,
-      "toxic": 0.0006
-    }
-  },
-  {
-    "tweet": {
-      "created_at": "Tue May 14 23:14:28 +0000 2019",
-      "id": 1128438457062150144,
-      "id_str": "1128438457062150144",
-      "full_text": "@DstarDev  *testing* You are a moron. I hope you die. #notreallyjusttesting",
-      "truncated": false,
-      "display_text_range": [
-        0,
-        75
-      ],
-      "entities": {
-        "hashtags": [
-          {
-            "text": "notreallyjusttesting",
-            "indices": [
-              54,
-              75
-            ]
-          }
-        ],
-        "symbols": [],
-        "user_mentions": [
-          {
-            "screen_name": "DstarDev",
-            "name": "DstarDev",
-            "id": 1123316691100786688,
-            "id_str": "1123316691100786688",
-            "indices": [
-              0,
-              9
-            ]
-          }
-        ],
-        "urls": []
-      },
-      "source": "<a href=\"http://twitter.com\" rel=\"nofollow\">Twitter Web Client</a>",
-      "in_reply_to_status_id": null,
-      "in_reply_to_status_id_str": null,
-      "in_reply_to_user_id": 1123316691100786688,
-      "in_reply_to_user_id_str": "1123316691100786688",
-      "in_reply_to_screen_name": "DstarDev",
-      "user": {
-        "id": 1125968227513786369,
-        "id_str": "1125968227513786369",
-        "name": "BrittonsTestAccount",
-        "screen_name": "BrittonsTest",
-        "location": "",
-        "description": "Just testing software and trying not to delete my real friends. All toxic comments are test data.",
-        "url": null,
-        "entities": {
-          "description": {
-            "urls": []
-          }
-        },
-        "protected": false,
-        "followers_count": 1,
-        "friends_count": 3,
-        "listed_count": 0,
-        "created_at": "Wed May 08 03:38:39 +0000 2019",
-        "favourites_count": 4,
-        "utc_offset": null,
-        "time_zone": null,
-        "geo_enabled": false,
-        "verified": false,
-        "statuses_count": 2,
-        "lang": null,
-        "contributors_enabled": false,
-        "is_translator": false,
-        "is_translation_enabled": false,
-        "profile_background_color": "F5F8FA",
-        "profile_background_image_url": null,
-        "profile_background_image_url_https": null,
-        "profile_background_tile": false,
-        "profile_image_url": "http://pbs.twimg.com/profile_images/1126982195774664705/bMc1xjby_normal.png",
-        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1126982195774664705/bMc1xjby_normal.png",
-        "profile_link_color": "1DA1F2",
-        "profile_sidebar_border_color": "C0DEED",
-        "profile_sidebar_fill_color": "DDEEF6",
-        "profile_text_color": "333333",
-        "profile_use_background_image": true,
-        "has_extended_profile": true,
-        "default_profile": true,
-        "default_profile_image": false,
-        "following": true,
-        "follow_request_sent": false,
-        "notifications": false,
-        "translator_type": "none"
-      },
-      "geo": null,
-      "coordinates": null,
-      "place": null,
-      "contributors": null,
-      "is_quote_status": false,
-      "retweet_count": 0,
-      "favorite_count": 0,
-      "favorited": false,
-      "retweeted": false,
-      "lang": "en"
-    },
-    "bert_result": {
-      "identity_hate": 0.0114,
-      "insult": 0.933,
-      "obscene": 0.3142,
-      "severe_toxic": 0.0475,
-      "threat": 0.7901,
-      "toxic": 0.9879
-    }
-  }
-]

@@ -167,7 +167,7 @@ class BlockListsTable extends Component {
               </TableRow>
             </TableHead>
             <TableBody classes={{ root: classes.pointsRow }} >
-              {console.log("this.state.rows", this.state.rows)}
+              {/* {console.log("this.state.rows", this.state.rows)} */}
               {this.state.rows.map(row => (
 
                 <TableRow classes={{ root: classes.tableBodyRow }} key={row.id} hover >
