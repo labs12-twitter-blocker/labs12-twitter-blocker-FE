@@ -232,7 +232,7 @@ class LeaderboardBlockTable extends React.Component {
   };
 
   handleRequestSort = (event, property) => {
-    console.log("handleRequestSort")
+    // console.log("handleRequestSort")
     const orderBy = property;
     let order = 'asc';
 
@@ -244,12 +244,12 @@ class LeaderboardBlockTable extends React.Component {
   };
 
   handleChangePage = (event, page) => {
-    console.log("handleChangePage")
+    // console.log("handleChangePage")
     this.setState({ page });
   };
 
   handleChangeRowsPerPage = event => {
-    console.log("handleChangeRowsPerPage")
+    // console.log("handleChangeRowsPerPage")
     this.setState({ rowsPerPage: event.target.value });
   };
 

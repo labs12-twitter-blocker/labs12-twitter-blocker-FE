@@ -30,7 +30,9 @@ require('dotenv').config();
 // const url = process.env.REACT_APP_BACKEND_BASE_URL
 
 
-const { Avatar, Typography } = atoms;
+const { 
+  // Avatar, 
+  Typography } = atoms;
 // const { Tabs, Tab } = molecules;
 
 const Content = styled('div')({
@@ -73,17 +75,17 @@ class Profile extends Component {
       this.setState({ profilePic: decoded.profile_img })
       this.setState({ username: decoded.username })
       this.setState({ banner_img: decoded.banner_img })
-      console.log("Profile DECODED", decoded)
+      // console.log("Profile DECODED", decoded)
     }
   }
 
   componentDidUpdate(prevProps) {
-    console.log("CDUpdate");
-    console.log("this.props.loggedIn", this.props.loggedIn);
-    console.log("this.props.currentUser", this.props.currentUser);
-    console.log("this.props.gotCurrentUser", this.props.gotCurrentUser);
+    // console.log("CDUpdate");
+    // console.log("this.props.loggedIn", this.props.loggedIn);
+    // console.log("this.props.currentUser", this.props.currentUser);
+    // console.log("this.props.gotCurrentUser", this.props.gotCurrentUser);
 
-    console.log("this.props.user", this.props.user);
+    // console.log("this.props.user", this.props.user);
     if (
       this.props.loggedIn === true &&
       this.state.loggedInRan === false &&
@@ -142,11 +144,11 @@ class Profile extends Component {
                 {/* <Typography primary>{this.props.user.displayName}</Typography> */}
 
                 <Typography light gutterBottom>
-                  {console.log("----------------------PROFILE PIC-----------", this.state.profilePic)}
+                  {/* {console.log("----------------------PROFILE PIC-----------", this.state.profilePic)}
                   {console.log("++++this.props.loggedIn", this.props.loggedIn)}
                   {console.log("++++this.state.twitter_user_id", this.state.twitter_user_id)}
                   {console.log("++++this.props.currentUser", this.props.currentUser)}
-                  {console.log("++++this.props.user", this.props.user)}
+                  {console.log("++++this.props.user", this.props.user)} */}
                   {/* {this.props.currentUser.users.screen_name} */}
                   {this.state.username}
                   {/* {this.props.user.username} */}

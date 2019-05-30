@@ -15,11 +15,11 @@ export const getHello = () => dispatch => {
   axios
     .get(`${url}`)
     .then(res => {
-      console.log(res)
+      // console.log(res)
       dispatch({ type: GET_HELLO_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: GET_HELLO_FAILURE, payload: err.message });
     });
 };
@@ -34,12 +34,12 @@ export const getLogin = (response) => dispatch => {
   dispatch({ type: GET_LOGIN });
   const token = response.headers.get('x-auth-token');
 
-  console.log("*************token: ", token)
+  // console.log("*************token: ", token)
 
   response.json()
     .then(user => {
-      console.log("DISPATCH USER: _________________________________________________________________________________________________", user)
-      console.log(user._json.profile_image_url_https)
+      // console.log("DISPATCH USER: _________________________________________________________________________________________________", user)
+      // console.log(user._json.profile_image_url_https)
       if (token) {
         // localStorage.setItem("twitter_user_id", user.id)
         localStorage.setItem("token", token)
@@ -84,11 +84,11 @@ export const getUsers = () => dispatch => {
       headers: { Authorization: token }
     })
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: GET_USERS_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: GET_USERS_FAILURE, payload: err.message });
     });
 };
@@ -108,11 +108,11 @@ export const getUser = user_id => dispatch => {
       headers: { Authorization: token }
     })
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: GET_USER_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: GET_USER_FAILURE, payload: err.message });
     });
 };
@@ -132,11 +132,11 @@ export const getUsersPoints = () => dispatch => {
       headers: { Authorization: token }
     })
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: GET_USERS_POINTS_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: GET_USERS_POINTS_FAILURE, payload: err.message });
     });
 };
@@ -156,11 +156,11 @@ export const getPremiumUsers = () => dispatch => {
       headers: { Authorization: token }
     })
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: GET_PREMIUM_USERS_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: GET_PREMIUM_USERS_FAILURE, payload: err.message });
     });
 };
@@ -199,11 +199,11 @@ export const addUser = user => dispatch => {
       headers: { Authorization: token }
     })
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: ADD_USER_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: ADD_USER_FAILURE, payload: err.message });
     });
 };
@@ -246,11 +246,11 @@ export const deleteUser = user_id => dispatch => {
       headers: { Authorization: token }
     })
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: DELETE_USER_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: DELETE_USER_FAILURE, payload: err.message });
     });
 };
@@ -271,11 +271,11 @@ export const getLists = () => dispatch => {
       headers: { Authorization: token }
     })
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: GET_LISTS_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: GET_LISTS_FAILURE, payload: err.message });
     });
 };
@@ -293,11 +293,11 @@ export const getPublicLists = () => dispatch => {
       headers: { Authorization: token }
     })
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: GET_PUBLIC_LISTS_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: GET_PUBLIC_LISTS_FAILURE, payload: err.message });
     });
 };
@@ -315,11 +315,11 @@ export const getPrivateLists = () => dispatch => {
       headers: { Authorization: token }
     })
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: GET_PRIVATE_LISTS_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: GET_PRIVATE_LISTS_FAILURE, payload: err.message });
     });
 };
@@ -337,11 +337,11 @@ export const getBlockLists = () => dispatch => {
       headers: { Authorization: token }
     })
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: GET_BLOCK_LISTS_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: GET_BLOCK_LISTS_FAILURE, payload: err.message });
     });
 };
@@ -359,11 +359,11 @@ export const getCoolLists = () => dispatch => {
       headers: { Authorization: token }
     })
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: GET_COOL_LISTS_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: GET_COOL_LISTS_FAILURE, payload: err.message });
     });
 };
@@ -382,11 +382,11 @@ export const getList = list_id => dispatch => {
       headers: { Authorization: token }
     })
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: GET_LIST_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: GET_LIST_FAILURE, payload: err.message });
     });
 };
@@ -404,11 +404,11 @@ export const getUserList = user_id => dispatch => {
       headers: { Authorization: token }
     })
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: GET_USER_LISTS_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: GET_USER_LISTS_FAILURE, payload: err.message });
     });
 };
@@ -426,11 +426,11 @@ export const getUserPublicList = user_id => dispatch => {
       headers: { Authorization: token }
     })
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: GET_USER_PUBLIC_LISTS_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: GET_USER_PUBLIC_LISTS_FAILURE, payload: err.message });
     });
 };
@@ -448,11 +448,11 @@ export const getUserPrivateList = user_id => dispatch => {
       headers: { Authorization: token }
     })
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: GET_USER_PRIVATE_LISTS_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: GET_USER_PRIVATE_LISTS_FAILURE, payload: err.message });
     });
 };
@@ -470,11 +470,11 @@ export const getUserBlockList = user_id => dispatch => {
       headers: { Authorization: token }
     })
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: GET_USER_BLOCK_LISTS_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: GET_USER_BLOCK_LISTS_FAILURE, payload: err.message });
     });
 };
@@ -492,11 +492,11 @@ export const getUserCoolList = user_id => dispatch => {
       headers: { Authorization: token }
     })
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: GET_USER_COOL_LISTS_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: GET_USER_COOL_LISTS_FAILURE, payload: err.message });
     });
 };
@@ -514,11 +514,11 @@ export const getListSubscribers = list_id => dispatch => {
       headers: { Authorization: token }
     })
     .then(res => {
-      console.log(res);
-      dispatch({ type: GET_LIST_SUBSCRIBERS_SUCCESS, payload: res.data[ 0 ].list_followers });
+      // console.log(res);
+      dispatch({ type: GET_LIST_SUBSCRIBERS_SUCCESS, payload: res.data[0].list_followers });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: GET_LIST_SUBSCRIBERS_FAILURE, payload: err.message });
     });
 };
@@ -536,11 +536,11 @@ export const getListMembers = list_id => dispatch => {
       headers: { Authorization: token }
     })
     .then(res => {
-      console.log(res);
-      dispatch({ type: GET_LIST_MEMBERS_SUCCESS, payload: res.data[ 0 ].list_members });
+      // console.log(res);
+      dispatch({ type: GET_LIST_MEMBERS_SUCCESS, payload: res.data[0].list_members });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: GET_LIST_MEMBERS_FAILURE, payload: err.message });
     });
 };
@@ -559,11 +559,11 @@ export const getAllListPoints = () => dispatch => {
       headers: { Authorization: token }
     })
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: GET_ALL_LIST_POINTS_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: GET_ALL_LIST_POINTS_FAILURE, payload: err.message });
     });
 };
@@ -581,11 +581,11 @@ export const getFollowListPoints = () => dispatch => {
       headers: { Authorization: token }
     })
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: GET_FOLLOW_LIST_POINTS_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: GET_FOLLOW_LIST_POINTS_FAILURE, payload: err.message });
     });
 };
@@ -603,11 +603,11 @@ export const getBlockListPoints = () => dispatch => {
       headers: { Authorization: token }
     })
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: GET_BLOCK_LIST_POINTS_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: GET_BLOCK_LIST_POINTS_FAILURE, payload: err.message });
     });
 };
@@ -626,11 +626,11 @@ export const getListTimeline = (list_id, user_id) => dispatch => {
       headers: { Authorization: token }
     })
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: GET_LIST_TIMELINE_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: GET_LIST_TIMELINE_FAILURE, payload: err.message });
     });
 };
@@ -649,11 +649,11 @@ export const dsList = post => dispatch => {
   axios
     .post(`${url}/lists/`, post)
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: DS_LIST_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: DS_LIST_FAILURE, payload: err.message });
     });
 };
@@ -670,11 +670,11 @@ export const createList = post => dispatch => {
   axios
     .post(`${url}/lists/create`, post)
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: CREATE_LIST_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: CREATE_LIST_FAILURE, payload: err.message });
     });
 };
@@ -726,18 +726,18 @@ export const DELETE_LIST_FAILURE = "DELETE_LIST_FAILURE";
 
 export const deleteList = (list_id, user_id) => dispatch => {
   dispatch({ type: DELETE_LIST });
-  let data = {twitter_id: user_id}
+  let data = { twitter_id: user_id }
   let token = localStorage.getItem("token")
   axios
     .post(`${url}/lists/${list_id}`, data, {
       headers: { Authorization: token }
     })
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: DELETE_LIST_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: DELETE_LIST_FAILURE, payload: err.message });
     });
 };
@@ -755,11 +755,11 @@ export const deleteListFollow = user_id => dispatch => {
       headers: { Authorization: token }
     }) // <-- I don't feel good about this.
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: DELETE_LIST_FOLLOW_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: DELETE_LIST_FOLLOW_FAILURE, payload: err.message });
     });
 };
@@ -774,16 +774,13 @@ export const subscribeToList = (listId, userId) => dispatch => {
   dispatch({ type: SUBSCRIBE_LIST });
   let token = localStorage.getItem("token")
   axios
-    .post(`${url}/lists/subscribe/${listId}/follow/${userId}`, {
-      // .post(`${url}/lists/subscribe`, {
-      headers: { Authorization: token }
-    })
+    .post(`${url}/lists/subscribe/${listId}/follow/${userId}`)
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: SUBSCRIBE_LIST_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: SUBSCRIBE_LIST_FAILURE, payload: err.message });
     });
 }
@@ -802,11 +799,11 @@ export const unSubscribeToList = (listId, userId) => dispatch => {
       headers: { Authorization: token }
     })
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: UNSUBSCRIBE_LIST_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: UNSUBSCRIBE_LIST_FAILURE, payload: err.message });
     });
 }
@@ -824,20 +821,20 @@ export const addPost = post => dispatch => {
 
   dispatch({ type: ADD_POST });
   // let token = localStorage.getItem("token")
-  console.log("POST HERE +++++++++++++++++++++++++++++++++++++++++++++++++++",post)
+  // console.log("POST HERE +++++++++++++++++++++++++++++++++++++++++++++++++++", post)
   const params = {
-    status:post.status,
-    twitter_user_id:post.twitter_user_id
+    status: post.status,
+    twitter_user_id: post.twitter_user_id
   }
-  console.log("PARAMS________________________________",params)
+  // console.log("PARAMS________________________________", params)
   axios
-    .post(`${url}/tweets`,  post)
+    .post(`${url}/tweets`, post)
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: ADD_POST_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: ADD_POST_FAILURE, payload: err.message });
     });
 };
@@ -855,11 +852,11 @@ export const cancelPost = post => dispatch => {
   axios
     .post(`${url}/tweets/cancel`)
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: CANCEL_POST_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: CANCEL_POST_FAILURE, payload: err.message });
     });
 };
@@ -880,11 +877,11 @@ export const getListVotes = twitter_list_id => dispatch => {
       headers: { Authorization: token }
     })
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: GET_LIST_VOTES_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: GET_LIST_VOTES_FAILURE, payload: err.message });
     });
 };
@@ -902,11 +899,11 @@ export const getUserVotes = twitter_user_id => dispatch => {
       headers: { Authorization: token }
     })
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: GET_USER_VOTES_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: GET_USER_VOTES_FAILURE, payload: err.message });
     });
 };
@@ -924,11 +921,11 @@ export const addUserVote = vote => dispatch => {
       headers: { Authorization: token }
     })
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: ADD_USER_VOTE_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: ADD_USER_VOTE_FAILURE, payload: err.message });
     });
 };
@@ -945,19 +942,19 @@ export function searchLists(searchTerm, history) {
       headers: { Authorization: token }
     })
       .then(({ data }) => {
-        console.log(data);
+        // console.log(data);
         let filtered = data.filter(list => {
           if (list.description) {
             return list.description.toLowerCase().includes(searchTerm.toLowerCase()) || list.list_name.toLowerCase().includes(searchTerm.toLowerCase())
           }
           return list.list_name.toLowerCase().includes(searchTerm.toLowerCase());
         })
-        console.log(filtered);
+        // console.log(filtered);
         dispatch({ type: SEARCH_LISTS_SUCCESS, payload: filtered })
         // history.push("/explorer")
       })
       .catch(err => {
-        console.log(err);
+        // console.log(err);
         dispatch({ type: SEARCH_LISTS_FAILURE })
       })
   }
@@ -971,17 +968,17 @@ export function blockTimeline(params) {
   return (dispatch) => {
     dispatch({ type: BLOCK_TIMELINE });
     // let token = localStorage.getItem("token")
-    console.log("Block Timeline Action");
+    // console.log("Block Timeline Action");
 
     axios.post(`${url}/lists/blocklist`, params)
       .then(res => {
-        console.log("res");
-        console.log(res);
+        // console.log("res");
+        // console.log(res);
         dispatch({ type: BLOCK_TIMELINE_SUCCESS, payload: res.data });
 
       }).catch(err => {
-        console.log(err)
-        console.log("err")
+        // console.log(err)
+        // console.log("err")
         dispatch({ type: BLOCK_TIMELINE_FAILURE });
       })
   }
@@ -994,8 +991,8 @@ export const BLOCK_USER_FAILURE = "BLOCK_USER_FAILURE";
 
 export const blockUser = (params) => dispatch => {
   dispatch({ type: BLOCK_USER });
-  console.log("inside block user")
-  console.log("blockUser params", params)
+  // console.log("inside block user")
+  // console.log("blockUser params", params)
   let token = localStorage.getItem("token")
   const twitterId = params.twitter_id;
   const userId = params.user_id;
@@ -1004,11 +1001,11 @@ export const blockUser = (params) => dispatch => {
       headers: { Authorization: token }
     })
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: BLOCK_USER_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: BLOCK_USER_FAILURE, payload: err.message });
     });
 }
@@ -1021,8 +1018,8 @@ export const UNBLOCK_USER_FAILURE = "UNBLOCK_USER_FAILURE";
 
 export const unblockUser = (params) => dispatch => {
   dispatch({ type: UNBLOCK_USER });
-  console.log("inside unblock user")
-  console.log("unblockUser params", params)
+  // console.log("inside unblock user")
+  // console.log("unblockUser params", params)
   let token = localStorage.getItem("token")
   const twitterId = params.twitter_id;
   const userId = params.user_id;
@@ -1031,11 +1028,11 @@ export const unblockUser = (params) => dispatch => {
       headers: { Authorization: token }
     })
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: UNBLOCK_USER_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: UNBLOCK_USER_FAILURE, payload: err.message });
     });
 }

@@ -65,9 +65,9 @@ class TweetFloat extends React.Component {
     event.preventDefault();
     const token = localStorage.getItem("token");
     const id = localStorage.getItem("twitter_user_id")
-    console.log("ID____________________", id);
-    console.log("TOKEN", token);
-    console.log("THIS.STATE", this.state);
+    // console.log("ID____________________", id);
+    // console.log("TOKEN", token);
+    // console.log("THIS.STATE", this.state);
 
     const tweetParams = {
       "status": this.state.tweet,

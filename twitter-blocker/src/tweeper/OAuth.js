@@ -18,16 +18,16 @@ class OAuth extends Component {
   }
 
   componentDidMount() {
-    console.log("CDM");
-    console.log("this.state.loggedIn", this.state.loggedIn);
-    console.log("this.state.user", this.state.user);
+    // console.log("CDM");
+    // console.log("this.state.loggedIn", this.state.loggedIn);
+    // console.log("this.state.user", this.state.user);
   }
 
   componentDidUpdate(prevProps) {
-    console.log("CDUpdate");
-    console.log("this.state.loggedIn", this.state.loggedIn);
-    console.log("this.state.user", this.state.user);
-    console.log("this.props.user", this.props.user);
+    // console.log("CDUpdate");
+    // console.log("this.state.loggedIn", this.state.loggedIn);
+    // console.log("this.state.user", this.state.user);
+    // console.log("this.props.user", this.props.user);
     if (this.props.user.id !== prevProps.user.id) {
       this.props.getUser(this.props.user.id)
     }
