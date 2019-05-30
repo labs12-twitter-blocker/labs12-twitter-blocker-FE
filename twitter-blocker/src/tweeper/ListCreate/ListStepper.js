@@ -626,7 +626,7 @@ class ListStepper extends React.Component {
                       onClick={this.handleNext}
                       className={classes.button}
                       disabled={this.handleDisableNext(activeStep)}
-
+                      style={{margin: "2rem"}}
                     >
                       {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                     </Button>
@@ -649,6 +649,8 @@ class ListStepper extends React.Component {
                   className={classes.button}
                   onClick={this.handleSubmit}
                   disabled={!isEnabled}
+                  style={{margin: "2rem"}}
+                  
                 >
                   Generate List
                 </Button>
