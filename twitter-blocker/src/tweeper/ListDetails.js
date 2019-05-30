@@ -155,7 +155,7 @@ class ListDetails extends React.Component {
         this.setState({ isSubscribed: true })
       }
     })
-  }, 1000)
+  }, 2000)
 
   }
 
