@@ -650,6 +650,7 @@ class ListStepper extends React.Component {
                   onClick={this.handleSubmit}
                   disabled={!isEnabled}
                   style={{margin: "2rem"}}
+                  
                 >
                   Generate List
                 </Button>
